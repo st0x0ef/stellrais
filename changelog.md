@@ -48,3 +48,7 @@
 - GUI textures for all machines
 - Oxygen distributor now propagate in all directions
 
+## Fix
+- Crash when trying to launch to any planet when you haven't launched from a planet
+
+

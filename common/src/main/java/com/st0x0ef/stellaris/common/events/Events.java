@@ -2,6 +2,7 @@ package com.st0x0ef.stellaris.common.events;
 
 import com.st0x0ef.stellaris.common.blocks.CoalLanternBlock;
 import com.st0x0ef.stellaris.common.blocks.WallCoalTorchBlock;
+import com.st0x0ef.stellaris.common.oxygen.DimensionOxygenManager;
 import com.st0x0ef.stellaris.common.oxygen.GlobalOxygenManager;
 import com.st0x0ef.stellaris.common.oxygen.OxygenRoom;
 import com.st0x0ef.stellaris.common.registry.BlocksRegistry;
@@ -56,7 +57,7 @@ public class Events {
         });
 
         BlockEvent.PLACE.register((level, pos, state, player) -> {
-            if (level instanceof ServerLevel serverLevel && !PlanetUtil.hasOxygen(serverLevel)) {
+            if (level instanceof ServerLevel serverLevel && !PlanetUtil.hasOxygen(level)) {
                 if (state.is(BlocksRegistry.OXYGEN_DISTRIBUTOR)) {
                     addOxygenRoom(serverLevel, pos);
                 } else if (serverLevel.getBlockStates(new AABB(pos).inflate(32)).anyMatch(blockState -> blockState.is(BlocksRegistry.OXYGEN_DISTRIBUTOR))) {
@@ -84,22 +85,6 @@ public class Events {
                 } else if (state.is(Blocks.CAMPFIRE)) {
                     serverLevel.setBlock(pos, state.setValue(CampfireBlock.LIT, false), 3);
                     return EventResult.interruptFalse();
-                } else if (state.is(Blocks.SOUL_TORCH)) {
-                    serverLevel.setBlock(pos, BlocksRegistry.COAL_TORCH_BLOCK.get().defaultBlockState(), 3);
-                    return EventResult.interruptFalse();
-                } else if (state.is(Blocks.SOUL_WALL_TORCH)) {
-                    serverLevel.setBlock(pos, BlocksRegistry.WALL_COAL_TORCH_BLOCK.get().defaultBlockState().setValue(WallCoalTorchBlock.FACING, state.getValue(WallTorchBlock.FACING)), 3);
-                    return EventResult.interruptFalse();
-                } else if (state.is(Blocks.SOUL_LANTERN)) {
-                    serverLevel.setBlock(pos, BlocksRegistry.COAL_LANTERN_BLOCK.get().defaultBlockState().setValue(CoalLanternBlock.HANGING, state.getValue(LanternBlock.HANGING)), 3);
-                    return EventResult.interruptFalse();
-                } else if (state.is(Blocks.SOUL_CAMPFIRE)) {
-                    serverLevel.setBlock(pos, state.setValue(CampfireBlock.LIT, false), 3);
-                    return EventResult.interruptFalse();
-                    // } else if (state.is(Blocks.CANDLE)){
-                    //  serverLevel.setBlock(pos, state.setValue(CandleBlock.LIT, false), 3);
-                    //  return EventResult.interruptFalse();
-
                 }
             }
 
@@ -123,7 +108,9 @@ public class Events {
     }
 
     private static void checkIfNeedToRemoveOxygenRoom(ServerLevel level, BlockPos pos) {
-        OxygenRoom room = GlobalOxygenManager.getInstance().getOrCreateDimensionManager(level).getOxygenRoom(pos);
+        DimensionOxygenManager manager = GlobalOxygenManager.getInstance().getOrCreateDimensionManager(level);
+
+        OxygenRoom room = manager.getOxygenRoom(pos);
         if (room != null) {
             boolean shouldRemove = false;
 
@@ -138,7 +125,7 @@ public class Events {
             }
 
             if (shouldRemove) {
-                removeOxygenRoom(level, pos);
+                manager.removeOxygenRoom(pos);
             }
         }
     }

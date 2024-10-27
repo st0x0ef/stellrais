@@ -3,6 +3,7 @@ package com.st0x0ef.stellaris.mixin;
 import com.st0x0ef.stellaris.common.armors.AbstractSpaceArmor;
 import com.st0x0ef.stellaris.common.registry.EntityData;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -35,8 +36,8 @@ public abstract class PlayerDataMixin extends LivingEntity {
 
     @Inject(method = "tick", at = @At("TAIL"))
     public void tick(CallbackInfo ci) {
-        if(this.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof AbstractSpaceArmor.AbstractSpaceChestplate suit) {
-            suit.onArmorTick(this.getItemBySlot(EquipmentSlot.CHEST), this.level(), stellaris$player);
+        if (this.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof AbstractSpaceArmor.AbstractSpaceChestplate suit && this.level() instanceof ServerLevel level) {
+            suit.onArmorTick(this.getItemBySlot(EquipmentSlot.CHEST), level, stellaris$player);
         }
     }
 }

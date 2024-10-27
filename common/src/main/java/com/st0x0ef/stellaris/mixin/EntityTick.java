@@ -21,7 +21,7 @@ public abstract class EntityTick {
 
         if (!entity.level().isClientSide()) {
             if (stellaris$tickSinceLastOxygenCheck > 20){
-                if (!GlobalOxygenManager.getInstance().getOrCreateDimensionManager((ServerLevel) entity.level()).canBreath(entity)) {
+                if (!GlobalOxygenManager.getInstance().getOrCreateDimensionManager((ServerLevel) entity.level()).breath(entity)) {
                     entity.hurt(DamageSourceRegistry.of(entity.level(), DamageSourceRegistry.OXYGEN), 2f);
                 }
 

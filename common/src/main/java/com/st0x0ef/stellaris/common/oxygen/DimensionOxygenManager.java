@@ -1,5 +1,7 @@
 package com.st0x0ef.stellaris.common.oxygen;
 
+import com.st0x0ef.stellaris.Stellaris;
+import com.st0x0ef.stellaris.common.blocks.entities.machines.FluidTankHelper;
 import com.st0x0ef.stellaris.common.registry.TagRegistry;
 import com.st0x0ef.stellaris.common.utils.OxygenUtils;
 import com.st0x0ef.stellaris.common.utils.PlanetUtil;
@@ -30,8 +32,11 @@ public class DimensionOxygenManager {
     }
 
     public void addOxygenRoom(OxygenRoom room) {
-        oxygenRooms.add(room);
-        this.setChanged();
+        if (getOxygenRoom(room.getDistributorPosition()) == null) {
+            oxygenRooms.add(room);
+            this.setChanged();
+            updateOxygen();
+        }
     }
 
     public void removeOxygenRoom(BlockPos pos) {
@@ -65,25 +70,40 @@ public class DimensionOxygenManager {
         oxygenRooms.forEach(OxygenRoom::updateOxygenRoom);
         roomToCheckIfOpen.values().forEach(OxygenRoom::removeOxygenInRoom);
         roomToCheckIfOpen.clear();
-        this.setChanged();
     }
 
-    public boolean canBreath(LivingEntity entity) {
-        if (planetHasOxygen || entity.getType().is(TagRegistry.ENTITY_NO_OXYGEN_NEEDED_TAG)) return true;
+    public boolean breath(LivingEntity entity) {
+        if (planetHasOxygen || entity.getType().is(TagRegistry.ENTITY_NO_OXYGEN_NEEDED_TAG)) {
+            return true;
+        }
 
         if (entity instanceof Player player && (player.isCreative() || player.isSpectator())) {
             return true;
         }
 
-        if (Utils.isLivingInJetSuit(entity) || Utils.isLivingInSpaceSuit(entity)) {
-            return OxygenUtils.getOxygen(entity.getItemBySlot(EquipmentSlot.CHEST)) > 0;
+        if (breathOxygenAt(entity.getOnPos().above())) {
+            return true;
         }
 
-        this.updateOxygen();
+        if (Utils.isLivingInJetSuit(entity) || Utils.isLivingInSpaceSuit(entity)) {
+            return OxygenUtils.removeOxygen(entity.getItemBySlot(EquipmentSlot.CHEST), FluidTankHelper.convertFromNeoMb(1L));
+        }
 
+        return false;
+    }
+
+    public boolean breathOxygenAt(BlockPos pos) {
+        AtomicBoolean canBreath = new AtomicBoolean(false);
+        Stellaris.LOG.error(String.valueOf(oxygenRooms.size()));
+        oxygenRooms.forEach(room -> canBreath.set(room.breathOxygenAt(pos)));
+        return canBreath.get();
+    }
+
+
+    public boolean hasOxygenAt(BlockPos pos) {
         AtomicBoolean canBreath = new AtomicBoolean(false);
         oxygenRooms.forEach(room -> {
-            if (room.hasOxygenAt(entity.getOnPos().above())) {
+            if (room.hasOxygenAt(pos)) {
                 canBreath.set(true);
             }
         });
@@ -95,9 +115,9 @@ public class DimensionOxygenManager {
         return oxygenRooms;
     }
 
-    public OxygenRoom getOxygenRoom(BlockPos pos) {
+    public OxygenRoom getOxygenRoom(BlockPos distributorPos) {
         for (OxygenRoom room : oxygenRooms) {
-            if (room.getDistributorPosition().equals(pos)) {
+            if (room.getDistributorPosition().equals(distributorPos)) {
                 return room;
             }
         }
@@ -108,5 +128,6 @@ public class DimensionOxygenManager {
     public void setOxygensRooms(Set<OxygenRoom> rooms) {
         this.oxygenRooms.clear();
         this.oxygenRooms.addAll(rooms);
+        this.updateOxygen();
     }
 }

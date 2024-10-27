@@ -33,6 +33,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWScrollCallback;
 
@@ -137,7 +138,10 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
         }
         Entity vehicle = player.getVehicle();
         if (vehicle instanceof RocketEntity rocket) {
-            return rocket.canGoTo(PlanetUtil.getPlanet(player.level().dimension().location()), planet);
+            if (PlanetUtil.isPlanet(player.level().dimension().location())) {
+                return rocket.canGoTo(PlanetUtil.getPlanet(player.level().dimension().location()), planet);
+            }
+            return rocket.canGoTo(PlanetUtil.getPlanet(Level.OVERWORLD.location()), planet);
         }
         return false;
     }

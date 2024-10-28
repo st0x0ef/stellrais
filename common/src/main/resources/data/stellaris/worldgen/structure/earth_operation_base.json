@@ -7,7 +7,7 @@
   "start_pool": "stellaris:earth_operation_base/earth_operation_base",
   "size": 1,
   "start_height": {
-    "absolute": -16
+    "absolute": -17
   },
   "max_distance_from_center": 80,
   "use_expansion_hack": false,

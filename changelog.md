@@ -27,7 +27,7 @@
   - Venus Ruins
   - Venus Tower
   - Mercury Big Castle
-  - Mercury Biome
+  - Mercury Temple
   - Mercury Structure
   - Mercury Small Castle
   - Mercury Lava Mines
@@ -36,7 +36,7 @@
   - Mercury Factory
   - Mercury Mining Ship
 - Biomes :
-  - Moon Caves
+  - Blue luna Lagoon
   - Mercury Fire Land
 - Rover
 - Speed Upgrade

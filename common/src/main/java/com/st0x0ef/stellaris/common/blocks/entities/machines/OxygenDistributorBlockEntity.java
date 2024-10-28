@@ -1,6 +1,7 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
 import com.st0x0ef.stellaris.common.menus.OxygenGeneratorMenu;
+import com.st0x0ef.stellaris.common.oxygen.GlobalOxygenManager;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
 import com.st0x0ef.stellaris.common.registry.FluidRegistry;
@@ -9,6 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.state.BlockState;
@@ -23,16 +25,27 @@ public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity
 
     @Override
     public void tick() {
-        if (this.getItem(0).has(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()) && oxygenTank.canGrow(1)) {
-            if (OxygenUtils.removeOxygen(getItem(0), 1)) {
-                addOyxgen(1);
+        if (level instanceof ServerLevel serverLevel) {
+            if (this.getItem(0).has(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()) && oxygenTank.canGrow(1)) {
+                if (OxygenUtils.removeOxygen(getItem(0), 1)) {
+                    addOyxgen(1);
+                }
+            }
+
+            if (oxygenTank.getAmount() > 0) {
+                GlobalOxygenManager.getInstance().getOrCreateDimensionManager(serverLevel).addOxygenRoomIfMissing(getBlockPos());
             }
         }
     }
 
     public boolean useOxygenAndEnergy() {
-        if (oxygenTank.getStack().isEmpty()) {
-            return false;
+        if (oxygenTank.getStack().isEmpty() || oxygenTank.getAmount() == 0) {
+            if (this.getItem(0).has(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()) && getWrappedEnergyContainer().getStoredEnergy() > 0) {
+                if (OxygenUtils.removeOxygen(getItem(0), 1)) {
+                    getWrappedEnergyContainer().extractEnergy(1, false);
+                    return true;
+                }
+            }
         }
 
         if (oxygenTank.getAmount() > 0 && getWrappedEnergyContainer().getStoredEnergy() > 0) {

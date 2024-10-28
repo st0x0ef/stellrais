@@ -46,6 +46,7 @@
 ## Changes
 - Rework config screen
 - GUI textures for all machines
+- Optimization of the oxygen system
 - Oxygen distributor now propagate in all directions
 
 ## Fix

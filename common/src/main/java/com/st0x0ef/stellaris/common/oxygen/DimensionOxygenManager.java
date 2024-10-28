@@ -1,6 +1,5 @@
 package com.st0x0ef.stellaris.common.oxygen;
 
-import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.FluidTankHelper;
 import com.st0x0ef.stellaris.common.registry.TagRegistry;
 import com.st0x0ef.stellaris.common.utils.OxygenUtils;
@@ -31,11 +30,11 @@ public class DimensionOxygenManager {
         this.planetHasOxygen = PlanetUtil.hasOxygen(level);
     }
 
-    public void addOxygenRoom(OxygenRoom room) {
-        if (getOxygenRoom(room.getDistributorPosition()) == null) {
-            oxygenRooms.add(room);
+    public void addOxygenRoomIfMissing(BlockPos distributorPos) {
+        if (getOxygenRoom(distributorPos) == null) {
+            oxygenRooms.add(new OxygenRoom(level, distributorPos));
+            this.updateOxygen();
             this.setChanged();
-            updateOxygen();
         }
     }
 
@@ -94,8 +93,11 @@ public class DimensionOxygenManager {
 
     public boolean breathOxygenAt(BlockPos pos) {
         AtomicBoolean canBreath = new AtomicBoolean(false);
-        Stellaris.LOG.error(String.valueOf(oxygenRooms.size()));
-        oxygenRooms.forEach(room -> canBreath.set(room.breathOxygenAt(pos)));
+        oxygenRooms.forEach(room -> {
+            if (room.breathOxygenAt(pos)) {
+                canBreath.set(true);
+            }
+        });
         return canBreath.get();
     }
 

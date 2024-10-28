@@ -34,8 +34,6 @@ public abstract class RenderPlayerMixin extends LivingEntityRenderer<AbstractCli
     @Shadow
     protected abstract void setModelProperties(AbstractClientPlayer clientPlayer);
 
-    @Shadow public abstract void render(AbstractClientPlayer entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight);
-
     public RenderPlayerMixin(EntityRendererProvider.Context context, PlayerModel<AbstractClientPlayer> model, float shadowRadius) {
         super(context, model, shadowRadius);
     }

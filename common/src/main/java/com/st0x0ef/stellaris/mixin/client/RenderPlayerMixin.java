@@ -6,6 +6,8 @@ import com.st0x0ef.stellaris.client.renderers.armors.SpaceSuitModel;
 import com.st0x0ef.stellaris.common.entities.vehicles.LanderEntity;
 import com.st0x0ef.stellaris.common.items.armors.AbstractSpaceArmor;
 import com.st0x0ef.stellaris.common.items.armors.JetSuit;
+import com.st0x0ef.stellaris.common.items.armors.SpaceSuit;
+import com.st0x0ef.stellaris.common.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
@@ -31,6 +33,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class RenderPlayerMixin extends LivingEntityRenderer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
     @Shadow
     protected abstract void setModelProperties(AbstractClientPlayer clientPlayer);
+
+    @Shadow public abstract void render(AbstractClientPlayer entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight);
 
     public RenderPlayerMixin(EntityRendererProvider.Context context, PlayerModel<AbstractClientPlayer> model, float shadowRadius) {
         super(context, model, shadowRadius);
@@ -85,6 +89,14 @@ public abstract class RenderPlayerMixin extends LivingEntityRenderer<AbstractCli
     public void renderPlayer(AbstractClientPlayer entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight, CallbackInfo ci) {
         if (entity.getVehicle() instanceof LanderEntity) {
             ci.cancel();
+        }
+        if (Utils.isLivingInSpaceSuit(entity)) {
+            if (entity.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof SpaceSuit spaceSuitItem) {
+                ItemStack spaceSuitStack = entity.getItemBySlot(EquipmentSlot.CHEST);
+                spaceSuitItem.getModules(spaceSuitStack).forEach(module -> {
+                    module.renderModel(poseStack, buffer, entity, entityYaw, partialTicks, packedLight);
+                });
+            }
         }
     }
 

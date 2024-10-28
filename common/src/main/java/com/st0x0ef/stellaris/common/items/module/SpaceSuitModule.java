@@ -1,11 +1,15 @@
 package com.st0x0ef.stellaris.common.items.module;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -41,9 +45,7 @@ public interface SpaceSuitModule {
         return y;
     }
 
-//    @Environment(EnvType.CLIENT)
-//    default ResourceLocation modelTextureOverride() { //TODO layer this texture onto spacesuit texture
-//        return null;
-//    }
+    @Environment(EnvType.CLIENT)
+    default void renderModel(PoseStack poseStack, MultiBufferSource buffer, AbstractClientPlayer entity, float entityYaw, float partialTicks, int packedLight) {}
 
 }

@@ -1,6 +1,7 @@
 package com.st0x0ef.stellaris.mixin.client;
 
 import com.st0x0ef.stellaris.common.entities.vehicles.LanderEntity;
+import com.st0x0ef.stellaris.common.entities.vehicles.RocketEntity;
 import com.st0x0ef.stellaris.common.keybinds.KeyVariables;
 import com.st0x0ef.stellaris.common.network.packets.KeyHandlerPacket;
 import dev.architectury.networking.NetworkManager;
@@ -21,13 +22,11 @@ import java.util.Map;
 import java.util.UUID;
 
 @Mixin(KeyboardHandler.class)
-public abstract class PlayerLanderKeyMixin {
+public abstract class PlayerKeyMixin {
 
     @Final
     @Shadow
     private Minecraft minecraft;
-
-
 
     @Inject(at = @At(value = "TAIL"), method = "keyPress")
     private void keyPress(long windowPointer, int key, int scanCode, int action, int modifiers, CallbackInfo info) {
@@ -40,27 +39,20 @@ public abstract class PlayerLanderKeyMixin {
             stellaris$sendKeyToServerAndClientHashMap(key, action, minecraft.player, this.minecraft.options.keyLeft, KeyVariables.KEY_LEFT, "key_left", KeyVariables.isHoldingLeft(minecraft.player));
 
 
-            if (minecraft.player.getVehicle() instanceof LanderEntity) {
-                stellaris$keyEvent(minecraft.player, minecraft.options.keyJump, key, scanCode, action, modifiers);
+            if ((minecraft.player.getVehicle() instanceof LanderEntity landerEntity && landerEntity.getFirstPlayerPassenger() == minecraft.player) || (minecraft.player.getVehicle() instanceof RocketEntity rocketEntity && rocketEntity.getFirstPlayerPassenger() == minecraft.player)) {
+                stellaris$keyEvent(minecraft.player, minecraft.options.keyJump, key, action);
             }
         }
     }
 
     @Unique
-    public void stellaris$keyEvent(Player player, KeyMapping keyWanted, int key, int scanCode, int action, int modifiers) {
-        if ((keyWanted.getDefaultKey().getValue() == key && action == GLFW.GLFW_RELEASE && KeyVariables.isHoldingJump(player))  || (KeyVariables.isHoldingJump(player))) {
+    public void stellaris$keyEvent(Player player, KeyMapping keyWanted, int key, int action) {
+        if ((keyWanted.getDefaultKey().getValue() == key && action == GLFW.GLFW_RELEASE && KeyVariables.isHoldingJump(player))) {
             KeyVariables.KEY_JUMP.put(player.getUUID(), false);
-
-            NetworkManager.sendToServer(new KeyHandlerPacket(
-                    "key_jump", false
-            ));
-
+            NetworkManager.sendToServer(new KeyHandlerPacket("key_jump", false));
         } else if (keyWanted.getDefaultKey().getValue() == key && action == GLFW.GLFW_PRESS && !KeyVariables.isHoldingJump(player)) {
             KeyVariables.KEY_JUMP.put(player.getUUID(), true);
-
-            NetworkManager.sendToServer(new KeyHandlerPacket(
-                    "key_jump", true
-            ));
+            NetworkManager.sendToServer(new KeyHandlerPacket("key_jump", true));
         }
     }
 
@@ -73,19 +65,12 @@ public abstract class PlayerLanderKeyMixin {
 
         if ((keyWanted.getDefaultKey().getValue() == key && action == GLFW.GLFW_RELEASE && isPressed) || isPressed) {
             variableKey.put(player.getUUID(), false);
-
-            NetworkManager.sendToServer(new KeyHandlerPacket(
-                    keyString, false
-            ));
+            NetworkManager.sendToServer(new KeyHandlerPacket(keyString, false));
         }
 
         if (keyWanted.getDefaultKey().getValue() == key && action == GLFW.GLFW_PRESS && !isPressed) {
             variableKey.put(player.getUUID(), true);
-
-            NetworkManager.sendToServer(new KeyHandlerPacket(
-                    keyString, true
-            ));
+            NetworkManager.sendToServer(new KeyHandlerPacket(keyString, true));
         }
     }
-
 }

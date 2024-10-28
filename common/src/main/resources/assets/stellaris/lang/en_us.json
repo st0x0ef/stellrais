@@ -564,7 +564,7 @@
 
   "message.stellaris.speed": "%s Speed",
   "text.stellaris.rocket.fuel": "You need to put %s in the rocket to be able to fly",
-  "message.stellaris.lander": "§4⚠ Warning §r |  Press §7%s§r to slow down!",
+  "message.stellaris.lander": "§4⚠ Warning §r |  Press space bar to slow down!",
 
   "tooltip.item.stellaris.can.empty": "Empty",
   "tooltip.item.stellaris.can.nutrition": "Nutrition: %s/%s",

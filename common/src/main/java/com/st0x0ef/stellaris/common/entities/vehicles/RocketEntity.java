@@ -1,10 +1,12 @@
 package com.st0x0ef.stellaris.common.entities.vehicles;
 
 import com.google.common.collect.Sets;
+import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.client.renderers.entities.vehicle.rocket.RocketModel;
 import com.st0x0ef.stellaris.common.data.planets.Planet;
 import com.st0x0ef.stellaris.common.data_components.RocketComponent;
 import com.st0x0ef.stellaris.common.items.VehicleUpgradeItem;
+import com.st0x0ef.stellaris.common.keybinds.KeyVariables;
 import com.st0x0ef.stellaris.common.menus.RocketMenu;
 import com.st0x0ef.stellaris.common.network.packets.SyncRocketComponentPacket;
 import com.st0x0ef.stellaris.common.registry.*;
@@ -118,6 +120,10 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
         this.rocketExplosion();
         this.burnEntities();
         this.checkContainer();
+
+        if (KeyVariables.isHoldingJump(getFirstPlayerPassenger())) {
+            startRocket();
+        }
 
         if (this.entityData.get(ROCKET_START)) {
             this.spawnParticle();
@@ -373,7 +379,7 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
     }
 
     public void startRocket() {
-        Player player = (Player) this.getFirstPassenger();
+        Player player = this.getFirstPlayerPassenger();
 
         if (player != null) {
             if (this.FUEL > 0 || player.isCreative()) {
@@ -420,11 +426,10 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
         }
     }
 
-    public ServerPlayer getFirstPlayerPassenger() {
-        if (!this.getPassengers().isEmpty() && this.getPassengers().getFirst() instanceof ServerPlayer player) {
+    public Player getFirstPlayerPassenger() {
+        if (!this.getPassengers().isEmpty() && this.getPassengers().getFirst() instanceof Player player) {
             return player;
         }
-
         return null;
     }
 

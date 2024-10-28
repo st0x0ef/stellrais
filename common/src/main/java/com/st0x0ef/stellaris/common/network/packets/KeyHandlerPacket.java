@@ -73,12 +73,6 @@ public class KeyHandlerPacket implements CustomPacketPayload {
                         item.switchJetSuitMode(itemStack);
                     }
                     break;
-                case "slow_lander":
-                    if (player.getVehicle() instanceof LanderEntity lander) lander.slowDownLander();
-                    break;
-                case "rocket_start":
-                    if (player.getVehicle() instanceof RocketEntity rocketEntity) rocketEntity.startRocket();
-                    break;
                 case "key_jump":
                     KeyVariables.KEY_JUMP.put(player.getUUID(), packet.condition);
                     break;

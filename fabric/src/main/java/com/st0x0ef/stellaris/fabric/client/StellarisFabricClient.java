@@ -155,10 +155,8 @@ public class StellarisFabricClient implements ClientModInitializer {
     }
 
     public static void registerKeyBinding() {
-        KeyBindingHelper.registerKeyBinding(KeyMappingsRegistry.ROCKET_START);
         KeyBindingHelper.registerKeyBinding(KeyMappingsRegistry.CHANGE_JETSUIT_MODE);
         KeyBindingHelper.registerKeyBinding(KeyMappingsRegistry.FREEZE_PLANET_MENU);
-        KeyBindingHelper.registerKeyBinding(KeyMappingsRegistry.SLOW_LANDER);
 
         ClientTickEvents.END_CLIENT_TICK.register(KeyMappingsRegistry::clientTick);
     }

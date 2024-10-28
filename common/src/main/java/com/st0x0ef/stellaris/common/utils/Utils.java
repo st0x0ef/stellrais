@@ -85,7 +85,7 @@ public class Utils {
 
             player.level().addFreshEntity(lander);
             player.startRiding(lander);
-            player.sendSystemMessage(Component.translatable("message.stellaris.lander", KeyMappingsRegistry.SLOW_LANDER.getTranslatedKeyMessage().getString().split("\\.")[2]));
+            player.sendSystemMessage(Component.translatable("message.stellaris.lander"));
         } else {
             player.closeContainer();
             teleportEntity(player, destination);

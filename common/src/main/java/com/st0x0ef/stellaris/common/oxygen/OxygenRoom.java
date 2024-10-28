@@ -9,7 +9,7 @@ import java.util.*;
 
 public class OxygenRoom {
     private final BlockPos distributorPos;
-    public final Set<BlockPos> oxygenatedPositions;
+    private final Set<BlockPos> oxygenatedPositions;
     private final Queue<BlockPos> positionsToCheck;
     private final ServerLevel level;
     private final DimensionOxygenManager oxygenManager;

@@ -1,0 +1,36 @@
+{
+  "parent": "stellaris:rocket_station",
+  "display": {
+    "description": {
+      "translate": "advancements.stellaris.oil.description"
+    },
+    "title": {
+      "translate": "advancements.stellaris.oil.title"
+    },
+    "icon": {
+      "count": 1,
+      "id": "stellaris:oil_finder"
+    }
+
+  },
+  "criteria": {
+    "oil_bucket": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "stellaris:oil_bucket"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "oil_bucket"
+    ]
+  ],
+  "rewards": {
+    "experience": 2
+  }
+}

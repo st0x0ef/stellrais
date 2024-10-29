@@ -11,18 +11,6 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "stellaris:moon_fruit",
-          "weight": 45,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": 5,
-              "add": true
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
           "name": "minecraft:obsidian",
           "weight": 40,
           "functions": [
@@ -31,7 +19,7 @@
               "count": {
                 "type": "minecraft:uniform",
                 "min": 1,
-                "max": 2
+                "max": 4
               },
               "add": false
             }

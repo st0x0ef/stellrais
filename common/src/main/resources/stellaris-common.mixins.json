@@ -6,15 +6,15 @@
   "mixins": [
     "EntityEatMixin",
     "EntityTick",
-    "ItemEntityGravityMixin",
     "LivingEntityMixin",
+    "PlayerDataMixin",
+    "ItemEntityGravityMixin",
     "MixinChunkAccess",
-    "MixinChunkSerializer",
-    "PlayerDataMixin"
+    "MixinChunkSerializer"
   ],
   "client": [
-    "client.PlayerLanderKeyMixin",
     "client.PlayerRiddingVehicleMixin",
+    "client.PlayerKeyMixin",
     "client.RenderPlayerMixin"
   ],
   "injectors": {

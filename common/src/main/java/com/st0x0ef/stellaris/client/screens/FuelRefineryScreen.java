@@ -2,7 +2,7 @@ package com.st0x0ef.stellaris.client.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.st0x0ef.stellaris.Stellaris;
-import com.st0x0ef.stellaris.client.screens.components.Gauge;
+import com.st0x0ef.stellaris.client.screens.components.GaugeWidget;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.FluidTank;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.FuelRefineryBlockEntity;
 import com.st0x0ef.stellaris.common.menus.FuelRefineryMenu;
@@ -19,14 +19,14 @@ public class FuelRefineryScreen extends AbstractContainerScreen<FuelRefineryMenu
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/fuel_refinery.png");
 
     private final FuelRefineryBlockEntity blockEntity = getMenu().getBlockEntity();
-    private Gauge ingredientTankGauge;
-    private Gauge resultTankGauge;
-    private Gauge energyGauge;
+    private GaugeWidget ingredientTankGauge;
+    private GaugeWidget resultTankGauge;
+    private GaugeWidget energyGauge;
 
     public FuelRefineryScreen(FuelRefineryMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
         imageWidth = 177;
-        imageHeight = 184;
+        imageHeight = 192;
         inventoryLabelY = imageHeight - 92;
     }
 
@@ -39,15 +39,18 @@ public class FuelRefineryScreen extends AbstractContainerScreen<FuelRefineryMenu
         }
 
         FluidTank ingredientTank = blockEntity.getIngredientTank();
-        ingredientTankGauge = new Gauge(leftPos + 43, topPos + 22, 12, 46, Component.translatable("stellaris.screen.oil"), GUISprites.OIL_OVERLAY, GUISprites.LIQUID_TANK_OVERLAY, (int)ingredientTank.getAmount(), (int)ingredientTank.getMaxCapacity() -1);
+        ingredientTankGauge = new GaugeWidget(leftPos + 41, topPos + 36, 12, 46, Component.translatable("stellaris.screen.oil"),
+                GUISprites.OIL_OVERLAY, GUISprites.LIQUID_TANK_OVERLAY, ingredientTank.getMaxCapacity() -1, GaugeWidget.Direction4.DOWN_UP);
         addRenderableWidget(ingredientTankGauge);
 
         FluidTank resultTank = blockEntity.getResultTank();
-        resultTankGauge = new Gauge(leftPos + 100, topPos + 22, 12, 46, Component.translatable("stellaris.screen.fuel"), GUISprites.FUEL_OVERLAY, GUISprites.LIQUID_TANK_OVERLAY, (int)resultTank.getAmount(), (int)resultTank.getMaxCapacity() -1);
+        resultTankGauge = new GaugeWidget(leftPos + 98, topPos + 36, 12, 46, Component.translatable("stellaris.screen.fuel"),
+                GUISprites.FUEL_OVERLAY, GUISprites.LIQUID_TANK_OVERLAY, resultTank.getMaxCapacity() -1, GaugeWidget.Direction4.DOWN_UP);
         addRenderableWidget(resultTankGauge);
 
         EnergyContainer energyContainer = blockEntity.getWrappedEnergyContainer().container();
-        energyGauge = new Gauge(leftPos + 150, topPos + 21, 13, 47, Component.translatable("stellaris.screen.energy"), GUISprites.ENERGY_FULL, GUISprites.BATTERY_OVERLAY, (int) energyContainer.getStoredEnergy(), (int) energyContainer.getMaxCapacity());
+        energyGauge = new GaugeWidget(leftPos + 147, topPos + 32, 13, 46, Component.translatable("stellaris.screen.energy"),
+                GUISprites.ENERGY_FULL, GUISprites.BATTERY_OVERLAY, energyContainer.getMaxCapacity(), GaugeWidget.Direction4.DOWN_UP);
         addRenderableWidget(energyGauge);
     }
 
@@ -61,9 +64,9 @@ public class FuelRefineryScreen extends AbstractContainerScreen<FuelRefineryMenu
             return;
         }
 
-        ingredientTankGauge.update((int)blockEntity.getIngredientTank().getAmount());
-        resultTankGauge.update((int)blockEntity.getResultTank().getAmount());
-        energyGauge.update((int)blockEntity.getWrappedEnergyContainer().getStoredEnergy());
+        ingredientTankGauge.updateAmount(blockEntity.getIngredientTank().getAmount());
+        resultTankGauge.updateAmount(blockEntity.getResultTank().getAmount());
+        energyGauge.updateAmount(blockEntity.getWrappedEnergyContainer().getStoredEnergy());
     }
 
     @Override

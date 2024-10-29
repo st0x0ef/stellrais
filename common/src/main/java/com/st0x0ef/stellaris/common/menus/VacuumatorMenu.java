@@ -29,12 +29,12 @@ public class VacuumatorMenu extends AbstractContainerMenu {
         checkContainerSize(container, 5);
         this.container = container;
 
-        addSlot(new VacumatorCanSlot(container, 0, 37, 56));
-        addSlot(new VacumatorFoodSlot(container, 1, 81, 47));
-        addSlot(new SpecificItemsSlot.Item(container, 2, 125, 56, Items.GLASS_BOTTLE));
+        addSlot(new VacumatorCanSlot(container, 0, 36, 56));
+        addSlot(new VacumatorFoodSlot(container, 1, 80, 48));
+        addSlot(new SpecificItemsSlot.Item(container, 2, 124, 56, Items.GLASS_BOTTLE));
 
-        addSlot(new ResultSlot(container, 3, 58, 97));
-        addSlot(new ResultSlot(container, 4, 104, 97));
+        addSlot(new ResultSlot(container, 3, 58, 96));
+        addSlot(new ResultSlot(container, 4, 102, 96));
 
         addPlayerHotbar(inventory);
         addPlayerInventory(inventory);

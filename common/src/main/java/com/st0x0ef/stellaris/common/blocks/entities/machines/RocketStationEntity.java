@@ -47,8 +47,10 @@ public class RocketStationEntity extends BaseContainerBlockEntity implements Imp
 
     @Override
     public void setChanged() {
-        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
-        super.setChanged();
+        if (this.level != null) {
+            this.level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+            super.setChanged();
+        }
     }
 
     @Override

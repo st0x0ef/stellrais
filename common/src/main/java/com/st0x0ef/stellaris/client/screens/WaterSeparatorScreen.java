@@ -2,7 +2,7 @@ package com.st0x0ef.stellaris.client.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.st0x0ef.stellaris.Stellaris;
-import com.st0x0ef.stellaris.client.screens.components.Gauge;
+import com.st0x0ef.stellaris.client.screens.components.GaugeWidget;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.FluidTank;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.WaterSeparatorBlockEntity;
 import com.st0x0ef.stellaris.common.menus.WaterSeparatorMenu;
@@ -22,10 +22,10 @@ public class WaterSeparatorScreen extends AbstractContainerScreen<WaterSeparator
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/water_separator.png");
 
     private final WaterSeparatorBlockEntity blockEntity = getMenu().getBlockEntity();
-    private Gauge ingredientTankGauge;
-    private Gauge resultTank1Gauge;
-    private Gauge resultTank2Gauge;
-    private Gauge.SidewayGauge energyGauge;
+    private GaugeWidget ingredientTankGauge;
+    private GaugeWidget resultTank1Gauge;
+    private GaugeWidget resultTank2Gauge;
+    private GaugeWidget energyGauge;
 
     public WaterSeparatorScreen(WaterSeparatorMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -43,19 +43,19 @@ public class WaterSeparatorScreen extends AbstractContainerScreen<WaterSeparator
         }
 
         FluidTank ingredientTank = blockEntity.getIngredientTank();
-        ingredientTankGauge = new Gauge(leftPos + 50, topPos + 58, 76, 42, Component.translatable("stellaris.screen.water"), GUISprites.WATER_OVERLAY, GUISprites.WATER_SEPARATOR_OVERLAY, (int)ingredientTank.getAmount(), (int)ingredientTank.getMaxCapacity()-1, -7);
+        ingredientTankGauge = new GaugeWidget(leftPos + 50, topPos + 58, 76, 40, Component.translatable("stellaris.screen.water"), GUISprites.WATER_OVERLAY, GUISprites.WATER_SEPARATOR_OVERLAY, ingredientTank.getMaxCapacity()-1, GaugeWidget.Direction4.DOWN_UP);
         addRenderableWidget(ingredientTankGauge);
 
         FluidTank resultTank1 = blockEntity.getResultTanks().getFirst();
-        resultTank1Gauge = new Gauge(leftPos + 22, topPos + 54, 12, 46, Component.translatable("stellaris.screen.hydrogen"), GUISprites.HYDROGEN_OVERLAY, GUISprites.LIQUID_TANK_OVERLAY, (int)resultTank1.getAmount(), (int)resultTank1.getMaxCapacity()-1, -3);
+        resultTank1Gauge = new GaugeWidget(leftPos + 22, topPos + 52, 12, 46, Component.translatable("stellaris.screen.hydrogen"), GUISprites.HYDROGEN_OVERLAY, GUISprites.LIQUID_TANK_OVERLAY, resultTank1.getMaxCapacity()-1, GaugeWidget.Direction4.DOWN_UP);
         addRenderableWidget(resultTank1Gauge);
 
         FluidTank resultTank2 = blockEntity.getResultTanks().get(1);
-        resultTank2Gauge = new Gauge(leftPos + 142, topPos + 54, 12, 46, Component.translatable("stellaris.screen.oxygen"), GUISprites.OXYGEN_OVERLAY, GUISprites.LIQUID_TANK_OVERLAY, (int)resultTank2.getAmount(), (int)resultTank2.getMaxCapacity()-1, -3);
+        resultTank2Gauge = new GaugeWidget(leftPos + 142, topPos + 52, 12, 46, Component.translatable("stellaris.screen.oxygen"), GUISprites.OXYGEN_OVERLAY, GUISprites.LIQUID_TANK_OVERLAY, resultTank2.getMaxCapacity()-1, GaugeWidget.Direction4.DOWN_UP);
         addRenderableWidget(resultTank2Gauge);
 
         EnergyContainer energyContainer = blockEntity.getWrappedEnergyContainer();
-        energyGauge = new Gauge.SidewayGauge(leftPos + 64, topPos + 24, 47, 13, Component.translatable("stellaris.screen.energy"), GUISprites.SIDEWAYS_ENERGY_FULL, GUISprites.SIDEWAYS_ENERGY_OVERLAY, (int)energyContainer.getStoredEnergy(), (int)energyContainer.getMaxCapacity());
+        energyGauge = new GaugeWidget(leftPos + 64, topPos + 24, 47, 13, Component.translatable("stellaris.screen.energy"), GUISprites.SIDEWAYS_ENERGY_FULL, GUISprites.SIDEWAYS_ENERGY_OVERLAY, energyContainer.getMaxCapacity(), GaugeWidget.Direction4.LEFT_RIGHT);
         addRenderableWidget(energyGauge);
     }
 
@@ -69,10 +69,10 @@ public class WaterSeparatorScreen extends AbstractContainerScreen<WaterSeparator
             return;
         }
 
-        ingredientTankGauge.update((int)blockEntity.getIngredientTank().getAmount());
-        resultTank1Gauge.update((int)blockEntity.getResultTanks().getFirst().getAmount());
-        resultTank2Gauge.update((int)blockEntity.getResultTanks().getLast().getAmount());
-        energyGauge.update((int)blockEntity.getWrappedEnergyContainer().getStoredEnergy());
+        ingredientTankGauge.updateAmount((int)blockEntity.getIngredientTank().getAmount());
+        resultTank1Gauge.updateAmount((int)blockEntity.getResultTanks().getFirst().getAmount());
+        resultTank2Gauge.updateAmount((int)blockEntity.getResultTanks().getLast().getAmount());
+        energyGauge.updateAmount((int)blockEntity.getWrappedEnergyContainer().getStoredEnergy());
     }
 
     @Override

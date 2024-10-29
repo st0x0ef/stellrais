@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "stellaris:mars_maze",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 129839051,
+    "spacing": 60,
+    "separation": 30
+  }
+}

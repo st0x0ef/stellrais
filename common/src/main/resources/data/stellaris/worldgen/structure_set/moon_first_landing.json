@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "stellaris:moon_first_landing",
+      "weight": 2
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 538142749,
+    "spacing": 40,
+    "separation": 25
+  }
+}

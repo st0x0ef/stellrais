@@ -14,6 +14,7 @@ public class CelestialBody {
     public ResourceLocation dimension;
     public Component translatable;
     public String id;
+    public boolean clickable = true;
 
     public CelestialBody(ResourceLocation texture, String name, float x, float y, float width, float height, int orbitColor, ResourceLocation dimension, Component translatable, String id) {
         this.texture = texture;

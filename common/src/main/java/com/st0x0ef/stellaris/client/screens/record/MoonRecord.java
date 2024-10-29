@@ -7,10 +7,12 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 
+import java.util.Optional;
+
 public record MoonRecord(
         ResourceLocation texture, String name,
         float distance, long period, float width,
-        float height, String parent, ResourceKey<Level> dimensionId, String translatable, String id) {
+        float height, String parent, ResourceKey<Level> dimensionId, String translatable, String id, Optional<Boolean> clickable) {
 
 
     public static final Codec<MoonRecord> CODEC = RecordCodecBuilder.create(instance -> instance.group(
@@ -23,7 +25,8 @@ public record MoonRecord(
             Codec.STRING.fieldOf("parent").forGetter(MoonRecord::parent),
             ResourceKey.codec(Registries.DIMENSION).fieldOf("dimensionId").forGetter(MoonRecord::dimensionId),
             Codec.STRING.fieldOf("translatable").forGetter(MoonRecord::translatable),
-            Codec.STRING.fieldOf("id").forGetter(MoonRecord::id)
+            Codec.STRING.fieldOf("id").forGetter(MoonRecord::id),
+            Codec.BOOL.optionalFieldOf("clickable").forGetter(MoonRecord::clickable)
     ).apply(instance, MoonRecord::new));
 
 }

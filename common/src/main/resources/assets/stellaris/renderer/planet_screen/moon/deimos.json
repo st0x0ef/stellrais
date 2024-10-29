@@ -8,5 +8,6 @@
   "parent": "stellaris:mars",
   "dimensionId": "stellaris:deimos",
   "translatable": "text.stellaris.planetscreen.deimos",
-  "id": "stellaris:deimos"
+  "id": "stellaris:deimos",
+  "clickable": false
 }

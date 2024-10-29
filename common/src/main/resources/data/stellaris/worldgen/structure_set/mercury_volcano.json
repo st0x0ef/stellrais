@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "stellaris:mercury_volcano",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 324957075,
+    "spacing": 45,
+    "separation": 20
+  }
+}

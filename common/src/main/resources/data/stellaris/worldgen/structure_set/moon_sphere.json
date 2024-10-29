@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "stellaris:moon_sphere",
+      "weight": 2
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 184370957,
+    "spacing": 60,
+    "separation": 45
+  }
+}

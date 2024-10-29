@@ -1,4 +1,5 @@
 {
+  "parent": "stellaris:rocket",
   "display": {
     "description": {
       "translate": "advancements.venus.root.description"

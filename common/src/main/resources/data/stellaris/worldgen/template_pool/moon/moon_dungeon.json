@@ -1,0 +1,150 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 10,
+      "element": {
+        "location": "stellaris:moon_dungeon_boss",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 50,
+      "element": {
+        "location": "stellaris:moon_dungeon_bridge",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ,
+    {
+      "weight": 50,
+      "element": {
+        "location": "stellaris:moon_dungeon_corner",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ,
+    {
+      "weight": 50,
+      "element": {
+        "location": "stellaris:moon_dungeon_cross",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ,
+    {
+      "weight": 50,
+      "element": {
+        "location": "stellaris:moon_dungeon_cross_spawner",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ,
+    {
+      "weight": 50,
+      "element": {
+        "location": "stellaris:moon_dungeon_dome",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ,
+    {
+      "weight": 50,
+      "element": {
+        "location": "stellaris:moon_dungeon_hall",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ,
+    {
+      "weight": 50,
+      "element": {
+        "location": "stellaris:moon_dungeon_hallway",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ,
+    {
+      "weight": 50,
+      "element": {
+        "location": "stellaris:moon_dungeon_lib",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ,
+    {
+      "weight": 50,
+      "element": {
+        "location": "stellaris:moon_dungeon_prison",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ,
+    {
+      "weight": 25,
+      "element": {
+        "location": "stellaris:moon_dungeon_spawnroom1",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 25,
+      "element": {
+        "location": "stellaris:moon_dungeon_spawnroom2",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 50,
+      "element": {
+        "location": "stellaris:moon_dungeon_stairs",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ,
+    {
+      "weight": 50,
+      "element": {
+        "location": "stellaris:moon_dungeon_storage",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 50,
+      "element": {
+        "location": "stellaris:moon_dungeon_tcross",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

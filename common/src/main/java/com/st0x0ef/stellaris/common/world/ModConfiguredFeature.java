@@ -138,5 +138,4 @@ public class ModConfiguredFeature {
 
         register(context, LAKE_OIL, Feature.LAKE, new LakeFeature.Configuration(BlockStateProvider.simple(BlocksRegistry.OIL_BLOCK.get().defaultBlockState()), BlockStateProvider.simple(Blocks.STONE.defaultBlockState())));
     }
-
 }

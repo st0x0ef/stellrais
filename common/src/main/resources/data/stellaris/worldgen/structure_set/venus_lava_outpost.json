@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "stellaris:venus_lava_outpost",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1204166310,
+    "spacing": 60,
+    "separation": 30
+  }
+}

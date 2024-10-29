@@ -8,21 +8,6 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "stellaris:venus_globe",
-          "weight": 5,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 1,
-                "max": 1
-              }
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
           "name": "minecraft:gold_ingot",
           "weight": 20,
           "functions": [
@@ -85,21 +70,6 @@
           "type": "minecraft:item",
           "name": "stellaris:venus_neptunium_ore",
           "weight": 10,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 1,
-                "max": 4
-              }
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "stellaris:cheese",
-          "weight": 5,
           "functions": [
             {
               "function": "minecraft:set_count",

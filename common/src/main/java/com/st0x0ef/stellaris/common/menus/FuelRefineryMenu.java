@@ -25,17 +25,17 @@ public class FuelRefineryMenu extends BaseContainer {
     }
 
     public FuelRefineryMenu(int containerId, Inventory inventory, Container container, FuelRefineryBlockEntity blockEntity) {
-        super(MenuTypesRegistry.FUEL_REFINERY.get(), containerId, 4, inventory, 18);
+        super(MenuTypesRegistry.FUEL_REFINERY.get(), containerId, 4, inventory, 26);
         this.container = container;
         this.blockEntity = blockEntity;
 
         // Ingredient tank
-        addSlot(new FluidContainerSlot(container, 0, 12, 22, false, false));
-        addSlot(new ResultSlot(container, 1, 12, 52));
+        addSlot(new FluidContainerSlot(container, 0, 10, 36, false, false));
+        addSlot(new ResultSlot(container, 1, 10, 66));
 
         // Result tank
-        addSlot(new FluidContainerSlot(container, 2, 127, 22, true, true));
-        addSlot(new ResultSlot(container, 3, 127, 52));
+        addSlot(new FluidContainerSlot(container, 2, 125, 36, true, true));
+        addSlot(new ResultSlot(container, 3, 125, 66));
     }
 
     @Override

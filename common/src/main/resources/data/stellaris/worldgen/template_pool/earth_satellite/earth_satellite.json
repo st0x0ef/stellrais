@@ -1,0 +1,17 @@
+{
+  "name": "stellaris:earth_satellite/earth_satellite",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "stellaris:earth_satellite",
+        "processors": {
+          "processors": []
+        }
+      }
+    }
+  ]
+}

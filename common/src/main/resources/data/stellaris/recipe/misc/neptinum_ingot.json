@@ -1,13 +1,11 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "   ",
-    " # ",
-    "   "
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "stellaris:neptunium_block"
+    }
   ],
-  "key": {
-    "#": {"item": "stellaris:neptunium_block"}
-  },
+
   "result": {
     "id": "stellaris:neptunium_ingot",
     "count": 9

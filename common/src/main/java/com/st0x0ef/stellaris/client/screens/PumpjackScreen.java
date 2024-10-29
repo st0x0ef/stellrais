@@ -2,7 +2,7 @@ package com.st0x0ef.stellaris.client.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.st0x0ef.stellaris.Stellaris;
-import com.st0x0ef.stellaris.client.screens.components.Gauge;
+import com.st0x0ef.stellaris.client.screens.components.GaugeWidget;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.FluidTank;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.PumpjackBlockEntity;
 import com.st0x0ef.stellaris.common.menus.PumpjackMenu;
@@ -20,8 +20,8 @@ public class PumpjackScreen extends AbstractContainerScreen<PumpjackMenu> {
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/pumpjack.png");
 
     private final PumpjackBlockEntity blockEntity = getMenu().getBlockEntity();
-    private Gauge resultTankGauge;
-    private Gauge energyGauge;
+    private GaugeWidget resultTankGauge;
+    private GaugeWidget energyGauge;
 
     public PumpjackScreen(PumpjackMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -39,11 +39,11 @@ public class PumpjackScreen extends AbstractContainerScreen<PumpjackMenu> {
         }
 
         FluidTank resultTank = blockEntity.getResultTank();
-        resultTankGauge = new Gauge(leftPos + 79, topPos + 30, 12, 46, Component.translatable("stellaris.screen.oil"), GUISprites.OIL_OVERLAY, GUISprites.LIQUID_TANK_OVERLAY, (int)resultTank.getAmount(), (int)resultTank.getMaxCapacity() -1);
+        resultTankGauge = new GaugeWidget(leftPos + 79, topPos + 32, 12, 46, Component.translatable("stellaris.screen.oil"), GUISprites.OIL_OVERLAY, GUISprites.LIQUID_TANK_OVERLAY, resultTank.getMaxCapacity() -1, GaugeWidget.Direction4.DOWN_UP);
         addRenderableWidget(resultTankGauge);
 
         EnergyContainer energyContainer = blockEntity.getWrappedEnergyContainer().container();
-        energyGauge = new Gauge(leftPos + 147, topPos + 30, 13, 47, Component.translatable("stellaris.screen.energy"), GUISprites.ENERGY_FULL, GUISprites.BATTERY_OVERLAY, (int) energyContainer.getStoredEnergy(), (int) energyContainer.getMaxCapacity());
+        energyGauge = new GaugeWidget(leftPos + 147, topPos + 31, 13, 46, Component.translatable("stellaris.screen.energy"), GUISprites.ENERGY_FULL, GUISprites.BATTERY_OVERLAY, energyContainer.getMaxCapacity(), GaugeWidget.Direction4.DOWN_UP);
         addRenderableWidget(energyGauge);
     }
 
@@ -72,8 +72,8 @@ public class PumpjackScreen extends AbstractContainerScreen<PumpjackMenu> {
 
 
 
-        resultTankGauge.update((int)blockEntity.getResultTank().getAmount());
-        energyGauge.update((int)blockEntity.getWrappedEnergyContainer().getStoredEnergy());
+        resultTankGauge.updateAmount(blockEntity.getResultTank().getAmount());
+        energyGauge.updateAmount(blockEntity.getWrappedEnergyContainer().getStoredEnergy());
 
 
     }

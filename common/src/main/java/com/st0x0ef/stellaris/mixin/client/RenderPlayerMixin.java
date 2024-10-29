@@ -83,7 +83,7 @@ public abstract class RenderPlayerMixin extends LivingEntityRenderer<AbstractCli
         }
     }
 
-    @Inject(method = "render", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "render*", at = @At("HEAD"), cancellable = true)
     public void renderPlayer(AbstractClientPlayer entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight, CallbackInfo ci) {
         if (entity.getVehicle() instanceof LanderEntity) {
             ci.cancel();
@@ -97,5 +97,4 @@ public abstract class RenderPlayerMixin extends LivingEntityRenderer<AbstractCli
             }
         }
     }
-
 }

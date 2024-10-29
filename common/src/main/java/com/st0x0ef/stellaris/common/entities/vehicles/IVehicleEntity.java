@@ -1,8 +1,11 @@
 package com.st0x0ef.stellaris.common.entities.vehicles;
 
+import dev.architectury.networking.NetworkManager;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerEntity;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -17,6 +20,8 @@ import net.minecraft.world.level.block.PowderSnowBlock;
 import net.minecraft.world.phys.Vec3;
 
 public abstract class IVehicleEntity extends Entity{
+    public int FUEL;
+
     private int lerpSteps;
     private double lerpX;
     private double lerpY;
@@ -33,16 +38,6 @@ public abstract class IVehicleEntity extends Entity{
     public IVehicleEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
         this.blocksBuilding = true;
-    }
-
-    @Override
-    protected void readAdditionalSaveData(CompoundTag tag) {
-
-    }
-
-    @Override
-    protected void addAdditionalSaveData(CompoundTag tag) {
-
     }
 
     /** Enable Interact with the Entity */
@@ -232,7 +227,7 @@ public abstract class IVehicleEntity extends Entity{
     }
 
     public float getFrictionInfluencedSpeed(float delta) {
-        return this.getSpeed() * (0.21600002F / (delta * delta * delta));
+        return this.getSpeed() * (0.216F / (delta * delta * delta));
     }
 
     public Vec3 handleRelativeFrictionAndCalculateMovement(Vec3 vector, float delta) {
@@ -252,5 +247,21 @@ public abstract class IVehicleEntity extends Entity{
 
     public void setDiscardFriction(boolean p_147245_) {
         this.discardFriction = p_147245_;
+    }
+
+    public void setEntityRotation(Entity vehicle, float rotation) {
+        vehicle.setYRot(vehicle.getYRot() + rotation);
+        vehicle.setYBodyRot(vehicle.getYRot());
+        vehicle.yRotO = vehicle.getYRot();
+    }
+
+    public int getFuel() {
+        return this.FUEL;
+    }
+
+
+    @Override
+    public Packet<ClientGamePacketListener> getAddEntityPacket(ServerEntity entity) {
+        return NetworkManager.createAddEntityPacket(this, entity);
     }
 }

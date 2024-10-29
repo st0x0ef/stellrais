@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "stellaris:mars_main_temple",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 677240350,
+    "spacing": 70,
+    "separation": 30
+  }
+}

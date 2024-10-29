@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "stellaris:earth_operation_base",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 890562391,
+    "spacing": 50,
+    "separation": 20
+  }
+}

@@ -12,6 +12,7 @@ public class OxygenRoom {
     private final Set<BlockPos> oxygenatedPositions;
     private final Queue<BlockPos> positionsToCheck;
     private final ServerLevel level;
+    private final DimensionOxygenManager oxygenManager;
 
     private static final int HALF_ROOM_SIZE = 16;
 
@@ -20,30 +21,41 @@ public class OxygenRoom {
         this.oxygenatedPositions = new LinkedHashSet<>();
         this.positionsToCheck = new LinkedList<>();
         this.level = level;
+        this.oxygenManager = GlobalOxygenManager.getInstance().getOrCreateDimensionManager(level);
     }
 
     public BlockPos getDistributorPosition() {
         return distributorPos;
     }
 
+    public OxygenDistributorBlockEntity getDistributorBlockEntity() {
+        if (level.getBlockEntity(distributorPos) instanceof OxygenDistributorBlockEntity distributor) {
+            return distributor;
+        }
+
+        return null;
+    }
+
     public void updateOxygenRoom() {
-        BlockPos abovePos = distributorPos.above();
-        if (isAirBlock(abovePos)) {
-            positionsToCheck.clear();
-            positionsToCheck.offer(abovePos);
-            Set<BlockPos> visited = new HashSet<>();
-            DimensionOxygenManager dimensionManager = GlobalOxygenManager.getInstance().getOrCreateDimensionManager(level);
+        positionsToCheck.clear();
+        Set<BlockPos> visited = new HashSet<>();
 
-            while (!positionsToCheck.isEmpty()) {
-                BlockPos currentPos = positionsToCheck.poll();
-                if (visited.add(currentPos) && isAirBlock(currentPos)) {
-                    if (addOxygenatedPosition(currentPos)) {
-                        if (isOnBorderBox(currentPos)) {
-                            dimensionManager.addRoomToCheckIfOpen(currentPos, this);
-                        }
+        for (Direction direction : Direction.values()) {
+            positionsToCheck.offer(distributorPos.relative(direction));
+        }
 
+        while (!positionsToCheck.isEmpty()) {
+            BlockPos currentPos = positionsToCheck.poll();
+            visited.add(currentPos);
+            if (isAirBlock(currentPos)) {
+                if (addOxygenatedPosition(currentPos)) {
+                    if (isOnBorderBox(currentPos)) {
+                        oxygenManager.addRoomToCheckIfOpen(currentPos, this);
+                    } else {
                         for (Direction direction : Direction.values()) {
-                            positionsToCheck.offer(currentPos.relative(direction));
+                            if (!visited.contains(currentPos.relative(direction))) {
+                                positionsToCheck.offer(currentPos.relative(direction));
+                            }
                         }
                     }
                 }
@@ -71,9 +83,27 @@ public class OxygenRoom {
     }
 
     private boolean addOxygenatedPosition(BlockPos pos) {
-        if (level.getBlockEntity(distributorPos) instanceof OxygenDistributorBlockEntity distributor && distributor.useOxygenAndEnergy()) {
-            oxygenatedPositions.add(pos);
-            return true;
+        OxygenDistributorBlockEntity distributor = getDistributorBlockEntity();
+        if (distributor != null) {
+            if (distributor.useOxygenAndEnergy()) {
+                oxygenatedPositions.add(pos);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean breathOxygenAt(BlockPos pos) {
+        if (hasOxygenAt(pos)) {
+            OxygenDistributorBlockEntity distributor = getDistributorBlockEntity();
+            if (distributor != null) {
+                if (!distributor.useOxygenAndEnergy()) {
+                    oxygenatedPositions.remove(pos);
+                }
+
+                return true;
+            }
         }
 
         return false;

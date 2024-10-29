@@ -13,6 +13,7 @@ import com.st0x0ef.stellaris.common.entities.mobs.pygro.Pygro;
 import com.st0x0ef.stellaris.common.entities.mobs.pygro.PygroMobsSensor;
 import com.st0x0ef.stellaris.common.entities.vehicles.LanderEntity;
 import com.st0x0ef.stellaris.common.entities.vehicles.RocketEntity;
+import com.st0x0ef.stellaris.common.entities.vehicles.RoverEntity;
 import dev.architectury.registry.level.entity.SpawnPlacementsRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -64,6 +65,8 @@ public class EntityRegistry {
     public static final RegistrySupplier<EntityType<RocketEntity>> SMALL_ROCKET = ENTITY_TYPE.register("small_rocket", () -> EntityType.Builder.of(RocketEntity::new, MobCategory.MISC).sized(0.8f, 3.2f).build(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "small_rocket").toString()));
     public static final RegistrySupplier<EntityType<RocketEntity>> NORMAL_ROCKET = ENTITY_TYPE.register("normal_rocket", () -> EntityType.Builder.of(RocketEntity::new, MobCategory.MISC).sized(1.1f, 4.4f).build(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "normal_rocket").toString()));
     public static final RegistrySupplier<EntityType<RocketEntity>> BIG_ROCKET = ENTITY_TYPE.register("big_rocket", () -> EntityType.Builder.of(RocketEntity::new, MobCategory.MISC).sized(1.1f, 4.4f).fireImmune().build(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "big_rocket").toString()));
+
+    public static final RegistrySupplier<EntityType<RoverEntity>> ROVER = ENTITY_TYPE.register("rover", () -> EntityType.Builder.of(RoverEntity::new, MobCategory.MISC).sized(2.7F,1.3F).fireImmune().build(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "rover").toString()));
 
     public static final RegistrySupplier<EntityType<LanderEntity>> LANDER = ENTITY_TYPE.register("lander", () -> EntityType.Builder.<LanderEntity>of(LanderEntity::new, MobCategory.MISC).sized(2.5f, 1.0f).build(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "lander").toString()));
 

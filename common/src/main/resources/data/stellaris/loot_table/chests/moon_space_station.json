@@ -193,22 +193,12 @@
         },
         {
           "type": "minecraft:item",
-          "name": "stellaris:jet_suit_chestplate",
+          "name": "stellaris:space_suit_boots",
           "weight": 10
         },
         {
           "type": "minecraft:item",
-          "name": "stellaris:jet_suit_boots",
-          "weight": 10
-        },
-        {
-          "type": "minecraft:item",
-          "name": "stellaris:jet_suit_helmet",
-          "weight": 10
-        },
-        {
-          "type": "minecraft:item",
-          "name": "stellaris:jet_suit_leggings",
+          "name": "stellaris:space_suit_leggings",
           "weight": 10
         },
         {

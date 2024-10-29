@@ -34,6 +34,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWScrollCallback;
 
@@ -139,7 +140,10 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
         }
         Entity vehicle = player.getVehicle();
         if (vehicle instanceof RocketEntity rocket) {
-            return rocket.canGoTo(PlanetUtil.getPlanet(player.level().dimension().location()), planet);
+            if (PlanetUtil.isPlanet(player.level().dimension().location())) {
+                return rocket.canGoTo(PlanetUtil.getPlanet(player.level().dimension().location()), planet);
+            }
+            return rocket.canGoTo(PlanetUtil.getPlanet(Level.OVERWORLD.location()), planet);
         }
         return false;
     }
@@ -215,7 +219,7 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
     }
 
     private void onMoonButtonClick(MoonInfo moon) {
-        if (!showLargeMenu) {
+        if (!showLargeMenu && moon.clickable) {
             focusedBody = moon;
             centerOnBody(moon);
             showLargeMenu = true;
@@ -600,8 +604,12 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
             }
         } else if (keyCode == GLFW.GLFW_KEY_DOWN) {
             if (focusedBody instanceof PlanetInfo) {
-                focusedBody = getMoonsByDistance((PlanetInfo) focusedBody);
-                centerOnBody(focusedBody);
+                var moonToBeFocused = getMoonsByDistance((PlanetInfo) focusedBody);
+
+                if(moonToBeFocused.clickable) {
+                    focusedBody = moonToBeFocused;
+                    centerOnBody(focusedBody);
+                }
             }
         } else if (keyCode == GLFW.GLFW_KEY_UP) {
             if (focusedBody instanceof MoonInfo) {

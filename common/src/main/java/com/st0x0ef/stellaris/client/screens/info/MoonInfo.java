@@ -21,6 +21,11 @@ public class MoonInfo extends CelestialBody {
         this.id = id;
     }
 
+    public MoonInfo setClickable(boolean clickable) {
+        this.clickable = clickable;
+        return this;
+    }
+
     public double updateAngle(long currentTime) {
         this.currentAngle = (currentTime % orbitalPeriod) * (2 * Math.PI / orbitalPeriod);
 

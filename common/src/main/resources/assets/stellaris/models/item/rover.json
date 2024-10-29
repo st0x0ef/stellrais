@@ -1,0 +1,6 @@
+{
+  "parent": "stellaris:template/rover",
+  "textures": {
+    "particle": "stellaris:vehicle/rover"
+  }
+}

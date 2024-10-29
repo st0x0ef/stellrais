@@ -1,4 +1,6 @@
 {
+  "parent": "stellaris:rocket",
+
   "display": {
     "description": {
       "translate": "advancements.mercury.root.description"

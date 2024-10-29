@@ -30,23 +30,48 @@ import com.st0x0ef.stellaris.client.renderers.entities.vehicle.rocket.small.Smal
 import com.st0x0ef.stellaris.client.renderers.entities.vehicle.rocket.small.SmallRocketRenderer;
 import com.st0x0ef.stellaris.client.renderers.entities.vehicle.rocket.tiny.TinyRocketModel;
 import com.st0x0ef.stellaris.client.renderers.entities.vehicle.rocket.tiny.TinyRocketRenderer;
+import com.st0x0ef.stellaris.client.renderers.entities.vehicle.rover.RoverModel;
+import com.st0x0ef.stellaris.client.renderers.entities.vehicle.rover.RoverRenderer;
 import com.st0x0ef.stellaris.client.renderers.globe.GlobeBlockRenderer;
 import com.st0x0ef.stellaris.client.renderers.globe.GlobeModel;
 import com.st0x0ef.stellaris.client.screens.*;
+import com.st0x0ef.stellaris.common.entities.vehicles.base.AbstractRoverBase;
 import com.st0x0ef.stellaris.common.registry.*;
+import dev.architectury.event.events.common.TickEvent;
 import dev.architectury.registry.menu.MenuRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.*;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 
 public class StellarisFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        TickEvent.LevelTick.PLAYER_POST.register(instance -> {
+            Minecraft minecraft = Minecraft.getInstance();
+
+            Player player = minecraft.player;
+
+            if (player == null) {
+                return;
+            }
+
+            Entity riding = player.getVehicle();
+
+            if (!(riding instanceof AbstractRoverBase car)) {
+                return;
+            }
+
+            if (player.equals(car.getDriver())) {
+                car.updateControls(minecraft.options.keyUp.isDown(), minecraft.options.keyDown.isDown(), minecraft.options.keyLeft.isDown(), minecraft.options.keyRight.isDown(), player);
+            }
+        });
+
         StellarisClient.initClient();
         StellarisClient.registerPacks();
         registerScreen();
@@ -72,6 +97,7 @@ public class StellarisFabricClient implements ClientModInitializer {
         EntityRendererRegistry.register(EntityRegistry.SMALL_ROCKET.get(), SmallRocketRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.NORMAL_ROCKET.get(), NormalRocketRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.BIG_ROCKET.get(), BigRocketRenderer::new);
+        EntityRendererRegistry.register(EntityRegistry.ROVER.get(), RoverRenderer::new);
 
         EntityRendererRegistry.register(EntityRegistry.LANDER.get(), LanderRenderer::new);
 
@@ -82,6 +108,8 @@ public class StellarisFabricClient implements ClientModInitializer {
         BuiltinItemRendererRegistry.INSTANCE.register(ItemsRegistry.MARS_GLOBE_ITEM.get(), ItemRendererRegistry.GLOBE_ITEM_RENDERER::renderByItem);
         BuiltinItemRendererRegistry.INSTANCE.register(ItemsRegistry.MERCURY_GLOBE_ITEM.get(), ItemRendererRegistry.GLOBE_ITEM_RENDERER::renderByItem);
         BuiltinItemRendererRegistry.INSTANCE.register(ItemsRegistry.VENUS_GLOBE_ITEM.get(), ItemRendererRegistry.GLOBE_ITEM_RENDERER::renderByItem);
+
+        BuiltinItemRendererRegistry.INSTANCE.register(ItemsRegistry.ROVER.get(), ItemRendererRegistry.ROVER_ITEM_RENDERER::renderByItem);
     }
 
     public static void registerEntityModelLayer() {
@@ -100,6 +128,7 @@ public class StellarisFabricClient implements ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(SmallRocketModel.LAYER_LOCATION, SmallRocketModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(NormalRocketModel.LAYER_LOCATION, NormalRocketModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(BigRocketModel.LAYER_LOCATION, BigRocketModel::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(RoverModel.LAYER_LOCATION, RoverModel::createBodyLayer);
 
         EntityModelLayerRegistry.registerModelLayer(SpaceSuitModel.LAYER_LOCATION, SpaceSuitModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(JetSuitModel.LAYER_LOCATION, JetSuitModel::createBodyLayer);
@@ -107,8 +136,8 @@ public class StellarisFabricClient implements ClientModInitializer {
 
     public static void registerScreen() {
         MenuRegistry.registerScreenFactory(MenuTypesRegistry.ROCKET_STATION.get(), RocketStationScreen::new);
-        MenuRegistry.registerScreenFactory(MenuTypesRegistry.UPGRADE_STATION_MENU.get(), UpgradeStationScreen::new);
         MenuRegistry.registerScreenFactory(MenuTypesRegistry.ROCKET_MENU.get(), RocketScreen::new);
+        MenuRegistry.registerScreenFactory(MenuTypesRegistry.ROVER_MENU.get(), RoverScreen::new);
         MenuRegistry.registerScreenFactory(MenuTypesRegistry.VACUMATOR_MENU.get(), VacumatorScreen::new);
         MenuRegistry.registerScreenFactory(MenuTypesRegistry.SOLAR_PANEL_MENU.get(), SolarPanelScreen::new);
         MenuRegistry.registerScreenFactory(MenuTypesRegistry.COAL_GENERATOR_MENU.get(), CoalGeneratorScreen::new);
@@ -122,11 +151,10 @@ public class StellarisFabricClient implements ClientModInitializer {
         MenuRegistry.registerScreenFactory(MenuTypesRegistry.WATER_PUMP_MENU.get(), WaterPumpScreen::new);
         MenuRegistry.registerScreenFactory(MenuTypesRegistry.WAIT_MENU.get(), WaitScreen::new);
         MenuRegistry.registerScreenFactory(MenuTypesRegistry.PUMPJACK_MENU.get(), PumpjackScreen::new);
-
+        MenuRegistry.registerScreenFactory(MenuTypesRegistry.UPGRADE_STATION_MENU.get(), UpgradeStationScreen::new);
     }
 
     public static void registerKeyBinding() {
-        KeyBindingHelper.registerKeyBinding(KeyMappingsRegistry.ROCKET_START);
         KeyBindingHelper.registerKeyBinding(KeyMappingsRegistry.CHANGE_JETSUIT_MODE);
         KeyBindingHelper.registerKeyBinding(KeyMappingsRegistry.FREEZE_PLANET_MENU);
 

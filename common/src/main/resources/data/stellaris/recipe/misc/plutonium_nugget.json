@@ -1,13 +1,11 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "   ",
-    " # ",
-    "   "
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "stellaris:plutonium_ingot"
+    }
   ],
-  "key": {
-    "#": {"item": "stellaris:plutonium_ingot"}
-  },
+
   "result": {
     "id": "stellaris:plutonium_nugget",
     "count": 9

@@ -64,19 +64,21 @@ public class GlobeBlockEntity extends BlockEntity {
     }
 
     public void tick() {
-        if (this.getRotationalInertia() > 0) {
-            this.setRotationalInertia(this.getRotationalInertia() - 0.0075f);
+        if (this.level != null) {
+            if (this.getRotationalInertia() > 0) {
+                this.setRotationalInertia(this.getRotationalInertia() - 0.0075f);
 
-            if (this.getRotationalInertia() < 0) {
-                this.setRotationalInertia(0);
-            }
+                if (this.getRotationalInertia() < 0) {
+                    this.setRotationalInertia(0);
+                }
 
-            this.setYaw0(this.getYaw());
-            this.setYaw(this.getYaw() - this.getRotationalInertia());
+                this.setYaw0(this.getYaw());
+                this.setYaw(this.getYaw() - this.getRotationalInertia());
 
-            if (this.getRotationalInertia() == 0) {
-                if (!this.level.isClientSide) {
-                    this.setChanged();
+                if (this.getRotationalInertia() == 0) {
+                    if (!this.level.isClientSide) {
+                        this.setChanged();
+                    }
                 }
             }
         }

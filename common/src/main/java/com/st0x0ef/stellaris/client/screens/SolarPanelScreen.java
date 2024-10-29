@@ -2,7 +2,7 @@ package com.st0x0ef.stellaris.client.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.st0x0ef.stellaris.Stellaris;
-import com.st0x0ef.stellaris.client.screens.components.Gauge;
+import com.st0x0ef.stellaris.client.screens.components.GaugeWidget;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.SolarPanelEntity;
 import com.st0x0ef.stellaris.common.menus.SolarPanelMenu;
 import net.fabricmc.api.EnvType;
@@ -14,16 +14,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Environment(EnvType.CLIENT)
 public class SolarPanelScreen extends AbstractContainerScreen<SolarPanelMenu> {
 
     public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/solar_panel.png");
 
     private final SolarPanelEntity blockEntity = getMenu().getBlockEntity();
-    private Gauge energyGauge;
+    private GaugeWidget energyGauge;
 
     public SolarPanelScreen(SolarPanelMenu abstractContainerMenu, Inventory inventory, Component component) {
         super(abstractContainerMenu, inventory, component);
@@ -40,7 +37,7 @@ public class SolarPanelScreen extends AbstractContainerScreen<SolarPanelMenu> {
             return;
         }
 
-        energyGauge = new Gauge(leftPos + 109, topPos + 29  , 11, 47, Component.translatable("stellaris.screen.energy"), GUISprites.ENERGY_FULL, GUISprites.BATTERY_OVERLAY, (int) menu.getEnergyContainer().getStoredEnergy(), (int) menu.getEnergyContainer().getMaxCapacity());
+        energyGauge = new GaugeWidget(leftPos + 109, topPos + 29, 11, 46, Component.translatable("stellaris.screen.energy"), GUISprites.ENERGY_FULL, GUISprites.BATTERY_OVERLAY, menu.getEnergyContainer().getMaxCapacity(), GaugeWidget.Direction4.DOWN_UP);
         addRenderableWidget(energyGauge);
     }
 
@@ -54,7 +51,7 @@ public class SolarPanelScreen extends AbstractContainerScreen<SolarPanelMenu> {
             return;
         }
 
-        energyGauge.update((int)blockEntity.getWrappedEnergyContainer().getStoredEnergy());
+        energyGauge.updateAmount((int)blockEntity.getWrappedEnergyContainer().getStoredEnergy());
     }
 
     @Override
@@ -68,8 +65,6 @@ public class SolarPanelScreen extends AbstractContainerScreen<SolarPanelMenu> {
     @Override
     protected void renderTooltip(GuiGraphics guiGraphics, int x, int y) {
         super.renderTooltip(guiGraphics, x, y);
-        List<Component> components = new ArrayList<>();
-        components.add(Component.translatable("gauge_text.stellaris.max_generation", getMenu().getBlockEntity().getEnergyGeneratedPT()));
-        energyGauge.renderTooltips(guiGraphics, x, y, font, components);
+        energyGauge.renderTooltips(guiGraphics, x, y, font, list -> list.add(Component.translatable("gauge_text.stellaris.max_generation", getMenu().getBlockEntity().getEnergyGeneratedPT())));
     }
 }

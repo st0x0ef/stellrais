@@ -2,7 +2,7 @@ package com.st0x0ef.stellaris.client.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.st0x0ef.stellaris.Stellaris;
-import com.st0x0ef.stellaris.client.screens.components.Gauge;
+import com.st0x0ef.stellaris.client.screens.components.GaugeWidget;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.FluidTank;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.WaterPumpBlockEntity;
 import com.st0x0ef.stellaris.common.menus.WaterPumpMenu;
@@ -19,8 +19,8 @@ public class WaterPumpScreen extends AbstractContainerScreen<WaterPumpMenu> {
     public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/water_pump.png");
 
     private final WaterPumpBlockEntity blockEntity = getMenu().getBlockEntity();
-    private Gauge waterTankGauge;
-    private Gauge energyGauge;
+    private GaugeWidget waterTankGauge;
+    private GaugeWidget energyGauge;
 
     public WaterPumpScreen(WaterPumpMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -36,11 +36,11 @@ public class WaterPumpScreen extends AbstractContainerScreen<WaterPumpMenu> {
         }
 
         FluidTank waterTank = blockEntity.getWaterTank();
-        waterTankGauge = new Gauge(leftPos + 25, topPos + 20, 12, 42, Component.translatable("stellaris.screen.water"), GUISprites.WATER_OVERLAY, GUISprites.LIQUID_TANK_OVERLAY, (int) waterTank.getAmount(), (int) (waterTank.getMaxCapacity() - 1));
+        waterTankGauge = new GaugeWidget(leftPos + 25, topPos + 20, 12, 42, Component.translatable("stellaris.screen.water"), GUISprites.WATER_OVERLAY, GUISprites.LIQUID_TANK_OVERLAY, waterTank.getMaxCapacity() - 1, GaugeWidget.Direction4.DOWN_UP);
         addRenderableWidget(waterTankGauge);
 
         EnergyContainer energyContainer = blockEntity.getWrappedEnergyContainer().container();
-        energyGauge = new Gauge(leftPos + 150, topPos + 20, 13, 47, Component.translatable("stellaris.screen.energy"), GUISprites.ENERGY_FULL, GUISprites.BATTERY_OVERLAY, (int) energyContainer.getStoredEnergy(), (int) energyContainer.getMaxCapacity());
+        energyGauge = new GaugeWidget(leftPos + 150, topPos + 20, 13, 46, Component.translatable("stellaris.screen.energy"), GUISprites.ENERGY_FULL, GUISprites.BATTERY_OVERLAY, energyContainer.getMaxCapacity(), GaugeWidget.Direction4.DOWN_UP);
         addRenderableWidget(energyGauge);
     }
 
@@ -54,8 +54,8 @@ public class WaterPumpScreen extends AbstractContainerScreen<WaterPumpMenu> {
             return;
         }
 
-        waterTankGauge.update((int) blockEntity.getWaterTank().getAmount());
-        energyGauge.update((int) blockEntity.getWrappedEnergyContainer().getStoredEnergy());
+        waterTankGauge.updateAmount((int) blockEntity.getWaterTank().getAmount());
+        energyGauge.updateAmount((int) blockEntity.getWrappedEnergyContainer().getStoredEnergy());
     }
 
     @Override

@@ -1,6 +1,6 @@
 # 1.2.0 changelog
 
-## Aditions
+## Additions
 - Structures :
   - Earth Operation Base
   - Earth Satellite

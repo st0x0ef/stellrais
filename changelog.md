@@ -49,9 +49,8 @@
 - Optimization of the oxygen system
 - Oxygen distributor now propagate in all directions
 - Improve achievement screen
+- Update minimum architectury api version to 13.0.8
 
 ## Fix
 - Crash when trying to launch to any planet when you haven't launched from a planet
 - Remove configurable start rocket key and slow down lander key to fix an issue with jumping
-
-

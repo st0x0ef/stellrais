@@ -51,6 +51,7 @@
 - Improve achievement screen
 - Update minimum architectury api version to 13.0.8
 - Upgrade quantity of oil in oil chunk but make them a bit rarer
+- Improve oil finder
 
 ## Fix
 - Crash when trying to launch to any planet when you haven't launched from a planet

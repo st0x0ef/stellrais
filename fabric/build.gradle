@@ -35,12 +35,11 @@ dependencies {
     modApi "com.terraformersmc:modmenu:${modmenu_version}"
     include modApi("teamreborn:energy:${energy_version}") { transitive = false }
     modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${rootProject.rei_version}"
-    modCompileOnlyApi("mezz.jei:jei-${minecraft_version}-fabric-api:${jei_version}")
-    modRuntimeOnly("mezz.jei:jei-${minecraft_version}-fabric:${jei_version}")
+    //modCompileOnlyApi("mezz.jei:jei-${minecraft_version}-fabric-api:${jei_version}")
+    //modRuntimeOnly("mezz.jei:jei-${minecraft_version}-fabric:${jei_version}")
 
-    modRuntimeOnly "maven.modrinth:sky-aesthetics:${sky_version}-fabric"
-
-    include "maven.modrinth:sky-aesthetics:${sky_version}-fabric"
+    //modRuntimeOnly "maven.modrinth:sky-aesthetics:${sky_version}-fabric"
+    //include "maven.modrinth:sky-aesthetics:${sky_version}-fabric"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }

@@ -47,10 +47,7 @@ public class StellarisCommands {
                                 .executes((CommandContext<CommandSourceStack> context) -> {
                                     PlanetUtil.openPlanetSelectionMenu(context.getSource().getPlayer(), true);
                                     return 0;
-                                }))
-                )
-
-
+                                })))
         );
     }
 }

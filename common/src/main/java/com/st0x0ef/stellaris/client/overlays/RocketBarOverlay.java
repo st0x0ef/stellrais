@@ -8,6 +8,7 @@ import com.st0x0ef.stellaris.common.utils.PlanetUtil;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -36,7 +37,7 @@ public class RocketBarOverlay {
 
             /** ROCKET BAR IMAGE */
             RenderSystem.setShaderTexture(0, planet);
-            graphics.blit(planet, 0, (graphics.guiHeight() / 2) - 128 / 2, 0, 0, 16, 128, 16, 128);
+            graphics.blit(RenderType::guiTextured, planet, 0, (graphics.guiHeight() / 2) - 128 / 2, 0, 0, 16, 128, 16, 128);
 
             /** ROCKET_Y IMAGE */
             RenderSystem.setShaderTexture(0, ROCKET);

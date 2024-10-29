@@ -33,12 +33,11 @@ dependencies {
     modApi "dev.architectury:architectury-neoforge:${architectury_version}"
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:${rei_version}"
     modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
-    modCompileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
-    runtimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
+    //modCompileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
+    //runtimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
 
-    runtimeOnly "maven.modrinth:sky-aesthetics:${sky_version}-neoforge"
-
-    include("maven.modrinth:sky-aesthetics:${sky_version}-neoforge")
+    //runtimeOnly "maven.modrinth:sky-aesthetics:${sky_version}-neoforge"
+    //include("maven.modrinth:sky-aesthetics:${sky_version}-neoforge")
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowBundle project(path: ":common", configuration: "transformProductionNeoForge")

@@ -17,4 +17,6 @@ accessible method net/minecraft/world/level/levelgen/feature/DripstoneUtils grow
 accessible method net/minecraft/world/level/levelgen/feature/DripstoneUtils isEmptyOrWater (Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;)Z
 accessible method net/minecraft/world/level/levelgen/feature/DripstoneClusterFeature getChanceOfStalagmiteOrStalactite (IIIILnet/minecraft/world/level/levelgen/feature/configurations/DripstoneClusterConfiguration;)D
 
+extendable method net/minecraft/client/model/Model renderToBuffer (Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;III)V
+
 accessible method net/minecraft/client/MouseHandler onScroll (JDD)V

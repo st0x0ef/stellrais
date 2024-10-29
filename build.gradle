@@ -49,12 +49,12 @@ subprojects {
 
         mappings loom.layered() {
             officialMojangMappings()
-            parchment("org.parchmentmc.data:parchment-${rootProject.minecraft_version}:${rootProject.parchment_mapping_version}@zip")
+            //parchment("org.parchmentmc.data:parchment-${rootProject.minecraft_version}:${rootProject.parchment_mapping_version}@zip")
         }
 
         modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:${rootProject.rei_version}"
         modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin:${rootProject.rei_version}"
-        modCompileOnly("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
+        //modCompileOnly("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
     }
 
     java {

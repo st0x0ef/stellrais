@@ -11,11 +11,12 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 @Environment(EnvType.CLIENT)
-public class AlienModel<T extends Alien> extends EntityModel<T> {
+public class AlienModel<T extends Alien> extends EntityModel<EntityRenderState> {
 
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "alien"), "main");
 
@@ -26,7 +27,9 @@ public class AlienModel<T extends Alien> extends EntityModel<T> {
 	private final ModelPart arms;
 	private final ModelPart head2;
 	public AlienModel(ModelPart root) {
-		this.head = root.getChild("head");
+        super(root);
+
+        this.head = root.getChild("head");
 		this.body = root.getChild("body");
 		this.leg0 = root.getChild("leg0");
 		this.leg1 = root.getChild("leg1");
@@ -61,7 +64,7 @@ public class AlienModel<T extends Alien> extends EntityModel<T> {
 	}
 
 	@Override
-	public void setupAnim(T e, float f, float f1, float f2, float f3, float f4) {
+	public void setupAnim(EntityRenderState state) {
 		this.head.yRot = f3 / (180F / (float) Math.PI);
 		this.head.xRot = f4 / (180F / (float) Math.PI);
 		this.leg0.xRot = Mth.cos(f) * -1.0F * f1;

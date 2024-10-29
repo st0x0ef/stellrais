@@ -3,17 +3,13 @@ package com.st0x0ef.stellaris.common.registry;
 import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.client.renderers.entities.vehicle.rocket.RocketModel;
 import com.st0x0ef.stellaris.client.screens.GUISprites;
-import com.st0x0ef.stellaris.common.armors.AbstractSpaceArmor;
-import com.st0x0ef.stellaris.common.armors.JetSuit;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.FluidTankHelper;
 import com.st0x0ef.stellaris.common.data_components.CappedLongComponent;
 import com.st0x0ef.stellaris.common.data_components.JetSuitComponent;
-import com.st0x0ef.stellaris.common.data_components.OxygenComponent;
 import com.st0x0ef.stellaris.common.data_components.RadioactiveComponent;
 import com.st0x0ef.stellaris.common.data_components.RocketComponent;
 import com.st0x0ef.stellaris.common.data_components.RoverComponent;
 import com.st0x0ef.stellaris.common.items.*;
-import com.st0x0ef.stellaris.common.items.armors.JetSuit;
 import com.st0x0ef.stellaris.common.items.armors.SpaceSuit;
 import com.st0x0ef.stellaris.common.items.module.*;
 import com.st0x0ef.stellaris.common.vehicle_upgrade.*;
@@ -401,15 +397,15 @@ public class ItemsRegistry {
 
         ItemStack JET_SUIT_FULL = new ItemStack(ItemsRegistry.JETSUIT_SUIT);
         JET_SUIT_FULL.set(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get(),
-                new OxygenComponent(FluidTankHelper.convertFromNeoMb(10800), FluidTankHelper.convertFromNeoMb(10800)));
+                new CappedLongComponent(FluidTankHelper.convertFromNeoMb(10800), FluidTankHelper.convertFromNeoMb(10800)));
         list.add(JET_SUIT_FULL);
 
         ItemStack OXYGEN_TANK_FULL = new ItemStack(ItemsRegistry.OXYGEN_TANK);
-        OXYGEN_TANK_FULL.set(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get(), new OxygenComponent(FluidTankHelper.convertFromNeoMb(3600), FluidTankHelper.convertFromNeoMb(3600)));
+        OXYGEN_TANK_FULL.set(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get(), new CappedLongComponent(FluidTankHelper.convertFromNeoMb(3600), FluidTankHelper.convertFromNeoMb(3600)));
         list.add(OXYGEN_TANK_FULL);
 
         ItemStack BIG_OXYGEN_TANK_FULL = new ItemStack(ItemsRegistry.BIG_OXYGEN_TANK);
-        BIG_OXYGEN_TANK_FULL.set(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get(), new OxygenComponent(FluidTankHelper.convertFromNeoMb(10800), FluidTankHelper.convertFromNeoMb(10800)));
+        BIG_OXYGEN_TANK_FULL.set(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get(), new CappedLongComponent(FluidTankHelper.convertFromNeoMb(10800), FluidTankHelper.convertFromNeoMb(10800)));
         list.add(BIG_OXYGEN_TANK_FULL);
 
         ItemStack ROCKET_FULL = new ItemStack(ItemsRegistry.ROCKET);

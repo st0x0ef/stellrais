@@ -1,15 +1,11 @@
 package com.st0x0ef.stellaris.common.registry;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
 import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.common.data_components.*;
-import com.st0x0ef.stellaris.common.data_components.OxygenComponent;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.codec.ByteBufCodecs;
 
 public class DataComponentsRegistry {
 

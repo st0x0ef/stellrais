@@ -1,7 +1,6 @@
 package com.st0x0ef.stellaris.common.entities.vehicles;
 
 import com.google.common.collect.Sets;
-import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.client.renderers.entities.vehicle.rocket.RocketModel;
 import com.st0x0ef.stellaris.common.data.planets.Planet;
 import com.st0x0ef.stellaris.common.data_components.RocketComponent;

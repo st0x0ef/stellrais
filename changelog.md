@@ -53,7 +53,6 @@
 - Update minimum architectury api version to 13.0.8
 - Upgrade quantity of oil in oil chunk but make them a bit rarer
 - Improve oil finder
-- Rocket bar overlay now showing in lander
 - Improve rocket bar overlay
 
 ## Fix

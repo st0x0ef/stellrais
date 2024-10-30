@@ -42,6 +42,7 @@
 - Speed Upgrade
 - Meteor can now spawn on moon
 - Moon Vines
+- Rocket bar overlay now showing in lander
 
 ## Changes
 - Rework config screen
@@ -52,6 +53,8 @@
 - Update minimum architectury api version to 13.0.8
 - Upgrade quantity of oil in oil chunk but make them a bit rarer
 - Improve oil finder
+- Rocket bar overlay now showing in lander
+- Improve rocket bar overlay
 
 ## Fix
 - Crash when trying to launch to any planet when you haven't launched from a planet

@@ -54,7 +54,9 @@
 - Upgrade quantity of oil in oil chunk but make them a bit rarer
 - Improve oil finder
 - Improve rocket bar overlay
+- Unlock all planet on the selection menu if the player is in creative mode
 
 ## Fix
 - Crash when trying to launch to any planet when you haven't launched from a planet
 - Remove configurable start rocket key and slow down lander key to fix an issue with jumping
+- Fix bug where the rocket don't open the planet menu when higher than 600 blocks

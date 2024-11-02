@@ -69,11 +69,6 @@
         },
         {
           "type": "minecraft:item",
-          "name": "stellaris:earth_globe",
-          "weight": 15
-        },
-        {
-          "type": "minecraft:item",
           "name": "minecraft:gold_nugget",
           "weight": 15,
           "functions": [

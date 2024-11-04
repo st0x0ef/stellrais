@@ -27,6 +27,10 @@ subprojects {
     repositories {
         maven { url "https://maven.shedaniel.me" }
         maven { url "https://cursemaven.com" }
+        maven {
+            name = 'teamresourceful'
+            url "https://maven.teamresourceful.com/repository/maven-public/"
+        }
         maven { url "https://maven.terraformersmc.com/releases" }
         maven { url "https://maven.parchmentmc.org" }
         maven { url "https://maven.neoforged.net/releases" }
@@ -55,6 +59,9 @@ subprojects {
         modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:${rootProject.rei_version}"
         modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin:${rootProject.rei_version}"
         modCompileOnly("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
+
+        modCompileOnly "earth.terrarium.common_storage_lib:common-storage-lib-${modLoader}-1.21:0.0.5"
+
     }
 
     java {

@@ -4,8 +4,6 @@ import com.st0x0ef.stellaris.common.blocks.machines.CoalGeneratorBlock;
 import com.st0x0ef.stellaris.common.menus.CoalGeneratorMenu;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import com.st0x0ef.stellaris.common.registry.TagRegistry;
-import com.st0x0ef.stellaris.common.systems.energy.EnergyApi;
-import com.st0x0ef.stellaris.common.systems.energy.impl.WrappedBlockEnergyContainer;
 import com.st0x0ef.stellaris.platform.systems.energy.EnergyContainer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -67,7 +65,6 @@ public class CoalGeneratorEntity extends BaseGeneratorBlockEntity {
     }
 
     public void tick() {
-        WrappedBlockEnergyContainer energyContainer = getWrappedEnergyContainer();
         boolean wasLit = isLit();
         boolean shouldUpdate = false;
 
@@ -101,15 +98,16 @@ public class CoalGeneratorEntity extends BaseGeneratorBlockEntity {
         }
 
         if (isLit()) {
-            if (energyContainer.getStoredEnergy() < energyContainer.getMaxCapacity()) {
-                energyContainer.setEnergy(energyContainer.getStoredEnergy() + getEnergyGeneratedPT());
+
+            if (energy.getStoredAmount() < energy.getCapacity()) {
+                energy.insert(getEnergyGeneratedPT(), false);
             }
-            else if (energyContainer.getStoredEnergy() > energyContainer.getMaxCapacity()) {
-                energyContainer.setEnergy(energyContainer.getMaxCapacity());
+            else if (energy.getStoredAmount() > energy.getCapacity()) {
+                energy.set(energy.getCapacity());
             }
         }
 
-        EnergyApi.distributeEnergyNearby(this,100);
+        this.distributeEnergy(null);
     }
 
     protected int getBurnDuration(ItemStack fuelStack) {
@@ -126,8 +124,7 @@ public class CoalGeneratorEntity extends BaseGeneratorBlockEntity {
 
     @Override
     public boolean canGenerate() {
-        EnergyContainer energyContainer = getWrappedEnergyContainer();
-        boolean isMaxEnergy = energyContainer.getStoredEnergy()==energyContainer.getMaxCapacity();
+        boolean isMaxEnergy = energy.getStoredAmount()==energy.getCapacity();
         return isLit() && !isMaxEnergy;
     }
 

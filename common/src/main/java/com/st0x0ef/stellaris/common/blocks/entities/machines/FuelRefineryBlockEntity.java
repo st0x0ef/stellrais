@@ -6,9 +6,15 @@ import com.st0x0ef.stellaris.common.data.recipes.input.FluidInput;
 import com.st0x0ef.stellaris.common.menus.FuelRefineryMenu;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import com.st0x0ef.stellaris.common.registry.RecipesRegistry;
-import com.st0x0ef.stellaris.common.systems.energy.impl.WrappedBlockEnergyContainer;
+import com.st0x0ef.stellaris.common.systems.SystemsMain;
 import dev.architectury.fluid.FluidStack;
+import earth.terrarium.common_storage_lib.fluid.impl.SimpleFluidStorage;
+import earth.terrarium.common_storage_lib.fluid.util.FluidProvider;
+import earth.terrarium.common_storage_lib.resources.fluid.FluidResource;
+import earth.terrarium.common_storage_lib.resources.fluid.util.FluidAmounts;
+import earth.terrarium.common_storage_lib.storage.base.CommonStorage;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -17,10 +23,13 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity implements WrappedFluidBlockEntity {
+public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity implements FluidProvider.BlockEntity {
+
+    private final SimpleFluidStorage fluids = new SimpleFluidStorage(this, SystemsMain.FLUID_CONTENTS, 1, FluidAmounts.BUCKET);
 
     private final FluidTank ingredientTank = new FluidTank("ingredientTank", 5);
     private final FluidTank resultTank = new FluidTank("resultTank", 5);
@@ -42,14 +51,13 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
         Optional<RecipeHolder<FuelRefineryRecipe>> recipeHolder = cachedCheck.getRecipeFor(new FluidInput(getLevel().getBlockEntity(getBlockPos()), getItems()), level);
         if (recipeHolder.isPresent()) {
             FuelRefineryRecipe recipe = recipeHolder.get().value();
-            WrappedBlockEnergyContainer energyContainer = getWrappedEnergyContainer();
 
-            if (energyContainer.getStoredEnergy() >= recipe.energy()) {
+            if (energy.getStoredAmount() >= recipe.energy()) {
                 FluidStack resultStack = recipe.resultStack();
 
                 if (resultTank.isEmpty() || resultTank.getStack().isFluidEqual(resultStack)) {
                     if (resultTank.getAmount() + resultStack.getAmount() < resultTank.getMaxCapacity()) {
-                        energyContainer.extractEnergy(recipe.energy(), false);
+                        energy.extract(recipe.energy(), false);
                         ingredientTank.shrink(recipe.ingredientStack().getAmount());
                         FluidTankHelper.addToTank(resultTank, resultStack);
                         setChanged();
@@ -121,7 +129,7 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
     }
 
     @Override
-    public FluidTank[] getFluidTanks() {
-        return new FluidTank[]{resultTank, ingredientTank};
+    public CommonStorage<FluidResource> getFluids(@Nullable Direction direction) {
+        return fluids;
     }
 }

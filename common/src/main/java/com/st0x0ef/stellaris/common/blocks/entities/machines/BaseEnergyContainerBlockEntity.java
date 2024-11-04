@@ -1,9 +1,15 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
+import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.common.blocks.entities.ImplementedInventory;
-import com.st0x0ef.stellaris.common.systems.energy.base.EnergyBlock;
-import com.st0x0ef.stellaris.common.systems.energy.impl.SimpleEnergyContainer;
-import com.st0x0ef.stellaris.common.systems.energy.impl.WrappedBlockEnergyContainer;
+import com.st0x0ef.stellaris.common.systems.SystemsMain;
+import earth.terrarium.common_storage_lib.energy.EnergyApi;
+import earth.terrarium.common_storage_lib.energy.EnergyProvider;
+import earth.terrarium.common_storage_lib.energy.impl.SimpleValueStorage;
+import earth.terrarium.common_storage_lib.fluid.impl.SimpleFluidStorage;
+import earth.terrarium.common_storage_lib.resources.fluid.util.FluidAmounts;
+import earth.terrarium.common_storage_lib.storage.base.ValueStorage;
+import earth.terrarium.common_storage_lib.storage.util.TransferUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -13,19 +19,19 @@ import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class BaseEnergyContainerBlockEntity extends BaseContainerBlockEntity implements EnergyBlock<WrappedBlockEnergyContainer>, WrappedEnergyBlockEntity, ImplementedInventory, TickingBlockEntity {
+import java.util.List;
 
-    public static final String ENERGY_TAG = "stellaris.energy";
+public abstract class BaseEnergyContainerBlockEntity extends BaseContainerBlockEntity implements EnergyProvider.BlockEntity, ImplementedInventory, TickingBlockEntity {
 
-    private WrappedBlockEnergyContainer energyContainer;
+    private final SimpleFluidStorage fluids = new SimpleFluidStorage(this, SystemsMain.FLUID_CONTENTS, 1, FluidAmounts.BUCKET);
+
+    public final SimpleValueStorage energy = new SimpleValueStorage(this, SystemsMain.VALUE_CONTENT, 1000);
     private NonNullList<ItemStack> items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
 
     public BaseEnergyContainerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -52,9 +58,10 @@ public abstract class BaseEnergyContainerBlockEntity extends BaseContainerBlockE
     }
 
     @Override
-    public WrappedBlockEnergyContainer getEnergyStorage(Level level, BlockPos pos, BlockState state, @Nullable BlockEntity entity, @Nullable Direction direction) {
-        return energyContainer == null ? energyContainer = new WrappedBlockEnergyContainer(entity, new SimpleEnergyContainer(getMaxCapacity(), Integer.MAX_VALUE)) : energyContainer;
+    public ValueStorage getEnergy(@Nullable Direction direction) {
+        return energy;
     }
+
 
     @Override
     public @NotNull CompoundTag getUpdateTag(HolderLookup.Provider provider) {
@@ -66,19 +73,25 @@ public abstract class BaseEnergyContainerBlockEntity extends BaseContainerBlockE
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
-        getWrappedEnergyContainer().setEnergy(tag.getLong(ENERGY_TAG));
         ContainerHelper.loadAllItems(tag, items, provider);
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.saveAdditional(tag, provider);
-        tag.putLong(ENERGY_TAG, getWrappedEnergyContainer().getStoredEnergy());
         ContainerHelper.saveAllItems(tag, items, provider);
     }
 
-    @Override
-    public WrappedBlockEnergyContainer getWrappedEnergyContainer() {
-        return getEnergyStorage(level, worldPosition, getBlockState(), this, null);
+
+    public void distributeEnergy(@Nullable Direction[] directions) {
+
+        if(directions == null) directions = Direction.values();
+
+        for (Direction direction : directions) {
+            ValueStorage foundEnergy = EnergyApi.BLOCK.find(level, getBlockPos().above(), Direction.DOWN);
+            if (foundEnergy != null) {
+                TransferUtil.moveValue(foundEnergy, energy, 50, false);
+            }
+        }
     }
 }

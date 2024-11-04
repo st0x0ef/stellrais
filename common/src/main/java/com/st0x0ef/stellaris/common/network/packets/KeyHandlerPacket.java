@@ -2,6 +2,7 @@ package com.st0x0ef.stellaris.common.network.packets;
 
 import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.common.armors.JetSuit;
+import com.st0x0ef.stellaris.common.entities.vehicles.LanderEntity;
 import com.st0x0ef.stellaris.common.entities.vehicles.RocketEntity;
 import com.st0x0ef.stellaris.common.keybinds.KeyVariables;
 import com.st0x0ef.stellaris.common.menus.PlanetSelectionMenu;
@@ -71,9 +72,6 @@ public class KeyHandlerPacket implements CustomPacketPayload {
                         JetSuit.Suit item = (JetSuit.Suit) itemStack.getItem();
                         item.switchJetSuitMode(itemStack);
                     }
-                    break;
-                case "rocket_start":
-                    if (player.getVehicle() instanceof RocketEntity rocketEntity) rocketEntity.startRocket();
                     break;
                 case "key_jump":
                     KeyVariables.KEY_JUMP.put(player.getUUID(), packet.condition);

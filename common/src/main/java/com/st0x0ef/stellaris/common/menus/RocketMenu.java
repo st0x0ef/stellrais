@@ -17,7 +17,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
-public class RocketMenu extends AbstractContainerMenu {
+public class RocketMenu extends AbstractContainerMenu implements IVehicleMenu {
 
     private final Container inventory;
     private final RocketEntity rocket;
@@ -119,5 +119,10 @@ public class RocketMenu extends AbstractContainerMenu {
 
     public RocketEntity getRocket() {
         return rocket;
+    }
+
+    @Override
+    public int getFuel() {
+        return getRocket().getFuel();
     }
 }

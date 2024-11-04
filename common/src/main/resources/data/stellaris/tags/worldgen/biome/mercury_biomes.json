@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "stellaris:mercury"
+    "stellaris:mercury",
+    "stellaris:mercury_fire_land"
   ]
 }

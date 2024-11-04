@@ -2,15 +2,19 @@ package com.st0x0ef.stellaris.neoforge;
 
 import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.client.StellarisClient;
-import com.st0x0ef.stellaris.common.registry.CreativeTabsRegistry;
 import com.st0x0ef.stellaris.common.registry.EntityRegistry;
 import com.st0x0ef.stellaris.common.registry.ItemsRegistry;
 import com.st0x0ef.stellaris.common.world.ModConfiguredFeature;
 import com.st0x0ef.stellaris.common.world.ModPlacedFeatures;
 import com.st0x0ef.stellaris.neoforge.systems.SystemsNeoForge;
+
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataProvider;
+
+import net.minecraft.world.item.CreativeModeTabs;
+import com.st0x0ef.stellaris.platform.neoforge.EffectRegisterImpl;
+
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -33,8 +37,10 @@ public class StellarisNeoForge {
         NeoForge.EVENT_BUS.addListener(StellarisNeoForge::onAddReloadListenerEvent);
         NeoForge.EVENT_BUS.addListener(StellarisNeoForge::onDatapackSync);
         //NeoForge.EVENT_BUS.addListener(StellarisNeoForge::addItemToTab);
+        EffectRegisterImpl.MOB_EFFECTS.register(bus);
 
         bus.addListener(StellarisNeoForge::onAttributes);
+        bus.addListener(StellarisNeoForge::addItemToTab);
         SystemsNeoForge.init(bus);
 
         if (FMLEnvironment.dist.isClient()) {
@@ -50,13 +56,17 @@ public class StellarisNeoForge {
         }
     }
 
+    @SubscribeEvent
     public static void addItemToTab(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey() == CreativeTabsRegistry.STELLARIS_TAB) {
+        if (event.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS) {
             for (ItemStack stack : ItemsRegistry.fullItemsToAdd()) {
                 event.accept(stack);
             }
         }
     }
+
+
+
 
 
 

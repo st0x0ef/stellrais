@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "stellaris:venus_crash_site",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 270660707,
+    "spacing": 60,
+    "separation": 30
+  }
+}

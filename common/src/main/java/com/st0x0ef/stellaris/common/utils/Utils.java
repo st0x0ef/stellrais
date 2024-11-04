@@ -1,6 +1,7 @@
 package com.st0x0ef.stellaris.common.utils;
 
 import com.mojang.serialization.Codec;
+import com.st0x0ef.stellaris.client.registries.KeyMappingsRegistry;
 import com.st0x0ef.stellaris.common.data.planets.Planet;
 import com.st0x0ef.stellaris.common.entities.vehicles.LanderEntity;
 import com.st0x0ef.stellaris.common.entities.vehicles.RocketEntity;
@@ -46,7 +47,6 @@ public class Utils {
 
     /** Should be call after teleporting the player */
     public static LanderEntity createLanderFromRocket(Entity player, RocketEntity rocket, int yPos) {
-
         LanderEntity lander = new LanderEntity(player.level());
         lander.setPos(player.getX(), yPos, player.getZ());
         transfertInventory(rocket, lander);
@@ -54,7 +54,6 @@ public class Utils {
         rocket.discard();
 
         return lander;
-
     }
 
     /** Teleport an entity to the planet wanted */
@@ -71,10 +70,9 @@ public class Utils {
 
     /** To use with the planetSelection menu */
     public static void changeDimension(Player player, Planet destination) {
-        if(player.level().isClientSide()) return;
+        if (player.level().isClientSide()) return;
 
-        Entity vehicle = player.getVehicle();
-        if (vehicle instanceof RocketEntity rocket) {
+        if (player.getVehicle() instanceof RocketEntity rocket) {
             player.stopRiding();
 
             teleportEntity(player, destination);
@@ -83,7 +81,6 @@ public class Utils {
             LanderEntity lander = createLanderFromRocket(player, rocket, 600);
 
             /** We remove the player from the Rocket */
-
             player.closeContainer();
 
             player.level().addFreshEntity(lander);
@@ -93,8 +90,6 @@ public class Utils {
             player.closeContainer();
             teleportEntity(player, destination);
         }
-
-
     }
 
     public static void changeDimensionForPlayers(List<Entity> entities, Planet destination) {

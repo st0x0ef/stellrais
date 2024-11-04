@@ -1,8 +1,5 @@
 package com.st0x0ef.stellaris.common.entities.vehicles;
 
-import java.util.function.Consumer;
-
-
 import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.common.keybinds.KeyVariables;
 import com.st0x0ef.stellaris.common.menus.LanderMenu;
@@ -18,7 +15,10 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.*;
+import net.minecraft.world.Container;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -31,13 +31,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 public class LanderEntity extends IVehicleEntity implements HasCustomInventoryScreen {
-
-    public static Consumer<LanderEntity> playBoost = e -> {
-    };
-
-    public static Consumer<LanderEntity> playBeep = e -> {
-    };
-
     protected SimpleContainer inventory;
 
     public LanderEntity(Level level) {
@@ -48,7 +41,6 @@ public class LanderEntity extends IVehicleEntity implements HasCustomInventorySc
         super(type, level);
 
         this.inventory = new SimpleContainer(15);
-
     }
 
     @Override
@@ -63,11 +55,6 @@ public class LanderEntity extends IVehicleEntity implements HasCustomInventorySc
 
     @Override
     public void push(Entity p_21294_) {
-    }
-
-    @Deprecated
-    public boolean canBeRiddenInWater() {
-        return true;
     }
 
     @Override
@@ -160,43 +147,34 @@ public class LanderEntity extends IVehicleEntity implements HasCustomInventorySc
     @Override
     public void tick() {
         super.tick();
-        this.slowDownLander();
-    }
 
-    public void beepWarningSound() {
-        if (level().isClientSide())
-            playBeep.accept(this);
-    }
-
-    public void boostSound() {
-        if (level().isClientSide())
-            playBoost.accept(this);
+        if (KeyVariables.isHoldingJump(getFirstPlayerPassenger())) {
+            slowDownLander();
+        }
     }
 
     public Player getFirstPlayerPassenger() {
         if (!this.getPassengers().isEmpty() && this.getPassengers().getFirst() instanceof Player player) {
             return player;
         }
-
         return null;
     }
 
+
     public void slowDownLander() {
-        if (KeyVariables.isHoldingJump(this.getFirstPlayerPassenger())) {
-            Vec3 vec = this.getDeltaMovement();
+        Vec3 vec = this.getDeltaMovement();
 
-            if (!this.onGround()) {
-                if (vec.y() < -0.05) {
-                    this.setDeltaMovement(vec.x(), vec.y() * 0.75, vec.z());
-                }
+        if (!this.onGround()) {
+            if (vec.y() < -0.05) {
+                this.setDeltaMovement(vec.x(), vec.y() * 0.75, vec.z());
+            }
 
-                this.fallDistance = (float) (vec.y() * (-1) * 4.5);
+            this.fallDistance = (float) (vec.y() * (-1) * 4.5);
 
-                if (this.level() instanceof ServerLevel) {
-                    for (ServerPlayer p : ((ServerLevel) this.level()).getServer().getPlayerList().getPlayers()) {
-                        ((ServerLevel) this.level()).sendParticles(p, ParticleTypes.SPIT, true, this.getX(),
-                                this.getY() - 0.3, this.getZ(), 3, 0.1, 0.1, 0.1, 0.001);
-                    }
+            if (this.level() instanceof ServerLevel level) {
+                for (ServerPlayer player : level.getServer().getPlayerList().getPlayers()) {
+                    level.sendParticles(player, ParticleTypes.SPIT, true, this.getX(),
+                            this.getY() - 0.3, this.getZ(), 3, 0.1, 0.1, 0.1, 0.001);
                 }
             }
         }

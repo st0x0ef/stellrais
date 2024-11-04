@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "stellaris:mercury_temple",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 1224566881,
+    "spacing": 324,
+    "separation": 138,
+    "type": "minecraft:random_spread"
+  }
+}

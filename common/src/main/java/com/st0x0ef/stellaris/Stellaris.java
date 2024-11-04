@@ -38,7 +38,6 @@ public class Stellaris {
 
         ProcessorsRegistry.STRUCTURE_PROCESSORS.register();
         SoundRegistry.SOUNDS.register();
-        //EffectsRegistry.init();
         DataComponentsRegistry.DATA_COMPONENT_TYPE.register();
         FluidRegistry.init();
         ParticleRegistry.PARTICLES.register();
@@ -56,6 +55,7 @@ public class Stellaris {
         LookupApiRegistry.registerEnergy();
         RecipesRegistry.register();
         EntityRegistry.registerSpawnPlacements();
+        EffectsRegistry.register();
 
         ReloadListenerRegistry.register(PackType.SERVER_DATA, new StellarisData());
     }

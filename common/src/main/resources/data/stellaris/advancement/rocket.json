@@ -1,0 +1,36 @@
+{
+  "parent": "stellaris:rocket_station",
+  "display": {
+    "description": {
+      "translate": "advancements.stellaris.rocket.description"
+    },
+    "title": {
+      "translate": "advancements.stellaris.rocket.title"
+    },
+    "icon": {
+      "count": 1,
+      "id": "stellaris:rocket"
+    }
+
+  },
+  "criteria": {
+    "rocket": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "stellaris:rocket"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "rocket"
+    ]
+  ],
+  "rewards": {
+    "experience": 2
+  }
+}

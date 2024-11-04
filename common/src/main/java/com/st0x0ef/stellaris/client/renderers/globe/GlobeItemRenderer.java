@@ -3,7 +3,6 @@ package com.st0x0ef.stellaris.client.renderers.globe;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.st0x0ef.stellaris.Stellaris;
-import com.st0x0ef.stellaris.common.blocks.entities.GlobeBlockEntity;
 import com.st0x0ef.stellaris.common.items.GlobeItem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -20,7 +19,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
 @Environment(EnvType.CLIENT)
-public class GlobeItemRenderer<T extends GlobeBlockEntity> extends BlockEntityWithoutLevelRenderer {
+public class GlobeItemRenderer extends BlockEntityWithoutLevelRenderer {
 
     private ResourceLocation texture;
     private GlobeModel<?> model;
@@ -30,7 +29,7 @@ public class GlobeItemRenderer<T extends GlobeBlockEntity> extends BlockEntityWi
     }
 
     
-    public GlobeItemRenderer<?> setTexture(ResourceLocation texture) {
+    public GlobeItemRenderer setTexture(ResourceLocation texture) {
         this.texture = texture;
         return this;
     }

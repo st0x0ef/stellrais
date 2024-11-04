@@ -105,7 +105,12 @@ public class RocketItem extends Item {
     }
 
     public RocketEntity getRocket(Level level, ItemStack stack) {
-        return new RocketEntity(this.getEntityType(stack), level);
+        RocketEntity rocket = new RocketEntity(this.getEntityType(stack), level);
+        RocketComponent rocketComponent = stack.get(DataComponentsRegistry.ROCKET_COMPONENT.get());
+        if(rocketComponent != null) {
+            rocket.FUEL = rocketComponent.fuel();
+        }
+        return rocket;
     }
 
     @Override

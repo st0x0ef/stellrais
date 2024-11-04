@@ -4,7 +4,7 @@
   "step": "surface_structures",
   "spawn_overrides": {},
   "terrain_adaptation": "beard_thin",
-  "start_pool": "stellaris:moon_space_base/moon_space_base",
+  "start_pool": "stellaris:moon/moon_space_base",
   "size": 1,
   "start_height": {
     "absolute": 0

@@ -1,0 +1,16 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "stellaris:moon_sphere",
+        "processors": {
+          "processors": []
+        }
+      }
+    }
+  ]
+}

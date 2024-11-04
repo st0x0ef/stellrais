@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "stellaris:mercury_big_castle",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 2033109259,
+    "spacing": 60,
+    "separation": 40
+  }
+}

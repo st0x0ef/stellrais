@@ -1,0 +1,93 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 50,
+      "element": {
+        "location": "stellaris:moon_destroyed_village_church",
+        "processors": "minecraft:empty",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 50,
+      "element": {
+        "location": "stellaris:moon_destroyed_village_house1",
+        "processors": "minecraft:empty",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ,
+    {
+      "weight": 50,
+      "element": {
+        "location": "stellaris:moon_destroyed_village_house2",
+        "processors": "minecraft:empty",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ,
+    {
+      "weight": 50,
+      "element": {
+        "location": "stellaris:moon_destroyed_village_house3",
+        "processors": "minecraft:empty",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ,
+    {
+      "weight": 50,
+      "element": {
+        "location": "stellaris:moon_destroyed_village_cross_house4",
+        "processors": "minecraft:empty",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ,
+    {
+      "weight": 50,
+      "element": {
+        "location": "stellaris:moon_destroyed_village_house5",
+        "processors": "minecraft:empty",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ,
+    {
+      "weight": 50,
+      "element": {
+        "location": "stellaris:moon_destroyed_village_house6",
+        "processors": "minecraft:empty",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ,
+    {
+      "weight": 50,
+      "element": {
+        "location": "stellaris:moon_destroyed_village_house7",
+        "processors": "minecraft:empty",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ,
+    {
+      "weight": 50,
+      "element": {
+        "location": "stellaris:moon_destroyed_village_tower",
+        "processors": "minecraft:empty",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

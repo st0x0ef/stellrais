@@ -1,11 +1,10 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "#"
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "stellaris:heavy_metal_ingot"
+    }
   ],
-  "key": {
-    "#": {"item": "stellaris:heavy_metal_ingot"}
-  },
   "result": {
     "id": "stellaris:heavy_metal_nugget",
     "count": 9

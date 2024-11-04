@@ -17,7 +17,6 @@ import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 public class JetSuit {
@@ -61,7 +60,7 @@ public class JetSuit {
 //            return true;
 //        }
 
-        public void onArmorTick(ItemStack stack, Level level, Player player) {
+        public void onArmorTick(ItemStack stack, ServerLevel level, Player player) {
             super.onArmorTick(stack, level, player);
 
             if (getFuel(stack) <= 0) return;
@@ -77,7 +76,7 @@ public class JetSuit {
             }
 
             switch (this.getMode(stack)) {
-                case 1 -> this.normalFlyModeMovement(player, stack);
+                case 1 -> this.normalFlyModeMovement(player);
                 case 2 -> this.hoverModeMovement(player, stack);
                 case 3 -> this.elytraModeMovement(player, stack);
             }
@@ -86,7 +85,7 @@ public class JetSuit {
             this.calculateSpacePressTime(player, stack);
         }
 
-        private void normalFlyModeMovement(Player player, ItemStack stack) {
+        private void normalFlyModeMovement(Player player) {
             if (KeyVariables.isHoldingJump(player)) {
                 player.moveRelative(1.2F, new Vec3(0, 0.1, 0));
                 player.resetFallDistance();

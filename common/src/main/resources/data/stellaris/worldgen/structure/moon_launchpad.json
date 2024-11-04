@@ -4,7 +4,7 @@
   "step": "surface_structures",
   "spawn_overrides": {},
   "terrain_adaptation": "beard_thin",
-  "start_pool": "stellaris:moon_launchpad/moon_launchpad",
+  "start_pool": "stellaris:moon/moon_launchpad",
   "size": 1,
   "start_height": {
     "absolute": 1

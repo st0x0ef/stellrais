@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "stellaris:moon_dungeon",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1592341735,
+    "spacing": 100,
+    "separation": 60
+  }
+}

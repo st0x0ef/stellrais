@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:jigsaw",
+  "biomes": "#stellaris:moon_biomes",
+  "step": "underground_structures",
+  "spawn_overrides": {},
+  "terrain_adaptation": "beard_thin",
+  "start_pool": "stellaris:moon/moon_dungeon_entry",
+  "size": 12,
+  "start_height": {
+    "absolute": -16
+  },
+  "max_distance_from_center": 116,
+  "use_expansion_hack": true
+}

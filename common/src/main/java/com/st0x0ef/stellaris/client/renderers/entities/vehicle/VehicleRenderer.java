@@ -101,6 +101,7 @@ public abstract class VehicleRenderer<T extends IVehicleEntity, M extends Entity
         super.render(entity, entityYaw, partialTick, poseStack, buffer, packedLight);
     }
 
+
     @Nullable
     protected RenderType getRenderType(T entity, boolean p_115323_, boolean p_115324_, boolean p_115325_) {
         ResourceLocation resourcelocation = this.getTextureLocation(entity);
@@ -113,15 +114,15 @@ public abstract class VehicleRenderer<T extends IVehicleEntity, M extends Entity
         }
     }
 
-    protected boolean isBodyVisible(T p_115341_) {
-        return !p_115341_.isInvisible();
+    protected boolean isBodyVisible(T entity) {
+        return !entity.isInvisible();
     }
 
-    protected boolean isShaking(T p_115304_) {
+    protected boolean isShaking(T entity) {
         return false;
     }
 
-    public static int getOverlayCoords(Entity p_115339_, float p_115340_) {
+    public static int getOverlayCoords(Entity entity, float p_115340_) {
         return OverlayTexture.pack(OverlayTexture.u(p_115340_), OverlayTexture.v(false));
     }
 

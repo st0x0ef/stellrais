@@ -1,6 +1,6 @@
 {
   "type": "minecraft:jigsaw",
-  "biomes": "#stellaris:has_structure/earth_biomes",
+  "biomes": "#stellaris:has_structure/meteor_biomes",
   "step": "surface_structures",
   "spawn_overrides": {},
   "terrain_adaptation": "none",

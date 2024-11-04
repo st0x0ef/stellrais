@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class SyncRocketComponentPacket implements CustomPacketPayload {
 
-    private final RocketComponent component;
+    final RocketComponent component;
 
 
     public static final StreamCodec<RegistryFriendlyByteBuf, SyncRocketComponentPacket> STREAM_CODEC = new StreamCodec<>() {

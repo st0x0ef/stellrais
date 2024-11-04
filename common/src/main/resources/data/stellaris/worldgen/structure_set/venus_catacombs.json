@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "stellaris:venus_catacombs",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1279549879,
+    "spacing": 50,
+    "separation": 30
+  }
+}

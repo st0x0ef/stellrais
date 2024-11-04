@@ -4,7 +4,7 @@
   "step": "surface_structures",
   "spawn_overrides": {},
   "terrain_adaptation": "beard_thin",
-  "start_pool": "stellaris:moon_first_landing/moon_first_landing",
+  "start_pool": "stellaris:moon/moon_first_landing",
   "size": 1,
   "start_height": {
     "absolute": 1

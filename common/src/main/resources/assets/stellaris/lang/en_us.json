@@ -297,7 +297,7 @@
   "item.stellaris.uranium_ingot": "Uranium Ingot",
   "item.stellaris.moon_berries": "Moon Berry",
 
-  "STELLARIS ROCKET STUFF":
+  "STELLARIS VEHICLE STUFF":
   ""
 ,
 
@@ -323,8 +323,9 @@
   "item.stellaris.skin_military": "Military Skin",
   "item.stellaris.skin_galaxy": "Galaxy Skin",
 
-  "item.stellaris.basic_rocket_skin": "Basic Rocket Skin",
-  "item.stellaris.frozy_rocket_skin": "Frozen Rocket Skin",
+  "item.stellaris.rover": "Rover",
+
+  "item.stellaris.speed_upgrade": "Speed Upgrade",
 
 
 
@@ -423,8 +424,21 @@
   "container.entity.stellaris.lander": "Lander",
   "container.entity.stellaris.rocket": "Rocket",
   "entity.stellaris.cheese_boss": "Cheese Boss",
+  "entity.stellaris.lander": "Lander",
+  "entity.stellaris.big_rocket": "Big Rocket",
+  "entity.stellaris.normal_rocket": "Normal Rocket",
+  "entity.stellaris.tiny_rocket": "Tiny Rocket",
+  "entity.stellaris.small_rocket": "Small Rocket",
+  "entity.stellaris.ice_shard_arrow": "Ice Shard Arrow",
+  "entity.stellaris.cheese_spit": "Cheese Spit",
+  "entity.stellaris.alien": "Alien",
+  "entity.stellaris.alien_zombie": "Alien Zombie",
+  "entity.stellaris.mogler": "Mogler",
+  "entity.stellaris.martian_raptor": "Martian Raptor",
+  "entity.stellaris.pygro": "Pygro",
+  "entity.stellaris.pygro_brute": "Pygro Brute",
 
-
+  "entity.stellaris.star_crawler": "Star Crawler",
 
   "STELLARIS ADVANCEMENTS":
   ""
@@ -438,6 +452,16 @@
   "advancements.venus.root.description": "Land on Venus.",
   "advancements.mercury.root.title": "Too Hot for Me!",
   "advancements.mercury.root.description": "Land on Mercury.",
+
+  "advancements.stellaris.rocket_station.description": "Crafted a Rocket Station.",
+  "advancements.stellaris.rocket_station.title": "An Other Kind of Workbench",
+
+  "advancements.stellaris.oil.description": "Find Oil.",
+  "advancements.stellaris.oil.title": "Did someone say Oil ?!!",
+  "advancements.stellaris.root.title": "What a weird metal...",
+  "advancements.stellaris.root.description": "Find Steel.",
+  "advancements.stellaris.rocket.description": "Crafted a rocket.",
+  "advancements.stellaris.rocket.title": "Fly Me to the Moon !",
 
 
 
@@ -490,6 +514,9 @@
   "category.stellaris.default": "Stellaris",
   "key.stellaris.rocket_start": "Rocket Start",
   "key.stellaris.freeze_planet_menu": "Freeze Planet Selection Menu",
+  "key.stellaris.jetsuit_mode": "Jet Suit Mode",
+  "key.stellaris.rocket_crafting_mode": "Rocket Crafting Mode",
+  "key.stellaris.slow_lander": "Slow Lander",
 
 
 
@@ -507,7 +534,6 @@
 
   "jetsuit.stellaris.oxygen": "§7Oxygen : §8%s",
   "general.stellaris.jet_suit_mode": "Mode",
-  "key.stellaris.jetsuit_mode": "Jet Suit Mode",
   "general.stellaris.jet_suit_disabled_mode": "Disabled",
   "general.stellaris.jet_suit_normal_mode": "Normal",
   "general.stellaris.jet_suit_hover_mode": "Hover",
@@ -544,13 +570,12 @@
   "stellaris.compat.rocket_crafting": "Rocket Crafting",
   "general.stellaris.rocket_crafting_mode": "Mode",
   "general.stellaris.rocket_crafting_fuel": "Fuel",
-  "key.stellaris.rocket_crafting_mode": "Rocket Crafting Mode",
   "general.stellaris.rocket_crafting_disabled_mode": "Disabled",
   "general.stellaris.rocket_crafting_normal_mode": "Normal",
 
   "message.stellaris.speed": "%s Speed",
   "text.stellaris.rocket.fuel": "You need to put %s in the rocket to be able to fly",
-  "message.stellaris.lander": "§4⚠ §r | §7 Press space to slow down!",
+  "message.stellaris.lander": "§4⚠ Warning §r |  Press space bar to slow down!",
 
   "tooltip.item.stellaris.can.empty": "Empty",
   "tooltip.item.stellaris.can.nutrition": "Nutrition: %s/%s",
@@ -568,14 +593,37 @@
   "translatable.stellaris.registry.players": "Player",
   "translatable.stellaris.registry.moons": "§7§l☾ §r§7Moons",
 
+  "tag.item.c.axes": "Axes",
+  "tag.item.c.arrows": "Arrows",
+  "tag.item.c.crops": "Crops",
 
+  "tag.item.c.raw_materials.desh": "Raw Desh",
+  "tag.item.c.raw_materials.neptunium": "Raw Neptunium",
+  "tag.item.c.raw_materials.steel": "Raw Steel",
+  "tag.item.c.raw_materials.uranium": "Raw Uranium",
+  "tag.item.c.ore_blocks.steel": "Steel Block",
+  "tag.item.c.nuggets.steel": "Steel Nugget",
+  "tag.item.c.nuggets.heavy_metal": "Heavy Metal Nugget",
+  "tag.item.c.nuggets.plutonium": "Plutonium Nugget",
 
-  "TO BE DELETED":
-  "These are blocks that have been named incorrectly for their translation keys, the replacement names should already be defined above this, so you only should have to delete this section when you're done"
-,
+  "tag.item.c.ingots.steel": "Steel Ingots",
+  "tag.item.c.ingots.heavy_metal": "Heavy Metal Ingots",
+  "tag.item.c.ingots.plutonium": "Plutonium Ingots",
+  "tag.item.c.ingots.neptunium": "Neptunium Ingots",
+  "tag.item.c.ingots.uranium": "Uranium Ingots",
+  "tag.item.c.ingots.desh": "Desh Ingots",
+  "tag.item.c.storage_blocks.raw_steel": "Raw Steel Block",
+  "tag.item.c.storage_blocks.raw_uranium": "Raw Uranium Block",
 
-  "Marcury": "rename to Mercury",
+  "tag.block.c.ores.desh": "Desh Ores",
+  "tag.block.c.ores.ostrum": "Ostrum Ores",
+  "tag.block.c.ores.uranium": "Uranium Ores",
+  "tag.block.c.ores.steel": "Steel Ores",
+  "tag.block.c.ores.neptunium": "Neptunium Ores",
 
-  "block.stellaris.marcury_polished_stone_slab": "Mercury Polished Stone Slab",
-  "block.stellaris.marcury_stone_slab": "Mercury Stone Slab"
+  "tag.item.stellaris.can": "Cans",
+  "tag.item.stellaris.space_food": "Space Food",
+  "tag.item.stellaris.rocket_skin": "Rocket Skin",
+  "tag.item.stellaris.coal_generator_fuel": "Coal Generator Fuel"
+
 }

@@ -8,5 +8,7 @@
   "parent": "stellaris:mars",
   "dimensionId": "stellaris:phobos",
   "translatable": "text.stellaris.planetscreen.phobos",
-  "id": "stellaris:phobos"
+  "id": "stellaris:phobos",
+  "clickable": false
+
 }

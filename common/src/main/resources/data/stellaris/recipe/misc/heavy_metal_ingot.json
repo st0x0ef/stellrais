@@ -1,11 +1,11 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "#"
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "stellaris:heavy_metal_plate"
+    }
   ],
-  "key": {
-    "#": {"item": "stellaris:heavy_metal_plate"}
-  },
+
   "result": {
     "id": "stellaris:heavy_metal_ingot",
     "count": 9

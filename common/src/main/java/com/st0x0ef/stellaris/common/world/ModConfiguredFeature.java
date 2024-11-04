@@ -168,5 +168,4 @@ public class ModConfiguredFeature {
         register(context, MOON_CAVES, Feature.VEGETATION_PATCH, new VegetationPatchConfiguration(BlockTags.MOSS_REPLACEABLE, BlockStateProvider.simple(BlocksRegistry.MOON_STONE.get()), PlacementUtils.inlinePlaced(holderGetter.getOrThrow(MOON_VINES), new PlacementModifier[0]), CaveSurface.CEILING, UniformInt.of(1, 2), 0.0F, 5, 0.08F, UniformInt.of(4, 7), 0.3F));
 
     }
-
 }

@@ -2,7 +2,7 @@
   "structures": [
     {
       "structure": "stellaris:moon_launchpad",
-      "weight": 1
+      "weight": 2
     }
   ],
   "placement": {

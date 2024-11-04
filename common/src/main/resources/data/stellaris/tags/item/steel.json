@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "stellaris:steel_ingot",
+    "stellaris:steel_nugget",
+    "stellaris:raw_steel_ingot",
+    "stellaris:steel_ore"
+  ]
+}

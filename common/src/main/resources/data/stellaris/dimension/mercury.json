@@ -4,8 +4,33 @@
     "type": "minecraft:noise",
     "settings": "stellaris:mercury",
     "biome_source": {
-      "type": "minecraft:fixed",
-      "biome": "stellaris:mercury"
+      "type": "minecraft:multi_noise",
+      "biomes": [
+        {
+          "biome": "stellaris:mercury",
+          "parameters": {
+            "temperature": 0,
+            "humidity": 0,
+            "continentalness": 0,
+            "erosion": 0.4,
+            "weirdness": 0,
+            "depth": 0,
+            "offset": 0
+          }
+        },
+        {
+          "biome": "stellaris:mercury_fire_land",
+          "parameters": {
+            "temperature": 0,
+            "humidity": 0,
+            "continentalness": 0,
+            "erosion": 0.4,
+            "weirdness": 0,
+            "depth": 0,
+            "offset": 0
+          }
+        }
+      ]
     }
   }
 }

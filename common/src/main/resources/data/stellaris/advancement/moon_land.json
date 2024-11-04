@@ -1,15 +1,17 @@
 {
+  "parent": "stellaris:rocket",
   "display": {
     "description": {
       "translate": "advancements.moon.root.description"
     },
+    "title": {
+      "translate": "advancements.moon.root.title"
+    },
     "icon": {
       "count": 1,
       "id": "stellaris:moon_sand"
-    },
-    "title": {
-      "translate": "advancements.moon.root.title"
     }
+
   },
   "criteria": {
     "moon_land": {

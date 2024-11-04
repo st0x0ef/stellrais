@@ -49,6 +49,8 @@ public class MoonPack extends SimpleJsonResourceReloadListener {
                     moon.id()
             );
 
+            moon.clickable().ifPresent(screenMoon::setClickable);
+
             PlanetSelectionScreen.MOONS.add(screenMoon);
             Stellaris.LOG.info("Added a moon to PlanetSelectionScreen : {}", moon.name());
         });

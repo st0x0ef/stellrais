@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class KeyVariables {
+
     public static final Map<UUID, Boolean> KEY_UP = new HashMap<>();
     public static final Map<UUID, Boolean> KEY_DOWN = new HashMap<>();
     public static final Map<UUID, Boolean> KEY_RIGHT = new HashMap<>();

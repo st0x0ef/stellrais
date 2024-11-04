@@ -1,13 +1,11 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "   ",
-    " # ",
-    "   "
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "stellaris:plutonium_nugget"
+    }
   ],
-  "key": {
-    "#": {"item": "stellaris:plutonium_nugget"}
-  },
+
   "result": {
     "id": "stellaris:plutonium_piece",
     "count": 9

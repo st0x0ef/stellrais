@@ -8,21 +8,6 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "stellaris:venus_globe",
-          "weight": 5,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 1,
-                "max": 1
-              }
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
           "name": "minecraft:gold_ingot",
           "weight": 20,
           "functions": [

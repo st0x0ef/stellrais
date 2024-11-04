@@ -68,32 +68,32 @@ subprojects {
         it.options.release = 21
     }
 
-    if (!isCommon) {
-
-        publishing {
-            publications {
-                maven(MavenPublication) {
-                    artifactId = "stellaris-${modLoader}-${rootProject.minecraft_version}"
-                    from components.java
-
-                    pom {
-                        name = "Stellaris ${modLoader}"
-                        url = "https://github.com/st0x0ef/stellaris"
-                    }
-                }
-            }
-            repositories {
-                maven {
-                    url = "http://maven.odysseyus.fr/releases/"
-                    allowInsecureProtocol = true
-                    credentials {
-                        username = System.getenv("MAVEN_USER")
-                        password = System.getenv("MAVEN_PASS")
-                    }
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                groupId "com.st0x0ef.stellaris"
+                artifactId "stellaris-$modLoader-" + minecraft_version
+                version project.version
+                from components.java
+                pom {
+                    name = "Stellaris" + modLoader.capitalize()
+                    url = "https://github.com/s0x0ef/Stellaris"
                 }
             }
         }
 
+        repositories {
+            maven {
+                url = "https://maven.odysseyus.fr/releases/"
+                credentials {
+                    username = System.getenv("MAVEN_USER")
+                    password = System.getenv("MAVEN_PASS")
+                }
+            }
+        }
+    }
+
+    if (!isCommon) {
         publishMods {
             file = file("../${modLoader.capitalize()}/build/libs/stellaris-${minecraft_version}-${modLoader}-${mod_version}.jar")
             changelog = file("../changelog.md").getText('UTF-8')

@@ -1,17 +1,15 @@
 package com.st0x0ef.stellaris.common.armors;
 
-import com.st0x0ef.stellaris.common.blocks.entities.machines.FluidTankHelper;
 import com.st0x0ef.stellaris.common.items.CustomArmorItem;
 import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
 import com.st0x0ef.stellaris.common.utils.OxygenUtils;
-import com.st0x0ef.stellaris.common.utils.PlanetUtil;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 
 import java.util.List;
 
@@ -25,15 +23,8 @@ public abstract class AbstractSpaceArmor extends CustomArmorItem {
             super(material, type, properties);
         }
 
-        int tickBeforeNextOxygenCheck = 10;
+        public void onArmorTick(ItemStack stack, ServerLevel level, Player player) {
 
-        public void onArmorTick(ItemStack stack, Level level, Player player) {
-            if (!PlanetUtil.hasOxygen(level) && !player.isCreative() && tickBeforeNextOxygenCheck == 0) {
-                OxygenUtils.removeOxygen(stack, FluidTankHelper.convertFromNeoMb(1L));
-
-            }
-
-            tickBeforeNextOxygenCheck = tickBeforeNextOxygenCheck == 0 ? 10 : tickBeforeNextOxygenCheck - 1;
         }
 
         @Override

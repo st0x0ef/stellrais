@@ -1,7 +1,9 @@
 # 1.2.0 beta 2 changelog
 
 ## Additions
+- Moon Vines
 - Rocket bar overlay now showing in lander
+- Add missing loot table
 
 ## Changes
 - Upgrade quantity of oil in oil chunk but make them a bit rarer
@@ -15,7 +17,7 @@
 
 
 
-# 1.2.0 changelog
+# 1.2.0 final changelog
 
 ## Additions
 - Structures :

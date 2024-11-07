@@ -1,3 +1,20 @@
+# 1.2.0 beta 2 changelog
+
+## Additions
+- Rocket bar overlay now showing in lander
+
+## Changes
+- Upgrade quantity of oil in oil chunk but make them a bit rarer
+- Improve oil finder
+- Improve rocket bar overlay
+- Unlock all planet on the selection menu if the player is in creative mode
+
+## Fix
+- Fix bug where the rocket don't open the planet menu when higher than 600 blocks
+
+
+
+
 # 1.2.0 changelog
 
 ## Additions

@@ -16,14 +16,4 @@ public record OxygenComponent(long oxygen, long capacity) implements Serializabl
     ).apply(instance, OxygenComponent::new));
 
     public static final StreamCodec<ByteBuf, OxygenComponent> STREAM_CODEC = StreamCodec.composite(ByteBufCodecs.VAR_LONG, OxygenComponent::oxygen, ByteBufCodecs.VAR_LONG, OxygenComponent::capacity, OxygenComponent::new);
-
-    public static OxygenComponent fromNetwork(RegistryFriendlyByteBuf buffer) {
-        return new OxygenComponent(buffer.readLong(), buffer.readLong());
-    }
-
-    public RegistryFriendlyByteBuf toNetwork(RegistryFriendlyByteBuf buffer) {
-        buffer.writeLong(this.oxygen);
-        buffer.writeLong(this.capacity);
-        return buffer;
-    }
 }

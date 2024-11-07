@@ -24,7 +24,6 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.DyedItemColor;
-import net.minecraft.world.level.block.Blocks;
 
 import java.util.ArrayList;
 

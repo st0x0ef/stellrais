@@ -21,8 +21,10 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.DyedItemColor;
+import net.minecraft.world.level.block.Blocks;
 
 import java.util.ArrayList;
 
@@ -226,6 +228,7 @@ public class ItemsRegistry {
     public static final RegistrySupplier<Item> MOON_POLISHED_STONE_BRICK_SLAB_ITEM = ITEMS.register("moon_polished_stone_brick_slab", () -> new BlockItem(BlocksRegistry.MOON_POLISHED_STONE_BRICK_SLAB.get(), new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_BLOCKS_TAB)));
     public static final RegistrySupplier<Item> MOON_ICE_SHARD_ORE = ITEMS.register("moon_ice_shard_ore", () -> new BlockItem(BlocksRegistry.MOON_ICE_SHARD_ORE.get(), new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_BLOCKS_TAB)));
     public static final RegistrySupplier<Item> MOON_IRON_ORE = ITEMS.register("moon_iron_ore", () -> new BlockItem(BlocksRegistry.MOON_IRON_ORE.get(), new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_BLOCKS_TAB)));
+    public static final RegistrySupplier<Item> MOON_BERRIES = ITEMS.register("moon_berries", () -> new ItemNameBlockItem(BlocksRegistry.MOON_VINES.get(), (new Item.Properties()).food(Foods.GLOW_BERRIES)));
 
     /**
      * Mercury

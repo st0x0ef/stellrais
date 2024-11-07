@@ -4,19 +4,31 @@ import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.client.StellarisClient;
 import com.st0x0ef.stellaris.common.registry.EntityRegistry;
 import com.st0x0ef.stellaris.common.registry.ItemsRegistry;
+import com.st0x0ef.stellaris.common.world.ModConfiguredFeature;
+import com.st0x0ef.stellaris.common.world.ModPlacedFeatures;
 import com.st0x0ef.stellaris.neoforge.systems.SystemsNeoForge;
+
+import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.DataProvider;
+
 import net.minecraft.world.item.CreativeModeTabs;
 import com.st0x0ef.stellaris.platform.neoforge.EffectRegisterImpl;
+
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
+
+import java.util.Set;
 
 @Mod(Stellaris.MODID)
 public class StellarisNeoForge {
@@ -52,6 +64,13 @@ public class StellarisNeoForge {
             }
         }
     }
+
+
+
+
+
+
+
 
     public static void onAddReloadListenerEvent(AddReloadListenerEvent event) {
         Stellaris.onAddReloadListenerEvent((id, listener) -> event.addListener(listener));

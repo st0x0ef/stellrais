@@ -40,10 +40,15 @@ import com.st0x0ef.stellaris.common.registry.*;
 import dev.architectury.event.events.common.TickEvent;
 import dev.architectury.registry.menu.MenuRegistry;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.rendering.v1.*;
+
+import net.minecraft.client.renderer.RenderType;
+
 import net.minecraft.client.Minecraft;
+
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.world.entity.Entity;
@@ -109,7 +114,14 @@ public class StellarisFabricClient implements ClientModInitializer {
         BuiltinItemRendererRegistry.INSTANCE.register(ItemsRegistry.MERCURY_GLOBE_ITEM.get(), ItemRendererRegistry.GLOBE_ITEM_RENDERER::renderByItem);
         BuiltinItemRendererRegistry.INSTANCE.register(ItemsRegistry.VENUS_GLOBE_ITEM.get(), ItemRendererRegistry.GLOBE_ITEM_RENDERER::renderByItem);
 
+
+        BlockRenderLayerMap.INSTANCE.putBlock(BlocksRegistry.MOON_VINES.get(), RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BlocksRegistry.MOON_VINES_PLANT.get(), RenderType.cutout());
+
+
+
         BuiltinItemRendererRegistry.INSTANCE.register(ItemsRegistry.ROVER.get(), ItemRendererRegistry.ROVER_ITEM_RENDERER::renderByItem);
+
     }
 
     public static void registerEntityModelLayer() {

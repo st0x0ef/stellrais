@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "berries=false": {
+      "model": "stellaris:block/moon_vines_plant"
+    },
+    "berries=true": {
+      "model": "stellaris:block/moon_vines_plant_lit"
+    }
+  }
+}

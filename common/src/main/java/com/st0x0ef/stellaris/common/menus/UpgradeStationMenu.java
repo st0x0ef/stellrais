@@ -71,9 +71,9 @@ public class UpgradeStationMenu extends ItemCombinerMenu {
     @Override
     protected @NotNull ItemCombinerMenuSlotDefinition createInputSlotDefinitions() {
         return ItemCombinerMenuSlotDefinition.create()
-                .withSlot(0, 27, 47, itemStack -> itemStack.getItem() instanceof SpaceSuit)
-                .withSlot(1, 76, 47, itemStack -> itemStack.getItem() instanceof SpaceSuitModule)
-                .withResultSlot(2, 134, 47)
+                .withSlot(0, 30, 40, itemStack -> itemStack.getItem() instanceof SpaceSuit)
+                .withSlot(1, 78, 40, itemStack -> itemStack.getItem() instanceof SpaceSuitModule)
+                .withResultSlot(2, 134, 40)
                 .build();
     }
 }

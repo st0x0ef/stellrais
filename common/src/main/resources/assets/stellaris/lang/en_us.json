@@ -285,6 +285,17 @@
   "item.stellaris.oil_finder": "Oil Finder",
 
 
+  "item.stellaris.raw_steel_ingot": "Raw Steel Ingot",
+  "item.stellaris.steel_ingot": "Steel Ingot",
+  "item.stellaris.raw_desh_ingot": "Raw Desh Ingot",
+  "item.stellaris.desh_ingot": "Desh Ingot",
+  "item.stellaris.ice_shard": "Ice Shard",
+  "item.stellaris.steel_nugget": "Steel Nugget",
+  "item.stellaris.heavy_metal_ingot": "Heavy Metal Ingot",
+  "item.stellaris.heavy_metal_nugget": "Heavy Metal Nugget",
+  "item.stellaris.raw_uranium": "Raw Uranium",
+  "item.stellaris.uranium_ingot": "Uranium Ingot",
+  "item.stellaris.moon_berries": "Moon Berry",
 
   "STELLARIS VEHICLE STUFF":
   ""

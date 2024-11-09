@@ -174,7 +174,7 @@
                               "argument1": "stellaris:moon/density",
                               "argument2": {
                                 "type": "minecraft:mul",
-                                "argument1": 5,
+                                "argument1": 50,
                                 "argument2": "minecraft:overworld/caves/entrances"
                               }
                             },
@@ -299,7 +299,8 @@
           "if_true": {
             "type": "minecraft:biome",
             "biome_is": [
-              "stellaris:moon_desert"
+              "stellaris:moon_desert",
+              "stellaris:moon_caves"
             ]
           },
           "then_run": {
@@ -330,7 +331,8 @@
           "if_true": {
             "type": "minecraft:biome",
             "biome_is": [
-              "stellaris:moon_desert"
+              "stellaris:moon_desert",
+              "stellaris:moon_caves"
             ]
           },
           "then_run": {

@@ -33,7 +33,20 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
     @Override
     public void tick() {
         FluidTankHelper.extractFluidToItem(this, resultTank, 2, 3);
-        addFuelToJetSuit();
+
+        if (getItem(2).getItem() instanceof JetSuit.Suit) {
+            int fuel = FluidTankHelper.convertFromNeoMb(1000);
+
+            if(resultTank.getAmount() < FluidTankHelper.convertFromNeoMb(1000)) {
+                fuel = (int) resultTank.getAmount();
+            }
+            else if (JetSuit.Suit.getFuel(getItem(2)) + fuel > JetSuit.MAX_FUEL_CAPACITY) {
+                fuel = (int) (JetSuit.MAX_FUEL_CAPACITY - (int) JetSuit.Suit.getFuel(getItem(2)));
+            }
+
+            JetSuit.Suit.addFuel(getItem(2), fuel);
+            resultTank.shrink(fuel);
+        }
 
         if (!FluidTankHelper.addFluidFromBucket(this, ingredientTank, 0, 1)) {
             FluidTankHelper.extractFluidToItem(this, ingredientTank, 0, 1);
@@ -56,25 +69,6 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
                     }
                 }
             }
-        }
-    }
-
-    public void addFuelToJetSuit() {
-        if (this.level.isClientSide) return;
-
-        if (getItem(2).getItem() instanceof JetSuit.Suit) {
-            int fuel = 1000;
-
-            if(resultTank.getAmount() < 1000) {
-                fuel = (int) resultTank.getAmount();
-            }
-            if (JetSuit.Suit.getFuel(getItem(2)) + fuel > 243_000) {
-                fuel = 243000 -  (int)JetSuit.Suit.getFuel(getItem(2));
-            }
-
-            JetSuit.Suit.addFuel(getItem(2), (int) fuel);
-            resultTank.grow(-fuel);
-
         }
     }
 

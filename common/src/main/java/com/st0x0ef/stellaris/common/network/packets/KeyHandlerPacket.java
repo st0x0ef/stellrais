@@ -1,14 +1,10 @@
 package com.st0x0ef.stellaris.common.network.packets;
 
 import com.st0x0ef.stellaris.Stellaris;
-import com.st0x0ef.stellaris.common.data_components.SpaceSuitModules;
-import com.st0x0ef.stellaris.common.entities.vehicles.RocketEntity;
-import com.st0x0ef.stellaris.common.items.armors.JetSuit;
-import com.st0x0ef.stellaris.common.items.module.JetModule;
+import com.st0x0ef.stellaris.common.armors.JetSuit;
 import com.st0x0ef.stellaris.common.keybinds.KeyVariables;
 import com.st0x0ef.stellaris.common.menus.PlanetSelectionMenu;
 import com.st0x0ef.stellaris.common.network.NetworkRegistry;
-import com.st0x0ef.stellaris.common.registry.ItemsRegistry;
 import com.st0x0ef.stellaris.common.utils.Utils;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -73,18 +69,7 @@ public class KeyHandlerPacket implements CustomPacketPayload {
                         ItemStack itemStack = player.getItemBySlot(EquipmentSlot.CHEST);
                         JetSuit.Suit item = (JetSuit.Suit) itemStack.getItem();
                         item.switchJetSuitMode(itemStack);
-                    } else if (Utils.isLivingInSpaceSuit(player)) {
-                        ItemStack itemStack = player.getItemBySlot(EquipmentSlot.CHEST);
-                        ItemStack jetModule = SpaceSuitModules.getIfContains(itemStack, ItemsRegistry.MODULE_JET.get());
-                        if (!jetModule.isEmpty()) {
-                            if (jetModule.getItem() instanceof JetModule module) {
-                                module.switchJetSuitMode(itemStack);
-                            }
-                        }
                     }
-                    break;
-                case "rocket_start":
-                    if (player.getVehicle() instanceof RocketEntity rocketEntity) rocketEntity.startRocket();
                     break;
                 case "key_jump":
                     KeyVariables.KEY_JUMP.put(player.getUUID(), packet.condition);

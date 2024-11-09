@@ -1,0 +1,64 @@
+{
+  "temperature": 0.5,
+  "downfall": 0,
+  "precipitation": "none",
+  "has_precipitation": false,
+
+  "effects": {
+    "sky_color": 2105376,
+    "fog_color": 1447444,
+    "water_color": 4159204,
+    "water_fog_color": 329011,
+    "grass_color": 9551193,
+    "foliage_color": 7842607
+  },
+  "creature_spawn_probability": 0.2,
+  "spawners": {
+    "monster": [
+	  {
+        "type": "stellaris:alien_zombie",
+        "weight": 55,
+        "minCount": 1,
+        "maxCount": 1
+      },
+	  {
+        "type": "stellaris:star_crawler",
+        "weight": 45,
+        "minCount": 1,
+        "maxCount": 3
+      }
+    ]
+  },
+  "spawn_costs": {
+    "stellaris:alien_zombie": {
+      "energy_budget": 0.015,
+      "charge": 0.2
+    },
+	"stellaris:star_crawler": {
+      "energy_budget": 0.015,
+      "charge": 0.4
+    }
+  },
+  "carvers": {
+    "air": [
+      "minecraft:cave",
+      "minecraft:cave_extra_underground",
+      "minecraft:canyon"
+    ]
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "minecraft:large_dripstone",
+      "stellaris:moon_dripstone_cluster",
+      "minecraft:pointed_dripstone",
+      "stellaris:moon_caves"
+    ]
+  ]
+}

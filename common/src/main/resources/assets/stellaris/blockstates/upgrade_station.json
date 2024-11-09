@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "stellaris:block/upgrade_station"
+    }
+  }
+}

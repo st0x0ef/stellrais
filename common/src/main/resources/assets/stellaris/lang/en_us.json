@@ -624,6 +624,51 @@
   "tag.item.stellaris.can": "Cans",
   "tag.item.stellaris.space_food": "Space Food",
   "tag.item.stellaris.rocket_skin": "Rocket Skin",
-  "tag.item.stellaris.coal_generator_fuel": "Coal Generator Fuel"
+  "tag.item.stellaris.coal_generator_fuel": "Coal Generator Fuel",
 
+  "spacesuit.stellaris.auto_feeder": "Auto Feeder",
+  "spacesuit.stellaris.shift_for_modules": "Hold shift for module list",
+  "spacesuit.stellaris.modules": "Modules",
+
+  "translatable.stellaris.registry.holdshift": "Hold [↑ Shift] to view more info",
+  "translatable.stellaris.registry.player": "Player",
+  "translatable.stellaris.registry.players": "player",
+  "translatable.stellaris.registry.moons": "§7§l☾ §r§7Moons",
+
+  "tooltip.item.stellaris.can.empty": "Empty",
+  "tooltip.item.stellaris.can.nutrition": "Nutrition: %s/%s",
+  "tooltip.item.stellaris.can.saturation": "Saturation: %s",
+  "tooltip.item.stellaris.oxygen_tank": "Oxygen: %s/%s",
+  "tooltip.item.stellaris.rocket.skin": "Skin: %s",
+  "tooltip.item.stellaris.rocket.fuel": "Fuel: %s",
+  "tooltip.item.stellaris.rocket.model": "Model: %s",
+  "tooltip.item.stellaris.oil_finder": "Right click on a block to check if there is oil",
+
+  "container.entity.stellaris.lander": "Lander",
+  "container.entity.stellaris.rocket": "Rocket",
+  "container.stellaris.upgrade": "Upgrade",
+  "advancements.moon.root.title" : "That's small step for man, one giant leap for mankind",
+  "advancements.moon.root.description" : "Land on the moon",
+  "advancements.mars.root.title" : "Red wasteland",
+  "advancements.mars.root.description" : "Land on mars",
+  "advancements.venus.root.title" : "Venus, goddess of love & beauty",
+  "advancements.venus.root.description" : "Land on venus",
+  "advancements.mercury.root.title" : "Too hot for me",
+  "advancements.mercury.root.description" : "Land on mercury",
+  "death.attack.radiation": "%1$s received a lethal dose of radiation",
+  "death.attack.oxygen" : "%1$s died from lack of oxygen",
+  "event.stellaris.cheeseboss": "Cheese Boss",
+
+  "entity.stellaris.cheese_boss": "Cheese Boss",
+  "message.stellaris.speed": "%s Speed",
+
+  "category.stellaris.default": "Stellaris Key",
+  "key.stellaris.rocket_start": "Rocket Start",
+  "key.stellaris.freeze_planet_menu": "Freeze Planet in the Selection Menu",
+
+  "screen.stellaris.gauge": "Capacity : %1$s / %2$s",
+
+  "gauge_text.stellaris.stored" : "Stored : %s",
+  "gauge_text.stellaris.capacity" : "Capacity : %s",
+  "gauge_text.stellaris.max_generation" : "Max Generation : %s Fe/tick"
 }

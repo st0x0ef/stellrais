@@ -1,19 +1,17 @@
 package com.st0x0ef.stellaris.client;
 
 import com.st0x0ef.stellaris.Stellaris;
-import com.st0x0ef.stellaris.client.overlays.JetSuitOverlay;
-import com.st0x0ef.stellaris.client.overlays.LanderOverlay;
-import com.st0x0ef.stellaris.client.overlays.RocketBarOverlay;
-import com.st0x0ef.stellaris.client.overlays.RocketStartOverlay;
+import com.st0x0ef.stellaris.client.overlays.*;
 import com.st0x0ef.stellaris.client.particles.*;
 import com.st0x0ef.stellaris.client.renderers.armors.JetSuitModel;
 import com.st0x0ef.stellaris.client.renderers.armors.SpaceSuitModel;
-import com.st0x0ef.stellaris.client.screens.*;
+import com.st0x0ef.stellaris.client.screens.ConfigScreen;
 import com.st0x0ef.stellaris.common.data.screen.MoonPack;
 import com.st0x0ef.stellaris.common.data.screen.PlanetPack;
 import com.st0x0ef.stellaris.common.data.screen.StarPack;
 import com.st0x0ef.stellaris.common.handlers.GlobalExceptionHandler;
-import com.st0x0ef.stellaris.common.registry.*;
+import com.st0x0ef.stellaris.common.registry.ItemsRegistry;
+import com.st0x0ef.stellaris.common.registry.ParticleRegistry;
 import com.st0x0ef.stellaris.platform.ClientUtilsPlatform;
 import dev.architectury.event.events.client.ClientGuiEvent;
 import dev.architectury.platform.Platform;
@@ -72,6 +70,7 @@ public class StellarisClient {
         ClientGuiEvent.RENDER_HUD.register(RocketBarOverlay::render);
         ClientGuiEvent.RENDER_HUD.register(LanderOverlay::render);
         ClientGuiEvent.RENDER_HUD.register(JetSuitOverlay::render);
+        ClientGuiEvent.RENDER_HUD.register(SpaceSuitOverlay::render);
     }
 
     public static void setupOpenGLDebugMessageCallback() {

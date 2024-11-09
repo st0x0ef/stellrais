@@ -1,8 +1,8 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
-import com.st0x0ef.stellaris.common.armors.JetSuit;
 import com.st0x0ef.stellaris.common.data.recipes.FuelRefineryRecipe;
 import com.st0x0ef.stellaris.common.data.recipes.input.FluidInput;
+import com.st0x0ef.stellaris.common.items.armors.JetSuit;
 import com.st0x0ef.stellaris.common.menus.FuelRefineryMenu;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import com.st0x0ef.stellaris.common.registry.RecipesRegistry;

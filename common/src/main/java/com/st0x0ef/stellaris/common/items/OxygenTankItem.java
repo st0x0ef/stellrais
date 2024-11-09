@@ -2,7 +2,7 @@ package com.st0x0ef.stellaris.common.items;
 
 import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.OxygenDistributorBlockEntity;
-import com.st0x0ef.stellaris.common.data_components.OxygenComponent;
+import com.st0x0ef.stellaris.common.data_components.CappedLongComponent;
 import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
 import com.st0x0ef.stellaris.common.utils.OxygenUtils;
 import net.minecraft.ChatFormatting;
@@ -44,16 +44,16 @@ public class OxygenTankItem extends Item {
                 Stellaris.LOG.info("ee");
 
                 ItemStack tank = player.getItemInHand(usedHand);
-                OxygenComponent oxygenComponent = tank.get(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get());
+                CappedLongComponent oxygenComponent = tank.get(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get());
 
-                if (oxygenComponent.oxygen() == 0) {
+                if (oxygenComponent.amount() == 0) {
                     return super.use(level, player, usedHand);
                 }
 
-                if (OxygenUtils.getOxygenCapacity(armor) - OxygenUtils.getOxygen(armor) > oxygenComponent.oxygen()) {
-                    OxygenUtils.addOxygen(armor, oxygenComponent.oxygen());
+                if (OxygenUtils.getOxygenCapacity(armor) - OxygenUtils.getOxygen(armor) > oxygenComponent.amount()) {
+                    OxygenUtils.addOxygen(armor, oxygenComponent.amount());
                     OxygenUtils.setOxygen(tank, 0);
-                } else if (OxygenUtils.getOxygenCapacity(armor) - OxygenUtils.getOxygen(armor) <= oxygenComponent.oxygen()) {
+                } else if (OxygenUtils.getOxygenCapacity(armor) - OxygenUtils.getOxygen(armor) <= oxygenComponent.amount()) {
                     OxygenUtils.addOxygen(armor, OxygenUtils.getOxygenCapacity(armor) - OxygenUtils.getOxygen(armor));
                     OxygenUtils.addOxygen(tank, -(OxygenUtils.getOxygenCapacity(armor) + OxygenUtils.getOxygen(armor)));
                 }

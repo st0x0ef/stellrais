@@ -1,8 +1,10 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
-import com.st0x0ef.stellaris.common.armors.JetSuit;
+import com.st0x0ef.stellaris.common.data_components.CappedLongComponent;
+import com.st0x0ef.stellaris.common.items.armors.JetSuit;
 import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
 import com.st0x0ef.stellaris.common.registry.FluidRegistry;
+import com.st0x0ef.stellaris.common.utils.FuelUtils;
 import com.st0x0ef.stellaris.common.utils.OxygenUtils;
 import dev.architectury.fluid.FluidStack;
 import dev.architectury.hooks.fluid.FluidBucketHooks;
@@ -38,7 +40,7 @@ public class FluidTankHelper {
 
                     if (isTank && tank.getStack().getFluid().isSame(FluidRegistry.OXYGEN_STILL.get())) {
                         resultStack = inputStack.copy();
-                        long storedOxygen = inputStack.get(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()).oxygen();
+                        long storedOxygen = inputStack.get(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()).amount();
 
                         if (storedOxygen + OXYGEN_TANK_FILL_AMOUNT >= inputStack.get(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()).capacity()) {
                             return;
@@ -101,9 +103,10 @@ public class FluidTankHelper {
 
                     if (success) {
                         if (canFuel) {
-                            long fuel = inputStack.getOrDefault(DataComponentsRegistry.STORED_FUEL_COMPONENT.get(), 0).longValue();
-                            amount = Math.min(JetSuit.MAX_FUEL_CAPACITY - fuel, tank.getAmount());
-                            resultStack.set(DataComponentsRegistry.STORED_FUEL_COMPONENT.get(), Mth.clamp(fuel + amount, 0, JetSuit.MAX_FUEL_CAPACITY));
+                            long fuel = FuelUtils.getFuel(inputStack);
+                            amount = Math.min(FuelUtils.getFuelCapacity(inputStack) - fuel, tank.getAmount());
+                            resultStack.set(DataComponentsRegistry.STORED_FUEL_COMPONENT.get(), new CappedLongComponent(
+                                    Mth.clamp(fuel + amount, 0, JetSuit.MAX_FUEL_CAPACITY), FuelUtils.getFuelCapacity(inputStack)));
                         }
 
                         inputStack.shrink(1);

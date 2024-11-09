@@ -1,8 +1,8 @@
 package com.st0x0ef.stellaris.client.overlays;
 
 import com.st0x0ef.stellaris.Stellaris;
-import com.st0x0ef.stellaris.common.armors.AbstractSpaceArmor;
-import com.st0x0ef.stellaris.common.armors.JetSuit;
+import com.st0x0ef.stellaris.common.items.armors.AbstractSpaceArmor;
+import com.st0x0ef.stellaris.common.items.armors.JetSuit;
 import com.st0x0ef.stellaris.common.utils.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.DeltaTracker;

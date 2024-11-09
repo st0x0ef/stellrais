@@ -1,6 +1,6 @@
 package com.st0x0ef.stellaris.mixin;
 
-import com.st0x0ef.stellaris.common.armors.AbstractSpaceArmor;
+import com.st0x0ef.stellaris.common.items.armors.AbstractSpaceArmor;
 import com.st0x0ef.stellaris.common.registry.EntityData;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;

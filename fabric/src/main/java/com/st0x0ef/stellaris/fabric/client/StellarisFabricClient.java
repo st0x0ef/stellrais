@@ -163,7 +163,7 @@ public class StellarisFabricClient implements ClientModInitializer {
         MenuRegistry.registerScreenFactory(MenuTypesRegistry.WATER_PUMP_MENU.get(), WaterPumpScreen::new);
         MenuRegistry.registerScreenFactory(MenuTypesRegistry.WAIT_MENU.get(), WaitScreen::new);
         MenuRegistry.registerScreenFactory(MenuTypesRegistry.PUMPJACK_MENU.get(), PumpjackScreen::new);
-
+        MenuRegistry.registerScreenFactory(MenuTypesRegistry.UPGRADE_STATION_MENU.get(), UpgradeStationScreen::new);
     }
 
     public static void registerKeyBinding() {

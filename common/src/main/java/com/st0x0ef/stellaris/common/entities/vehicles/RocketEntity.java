@@ -113,6 +113,11 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
     }
 
     @Override
+    public boolean setPassengersRiding() {
+        return false;
+    }
+
+    @Override
     public void tick() {
         super.tick();
 

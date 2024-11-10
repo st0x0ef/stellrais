@@ -347,7 +347,11 @@
   "item.stellaris.jetsuit_leggings": "Jet Suit Leggings",
   "item.stellaris.jetsuit_boots": "Jet Suit Boots",
   "item.stellaris.jetsuit_suit": "Jet Suit Chest",
-
+  "item.stellaris.fuel_module": "Fuel Module",
+  "item.stellaris.oil_finder_module": "Oil Finder Module",
+  "item.stellaris.auto_feader_module": "Auto Feader Module",
+  "item.stellaris.gravity_normalizer_module": "Gravity Normalizer Module",
+  "item.stellaris.jet_module": "Jet Module",
 
 
   "STELLARIS TOOLS/WEAPONS":

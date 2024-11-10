@@ -371,6 +371,10 @@ public class ItemsRegistry {
     public static final RegistrySupplier<Item> SPACESUIT_BOOTS = ITEMS.register("space_suit_boots", () -> new CustomArmorItem(ArmorMaterialsRegistry.SPACE_SUIT, ArmorItem.Type.BOOTS, new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB)));
 
     //Modules
+    public static final RegistrySupplier<Item> BASE_MODULE_TIER_1 = ITEMS.register("base_module_tier_1", () -> new Item(new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB)));
+    public static final RegistrySupplier<Item> BASE_MODULE_TIER_2 = ITEMS.register("base_module_tier_2", () -> new Item(new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB)));
+
+
     public static final RegistrySupplier<Item> MODULE_FUEL = ITEMS.register("fuel_module", () -> new FuelModule(new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB)));
     public static final RegistrySupplier<Item> MODULE_AUTO_FEEDER = ITEMS.register("auto_feeder_module", () -> new AutoFeederModule(new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB)));
     public static final RegistrySupplier<Item> MODULE_OIL_FINDER = ITEMS.register("oil_finder_module", () -> new OilFinderModule(new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB)));

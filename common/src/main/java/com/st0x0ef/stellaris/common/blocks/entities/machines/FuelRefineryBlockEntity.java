@@ -33,21 +33,23 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
 
     @Override
     public void tick() {
-        FluidTankHelper.extractFluidToItem(this, resultTank, 2, 3);
-
         if (getItem(2).getItem() instanceof JetSuit.Suit) {
-            int fuel = FluidTankHelper.convertFromNeoMb(1000);
+            int fuel = FluidTankHelper.convertFromNeoMb(10);
 
-            if(resultTank.getAmount() < FluidTankHelper.convertFromNeoMb(1000)) {
+            if (resultTank.getAmount() < fuel) {
                 fuel = (int) resultTank.getAmount();
             }
+
             else if (FuelUtils.getFuel(getItem(2)) + fuel > JetSuit.MAX_FUEL_CAPACITY) {
                 fuel = (int) (JetSuit.MAX_FUEL_CAPACITY - (int) FuelUtils.getFuel(getItem(2)));
             }
 
             if (FuelUtils.addFuel(getItem(2), fuel)) {
                 resultTank.shrink(fuel);
+                this.setChanged();
             }
+        } else {
+            FluidTankHelper.extractFluidToItem(this, resultTank, 2, 3);
         }
 
         if (!FluidTankHelper.addFluidFromBucket(this, ingredientTank, 0, 1)) {

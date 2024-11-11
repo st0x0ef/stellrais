@@ -106,7 +106,7 @@ public class FluidTankHelper {
                             long fuel = FuelUtils.getFuel(inputStack);
                             amount = Math.min(FuelUtils.getFuelCapacity(inputStack) - fuel, tank.getAmount());
                             resultStack.set(DataComponentsRegistry.STORED_FUEL_COMPONENT.get(), new CappedLongComponent(
-                                    Mth.clamp(fuel + amount, 0, JetSuit.MAX_FUEL_CAPACITY), FuelUtils.getFuelCapacity(inputStack)));
+                                    Mth.clamp(fuel + amount, 0, FuelUtils.getFuelCapacity(inputStack)), FuelUtils.getFuelCapacity(inputStack)));
                         }
 
                         inputStack.shrink(1);

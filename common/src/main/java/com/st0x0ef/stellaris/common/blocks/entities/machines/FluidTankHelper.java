@@ -27,7 +27,6 @@ import java.util.List;
 public class FluidTankHelper {
 
     public static final long BUCKET_AMOUNT = FluidStackHooks.bucketAmount();
-    public static final long OXYGEN_TANK_FILL_AMOUNT = Platform.isFabric() ? 810 : 10;
 
     public static <T extends BlockEntity & Container> void extractFluidToItem(T blockEntity, FluidTank tank, int slot) {
         ItemStack inputStack = blockEntity.getItem(slot);
@@ -35,19 +34,28 @@ public class FluidTankHelper {
             if (!tank.isEmpty()) {
                 boolean isTank = inputStack.has(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get());
 
-                if (tank.getAmount() >= BUCKET_AMOUNT || (isTank && tank.getAmount() >= OXYGEN_TANK_FILL_AMOUNT)) {
+                if (tank.getAmount() >= BUCKET_AMOUNT || (isTank && !tank.isEmpty())) {
                     ItemStack resultStack = ItemStack.EMPTY;
 
                     if (isTank && tank.getStack().getFluid().isSame(FluidRegistry.OXYGEN_STILL.get())) {
                         resultStack = inputStack.copy();
-                        long storedOxygen = inputStack.get(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()).amount();
+                        long storedOxygen = OxygenUtils.getOxygen(inputStack);
 
-                        if (storedOxygen + OXYGEN_TANK_FILL_AMOUNT >= inputStack.get(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()).capacity()) {
+                        if (storedOxygen + 1 >= OxygenUtils.getOxygenCapacity(inputStack)) {
                             return;
                         }
 
-                        OxygenUtils.addOxygen(resultStack, OXYGEN_TANK_FILL_AMOUNT);
-                        tank.shrink(OXYGEN_TANK_FILL_AMOUNT);
+                        else if (OxygenUtils.getOxygenCapacity(inputStack) - storedOxygen > convertFromNeoMb(10) && tank.getAmount() > convertFromNeoMb(10)) {
+                            OxygenUtils.addOxygen(resultStack, convertFromNeoMb(10));
+                            tank.shrink(convertFromNeoMb(10));
+                        } else if (tank.getAmount() < convertFromNeoMb(10) && storedOxygen + tank.getAmount() <= OxygenUtils.getOxygenCapacity(inputStack)) {
+                            OxygenUtils.addOxygen(resultStack, tank.getAmount());
+                            tank.shrink(tank.getAmount());
+                        }
+                        else if (tank.getAmount() > OxygenUtils.getOxygenCapacity(inputStack) - storedOxygen){
+                            OxygenUtils.addOxygen(resultStack, OxygenUtils.getOxygenCapacity(inputStack) - storedOxygen);
+                            tank.shrink(OxygenUtils.getOxygenCapacity(inputStack) - storedOxygen);
+                        }
                     }
                     else if (!isTank && isEmptyBucket(inputStack.getItem())) {
                         ItemStack stack = new ItemStack(tank.getStack().getFluid().getBucket());

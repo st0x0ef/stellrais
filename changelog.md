@@ -10,6 +10,7 @@
 
 ## Fix
 - Fix fuel refinery doesn't convert convert neo mb to fabric mb
+- Fix fluid transfer
 
 
 # 1.2.0 final changelog

@@ -18,7 +18,7 @@ import net.minecraft.world.level.chunk.ChunkAccess;
 public class PumpjackBlockEntity extends BaseEnergyContainerBlockEntity implements WrappedFluidBlockEntity{
 
     private boolean isGenerating = false;
-    private long oilToExtract =  FluidTankHelper.OXYGEN_TANK_FILL_AMOUNT / 10;
+    private final long oilToExtract = FluidTankHelper.convertFromNeoMb(10);
     public final FluidTank resultTank = new FluidTank("resultTank", 5);
     public int chunkOilLevel = 0;
     public PumpjackBlockEntity(BlockPos pos, BlockState state) {

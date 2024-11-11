@@ -4,7 +4,7 @@
   "step": "underground_structures",
   "spawn_overrides": {},
   "terrain_adaptation": "beard_thin",
-  "start_pool": "stellaris:earth_operation_base/earth_operation_base",
+  "start_pool": "stellaris:earth/earth_operation_base",
   "size": 1,
   "start_height": {
     "absolute": -17

@@ -117,6 +117,7 @@ public class StellarisFabricClient implements ClientModInitializer {
 
         BlockRenderLayerMap.INSTANCE.putBlock(BlocksRegistry.MOON_VINES.get(), RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BlocksRegistry.MOON_VINES_PLANT.get(), RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BlocksRegistry.UPGRADE_STATION.get(), RenderType.cutout());
 
 
 

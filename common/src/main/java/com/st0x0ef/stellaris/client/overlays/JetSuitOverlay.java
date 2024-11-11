@@ -3,6 +3,7 @@ package com.st0x0ef.stellaris.client.overlays;
 import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.common.items.armors.AbstractSpaceArmor;
 import com.st0x0ef.stellaris.common.items.armors.JetSuit;
+import com.st0x0ef.stellaris.common.utils.FuelUtils;
 import com.st0x0ef.stellaris.common.utils.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.DeltaTracker;
@@ -28,7 +29,7 @@ public class JetSuitOverlay {
             if (itemStack.getItem() instanceof JetSuit.Suit jetSuitItem) {
                 Component modeText = jetSuitItem.getModeType(itemStack).getComponent();
                 ChatFormatting chatFormatting = jetSuitItem.getModeType(itemStack).getChatFormatting();
-                String fuel = String.valueOf(AbstractSpaceArmor.Chestplate.getFuel(itemStack));
+                String fuel = String.valueOf(FuelUtils.getFuel(itemStack));
 
                 /** TEXT */
                 Font font = Minecraft.getInstance().font;

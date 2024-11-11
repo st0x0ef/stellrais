@@ -64,7 +64,7 @@ public class JetSuit {
         public void onArmorTick(ItemStack stack, ServerLevel level, Player player) {
             super.onArmorTick(stack, level, player);
 
-            if (getFuel(stack) <= 0) return;
+            if (FuelUtils.getFuel(stack) <= 0) return;
 
             /** JET SUIT FAST BOOST */
             if (player.isSprinting()) {
@@ -116,10 +116,11 @@ public class JetSuit {
 
             // Main movement logic
             if (!player.onGround() && !player.isInWater()) {
-                player.setDeltaMovement(vec3.x, vec3.y + 0.04, vec3.z);
-                player.resetFallDistance();
-                Utils.disableFlyAntiCheat(player, true);
-                addFuel(stack, -2);
+                if (FuelUtils.removeFuel(stack, 1)) {
+                    player.setDeltaMovement(vec3.x, vec3.y + 0.04, vec3.z);
+                    player.resetFallDistance();
+                    Utils.disableFlyAntiCheat(player, true);
+                }
             }
 
             // Move up
@@ -153,10 +154,10 @@ public class JetSuit {
 
         private void elytraModeMovement(Player player, ItemStack stack) {
             if (player.isSprinting() && !player.onGround()) {
-
-                player.startFallFlying();
-                Utils.disableFlyAntiCheat(player, true);
-                addFuel(stack, -2);
+                if (FuelUtils.removeFuel(stack, 1)) {
+                    player.startFallFlying();
+                    Utils.disableFlyAntiCheat(player, true);
+                }
             } else if (player.isSprinting() && player.onGround() && KeyVariables.isHoldingJump(player)) {
                 player.moveTo(player.getX(), player.getY() + 2, player.getZ());
             }

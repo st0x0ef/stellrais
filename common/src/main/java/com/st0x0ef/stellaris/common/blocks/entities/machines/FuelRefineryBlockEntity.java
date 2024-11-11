@@ -7,6 +7,7 @@ import com.st0x0ef.stellaris.common.menus.FuelRefineryMenu;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import com.st0x0ef.stellaris.common.registry.RecipesRegistry;
 import com.st0x0ef.stellaris.common.systems.energy.impl.WrappedBlockEnergyContainer;
+import com.st0x0ef.stellaris.common.utils.FuelUtils;
 import dev.architectury.fluid.FluidStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -40,11 +41,11 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
             if(resultTank.getAmount() < FluidTankHelper.convertFromNeoMb(1000)) {
                 fuel = (int) resultTank.getAmount();
             }
-            else if (JetSuit.Suit.getFuel(getItem(2)) + fuel > JetSuit.MAX_FUEL_CAPACITY) {
-                fuel = (int) (JetSuit.MAX_FUEL_CAPACITY - (int) JetSuit.Suit.getFuel(getItem(2)));
+            else if (FuelUtils.getFuel(getItem(2)) + fuel > JetSuit.MAX_FUEL_CAPACITY) {
+                fuel = (int) (JetSuit.MAX_FUEL_CAPACITY - (int) FuelUtils.getFuel(getItem(2)));
             }
 
-            if (JetSuit.Suit.addFuel(getItem(2), fuel)) {
+            if (FuelUtils.addFuel(getItem(2), fuel)) {
                 resultTank.shrink(fuel);
             }
         }

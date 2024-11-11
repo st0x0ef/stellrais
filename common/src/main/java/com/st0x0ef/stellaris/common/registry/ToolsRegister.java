@@ -19,7 +19,7 @@ public enum ToolsRegister implements Tier {
         private final int enchantmentValue;
         private final Supplier<Ingredient> repairIngredient;
 
-         ToolsRegister(final TagKey incorrectBlockForDrops, final int uses, final float speed, final float damage, final int enchantmentValue, final Supplier<Ingredient> repairIngredient) {
+         ToolsRegister(final TagKey<Block> incorrectBlockForDrops, final int uses, final float speed, final float damage, final int enchantmentValue, final Supplier<Ingredient> repairIngredient) {
             this.incorrectBlocksForDrops = incorrectBlockForDrops;
             this.uses = uses;
             this.speed = speed;

@@ -102,7 +102,7 @@ public record SpaceSuitModules(List<ItemStack> modules) implements Serializable 
         private final List<ItemStack> modules;
 
         public Mutable(SpaceSuitModules contents) {
-            this.modules = new ArrayList(contents.modules);
+            this.modules = new ArrayList<>(contents.modules);
         }
 
         public Mutable insert(ItemStack stack) {

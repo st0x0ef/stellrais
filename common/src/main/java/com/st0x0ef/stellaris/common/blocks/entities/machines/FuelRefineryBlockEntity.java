@@ -44,8 +44,9 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
                 fuel = (int) (JetSuit.MAX_FUEL_CAPACITY - (int) JetSuit.Suit.getFuel(getItem(2)));
             }
 
-            JetSuit.Suit.addFuel(getItem(2), fuel);
-            resultTank.shrink(fuel);
+            if (JetSuit.Suit.addFuel(getItem(2), fuel)) {
+                resultTank.shrink(fuel);
+            }
         }
 
         if (!FluidTankHelper.addFluidFromBucket(this, ingredientTank, 0, 1)) {

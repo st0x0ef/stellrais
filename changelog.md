@@ -1,5 +1,13 @@
 # 1.2.0 beta 3 changelog
 
+## Additions
+- Modular jet suit
+- Upgrade station
+
+## Changes
+- update a few loot table
+- jet suit now require fuel
+
 ## Fix
 - Fix fuel refinery doesn't convert convert neo mb to fabric mb
 
@@ -49,6 +57,8 @@
 - Meteor can now spawn on moon
 - Moon Vines
 - Rocket bar overlay now showing in lander
+- Modular jet suit
+- Upgrade station
 
 ## Changes
 - Rework config screen

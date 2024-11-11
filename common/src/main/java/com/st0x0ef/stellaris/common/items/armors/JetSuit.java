@@ -6,6 +6,7 @@ import com.st0x0ef.stellaris.common.blocks.entities.machines.FluidTankHelper;
 import com.st0x0ef.stellaris.common.data_components.JetSuitComponent;
 import com.st0x0ef.stellaris.common.keybinds.KeyVariables;
 import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
+import com.st0x0ef.stellaris.common.utils.FuelUtils;
 import com.st0x0ef.stellaris.common.utils.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
@@ -76,7 +77,7 @@ public class JetSuit {
             }
 
             switch (this.getMode(stack)) {
-                case 1 -> this.normalFlyModeMovement(player);
+                case 1 -> this.normalFlyModeMovement(player, stack);
                 case 2 -> this.hoverModeMovement(player, stack);
                 case 3 -> this.elytraModeMovement(player, stack);
             }
@@ -85,11 +86,13 @@ public class JetSuit {
             this.calculateSpacePressTime(player, stack);
         }
 
-        private void normalFlyModeMovement(Player player) {
+        private void normalFlyModeMovement(Player player, ItemStack stack) {
             if (KeyVariables.isHoldingJump(player)) {
-                player.moveRelative(1.2F, new Vec3(0, 0.1, 0));
-                player.resetFallDistance();
-                Utils.disableFlyAntiCheat(player, true);
+                if (FuelUtils.removeFuel(stack, 1)) {
+                    player.moveRelative(1.2F, new Vec3(0, 0.1, 0));
+                    player.resetFallDistance();
+                    Utils.disableFlyAntiCheat(player, true);
+                }
             }
 
             if (!player.onGround()) {

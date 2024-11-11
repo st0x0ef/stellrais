@@ -29,8 +29,6 @@ public class DataComponentsRegistry {
     public static final RegistrySupplier<DataComponentType<SpaceSuitModules>> SPACE_SUIT_MODULES = DATA_COMPONENT_TYPE.register("space_suit_modules",
             () -> DataComponentType.<SpaceSuitModules>builder().persistent(SpaceSuitModules.CODEC).networkSynchronized(SpaceSuitModules.STREAM_CODEC).build());
 
-
     public static final RegistrySupplier<DataComponentType<CappedLongComponent>> STORED_FUEL_COMPONENT = DATA_COMPONENT_TYPE.register("stored_fuel",
             () -> DataComponentType.<CappedLongComponent>builder().persistent(CappedLongComponent.CODEC).networkSynchronized(CappedLongComponent.STREAM_CODEC).build());
-
 }

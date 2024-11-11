@@ -47,8 +47,8 @@ public abstract class AbstractSpaceArmor extends CustomArmorItem {
             tooltipComponents.add(Component.translatable("jetsuit.stellaris.fuel", getFuel(stack)));
         }
 
-        public static void addFuel(ItemStack stack, int amount) {
-            FuelUtils.addFuel(stack, amount);
+        public static boolean addFuel(ItemStack stack, int amount) {
+            return FuelUtils.addFuel(stack, amount);
         }
 
         public static long getFuel(ItemStack stack) {

@@ -7,14 +7,14 @@ import net.minecraft.world.item.ItemStack;
 public class FuelUtils {
 
     public static boolean addFuel(ItemStack stack, long amount) {
-        if (stack.get(DataComponentsRegistry.STORED_FUEL_COMPONENT.get()).amount() + amount > stack.get(DataComponentsRegistry.STORED_FUEL_COMPONENT.get()).capacity()) return false;
-        setFuel(stack, stack.get(DataComponentsRegistry.STORED_FUEL_COMPONENT.get()).amount() + amount);
+        if (!stack.has(DataComponentsRegistry.STORED_FUEL_COMPONENT.get()) || getFuel(stack) + amount > getFuelCapacity(stack)) return false;
+        setFuel(stack, getFuel(stack) + amount);
         return true;
     }
 
     public static boolean removeFuel(ItemStack stack, long amount) {
-        if (stack.get(DataComponentsRegistry.STORED_FUEL_COMPONENT.get()).amount() < amount) return false;
-        setFuel(stack, stack.get(DataComponentsRegistry.STORED_FUEL_COMPONENT.get()).amount() - amount);
+        if (!stack.has(DataComponentsRegistry.STORED_FUEL_COMPONENT.get()) || getFuel(stack) < amount) return false;
+        setFuel(stack, getFuel(stack) - amount);
         return true;
     }
 

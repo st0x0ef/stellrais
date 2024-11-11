@@ -78,3 +78,4 @@
 - Remove configurable start rocket key and slow down lander key to fix an issue with jumping
 - Fix bug where the rocket don't open the planet menu when higher than 600 blocks
 - Fix fuel refinery doesn't convert convert neo mb to fabric mb
+- Fix fluid transfer

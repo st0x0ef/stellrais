@@ -56,8 +56,6 @@
               "add": false
             }
           ]
-        }
-          ]
         },
         {
           "type": "minecraft:item",
@@ -148,4 +146,5 @@
         }
       ]
     }
-
+  ]
+}

@@ -94,7 +94,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "stellaris:mercury_sand",
+          "name": "stellaris:mercury_cobblestone",
           "weight": 10,
           "functions": [
             {

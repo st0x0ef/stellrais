@@ -5,9 +5,9 @@
 - Upgrade station
 
 ## Changes
-- update a few loot table
-- jet suit now require fuel
-- update sky aesthetic to 1.2.6
+- Update a few loot table
+- Jet suit now require fuel
+- Update sky aesthetic to 1.2.6
 
 ## Fix
 - Fix fuel refinery doesn't convert convert neo mb to fabric mb
@@ -74,6 +74,8 @@
 - Improve oil finder
 - Improve rocket bar overlay
 - Unlock all planet on the selection menu if the player is in creative mode
+- Jet suit now require fuel
+- Update sky aesthetic to 1.2.6
 
 ## Fix
 - Crash when trying to launch to any planet when you haven't launched from a planet

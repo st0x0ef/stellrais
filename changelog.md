@@ -7,6 +7,7 @@
 ## Changes
 - update a few loot table
 - jet suit now require fuel
+- update sky aesthetic to 1.2.6
 
 ## Fix
 - Fix fuel refinery doesn't convert convert neo mb to fabric mb

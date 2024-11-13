@@ -3,7 +3,9 @@ package com.st0x0ef.stellaris.common.commands;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
+import com.st0x0ef.stellaris.client.screens.tablet.TabletMainScreen;
 import com.st0x0ef.stellaris.common.utils.PlanetUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
@@ -36,6 +38,11 @@ public class StellarisCommands {
                         .then(Commands.literal("galaxyScreen")
                                 .executes((CommandContext<CommandSourceStack> context) -> {
                                     PlanetUtil.openMilkyWayMenu(context.getSource().getPlayer());
+                                    return 0;
+                                }))
+                        .then(Commands.literal("tablet")
+                                .executes((CommandContext<CommandSourceStack> context) -> {
+                                    PlanetUtil.openTabletMenu(context.getSource().getPlayer());
                                     return 0;
                                 }))
                         .then(Commands.literal("waitScreen")

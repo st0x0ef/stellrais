@@ -18,3 +18,4 @@ accessible method net/minecraft/world/level/levelgen/feature/DripstoneUtils isEm
 accessible method net/minecraft/world/level/levelgen/feature/DripstoneClusterFeature getChanceOfStalagmiteOrStalactite (IIIILnet/minecraft/world/level/levelgen/feature/configurations/DripstoneClusterConfiguration;)D
 
 accessible method net/minecraft/client/MouseHandler onScroll (JDD)V
+accessible field net/minecraft/client/gui/components/AbstractWidget tooltip Lnet/minecraft/client/gui/components/Tooltip;

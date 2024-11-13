@@ -1,0 +1,7 @@
+{
+  "id": "test",
+  "description": "Test",
+  "icon": "stellaris:textures/gui/tablet/rocket_page.png",
+  "hoverIcon": "stellaris:textures/gui/tablet/rocket_page_hover.png",
+  "infos": []
+}

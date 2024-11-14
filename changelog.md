@@ -1,18 +1,9 @@
-# 1.2.0 beta 3 changelog
+# 1.2.0 beta 4 changelog
 
-## Additions
-- Modular jet suit
-- Upgrade station
-
-## Changes
-- Update a few loot table
-- Jet suit now require fuel
-- Update sky aesthetic to 1.2.6
 
 ## Fix
-- Fix fuel refinery doesn't convert convert neo mb to fabric mb
-- Fix fluid transfer
-- Fix a few structures gen
+- Fix typo
+- Fix datapack error on server
 
 
 # 1.2.0 final changelog

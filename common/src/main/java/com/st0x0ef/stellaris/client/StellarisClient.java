@@ -53,8 +53,6 @@ public class StellarisClient {
         ColorHandlerRegistry.registerItemColors(
                 (stack, color) -> color > 0 ? -1 : DyedItemColor.getOrDefault(stack, -1),
                 ItemsRegistry.SPACESUIT_SUIT.get(), ItemsRegistry.SPACESUIT_HELMET.get(), ItemsRegistry.SPACESUIT_LEGGINGS.get());
-
-
     }
 
     public static void registerParticle() {

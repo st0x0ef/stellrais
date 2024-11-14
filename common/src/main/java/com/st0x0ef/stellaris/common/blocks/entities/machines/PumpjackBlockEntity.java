@@ -44,7 +44,7 @@ public class PumpjackBlockEntity extends BaseEnergyContainerBlockEntity implemen
             if (actualOilToExtract == 0) return;
         }
 
-        if (energyContainer.getStoredEnergy() >= 20) {
+        if (energyContainer.getStoredEnergy() >= 2L * actualOilToExtract) {
             if (resultTank.getAmount() + actualOilToExtract <= resultTank.getMaxCapacity()) {
                 access.stellaris$setChunkOilLevel(access.stellaris$getChunkOilLevel() - actualOilToExtract);
                 FluidStack tankStack = resultTank.getStack();
@@ -54,7 +54,7 @@ public class PumpjackBlockEntity extends BaseEnergyContainerBlockEntity implemen
                 }
 
                 resultTank.grow(actualOilToExtract);
-                energyContainer.extractEnergy(20, false);
+                energyContainer.extractEnergy(2L * actualOilToExtract, false);
                 isGenerating = true;
                 setChanged();
             } else {

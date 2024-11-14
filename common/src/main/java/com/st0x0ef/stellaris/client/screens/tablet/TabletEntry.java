@@ -8,15 +8,15 @@ import net.minecraft.resources.ResourceLocation;
 import java.util.List;
 import java.util.Optional;
 
-public record TabletEntries(String id, String description, ResourceLocation icon, ResourceLocation hoverIcon, List<Info> infos) {
+public record TabletEntry(String id, String description, ResourceLocation icon, ResourceLocation hoverIcon, List<Info> infos) {
 
-    public static final Codec<TabletEntries> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Codec.STRING.fieldOf("id").forGetter(TabletEntries::id),
-            Codec.STRING.fieldOf("description").forGetter(TabletEntries::description),
-            ResourceLocation.CODEC.fieldOf("icon").forGetter(TabletEntries::icon),
-            ResourceLocation.CODEC.fieldOf("hoverIcon").forGetter(TabletEntries::hoverIcon),
-            Info.CODEC.listOf().fieldOf("infos").forGetter(TabletEntries::infos)
-    ).apply(instance, TabletEntries::new));
+    public static final Codec<TabletEntry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            Codec.STRING.fieldOf("id").forGetter(TabletEntry::id),
+            Codec.STRING.fieldOf("description").forGetter(TabletEntry::description),
+            ResourceLocation.CODEC.fieldOf("icon").forGetter(TabletEntry::icon),
+            ResourceLocation.CODEC.fieldOf("hoverIcon").forGetter(TabletEntry::hoverIcon),
+            Info.CODEC.listOf().fieldOf("infos").forGetter(TabletEntry::infos)
+    ).apply(instance, TabletEntry::new));
 
 
     public  record Info(String title, String description, Optional<ResourceLocation> image, Optional<ResourceLocation> entityId) {

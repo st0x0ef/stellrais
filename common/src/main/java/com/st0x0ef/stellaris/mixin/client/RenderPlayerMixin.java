@@ -91,9 +91,7 @@ public abstract class RenderPlayerMixin extends LivingEntityRenderer<AbstractCli
         if (Utils.isLivingInSpaceSuit(entity)) {
             if (entity.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof SpaceSuit spaceSuitItem) {
                 ItemStack spaceSuitStack = entity.getItemBySlot(EquipmentSlot.CHEST);
-                spaceSuitItem.getModules(spaceSuitStack).forEach(module -> {
-                    module.renderModel(poseStack, buffer, entity, entityYaw, partialTicks, packedLight);
-                });
+                spaceSuitItem.getModules(spaceSuitStack).forEach(module -> module.renderModel(poseStack, buffer, entity, entityYaw, partialTicks, packedLight));
             }
         }
     }

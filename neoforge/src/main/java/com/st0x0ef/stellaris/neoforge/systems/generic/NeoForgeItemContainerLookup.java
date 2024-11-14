@@ -31,8 +31,9 @@ public class NeoForgeItemContainerLookup<T, C> implements ItemContainerLookup<T,
         return stack.getCapability(capability, context);
     }
 
+    @SafeVarargs
     @Override
-    public void registerItems(ItemGetter<T, C> getter, Supplier<Item>... containers) {
+    public final void registerItems(ItemGetter<T, C> getter, Supplier<Item>... containers) {
         for (Supplier<Item> container : containers) {
             blockEntityGetterMap.put(container, getter);
         }

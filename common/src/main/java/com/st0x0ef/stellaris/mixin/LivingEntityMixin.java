@@ -1,6 +1,5 @@
 package com.st0x0ef.stellaris.mixin;
 
-import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.common.data_components.SpaceSuitModules;
 import com.st0x0ef.stellaris.common.registry.ItemsRegistry;
 import com.st0x0ef.stellaris.common.utils.PlanetUtil;

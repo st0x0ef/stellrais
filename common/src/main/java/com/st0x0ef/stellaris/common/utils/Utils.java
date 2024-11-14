@@ -145,7 +145,6 @@ public class Utils {
     public static int getColorHexCode(String colorName) {
         return switch (colorName.toLowerCase()) {
             case "black" -> 0x000000;
-            case "white" -> 0xFFFFFF;
             case "red" -> 0xFF0000;
             case "green" -> 0x008000;
             case "blue" -> 0x0000FF;

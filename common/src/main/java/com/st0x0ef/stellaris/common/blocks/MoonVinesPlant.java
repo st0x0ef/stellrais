@@ -16,7 +16,6 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.BlockHitResult;
 
 public class MoonVinesPlant extends GrowingPlantBodyBlock implements BonemealableBlock, CaveVines {
@@ -29,7 +28,7 @@ public class MoonVinesPlant extends GrowingPlantBodyBlock implements Bonemealabl
 
     public MoonVinesPlant(BlockBehaviour.Properties properties) {
         super(properties, Direction.DOWN, SHAPE, false);
-        this.registerDefaultState((BlockState)((BlockState)this.stateDefinition.any()).setValue(BERRIES, false));
+        this.registerDefaultState(this.stateDefinition.any().setValue(BERRIES, false));
     }
 
     @Override
@@ -39,7 +38,7 @@ public class MoonVinesPlant extends GrowingPlantBodyBlock implements Bonemealabl
 
     @Override
     protected BlockState updateHeadAfterConvertedFromBody(BlockState head, BlockState body) {
-        return (BlockState)body.setValue(BERRIES, (Boolean)head.getValue(BERRIES));
+        return body.setValue(BERRIES, head.getValue(BERRIES));
     }
 
     @Override
@@ -54,7 +53,7 @@ public class MoonVinesPlant extends GrowingPlantBodyBlock implements Bonemealabl
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{BERRIES});
+        builder.add(BERRIES);
     }
 
     @Override
@@ -69,7 +68,7 @@ public class MoonVinesPlant extends GrowingPlantBodyBlock implements Bonemealabl
 
     @Override
     public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
-        level.setBlock(pos, (BlockState)state.setValue(BERRIES, true), 2);
+        level.setBlock(pos, state.setValue(BERRIES, true), 2);
     }
 
 

@@ -269,14 +269,11 @@ public class JetSuit {
         }
 
         public static ModeType fromString(String string) {
-            //Stellaris.LOG.error("From String : {}", Integer.decode(string));
-
             return switch (Integer.decode(string)) {
-               case 0 -> DISABLED;
-               case 1 -> NORMAL;
-               case 2 -> HOVER;
-               case 3 -> ELYTRA;
-               default -> DISABLED;
+                case 1 -> NORMAL;
+                case 2 -> HOVER;
+                case 3 -> ELYTRA;
+                default -> DISABLED;
            };
         }
     }

@@ -23,7 +23,7 @@ public class KeyMappingsRegistry {
             return;
         }
 
-        else if (player.containerMenu == MenuTypesRegistry.PLANET_SELECTION_MENU) {
+        if (player.containerMenu == MenuTypesRegistry.PLANET_SELECTION_MENU) {
             while (FREEZE_PLANET_MENU.consumeClick()) {
                 NetworkManager.sendToServer(new KeyHandlerPacket("freeze_planet_menu", true));
             }

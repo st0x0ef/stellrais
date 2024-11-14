@@ -28,7 +28,7 @@ public record SpaceSuitModules(List<ItemStack> modules) implements Serializable 
 
 
     public ItemStack getItemUnsafe(int index) {
-        return (ItemStack)this.modules.get(index);
+        return this.modules.get(index);
     }
 
     public Stream<ItemStack> itemCopyStream() {
@@ -40,7 +40,7 @@ public record SpaceSuitModules(List<ItemStack> modules) implements Serializable 
     }
 
     public Iterable<ItemStack> itemsCopy() {
-        return Lists.<ItemStack, ItemStack>transform(this.modules, ItemStack::copy);
+        return Lists.transform(this.modules, ItemStack::copy);
     }
 
     public static ItemStack getIfContains(ItemStack stack, Item module) {
@@ -86,7 +86,7 @@ public record SpaceSuitModules(List<ItemStack> modules) implements Serializable 
     }
 
     public List<SpaceSuitModule> getModules() {
-        return Lists.<ItemStack, SpaceSuitModule>transform(this.modules, this::getModule);
+        return Lists.transform(this.modules, this::getModule);
     }
 
     private SpaceSuitModule getModule(ItemStack itemStack) {

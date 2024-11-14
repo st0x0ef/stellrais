@@ -1,9 +1,9 @@
 # 1.2.0 beta 4 changelog
 
-
 ## Fix
 - Fix typo
 - Fix datapack error on server
+- Fix pumpjack duplicate oil
 
 
 # 1.2.0 final changelog

@@ -28,7 +28,6 @@ public class PumpjackBlockEntity extends BaseEnergyContainerBlockEntity implemen
 
     @Override
     public void tick() {
-
         FluidTankHelper.extractFluidToItem(this, resultTank, 0, 1);
 
         ChunkAccess access = this.level.getChunk(this.worldPosition);
@@ -37,15 +36,24 @@ public class PumpjackBlockEntity extends BaseEnergyContainerBlockEntity implemen
 
         WrappedBlockEnergyContainer energyContainer = getWrappedEnergyContainer();
 
-        if (energyContainer.getStoredEnergy() >= 20 && access.stellaris$getChunkOilLevel() >= oilToExtract) {
-            if (resultTank.getAmount() + oilToExtract <= resultTank.getMaxCapacity()) {
-                access.stellaris$setChunkOilLevel(access.stellaris$getChunkOilLevel() - 1);
+        int actualOilToExtract = (int) oilToExtract;
+
+        if (access.stellaris$getChunkOilLevel() < oilToExtract) {
+            actualOilToExtract = access.stellaris$getChunkOilLevel();
+
+            if (actualOilToExtract == 0) return;
+        }
+
+        if (energyContainer.getStoredEnergy() >= 20) {
+            if (resultTank.getAmount() + actualOilToExtract <= resultTank.getMaxCapacity()) {
+                access.stellaris$setChunkOilLevel(access.stellaris$getChunkOilLevel() - actualOilToExtract);
                 FluidStack tankStack = resultTank.getStack();
 
                 if (tankStack.isEmpty()) {
                     resultTank.setFluid(FluidRegistry.OIL_ATTRIBUTES.getSourceFluid(), 1);
                 }
-                resultTank.grow(oilToExtract);
+
+                resultTank.grow(actualOilToExtract);
                 energyContainer.extractEnergy(20, false);
                 isGenerating = true;
                 setChanged();

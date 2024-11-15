@@ -3,8 +3,6 @@ package com.st0x0ef.stellaris.client.screens.tablet;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.client.screens.components.TexturedButton;
-import com.st0x0ef.stellaris.common.utils.PlanetUtil;
-import com.st0x0ef.stellaris.common.utils.Utils;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -12,8 +10,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 public class TabletEntryScreen extends Screen {
-
-
 
     private int leftPos;
     private int topPos;
@@ -41,6 +37,8 @@ public class TabletEntryScreen extends Screen {
 
     }
 
+
+
     @Override
     protected void init() {
         /** Back Button **/
@@ -50,7 +48,7 @@ public class TabletEntryScreen extends Screen {
                 .tex(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/tablet/main_page.png"), ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/tablet/main_page_hover.png"));
         this.addRenderableWidget(homeButton);
 
-        TabletEntryWidget widget = new TabletEntryWidget(this.leftPos + 10, this.topPos + 50, 230, 100, Component.literal(""), this.entry);
+        TabletEntryWidget widget = new TabletEntryWidget(this.leftPos + 15, this.topPos + 50, 215, 100, Component.literal(""), this.entry);
         this.addRenderableWidget(widget);
     }
 

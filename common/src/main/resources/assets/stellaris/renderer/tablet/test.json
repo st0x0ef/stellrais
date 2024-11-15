@@ -3,5 +3,24 @@
   "description": "Test",
   "icon": "stellaris:textures/gui/tablet/rocket_page.png",
   "hoverIcon": "stellaris:textures/gui/tablet/rocket_page_hover.png",
-  "infos": []
+  "infos": [
+    {
+        "title": "Machines Blocks",
+        "description": "Theses blocks are so cool ! Yea I know ",
+        "image": {
+          "location": "stellaris:textures/gui/tablet/rocket_page.png",
+          "width": 64,
+          "height": 64
+        }
+    },
+    {
+      "title": "test",
+      "description": "Test"
+    },
+    {
+      "title": "test 2",
+      "description": "Test 2",
+      "entity": "minecraft:cow"
+    }
+  ]
 }

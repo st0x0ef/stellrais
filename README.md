@@ -1,17 +1,64 @@
-# Stellaris
- 
-Welcome to the Stellaris project
+# 🌌 Stellaris Project 🚀
 
-Rocket Crafting and Launching: Players can craft there own rocket using our new rocket component system, allowing for progressive upgrades and customization of spacecraft.
+Welcome to the **Stellaris Project**, a mod that transforms your Minecraft experience into an interstellar adventure. Build rockets, explore alien worlds, and conquer the galaxy with your friends! 🪐✨
 
-Planetary Exploration: The mod adds a variety of planets and moons to explore, each with distinct environments and gravity levels. Some planets have alien flora and fauna, while others contain rare minerals and treasures.
+![stellaris-mercury](https://github.com/user-attachments/assets/35047343-b8f5-4159-bc92-68cfeae545c1)
 
-Advanced Technology and Machinery: The mod introduces new technological advancements such as advanced energy systems, machinery for resource extraction and processing, and specialized tools for space survival and exploration.
+---
 
-Aliens and Hostile Entities: Space is not without its dangers. Players may encounter alien species, some of which are hostile and require strategic combat to overcome.
+## 🚀 Rocket Crafting & Launching
+Design and construct your own spacecraft using the **rocket component system**.  
+Customize and upgrade as you progress to explore deeper into space! 🌠
 
-Multiplayer Compatibility: The mod supports multiplayer gameplay, allowing players to embark on space adventures together, cooperate on building projects, and explore the cosmos as a team.
+---
 
-Customizable Options: Players can adjust various settings within the mod to tailor the difficulty and complexity of their space adventures, making it accessible to both casual players and hardcore space enthusiasts. Overall, the Minecraft Space Mod transforms the game into a vast frontier of space exploration, providing endless opportunities for adventure, creativity, and discovery. Whether you're building a thriving space colony or venturing into the unknown depths of the galaxy, this mod offers a rich and engaging experience for all Minecraft players.
+## 🌍 Planetary Exploration  
+Discover a universe of diverse planets and moons:  
+- **Unique environments** with varying gravity levels.  
+- Exotic **alien flora and fauna** 🛸.  
+- Hidden **rare minerals and treasures** 🪨.  
 
-Datapack and Addon Support: You can add new planet easily with datapack or create new features with addons, a wiki for developers is disponible here
+---
+
+## ⚙️ Advanced Technology & Machinery  
+Push the boundaries of science and engineering with:  
+- **Futuristic energy systems** 💡.  
+- High-tech **resource extraction and processing** machinery 🏭.  
+- Specialized tools for **space survival and exploration** 🛠️.
+
+---
+
+## 👾 Aliens & Hostile Entities  
+Space is teeming with life—and danger!  
+- Encounter **alien species** (friendly or hostile).  
+- Engage in **strategic combat** with space-based threats 🔫.
+
+---
+
+## 🤝 Multiplayer Adventures  
+Explore the galaxy **with friends**:  
+- Collaborate to build **space colonies** 🏘️.  
+- Share resources and work as a team to tackle challenges 🚀.  
+- Enjoy a fully multiplayer-compatible experience! 🌌
+
+---
+
+## 🛠️ Customizable Options  
+Adapt the game to your play style:  
+- **Adjust difficulty and complexity** to suit casual or hardcore players 🎛️.  
+- Tailor your space adventures to your liking.
+
+---
+
+## 📦 Datapack & Addon Support  
+Expand your galaxy with ease:  
+- Add **new planets** with datapacks 🌐.  
+- Create **new features and mechanics** using addons.  
+- Developer-friendly documentation is available in our **[Wiki](https://st0x0ef.github.io/stellaris/)**. 📜
+
+---
+
+## 🌟 Join the Adventure! 🌟  
+Unleash your creativity, explore the unknown, and conquer the stars with the Stellaris Project. Whether you're building a thriving space colony or venturing into alien worlds, endless opportunities await.  
+
+**Let’s craft, explore, and conquer the galaxy—together!** 🌠

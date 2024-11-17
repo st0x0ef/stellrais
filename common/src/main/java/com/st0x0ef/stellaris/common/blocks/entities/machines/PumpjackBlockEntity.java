@@ -50,10 +50,12 @@ public class PumpjackBlockEntity extends BaseEnergyContainerBlockEntity implemen
                 FluidStack tankStack = resultTank.getStack();
 
                 if (tankStack.isEmpty()) {
-                    resultTank.setFluid(FluidRegistry.OIL_ATTRIBUTES.getSourceFluid(), 1);
+                    resultTank.setFluid(FluidRegistry.OIL_ATTRIBUTES.getSourceFluid(), actualOilToExtract);
+                } else {
+                    resultTank.grow(actualOilToExtract);
                 }
 
-                resultTank.grow(actualOilToExtract);
+
                 energyContainer.extractEnergy(2L * actualOilToExtract, false);
                 isGenerating = true;
                 setChanged();

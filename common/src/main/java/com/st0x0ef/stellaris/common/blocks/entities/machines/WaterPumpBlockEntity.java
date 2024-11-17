@@ -1,6 +1,7 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
+import com.st0x0ef.stellaris.common.registry.FluidRegistry;
 import com.st0x0ef.stellaris.common.systems.energy.impl.WrappedBlockEnergyContainer;
 import dev.architectury.fluid.FluidStack;
 import net.minecraft.core.BlockPos;
@@ -22,7 +23,7 @@ public class WaterPumpBlockEntity extends BaseEnergyBlockEntity implements Wrapp
 
     @Override
     public int getMaxCapacity() {
-        return 12000;
+        return 1000;
     }
 
     @Override
@@ -33,10 +34,18 @@ public class WaterPumpBlockEntity extends BaseEnergyBlockEntity implements Wrapp
             BlockState belowState = level.getBlockState(belowPos);
             FluidState belowFluidState = level.getFluidState(belowPos);
 
-
-
             if (belowFluidState.is(Fluids.WATER) && belowFluidState.isSource()) {
-                if (waterTank.getAmount() + FluidTankHelper.BUCKET_AMOUNT <= waterTank.getMaxCapacity()) {
+                if (waterTank.isEmpty()) {
+                    if (belowState.getBlock() instanceof BucketPickup bucketPickup) {
+                        if (!bucketPickup.pickupBlock(null, level, belowPos, belowState).isEmpty()) {
+                            waterTank.setFluid(Fluids.WATER, FluidTankHelper.BUCKET_AMOUNT);
+                            energyContainer.extractEnergy(NEEDED_ENERGY, false);
+                            setChanged();
+                        }
+                    }
+                }
+
+                else if (waterTank.getAmount() + FluidTankHelper.BUCKET_AMOUNT <= waterTank.getMaxCapacity()) {
                     if (belowState.getBlock() instanceof BucketPickup bucketPickup) {
                         if (!bucketPickup.pickupBlock(null, level, belowPos, belowState).isEmpty()) {
                             FluidTankHelper.addToTank(waterTank, FluidStack.create(Fluids.WATER, FluidTankHelper.BUCKET_AMOUNT));
@@ -46,10 +55,9 @@ public class WaterPumpBlockEntity extends BaseEnergyBlockEntity implements Wrapp
                     }
                 }
             }
-
         }
-        FluidTankHelper.transferFluidNearby(this, waterTank);
 
+        FluidTankHelper.transferFluidNearby(this, waterTank);
     }
 
     @Override

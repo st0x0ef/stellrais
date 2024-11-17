@@ -1,12 +1,13 @@
 # 1.2.0 beta 4 changelog
 
 ## Changes
-- Update sky aesthetic to 1.2.7
+- Update sky aesthetics to 1.2.8
 
 ## Fix
 - Fix typo
 - Fix datapack error on server
 - Fix pumpjack duplicate oil
+- Fix fluid transfer
 
 
 # 1.2.0 final changelog
@@ -69,7 +70,7 @@
 - Improve rocket bar overlay
 - Unlock all planet on the selection menu if the player is in creative mode
 - Jet suit now require fuel
-- Update sky aesthetic to 1.2.7
+- Update sky aesthetics to 1.2.8
 
 ## Fix
 - Crash when trying to launch to any planet when you haven't launched from a planet

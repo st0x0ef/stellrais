@@ -36,7 +36,7 @@ public class TabletEntryWidget extends AbstractScrollWidget {
 
     @Override
     protected void renderBorder(GuiGraphics guiGraphics, int x, int y, int width, int height) {
-
+        //We don't want to render the border
     }
 
 

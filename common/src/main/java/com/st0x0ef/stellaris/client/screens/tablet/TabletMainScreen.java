@@ -27,6 +27,10 @@ public class TabletMainScreen extends AbstractContainerScreen<TabletMenu> {
         this.imageWidth = 250;
     }
 
+    @Override
+    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+        //We don't want to render any labels
+    }
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {

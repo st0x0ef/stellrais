@@ -1,7 +1,7 @@
 # 1.2.0 beta 4 changelog
 
 ## Changes
-- Update sky aesthetics to 1.2.8
+- Update sky aesthetics to 1.2.11
 
 ## Fix
 - Fix typo

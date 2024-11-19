@@ -17,7 +17,8 @@
     "moon_size": 150
 
   },
-  "sunrise_color": [255, 169, 91, 1],
+  "sunrise_color": [0, 140 , 205 ],
+  "sunrise_alpha_modifier": 0,
   "stars": {
     "vanilla": false,
     "moving_stars": true,

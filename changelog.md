@@ -57,6 +57,7 @@
 - Rocket bar overlay now showing in lander
 - Modular jet suit
 - Upgrade station
+- Added sunrise color for planets
 
 ## Changes
 - Rework config screen
@@ -70,7 +71,7 @@
 - Improve rocket bar overlay
 - Unlock all planet on the selection menu if the player is in creative mode
 - Jet suit now require fuel
-- Update sky aesthetics to 1.2.8
+- Update sky aesthetics to 1.2.11
 
 ## Fix
 - Crash when trying to launch to any planet when you haven't launched from a planet

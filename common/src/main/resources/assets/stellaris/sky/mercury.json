@@ -16,7 +16,7 @@
     "moon_height": 150,
     "moon_size": 150
   },
-  "sunrise_color": [255, 169, 91, 1],
+  "sunrise_color": [179, 49, 44 ],
   "stars": {
     "vanilla": false,
     "moving_stars": true,

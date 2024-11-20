@@ -16,6 +16,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
@@ -51,8 +52,10 @@ public class JetSuit {
         public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
             super.inventoryTick(stack, level, entity, slotId, isSelected);
 
-            if (entity instanceof Player player) {
-                if (FuelUtils.getFuel(stack) <= 0) return;
+            if (entity instanceof Player player && player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof JetSuit.Suit) {
+                ItemStack jetSuitItemStack = player.getItemBySlot(EquipmentSlot.CHEST);
+
+                if (FuelUtils.getFuel(jetSuitItemStack) <= 0) return;
 
                 /** JET SUIT FAST BOOST */
                 if (player.isSprinting()) {
@@ -65,13 +68,13 @@ public class JetSuit {
                 }
 
                 switch (this.getMode(stack)) {
-                    case 1 -> this.normalFlyModeMovement(player, stack);
-                    case 2 -> this.hoverModeMovement(player, stack);
+                    case 1 -> this.normalFlyModeMovement(player, jetSuitItemStack);
+                    case 2 -> this.hoverModeMovement(player, jetSuitItemStack);
                     case 3 -> this.elytraModeMovement(player);
                 }
 
                 /** CALCULATE PRESS SPACE TIME */
-                this.calculateSpacePressTime(player, stack);
+                this.calculateSpacePressTime(player, jetSuitItemStack);
             }
         }
 
@@ -83,7 +86,7 @@ public class JetSuit {
                     Utils.disableFlyAntiCheat(player, true);
                 }
 
-                else if (nextFuelCheckTick == 0 && FuelUtils.removeFuel(stack, 1)) {
+                else if (FuelUtils.removeFuel(stack, 1)) {
                     player.moveRelative(1.2F, new Vec3(0, 0.1, 0));
                     player.resetFallDistance();
                     Utils.disableFlyAntiCheat(player, true);
@@ -120,7 +123,7 @@ public class JetSuit {
                     Utils.disableFlyAntiCheat(player, true);
                 }
 
-                else if (nextFuelCheckTick == 0 && FuelUtils.removeFuel(stack, 1)) {
+                else if (FuelUtils.removeFuel(stack, 1)) {
                     player.setDeltaMovement(vec3.x, vec3.y + 0.04, vec3.z);
                     player.resetFallDistance();
                     Utils.disableFlyAntiCheat(player, true);

@@ -5,8 +5,6 @@ import com.st0x0ef.stellaris.common.utils.FuelUtils;
 import com.st0x0ef.stellaris.common.utils.OxygenUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -21,10 +19,6 @@ public abstract class AbstractSpaceArmor extends CustomArmorItem {
     public static class AbstractSpaceChestplate extends AbstractSpaceArmor {
         public AbstractSpaceChestplate(Holder<ArmorMaterial> material, Type type, Properties properties) {
             super(material, type, properties);
-        }
-
-        public void onArmorTick(ItemStack stack, ServerLevel level, Player player) {
-
         }
 
         @Override

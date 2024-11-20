@@ -8,6 +8,7 @@
 - Fix datapack error on server
 - Fix pumpjack duplicate oil
 - Fix fluid transfer
+- Fix jet suit
 
 
 # 1.2.0 final changelog
@@ -79,3 +80,4 @@
 - Fix bug where the rocket don't open the planet menu when higher than 600 blocks
 - Fix fuel refinery doesn't convert convert neo mb to fabric mb
 - Fix fluid transfer
+- Fix jet suit

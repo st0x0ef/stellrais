@@ -4,7 +4,6 @@
   "cloud_height": 192,
   "fog": true,
   "rain": false,
-
   "custom_vanilla_objects": {
     "sun": true,
     "sun_texture": "textures/environment/sun.png",
@@ -16,7 +15,6 @@
     "moon_texture": "stellaris:textures/environment/solar_system/mars.png",
     "moon_height": 20,
     "moon_size": 20
-
   },
   "sunrise_color": [255, 169, 91],
   "stars": {
@@ -25,17 +23,12 @@
     "count": 30000,
     "all_days_visible": true,
     "scale": 0.05,
-    "color": {
-      "r": 190,
-      "g": 160,
-      "b": -1
-    }
+    "color": [190, 160, -1]
   },
   "sky_color": {
     "custom_color": false,
-    "color": [255, 255, 255]
+    "color": [255, 255, 255, 0]
   },
-
   "sky_type": "NORMAL",
   "sky_objects": []
 }

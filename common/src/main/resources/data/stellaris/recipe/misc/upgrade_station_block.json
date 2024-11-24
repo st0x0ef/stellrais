@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " X ",
+    "XRX",
+    "###"
+  ],
+  "key": {
+    "X": {"item": "stellaris:heavy_metal_ingot"},
+    "#": {"item": "stellaris:iron_plating_block"},
+    "R": {"item": "stellaris:base_module_tier_1"}
+  },
+  "result": {
+    "id": "stellaris:upgrade_station"
+  }
+}

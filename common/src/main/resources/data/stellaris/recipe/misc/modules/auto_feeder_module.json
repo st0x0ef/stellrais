@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "stellaris:base_module_tier_2",
+    "stellaris:auto_feeder_module"
+
+  ],
+  "result": {
+    "id": "stellaris:auto_feeder_module",
+    "count": 1
+  }
+}

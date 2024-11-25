@@ -41,6 +41,7 @@ import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.biome.MobSpawnSettings;
 
 import java.util.Random;
 import java.util.Set;
@@ -68,7 +69,7 @@ public class Alien extends Villager implements Merchant, Npc {
 	public Villager getBreedOffspring(ServerLevel level, AgeableMob p_241840_2_) {
 		Alien alien = new Alien(EntityRegistry.ALIEN.get(), level);
 
-		alien.finalizeSpawn(level, level.getCurrentDifficultyAt(new BlockPos((int)p_241840_2_.getX(), (int)p_241840_2_.getY(), (int)p_241840_2_.getZ())), MobSpawnType.BREEDING, null);
+		alien.finalizeSpawn(level, level.getCurrentDifficultyAt(new BlockPos((int)p_241840_2_.getX(), (int)p_241840_2_.getY(), (int)p_241840_2_.getZ())), EntitySpawnReason.BREEDING, null);
 		return alien;
 	}
 
@@ -78,7 +79,9 @@ public class Alien extends Villager implements Merchant, Npc {
 		if (itemstack.getItem() != ItemsRegistry.ALIEN_SPAWN_EGG.get() && this.isAlive() && !this.isTrading() && !this.isSleeping() && !player.isSecondaryUseActive()) {
 			if (this.isBaby()) {
 				this.shakeHead();
-				return InteractionResult.sidedSuccess(this.level().isClientSide);
+				if (!this.level().isClientSide) {
+					return InteractionResult.SUCCESS;
+				}
 			}
 		}
 		return InteractionResult.PASS;
@@ -166,13 +169,13 @@ public class Alien extends Villager implements Merchant, Npc {
 
 
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, SpawnGroupData spawnDataIn) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, EntitySpawnReason entitySpawnReason, SpawnGroupData spawnDataIn) {
 
-		if (reason == MobSpawnType.COMMAND || reason == MobSpawnType.SPAWN_EGG || reason == MobSpawnType.SPAWNER || reason == MobSpawnType.DISPENSER) {
+		if (entitySpawnReason == EntitySpawnReason.COMMAND || entitySpawnReason == EntitySpawnReason.SPAWN_ITEM_USE || entitySpawnReason == EntitySpawnReason.SPAWNER || entitySpawnReason == EntitySpawnReason.DISPENSER) {
 			this.setVillagerData(this.getVillagerData().setType(VillagerType.byBiome(worldIn.getBiome(this.blockPosition()))));
 		}
 
-		if (reason == MobSpawnType.STRUCTURE) {
+		if (entitySpawnReason == EntitySpawnReason.STRUCTURE) {
 			this.assignProfessionWhenSpawned = true;
 		}
 

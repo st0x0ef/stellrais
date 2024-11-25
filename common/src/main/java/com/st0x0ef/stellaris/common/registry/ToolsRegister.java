@@ -28,13 +28,13 @@ public record ToolsRegister (TagKey<Block> incorrectBlocksForDrops, int durabili
     public static final ToolMaterial STEEL;
 
 
-    public ToolsRegister(TagKey<Block> tagKey, int i, float f, float g, int j, TagKey<Item> tagKey2) {
-        this.incorrectBlocksForDrops = tagKey;
-        this.durability = i;
-        this.speed = f;
-        this.attackDamageBonus = g;
-        this.enchantmentValue = j;
-        this.repairItems = tagKey2;
+    public ToolsRegister(TagKey<Block> incorrectBlocksForDrops, int durability, float speed, float attackDamageBonus, int enchantmentValue, TagKey<Item> repairItems) {
+        this.incorrectBlocksForDrops = incorrectBlocksForDrops;
+        this.durability = durability;
+        this.speed = speed;
+        this.attackDamageBonus = attackDamageBonus;
+        this.enchantmentValue = enchantmentValue;
+        this.repairItems = repairItems;
     }
 
     private Item.Properties applyCommonProperties(Item.Properties properties) {

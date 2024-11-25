@@ -30,7 +30,7 @@ public class FlagBlock extends Block implements SimpleWaterloggedBlock {
     public static final EnumProperty<DoubleBlockHalf> HALF = DOUBLE_BLOCK_HALF;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static final Property<Direction> FACING = HorizontalDirectionalBlock.FACING;
 
     public static final VoxelShape SHAPE = Shapes.box((double)7/16, 0, (double)7/16, (double)9/16, 1, (double)9/16);
 

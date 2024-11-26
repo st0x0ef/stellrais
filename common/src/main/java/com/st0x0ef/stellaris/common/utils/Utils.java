@@ -1,7 +1,6 @@
 package com.st0x0ef.stellaris.common.utils;
 
 import com.mojang.serialization.Codec;
-import com.st0x0ef.stellaris.client.registries.KeyMappingsRegistry;
 import com.st0x0ef.stellaris.common.data.planets.Planet;
 import com.st0x0ef.stellaris.common.entities.vehicles.LanderEntity;
 import com.st0x0ef.stellaris.common.entities.vehicles.RocketEntity;
@@ -85,7 +84,7 @@ public class Utils {
 
             player.level().addFreshEntity(lander);
             player.startRiding(lander);
-            player.sendSystemMessage(Component.translatable("message.stellaris.lander", KeyMappingsRegistry.SLOW_LANDER.getTranslatedKeyMessage().getString().split("\\.")[2]));
+            player.sendSystemMessage(Component.translatable("message.stellaris.lander"));
         } else {
             player.closeContainer();
             teleportEntity(player, destination);
@@ -146,7 +145,6 @@ public class Utils {
     public static int getColorHexCode(String colorName) {
         return switch (colorName.toLowerCase()) {
             case "black" -> 0x000000;
-            case "white" -> 0xFFFFFF;
             case "red" -> 0xFF0000;
             case "green" -> 0x008000;
             case "blue" -> 0x0000FF;

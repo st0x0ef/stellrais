@@ -133,9 +133,7 @@ public class SpaceSuitModel extends HumanoidModel<LivingEntity> {
 				this.leftLeg.visible = true;
 				this.rightLeg.visible = true;
 			}
-			case FEET -> {
-				this.waist.visible = true;
-			}
+			case FEET -> this.waist.visible = true;
 
 		}
 	}

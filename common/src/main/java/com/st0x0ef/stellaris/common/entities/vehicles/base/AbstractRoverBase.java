@@ -345,8 +345,7 @@ public abstract class AbstractRoverBase extends IVehicleEntity
     }
 
     public boolean isAccelerating() {
-        boolean b = (isForward() || isBackward()) && !horizontalCollision;
-        return b;
+        return (isForward() || isBackward()) && !horizontalCollision;
     }
 
     @Override
@@ -434,12 +433,12 @@ public abstract class AbstractRoverBase extends IVehicleEntity
     //I Drive
     public Player getDriver() {
         List<Entity> passengers = getPassengers();
-        if (passengers.size() <= 0) {
+        if (passengers.isEmpty()) {
             return null;
         }
 
-        if (passengers.get(0) instanceof Player) {
-            return (Player) passengers.get(0);
+        if (passengers.getFirst() instanceof Player) {
+            return (Player) passengers.getFirst();
         }
 
         return null;
@@ -480,7 +479,7 @@ public abstract class AbstractRoverBase extends IVehicleEntity
 
         List<Entity> passengers = getPassengers();
 
-        if (passengers.size() > 0) {
+        if (!passengers.isEmpty()) {
             int i = passengers.indexOf(passenger);
 
             Vector3d offset = getPlayerOffsets()[i];

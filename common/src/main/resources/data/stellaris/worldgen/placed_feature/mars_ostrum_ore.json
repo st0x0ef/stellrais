@@ -12,11 +12,11 @@
       "type": "minecraft:height_range",
       "height": {
         "type": "minecraft:trapezoid",
-        "max_inclusive": {
-          "above_bottom": 80
-        },
         "min_inclusive": {
           "above_bottom": -64
+        },
+        "max_inclusive": {
+          "above_bottom": 80
         }
       }
     },

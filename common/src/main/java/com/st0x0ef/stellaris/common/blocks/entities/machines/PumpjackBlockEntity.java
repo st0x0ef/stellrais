@@ -18,7 +18,7 @@ import net.minecraft.world.level.chunk.ChunkAccess;
 public class PumpjackBlockEntity extends BaseEnergyContainerBlockEntity implements WrappedFluidBlockEntity{
 
     private boolean isGenerating = false;
-    private long oilToExtract =  FluidTankHelper.OXYGEN_TANK_FILL_AMOUNT / 10;
+    private final long oilToExtract = FluidTankHelper.convertFromNeoMb(10);
     public final FluidTank resultTank = new FluidTank("resultTank", 5);
     public int chunkOilLevel = 0;
     public PumpjackBlockEntity(BlockPos pos, BlockState state) {
@@ -28,7 +28,6 @@ public class PumpjackBlockEntity extends BaseEnergyContainerBlockEntity implemen
 
     @Override
     public void tick() {
-
         FluidTankHelper.extractFluidToItem(this, resultTank, 0, 1);
 
         ChunkAccess access = this.level.getChunk(this.worldPosition);
@@ -37,16 +36,27 @@ public class PumpjackBlockEntity extends BaseEnergyContainerBlockEntity implemen
 
         WrappedBlockEnergyContainer energyContainer = getWrappedEnergyContainer();
 
-        if (energyContainer.getStoredEnergy() >= 20 && access.stellaris$getChunkOilLevel() >= oilToExtract) {
-            if (resultTank.getAmount() + oilToExtract <= resultTank.getMaxCapacity()) {
-                access.stellaris$setChunkOilLevel(access.stellaris$getChunkOilLevel() - 1);
+        int actualOilToExtract = (int) oilToExtract;
+
+        if (access.stellaris$getChunkOilLevel() < oilToExtract) {
+            actualOilToExtract = access.stellaris$getChunkOilLevel();
+
+            if (actualOilToExtract == 0) return;
+        }
+
+        if (energyContainer.getStoredEnergy() >= 2L * actualOilToExtract) {
+            if (resultTank.getAmount() + actualOilToExtract <= resultTank.getMaxCapacity()) {
+                access.stellaris$setChunkOilLevel(access.stellaris$getChunkOilLevel() - actualOilToExtract);
                 FluidStack tankStack = resultTank.getStack();
 
                 if (tankStack.isEmpty()) {
-                    resultTank.setFluid(FluidRegistry.OIL_ATTRIBUTES.getSourceFluid(), 1);
+                    resultTank.setFluid(FluidRegistry.OIL_ATTRIBUTES.getSourceFluid(), actualOilToExtract);
+                } else {
+                    resultTank.grow(actualOilToExtract);
                 }
-                resultTank.grow(oilToExtract);
-                energyContainer.extractEnergy(20, false);
+
+
+                energyContainer.extractEnergy(2L * actualOilToExtract, false);
                 isGenerating = true;
                 setChanged();
             } else {

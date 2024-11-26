@@ -29,6 +29,7 @@ public class FluidRegistry {
             .dropOff(1)
             .tickDelay(8)
             .explosionResistance(100.0F)
+            .luminosity(3)
             .convertToSource(false)
             .sourceTexture(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "block/fluids/fuel_still"))
             .flowingTexture(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "block/fluids/fuel_flow"));

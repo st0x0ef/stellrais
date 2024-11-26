@@ -26,13 +26,15 @@ public class ForgeItemApiBlockLookup implements BlockContainerLookup<ItemContain
         return PlatformItemContainer.of(lookup.find(level, pos, state, entity, direction));
     }
 
+    @SafeVarargs
     @Override
-    public void registerBlocks(BlockGetter<ItemContainer, @Nullable Direction> getter, Supplier<Block>... containers) {
+    public final void registerBlocks(BlockGetter<ItemContainer, @Nullable Direction> getter, Supplier<Block>... containers) {
         lookup.registerBlocks((level, pos, state, entity, direction) -> ForgeItemContainer.of(getter.getContainer(level, pos, state, entity, direction)), containers);
     }
 
+    @SafeVarargs
     @Override
-    public void registerBlockEntities(BlockGetter<ItemContainer, @Nullable Direction> getter, Supplier<BlockEntityType<?>>... containers) {
+    public final void registerBlockEntities(BlockGetter<ItemContainer, @Nullable Direction> getter, Supplier<BlockEntityType<?>>... containers) {
         lookup.registerBlockEntities((level, pos, state, entity, direction) -> ForgeItemContainer.of(getter.getContainer(level, pos, state, entity, direction)), containers);
     }
 }

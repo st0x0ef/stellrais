@@ -211,18 +211,18 @@ public abstract class IVehicleEntity extends Entity{
     }
 
 
-    public Vec3 getFluidFallingAdjustedMovement(double p_20995_, boolean p_20996_, Vec3 p_20997_) {
+    public Vec3 getFluidFallingAdjustedMovement(double p_20995_, boolean flag, Vec3 deltaMovement) {
         if (!this.isNoGravity() && !this.isSprinting()) {
             double d0;
-            if (p_20996_ && Math.abs(p_20997_.y - 0.005D) >= 0.003D && Math.abs(p_20997_.y - p_20995_ / 16.0D) < 0.003D) {
+            if (flag && Math.abs(deltaMovement.y - 0.005D) >= 0.003D && Math.abs(deltaMovement.y - p_20995_ / 16.0D) < 0.003D) {
                 d0 = -0.003D;
             } else {
-                d0 = p_20997_.y - p_20995_ / 16.0D;
+                d0 = deltaMovement.y - p_20995_ / 16.0D;
             }
 
-            return new Vec3(p_20997_.x, d0, p_20997_.z);
+            return new Vec3(deltaMovement.x, d0, deltaMovement.z);
         } else {
-            return p_20997_;
+            return deltaMovement;
         }
     }
 
@@ -245,8 +245,8 @@ public abstract class IVehicleEntity extends Entity{
         return this.discardFriction;
     }
 
-    public void setDiscardFriction(boolean p_147245_) {
-        this.discardFriction = p_147245_;
+    public void setDiscardFriction(boolean discardFriction) {
+        this.discardFriction = discardFriction;
     }
 
     public void setEntityRotation(Entity vehicle, float rotation) {
@@ -263,5 +263,9 @@ public abstract class IVehicleEntity extends Entity{
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket(ServerEntity entity) {
         return NetworkManager.createAddEntityPacket(this, entity);
+    }
+
+    public boolean setPassengersRiding() {
+        return true;
     }
 }

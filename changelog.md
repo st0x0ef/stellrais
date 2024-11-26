@@ -1,6 +1,20 @@
-# 1.2.0 changelog
+# 1.2.0 beta 4 changelog
 
-## Aditions
+## Changes
+- Update sky aesthetics to 1.4
+
+## Fix
+- Fix typo
+- Fix datapack error on server
+- Fix pumpjack duplicate oil
+- Fix fluid transfer
+- Fix jet suit
+- fix full jet suit
+
+
+# 1.2.0 final changelog
+
+## Additions
 - Structures :
   - Earth Operation Base
   - Earth Satellite
@@ -27,7 +41,7 @@
   - Venus Ruins
   - Venus Tower
   - Mercury Big Castle
-  - Mercury Biome
+  - Mercury Temple
   - Mercury Structure
   - Mercury Small Castle
   - Mercury Lava Mines
@@ -36,15 +50,36 @@
   - Mercury Factory
   - Mercury Mining Ship
 - Biomes :
-  - Moon Caves
+  - Blue luna Lagoon
   - Mercury Fire Land
 - Rover
 - Speed Upgrade
 - Meteor can now spawn on moon
 - Moon Vines
+- Rocket bar overlay now showing in lander
+- Modular jet suit
+- Upgrade station
+- Added sunrise color for planets
 
 ## Changes
 - Rework config screen
 - GUI textures for all machines
+- Optimization of the oxygen system
 - Oxygen distributor now propagate in all directions
+- Improve achievement screen
+- Update minimum architectury api version to 13.0.8
+- Upgrade quantity of oil in oil chunk but make them a bit rarer
+- Improve oil finder
+- Improve rocket bar overlay
+- Unlock all planet on the selection menu if the player is in creative mode
+- Jet suit now require fuel
+- Update sky aesthetics to 1.2.12
 
+## Fix
+- Crash when trying to launch to any planet when you haven't launched from a planet
+- Remove configurable start rocket key and slow down lander key to fix an issue with jumping
+- Fix bug where the rocket don't open the planet menu when higher than 600 blocks
+- Fix fuel refinery doesn't convert convert neo mb to fabric mb
+- Fix fluid transfer
+- Fix jet suit
+- fix full jet suit

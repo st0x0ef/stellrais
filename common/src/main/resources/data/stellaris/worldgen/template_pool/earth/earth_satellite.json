@@ -1,5 +1,4 @@
 {
-  "name": "stellaris:earth_satellite/earth_satellite",
   "fallback": "minecraft:empty",
   "elements": [
     {

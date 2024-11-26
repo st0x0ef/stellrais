@@ -14,7 +14,7 @@
   ],
   "client": [
     "client.PlayerRiddingVehicleMixin",
-    "client.PlayerLanderKeyMixin",
+    "client.PlayerKeyMixin",
     "client.RenderPlayerMixin"
   ],
   "injectors": {

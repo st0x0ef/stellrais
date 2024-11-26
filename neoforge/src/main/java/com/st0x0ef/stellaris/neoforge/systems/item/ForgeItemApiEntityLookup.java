@@ -19,8 +19,9 @@ public class ForgeItemApiEntityLookup implements EntityContainerLookup<ItemConta
         return PlatformItemContainer.of(lookup.find(entity, context));
     }
 
+    @SafeVarargs
     @Override
-    public void registerEntityTypes(EntityGetter<ItemContainer, Void> getter, Supplier<EntityType<?>>... containers) {
+    public final void registerEntityTypes(EntityGetter<ItemContainer, Void> getter, Supplier<EntityType<?>>... containers) {
         lookup.registerEntityTypes((entity, context) -> ForgeItemContainer.of(getter.getContainer(entity, context)), containers);
     }
 }

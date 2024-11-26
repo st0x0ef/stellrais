@@ -6,18 +6,22 @@ import com.st0x0ef.stellaris.common.data.planets.StellarisData;
 import com.st0x0ef.stellaris.common.menus.MilkyWayMenu;
 import com.st0x0ef.stellaris.common.menus.PlanetSelectionMenu;
 import com.st0x0ef.stellaris.common.menus.WaitMenu;
+import com.st0x0ef.stellaris.common.oxygen.GlobalOxygenManager;
 import dev.architectury.registry.menu.ExtendedMenuProvider;
 import dev.architectury.registry.menu.MenuRegistry;
 import io.netty.buffer.Unpooled;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
@@ -36,9 +40,24 @@ public class PlanetUtil {
     }
 
     public static boolean hasOxygen(Level level) {
-        if (isPlanet(level.dimension().location())) {
-            return getPlanet(level.dimension().location()).oxygen();
+        if (level instanceof ServerLevel serverLevel) {
+            return hasOxygenAt(serverLevel, null);
         }
+
+        return false;
+    }
+
+    public static boolean hasOxygenAt(ServerLevel level, @Nullable BlockPos pos) {
+        if (isPlanet(level.dimension().location())) {
+            if (!getPlanet(level.dimension().location()).oxygen()) {
+                if (pos == null){
+                    return false;
+                }
+
+                return GlobalOxygenManager.getInstance().getOrCreateDimensionManager(level).hasOxygenAt(pos);
+            }
+        }
+
         return true;
     }
 

@@ -5,11 +5,12 @@ import com.st0x0ef.stellaris.client.renderers.entities.vehicle.rocket.RocketMode
 import com.st0x0ef.stellaris.common.data.planets.Planet;
 import com.st0x0ef.stellaris.common.data_components.RocketComponent;
 import com.st0x0ef.stellaris.common.items.VehicleUpgradeItem;
+import com.st0x0ef.stellaris.common.keybinds.KeyVariables;
 import com.st0x0ef.stellaris.common.menus.RocketMenu;
 import com.st0x0ef.stellaris.common.network.packets.SyncRocketComponentPacket;
 import com.st0x0ef.stellaris.common.registry.*;
-import com.st0x0ef.stellaris.common.vehicle_upgrade.*;
 import com.st0x0ef.stellaris.common.utils.PlanetUtil;
+import com.st0x0ef.stellaris.common.vehicle_upgrade.*;
 import dev.architectury.networking.NetworkManager;
 import dev.architectury.registry.menu.ExtendedMenuProvider;
 import dev.architectury.registry.menu.MenuRegistry;
@@ -51,7 +52,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class RocketEntity extends IVehicleEntity implements HasCustomInventoryScreen, ContainerListener {
     public int START_TIMER;
@@ -112,31 +112,35 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
     }
 
     @Override
+    public boolean setPassengersRiding() {
+        return false;
+    }
+
+    @Override
     public void tick() {
         super.tick();
+
+        if (this.getY() > 600) {
+            this.openPlanetMenu(getFirstPlayerPassenger());
+
+            this.getPassengers().forEach((entity -> {
+                if (entity instanceof Player passenger && !passenger.is(getFirstPlayerPassenger())) {
+                    this.openWaitMenu(passenger);
+                }
+            }));
+        }
 
         this.rocketExplosion();
         this.burnEntities();
         this.checkContainer();
 
+        if (KeyVariables.isHoldingJump(getFirstPlayerPassenger())) {
+            startRocket();
+        }
+
         if (this.entityData.get(ROCKET_START)) {
             this.spawnParticle();
             this.startTimerAndFlyMovement();
-        }
-
-        if (this.getY() > 600) {
-            AtomicBoolean firstPlayer = new AtomicBoolean(true);
-
-            this.getPassengers().forEach((entity -> {
-                if (entity instanceof Player passenger) {
-                    if(firstPlayer.get()) {
-                        this.openPlanetMenu(passenger);
-                        firstPlayer.set(false);
-                    } else {
-                        this.openWaitMenu(passenger);
-                    }
-                }
-            }));
         }
     }
 
@@ -373,7 +377,7 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
     }
 
     public void startRocket() {
-        Player player = (Player) this.getFirstPassenger();
+        Player player = this.getFirstPlayerPassenger();
 
         if (player != null) {
             if (this.FUEL > 0 || player.isCreative()) {
@@ -420,9 +424,12 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
         }
     }
 
-    public ServerPlayer getFirstPlayerPassenger() {
-        if (!this.getPassengers().isEmpty() && this.getPassengers().getFirst() instanceof ServerPlayer player) {
-            return player;
+    public Player getFirstPlayerPassenger() {
+        if (!this.getPassengers().isEmpty()) {
+            for (int i = 0; i < this.getPassengers().size(); i++) {
+                if (this.getPassengers().get(i) instanceof Player player)
+                    return player;
+            }
         }
 
         return null;
@@ -550,12 +557,12 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
     }
 
     private void openPlanetMenu(Player player) {
-        if(player == null) return;
+        if (player == null) return;
 
-        if(!player.getEntityData().get(EntityData.DATA_PLANET_MENU_OPEN)) {
+        if (!player.getEntityData().get(EntityData.DATA_PLANET_MENU_OPEN)) {
             player.setNoGravity(true);
             player.getVehicle().setNoGravity(true);
-            PlanetUtil.openPlanetSelectionMenu(player, false);
+            PlanetUtil.openPlanetSelectionMenu(player, player.isCreative());
             player.getEntityData().set(EntityData.DATA_PLANET_MENU_OPEN, true);
         }
     }

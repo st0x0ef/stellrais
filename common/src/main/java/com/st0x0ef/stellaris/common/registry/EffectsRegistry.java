@@ -5,6 +5,7 @@ import com.st0x0ef.stellaris.platform.EffectRegister;
 import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
+
 public class EffectsRegistry {
     public static Holder<MobEffect> RADIOACTIVE;
 

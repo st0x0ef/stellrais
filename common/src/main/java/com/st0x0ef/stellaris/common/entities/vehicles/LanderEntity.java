@@ -1,6 +1,7 @@
 package com.st0x0ef.stellaris.common.entities.vehicles;
 
 import com.st0x0ef.stellaris.Stellaris;
+import com.st0x0ef.stellaris.common.keybinds.KeyVariables;
 import com.st0x0ef.stellaris.common.menus.LanderMenu;
 import com.st0x0ef.stellaris.common.registry.EntityRegistry;
 import dev.architectury.registry.menu.ExtendedMenuProvider;
@@ -146,7 +147,19 @@ public class LanderEntity extends IVehicleEntity implements HasCustomInventorySc
     @Override
     public void tick() {
         super.tick();
+
+        if (KeyVariables.isHoldingJump(getFirstPlayerPassenger())) {
+            slowDownLander();
+        }
     }
+
+    public Player getFirstPlayerPassenger() {
+        if (!this.getPassengers().isEmpty() && this.getPassengers().getFirst() instanceof Player player) {
+            return player;
+        }
+        return null;
+    }
+
 
     public void slowDownLander() {
         Vec3 vec = this.getDeltaMovement();

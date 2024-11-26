@@ -2,12 +2,9 @@ package com.st0x0ef.stellaris.common.registry;
 
 import com.google.common.base.Suppliers;
 import net.minecraft.tags.TagKey;
-
 import net.minecraft.world.item.Tier;
-
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
-
 
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -22,7 +19,7 @@ public enum ToolsRegister implements Tier {
         private final int enchantmentValue;
         private final Supplier<Ingredient> repairIngredient;
 
-         ToolsRegister(final TagKey incorrectBlockForDrops, final int uses, final float speed, final float damage, final int enchantmentValue, final Supplier<Ingredient> repairIngredient) {
+         ToolsRegister(final TagKey<Block> incorrectBlockForDrops, final int uses, final float speed, final float damage, final int enchantmentValue, final Supplier<Ingredient> repairIngredient) {
             this.incorrectBlocksForDrops = incorrectBlockForDrops;
             this.uses = uses;
             this.speed = speed;

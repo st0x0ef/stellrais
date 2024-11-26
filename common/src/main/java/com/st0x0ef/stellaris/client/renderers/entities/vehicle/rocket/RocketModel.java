@@ -40,7 +40,6 @@ public enum RocketModel implements StringRepresentable {
         return switch (name) {
             case "tiny" -> TINY;
             case "small" -> SMALL;
-            case "normal" -> NORMAL;
             case "big" -> BIG;
             default -> NORMAL;
         };

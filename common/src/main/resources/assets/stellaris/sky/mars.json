@@ -17,18 +17,15 @@
     "moon_size": 150
 
   },
-  "sunrise_color": 16755035,
+  "sunrise_color": [0, 140 , 205 ],
+  "sunrise_alpha_modifier": 0,
   "stars": {
     "vanilla": false,
     "moving_stars": true,
     "count": 10000,
     "all_days_visible": true,
     "scale": 0.05,
-    "color": {
-      "r": 255,
-      "g": 255,
-      "b": 255
-    },
+    "color": [255, 255, 255],
     "shooting_stars": {
       "percentage": 999,
       "random_lifetime": [
@@ -37,17 +34,14 @@
       ],
       "scale": 0.1,
       "speed": 0.4,
-      "color": {
-        "r": 190,
-        "g": 160,
-        "b": -1
-      }
+      "color": [190, 160, -1]
+
     }
   },
   "sky_type": "NORMAL",
   "sky_color": {
     "custom_color": false,
-    "color": [255, 255, 255]
+    "color": [255, 255, 255, 0]
   },
   "sky_objects": [
     {

@@ -1,8 +1,9 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
-import com.st0x0ef.stellaris.common.armors.JetSuit;
+import com.st0x0ef.stellaris.common.data_components.CappedLongComponent;
 import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
 import com.st0x0ef.stellaris.common.registry.FluidRegistry;
+import com.st0x0ef.stellaris.common.utils.FuelUtils;
 import com.st0x0ef.stellaris.common.utils.OxygenUtils;
 import dev.architectury.fluid.FluidStack;
 import dev.architectury.hooks.fluid.FluidBucketHooks;
@@ -25,7 +26,6 @@ import java.util.List;
 public class FluidTankHelper {
 
     public static final long BUCKET_AMOUNT = FluidStackHooks.bucketAmount();
-    public static final long OXYGEN_TANK_FILL_AMOUNT = Platform.isFabric() ? 810 : 10;
 
     public static <T extends BlockEntity & Container> void extractFluidToItem(T blockEntity, FluidTank tank, int slot) {
         ItemStack inputStack = blockEntity.getItem(slot);
@@ -33,19 +33,28 @@ public class FluidTankHelper {
             if (!tank.isEmpty()) {
                 boolean isTank = inputStack.has(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get());
 
-                if (tank.getAmount() >= BUCKET_AMOUNT || (isTank && tank.getAmount() >= OXYGEN_TANK_FILL_AMOUNT)) {
+                if (tank.getAmount() >= BUCKET_AMOUNT || (isTank && !tank.isEmpty())) {
                     ItemStack resultStack = ItemStack.EMPTY;
 
                     if (isTank && tank.getStack().getFluid().isSame(FluidRegistry.OXYGEN_STILL.get())) {
                         resultStack = inputStack.copy();
-                        long storedOxygen = inputStack.get(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()).oxygen();
+                        long storedOxygen = OxygenUtils.getOxygen(inputStack);
 
-                        if (storedOxygen + OXYGEN_TANK_FILL_AMOUNT >= inputStack.get(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()).capacity()) {
+                        if (storedOxygen + 1 >= OxygenUtils.getOxygenCapacity(inputStack)) {
                             return;
                         }
 
-                        OxygenUtils.addOxygen(resultStack, OXYGEN_TANK_FILL_AMOUNT);
-                        tank.shrink(OXYGEN_TANK_FILL_AMOUNT);
+                        else if (OxygenUtils.getOxygenCapacity(inputStack) - storedOxygen > convertFromNeoMb(10) && tank.getAmount() > convertFromNeoMb(10)) {
+                            OxygenUtils.addOxygen(resultStack, convertFromNeoMb(10));
+                            tank.shrink(convertFromNeoMb(10));
+                        } else if (tank.getAmount() < convertFromNeoMb(10) && storedOxygen + tank.getAmount() <= OxygenUtils.getOxygenCapacity(inputStack)) {
+                            OxygenUtils.addOxygen(resultStack, tank.getAmount());
+                            tank.shrink(tank.getAmount());
+                        }
+                        else if (tank.getAmount() > OxygenUtils.getOxygenCapacity(inputStack) - storedOxygen){
+                            OxygenUtils.addOxygen(resultStack, OxygenUtils.getOxygenCapacity(inputStack) - storedOxygen);
+                            tank.shrink(OxygenUtils.getOxygenCapacity(inputStack) - storedOxygen);
+                        }
                     }
                     else if (!isTank && isEmptyBucket(inputStack.getItem())) {
                         ItemStack stack = new ItemStack(tank.getStack().getFluid().getBucket());
@@ -101,9 +110,10 @@ public class FluidTankHelper {
 
                     if (success) {
                         if (canFuel) {
-                            long fuel = inputStack.getOrDefault(DataComponentsRegistry.STORED_FUEL_COMPONENT.get(), 0).longValue();
-                            amount = Math.min(JetSuit.MAX_FUEL_CAPACITY - fuel, tank.getAmount());
-                            resultStack.set(DataComponentsRegistry.STORED_FUEL_COMPONENT.get(), Mth.clamp(fuel + amount, 0, JetSuit.MAX_FUEL_CAPACITY));
+                            long fuel = FuelUtils.getFuel(inputStack);
+                            amount = Math.min(FuelUtils.getFuelCapacity(inputStack) - fuel, tank.getAmount());
+                            resultStack.set(DataComponentsRegistry.STORED_FUEL_COMPONENT.get(), new CappedLongComponent(
+                                    Mth.clamp(fuel + amount, 0, FuelUtils.getFuelCapacity(inputStack)), FuelUtils.getFuelCapacity(inputStack)));
                         }
 
                         inputStack.shrink(1);
@@ -166,16 +176,19 @@ public class FluidTankHelper {
             BlockEntity block = entity.getLevel().getBlockEntity(pos2);
             if(block == null) return;
             if (block instanceof WrappedFluidBlockEntity fluidBlock) {
-
                 for (FluidTank tank : fluidBlock.getFluidTanks()) {
-
                     if (tank.getStack().getFluid() == fluidTank.getStack().getFluid()) {
-                        if (fluidTank.getAmount() - 10 > 0 && tank.canGrow(10)) {
-                            tank.grow(10);
-                            fluidTank.grow(-10);
+                        if (fluidTank.getAmount() - convertFromNeoMb(10) > 0 && tank.canGrow(convertFromNeoMb(10))) {
+                            tank.grow(convertFromNeoMb(10));
+                            fluidTank.shrink(convertFromNeoMb(10));
 
                             entity.setChanged();
                         }
+                    } else if (tank.getStack().isEmpty()) {
+                        tank.setFluid(fluidTank.getStack().getFluid(), convertFromNeoMb(10));
+                        fluidTank.shrink(convertFromNeoMb(10));
+
+                        entity.setChanged();
                     }
                 }
             }
@@ -183,7 +196,7 @@ public class FluidTankHelper {
     }
 
     public static long convertFromNeoMb(long amount) {
-        return Platform.isFabric() ? amount * 81 : amount;
+        return Platform.isFabric() ? amount * 81L : amount;
     }
 
     public static int convertFromNeoMb(int amount) {

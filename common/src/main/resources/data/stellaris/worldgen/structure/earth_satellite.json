@@ -4,7 +4,7 @@
   "step": "surface_structures",
   "spawn_overrides": {},
   "terrain_adaptation": "beard_thin",
-  "start_pool": "stellaris:earth_satellite/earth_satellite",
+  "start_pool": "stellaris:earth/earth_satellite",
   "size": 1,
   "start_height": {
     "absolute": 1

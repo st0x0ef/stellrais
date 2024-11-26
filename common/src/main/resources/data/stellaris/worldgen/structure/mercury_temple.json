@@ -3,7 +3,7 @@
   "biomes": "#stellaris:has_structure/mercury_temple",
   "step": "surface_structures",
   "spawn_overrides": {},
-  "start_pool": "stellaris:mercury_temple_pool/mercury_temple",
+  "start_pool": "stellaris:mercury/mercury_temple",
   "size": 6,
   "start_height": {
     "absolute": -20

@@ -1,4 +1,4 @@
-package com.st0x0ef.stellaris.common.armors;
+package com.st0x0ef.stellaris.common.items.armors;
 
 import com.mojang.serialization.Codec;
 import com.st0x0ef.stellaris.Stellaris;
@@ -6,6 +6,7 @@ import com.st0x0ef.stellaris.common.blocks.entities.machines.FluidTankHelper;
 import com.st0x0ef.stellaris.common.data_components.JetSuitComponent;
 import com.st0x0ef.stellaris.common.keybinds.KeyVariables;
 import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
+import com.st0x0ef.stellaris.common.utils.FuelUtils;
 import com.st0x0ef.stellaris.common.utils.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
@@ -14,6 +15,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
@@ -21,10 +24,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 public class JetSuit {
-    public static final long MAX_FUEL_CAPACITY = FluidTankHelper.convertFromNeoMb(3000);
+    public static final long MAX_FUEL_CAPACITY = FluidTankHelper.convertFromNeoMb(1000);
 
     public static class Suit extends AbstractSpaceArmor.Chestplate {
-        public float spacePressTime;
+        public float spacePressTime = 0.0f;
+
+        private int nextFuelCheckTick = 0;
 
         public Suit(Holder<ArmorMaterial> material, Properties properties) {
             super(material, Type.CHESTPLATE, properties);
@@ -43,54 +48,52 @@ public class JetSuit {
             };
         }
 
+        @Override
+        public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
+            super.inventoryTick(stack, level, entity, slotId, isSelected);
 
-//        @Override
-//        public boolean canElytraFly(ItemStack stack, LivingEntity entity) {
-//            return Utils.isLivingInJetSuit(entity) && this.getMode(stack) == ModeType.ELYTRA.getMode();
-//        }
-//
-//        @Override
-//        public boolean elytraFlightTick(ItemStack stack, LivingEntity entity, int flightTicks) {
-//            if (!entity.level().isClientSide) {
-//                int nextFlightTick = flightTicks + 1;
-//                if (nextFlightTick % 10 == 0) {
-//                    entity.gameEvent(GameEvent.ELYTRA_GLIDE);
-//                }
-//            }
-//
-//            return true;
-//        }
+            if (entity instanceof Player player && player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof JetSuit.Suit) {
+                ItemStack jetSuitItemStack = player.getItemBySlot(EquipmentSlot.CHEST);
 
-        public void onArmorTick(ItemStack stack, Level level, Player player) {
-            super.onArmorTick(stack, level, player);
+                if (FuelUtils.getFuel(jetSuitItemStack) <= 0) return;
 
-            if (getFuel(stack) <= 0) return;
+                /** JET SUIT FAST BOOST */
+                if (player.isSprinting()) {
+                    this.boost(player, 1.3, true);
+                }
 
-            /** JET SUIT FAST BOOST */
-            if (player.isSprinting()) {
-                this.boost(player, 1.3, true);
+                /** JET SUIT SLOW BOOST */
+                if (player.zza > 0 && !player.isSprinting()) {
+                    this.boost(player, 0.9, false);
+                }
+
+                switch (this.getMode(stack)) {
+                    case 1 -> this.normalFlyModeMovement(player, jetSuitItemStack);
+                    case 2 -> this.hoverModeMovement(player, jetSuitItemStack);
+                    case 3 -> this.elytraModeMovement(player);
+                }
+
+                /** CALCULATE PRESS SPACE TIME */
+                this.calculateSpacePressTime(player, jetSuitItemStack);
             }
-
-            /** JET SUIT SLOW BOOST */
-            if (player.zza > 0 && !player.isSprinting()) {
-                this.boost(player, 0.9, false);
-            }
-
-            switch (this.getMode(stack)) {
-                case 1 -> this.normalFlyModeMovement(player, stack);
-                case 2 -> this.hoverModeMovement(player, stack);
-                case 3 -> this.elytraModeMovement(player, stack);
-            }
-
-            /** CALCULATE PRESS SPACE TIME */
-            this.calculateSpacePressTime(player, stack);
         }
 
         private void normalFlyModeMovement(Player player, ItemStack stack) {
             if (KeyVariables.isHoldingJump(player)) {
-                player.moveRelative(1.2F, new Vec3(0, 0.1, 0));
-                player.resetFallDistance();
-                Utils.disableFlyAntiCheat(player, true);
+                if (nextFuelCheckTick > 0) {
+                    player.moveRelative(1.2F, new Vec3(0, 0.1, 0));
+                    player.resetFallDistance();
+                    Utils.disableFlyAntiCheat(player, true);
+                }
+
+                else if (FuelUtils.removeFuel(stack, 1)) {
+                    player.moveRelative(1.2F, new Vec3(0, 0.1, 0));
+                    player.resetFallDistance();
+                    Utils.disableFlyAntiCheat(player, true);
+                    nextFuelCheckTick = 20;
+                }
+
+                nextFuelCheckTick--;
             }
 
             if (!player.onGround()) {
@@ -114,10 +117,20 @@ public class JetSuit {
 
             // Main movement logic
             if (!player.onGround() && !player.isInWater()) {
-                player.setDeltaMovement(vec3.x, vec3.y + 0.04, vec3.z);
-                player.resetFallDistance();
-                Utils.disableFlyAntiCheat(player, true);
-                addFuel(stack, -2);
+                if (nextFuelCheckTick > 0) {
+                    player.setDeltaMovement(vec3.x, vec3.y + 0.04, vec3.z);
+                    player.resetFallDistance();
+                    Utils.disableFlyAntiCheat(player, true);
+                }
+
+                else if (FuelUtils.removeFuel(stack, 1)) {
+                    player.setDeltaMovement(vec3.x, vec3.y + 0.04, vec3.z);
+                    player.resetFallDistance();
+                    Utils.disableFlyAntiCheat(player, true);
+                    nextFuelCheckTick = 20;
+                }
+
+                nextFuelCheckTick--;
             }
 
             // Move up
@@ -149,12 +162,10 @@ public class JetSuit {
             }
         }
 
-        private void elytraModeMovement(Player player, ItemStack stack) {
+        private void elytraModeMovement(Player player) {
             if (player.isSprinting() && !player.onGround()) {
-
                 player.startFallFlying();
                 Utils.disableFlyAntiCheat(player, true);
-                addFuel(stack, -2);
             } else if (player.isSprinting() && player.onGround() && KeyVariables.isHoldingJump(player)) {
                 player.moveTo(player.getX(), player.getY() + 2, player.getZ());
             }
@@ -175,53 +186,49 @@ public class JetSuit {
         public void calculateSpacePressTime(Player player, ItemStack itemStack) {
             int mode = this.getMode(itemStack);
 
-            if (Utils.isLivingInJetSuit(player)) {
+            /** NORMAL MODE */
+            if (mode == ModeType.NORMAL.getMode()) {
+                if (KeyVariables.isHoldingJump(player)) {
+                    if (this.spacePressTime < 2.2F) {this.spacePressTime = this.spacePressTime + 0.2F;
+                    }
+                }
+                else if (this.spacePressTime > 0.0F) {
+                    this.spacePressTime = this.spacePressTime - 0.2F;
+                }
+            }
 
-                /** NORMAL MODE */
-                if (mode == ModeType.NORMAL.getMode()) {
-                    if (KeyVariables.isHoldingJump(player)) {
+            /** HOVER MODE */
+            if (mode == ModeType.HOVER.getMode()) {
+                if (!player.onGround() && this.spacePressTime < 0.6F) {
+                    this.spacePressTime = this.spacePressTime + 0.2F;
+                }
+                else if (KeyVariables.isHoldingJump(player)) {
+                    if (this.spacePressTime < 1.4F) {
+                        this.spacePressTime = this.spacePressTime + 0.2F;
+                        hoverModeMovement(player,itemStack);
+                    }
+                }
+                else if (this.spacePressTime >= 0.6F) {
+                    this.spacePressTime = this.spacePressTime - 0.2F;
+                }
+
+            }
+
+            /** ELYTRA MODE */
+            if (mode == ModeType.ELYTRA.getMode()) {
+                if (KeyVariables.isHoldingUp(player) && player.isFallFlying()) {
+                    if (player.isSprinting()) {
+                        if (this.spacePressTime < 2.8F) {
+                            this.spacePressTime = this.spacePressTime + 0.2F;
+                        }
+                    } else {
                         if (this.spacePressTime < 2.2F) {
                             this.spacePressTime = this.spacePressTime + 0.2F;
                         }
                     }
-                    else if (this.spacePressTime > 0.0F) {
-                        this.spacePressTime = this.spacePressTime - 0.2F;
-                    }
                 }
-
-                /** HOVER MODE */
-                if (mode == ModeType.HOVER.getMode()) {
-                    if (!player.onGround() && this.spacePressTime < 0.6F) {
-                        this.spacePressTime = this.spacePressTime + 0.2F;
-                    }
-                    else if (KeyVariables.isHoldingJump(player)) {
-                        if (this.spacePressTime < 1.4F) {
-                            this.spacePressTime = this.spacePressTime + 0.2F;
-                            hoverModeMovement(player,itemStack);
-                        }
-                    }
-                    else if (this.spacePressTime >= 0.6F) {
-                        this.spacePressTime = this.spacePressTime - 0.2F;
-                    }
-
-                }
-
-                /** ELYTRA MODE */
-                if (mode == ModeType.ELYTRA.getMode()) {
-                    if (KeyVariables.isHoldingUp(player) && player.isFallFlying()) {
-                        if (player.isSprinting()) {
-                            if (this.spacePressTime < 2.8F) {
-                                this.spacePressTime = this.spacePressTime + 0.2F;
-                            }
-                        } else {
-                            if (this.spacePressTime < 2.2F) {
-                                this.spacePressTime = this.spacePressTime + 0.2F;
-                            }
-                        }
-                    }
-                    else if (this.spacePressTime > 0.0F) {
-                        this.spacePressTime = this.spacePressTime - 0.2F;
-                    }
+                else if (this.spacePressTime > 0.0F) {
+                    this.spacePressTime = this.spacePressTime - 0.2F;
                 }
             }
         }
@@ -229,7 +236,7 @@ public class JetSuit {
         public void boost(Player player, double boost, boolean sonicBoom) {
             Vec3 vec31 = player.getLookAngle();
 
-            if (Utils.isLivingInJetSuit(player) && player.isFallFlying()) {
+            if ((Utils.isLivingInJetSuit(player) || Utils.isLivingInSpaceSuit(player)) && player.isFallFlying()) {
                 Vec3 vec32 = player.getDeltaMovement();
                 player.setDeltaMovement(vec32.add(vec31.x * 0.1D + (vec31.x * boost - vec32.x) * 0.5D, vec31.y * 0.1D + (vec31.y * boost - vec32.y) * 0.5D, vec31.z * 0.1D + (vec31.z * boost - vec32.z) * 0.5D));
 
@@ -284,19 +291,16 @@ public class JetSuit {
 
 
         public static ModeType fromInt(int integer) {
-           return fromString(Integer.toString(integer));
+            return fromString(Integer.toString(integer));
         }
 
         public static ModeType fromString(String string) {
-            Stellaris.LOG.error("From String : {}", Integer.decode(string));
-
             return switch (Integer.decode(string)) {
-               case 0 -> DISABLED;
-               case 1 -> NORMAL;
-               case 2 -> HOVER;
-               case 3 -> ELYTRA;
-               default -> DISABLED;
-           };
+                case 1 -> NORMAL;
+                case 2 -> HOVER;
+                case 3 -> ELYTRA;
+                default -> DISABLED;
+            };
         }
     }
 }

@@ -3,7 +3,9 @@ package com.st0x0ef.stellaris.client.screens;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.st0x0ef.stellaris.Stellaris;
-import com.st0x0ef.stellaris.client.screens.components.*;
+import com.st0x0ef.stellaris.client.screens.components.InvisibleButton;
+import com.st0x0ef.stellaris.client.screens.components.LaunchButton;
+import com.st0x0ef.stellaris.client.screens.components.ModifiedButton;
 import com.st0x0ef.stellaris.client.screens.helper.ScreenHelper;
 import com.st0x0ef.stellaris.client.screens.info.CelestialBody;
 import com.st0x0ef.stellaris.client.screens.info.MoonInfo;
@@ -16,7 +18,6 @@ import com.st0x0ef.stellaris.common.registry.EntityData;
 import com.st0x0ef.stellaris.common.registry.TranslatableRegistry;
 import com.st0x0ef.stellaris.common.utils.PlanetUtil;
 import com.st0x0ef.stellaris.common.utils.Utils;
-
 import dev.architectury.networking.NetworkManager;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -33,6 +34,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWScrollCallback;
 
@@ -40,7 +42,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 @Environment(EnvType.CLIENT)
 public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelectionMenu> {
@@ -137,7 +140,10 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
         }
         Entity vehicle = player.getVehicle();
         if (vehicle instanceof RocketEntity rocket) {
-            return rocket.canGoTo(PlanetUtil.getPlanet(player.level().dimension().location()), planet);
+            if (PlanetUtil.isPlanet(player.level().dimension().location())) {
+                return rocket.canGoTo(PlanetUtil.getPlanet(player.level().dimension().location()), planet);
+            }
+            return rocket.canGoTo(PlanetUtil.getPlanet(Level.OVERWORLD.location()), planet);
         }
         return false;
     }

@@ -1,5 +1,6 @@
 package com.st0x0ef.stellaris.client.screens.components;
 
+import com.st0x0ef.stellaris.client.screens.PlanetSelectionScreen;
 import com.st0x0ef.stellaris.client.screens.helper.ScreenHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -9,7 +10,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.phys.Vec3;
-import com.st0x0ef.stellaris.client.screens.PlanetSelectionScreen;
 
 import java.util.ArrayList;
 import java.util.List;

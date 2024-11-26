@@ -22,15 +22,17 @@ public class FabricItemApiBlockLookup implements BlockContainerLookup<ItemContai
         return PlatformItemContainer.of(level, pos, state, entity, direction);
     }
 
+    @SafeVarargs
     @Override
-    public void registerBlocks(BlockGetter<ItemContainer, Direction> getter, Supplier<Block>... containers) {
+    public final void registerBlocks(BlockGetter<ItemContainer, Direction> getter, Supplier<Block>... containers) {
         for (Supplier<Block> container : containers) {
             ItemStorage.SIDED.registerForBlocks((level, pos, state, entity, dir) -> FabricItemContainer.of(getter.getContainer(level, pos, state, entity, dir)), container.get());
         }
     }
 
+    @SafeVarargs
     @Override
-    public void registerBlockEntities(BlockGetter<ItemContainer, Direction> getter, Supplier<BlockEntityType<?>>... containers) {
+    public final void registerBlockEntities(BlockGetter<ItemContainer, Direction> getter, Supplier<BlockEntityType<?>>... containers) {
         for (Supplier<BlockEntityType<?>> container : containers) {
             ItemStorage.SIDED.registerForBlockEntity((entity, direction) -> FabricItemContainer.of(getter.getContainer(entity.getLevel(), entity.getBlockPos(), entity.getBlockState(), entity, direction)), container.get());
         }

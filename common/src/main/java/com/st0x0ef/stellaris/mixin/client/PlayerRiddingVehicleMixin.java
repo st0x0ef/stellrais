@@ -10,10 +10,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(HumanoidModel.class)
 public abstract class PlayerRiddingVehicleMixin {
+
     @Inject(at = @At(value = "HEAD"), method = "setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V")
     private void setupAnim(LivingEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo c) {
-        if(entity.getVehicle() instanceof IVehicleEntity) {
-            ((HumanoidModel<LivingEntity>) (Object) this).riding = false;
+        if(entity.getVehicle() instanceof IVehicleEntity vehicle) {
+            ((HumanoidModel<LivingEntity>) (Object) this).riding = vehicle.setPassengersRiding();
         }
     }
 }

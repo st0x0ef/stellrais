@@ -1,10 +1,13 @@
 {
   "world": "stellaris:deimos",
-  "cloud": false,
-  "cloud_height": 192,
-  "fog": true,
   "rain": false,
-
+  "fog_settings": {
+    "fog": true
+  },
+  "cloud_settings": {
+    "cloud": false,
+    "cloud_height": 192
+  },
   "custom_vanilla_objects": {
     "sun": true,
     "sun_texture": "textures/environment/sun.png",

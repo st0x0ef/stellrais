@@ -1,11 +1,14 @@
 {
   "world": "minecraft:overworld",
   "id": "stellaris:earth_sky",
-  "cloud": true,
-  "cloud_height": 192,
-  "fog": true,
   "rain": true,
-
+  "fog_settings": {
+    "fog": true
+  },
+  "cloud_settings": {
+    "cloud": true,
+    "cloud_height": 192
+  },
   "custom_vanilla_objects": {
     "sun": true,
     "sun_texture": "textures/environment/sun.png",

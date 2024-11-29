@@ -7,11 +7,13 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 
+import java.util.Optional;
+
 public record PlanetRecord(
         ResourceLocation texture, String name,
         int distance, long period, int width,
         int height, String parent,
-        ResourceKey<Level> dimensionId, String translatable, String id) {
+        ResourceKey<Level> dimensionId, String translatable, Optional<Boolean> spaceStation, String id) {
 
 
     public static final Codec<PlanetRecord> CODEC = RecordCodecBuilder.create(instance -> instance.group(
@@ -24,6 +26,7 @@ public record PlanetRecord(
             Codec.STRING.fieldOf("parent").forGetter(PlanetRecord::parent),
             ResourceKey.codec(Registries.DIMENSION).fieldOf("dimensionId").forGetter(PlanetRecord::dimensionId),
             Codec.STRING.fieldOf("translatable").forGetter(PlanetRecord::translatable),
+            Codec.BOOL.optionalFieldOf("space_station").forGetter(PlanetRecord::spaceStation),
             Codec.STRING.fieldOf("id").forGetter(PlanetRecord::id)
     ).apply(instance, PlanetRecord::new));
 }

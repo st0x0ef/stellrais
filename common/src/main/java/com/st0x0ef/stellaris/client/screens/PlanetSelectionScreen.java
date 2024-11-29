@@ -11,10 +11,15 @@ import com.st0x0ef.stellaris.client.screens.info.CelestialBody;
 import com.st0x0ef.stellaris.client.screens.info.MoonInfo;
 import com.st0x0ef.stellaris.client.screens.info.PlanetInfo;
 import com.st0x0ef.stellaris.common.data.planets.Planet;
+import com.st0x0ef.stellaris.common.data.recipes.RocketStationRecipe;
+import com.st0x0ef.stellaris.common.data.recipes.SpaceStationRecipe;
+import com.st0x0ef.stellaris.common.data.recipes.input.RocketStationInput;
+import com.st0x0ef.stellaris.common.data.recipes.input.SpaceStationInput;
 import com.st0x0ef.stellaris.common.entities.vehicles.RocketEntity;
 import com.st0x0ef.stellaris.common.menus.PlanetSelectionMenu;
 import com.st0x0ef.stellaris.common.network.packets.TeleportEntityToPlanetPacket;
 import com.st0x0ef.stellaris.common.registry.EntityData;
+import com.st0x0ef.stellaris.common.registry.RecipesRegistry;
 import com.st0x0ef.stellaris.common.registry.TranslatableRegistry;
 import com.st0x0ef.stellaris.common.utils.PlanetUtil;
 import com.st0x0ef.stellaris.common.utils.Utils;
@@ -26,6 +31,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -34,14 +40,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWScrollCallback;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -74,6 +79,9 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
     public static final Component oxygen = Component.translatable("text.stellaris.planetscreen.oxygen");
     public static final Component system = Component.translatable("text.stellaris.planetscreen.system");
     public static final Component error_message = Component.translatable("text.stellaris.planetscreen.error_message");
+
+    private final RecipeManager.CachedCheck<SpaceStationInput, SpaceStationRecipe> quickCheck = RecipeManager.createCheck(RecipesRegistry.SPACE_STATION_TYPE.get());
+
 
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private static final long UPDATE_INTERVAL = 1L;
@@ -229,7 +237,12 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
     private void onLaunchButtonClick() {
         if (focusedBody != null && focusedBody.dimension != null) {
             if (canLaunch(PlanetUtil.getPlanet(focusedBody.dimension))) {
-                tpToFocusedPlanet();
+
+                if(focusedBody.spaceStation && this.playerHaveSpaceStationRecipes()) {
+                    //TP and CREATE STATION
+                } else {
+                    tpToFocusedPlanet();
+                }
 
             } else {
                 if (PlanetUtil.getPlanet(focusedBody.dimension).name().equals("Earth")) {
@@ -482,9 +495,16 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
             int buttonY = centerY + buttonHeight / 2 + 1;
 
             int textX = buttonX + buttonWidth / 4 - 20;
+            System.out.println("Space Station " + focusedBody.spaceStation);
+
+            if(focusedBody.spaceStation) {
+                launchButton.setTooltip(Tooltip.create(Component.literal("Require Space Station")));
+
+            }
 
             launchButton.visible = true;
             launchButton.setPosition(buttonX, buttonY);
+
 
             float alpha = 0.5f;
 
@@ -995,7 +1015,6 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
     }
 
 
-
     @Override
     public PlanetSelectionMenu getMenu() {
         return this.menu;
@@ -1010,6 +1029,16 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
         prevScrollCallback = GLFW.glfwSetScrollCallback(windowHandle, Minecraft.getInstance().mouseHandler::onScroll);
 
         super.onClose();
+    }
+
+    public boolean playerHaveSpaceStationRecipes() {
+        Optional<RecipeHolder<SpaceStationRecipe>> recipeHolder = quickCheck.getRecipeFor(new SpaceStationInput( this.getPlayer(), this.getPlayer().getInventory()) , this.getPlayer().level());
+        if(recipeHolder.isPresent()) {
+            SpaceStationRecipe recipe = recipeHolder.get().value();
+            //Remove Items
+        }
+
+        return recipeHolder.isPresent();
     }
 
     public Player getPlayer() {

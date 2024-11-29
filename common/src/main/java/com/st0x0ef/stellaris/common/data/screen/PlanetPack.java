@@ -37,8 +37,11 @@ public class PlanetPack extends SimpleJsonResourceReloadListener {
                     PlanetSelectionScreen.findByNameStar(planet.parent()),
                     planet.dimensionId(),
                     Component.translatable(planet.translatable()),
-                    planet.id()
+                    planet.id(),
+                    planet.spaceStation().orElse(false)
             );
+
+            planet.spaceStation().ifPresent(screenPlanet::setSpaceStation);
 
             PlanetSelectionScreen.PLANETS.add(screenPlanet);
             Stellaris.LOG.info("Added a planet to PlanetSelectionScreen : {}", planet.name());

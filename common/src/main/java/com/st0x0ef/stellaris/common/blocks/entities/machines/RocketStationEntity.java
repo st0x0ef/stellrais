@@ -98,7 +98,7 @@ public class RocketStationEntity extends BaseContainerBlockEntity implements Imp
 
         ItemStack outputStack = getItem(14);
         if (outputStack.isEmpty() || outputStack.getCount() < outputStack.getMaxStackSize()) {
-            Optional<RecipeHolder<RocketStationRecipe>> recipeHolder = quickCheck.getRecipeFor(new RocketStationInput(getLevel().getBlockEntity(getBlockPos()), getItems()), level);
+            Optional<RecipeHolder<RocketStationRecipe>> recipeHolder = quickCheck.getRecipeFor(new RocketStationInput( getLevel().getBlockEntity(getBlockPos()), getItems()) , level);
             if (recipeHolder.isPresent()) {
                 RocketStationRecipe recipe = recipeHolder.get().value();
                 ItemStack resultStack = recipe.getResultItem(level.registryAccess());

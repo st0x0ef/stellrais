@@ -15,6 +15,7 @@ public class CelestialBody {
     public Component translatable;
     public String id;
     public boolean clickable = true;
+    public boolean spaceStation = false;
 
     public CelestialBody(ResourceLocation texture, String name, float x, float y, float width, float height, int orbitColor, ResourceLocation dimension, Component translatable, String id) {
         this.texture = texture;
@@ -32,6 +33,11 @@ public class CelestialBody {
     public void setPosition(float x, float y) {
         this.x = x;
         this.y = y;
+    }
+
+    public CelestialBody setSpaceStation(boolean spaceStation) {
+        this.spaceStation = spaceStation;
+        return this;
     }
 
     public Component getTranslatable() {

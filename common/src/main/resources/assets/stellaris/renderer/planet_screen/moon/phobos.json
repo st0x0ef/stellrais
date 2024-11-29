@@ -9,6 +9,7 @@
   "dimensionId": "stellaris:phobos",
   "translatable": "text.stellaris.planetscreen.phobos",
   "id": "stellaris:phobos",
-  "clickable": false
+  "clickable": true,
+  "space_station": true
 
 }

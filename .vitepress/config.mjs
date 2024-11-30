@@ -11,7 +11,7 @@ export default defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Documention', link: '/custom-planets' },
-      { text: 'Wiki', link: '/wiki/getting-started' },
+      { text: 'Wiki', link: '/wiki/installation' },
       { text: 'Team', link: '/team' }
 
     ],
@@ -29,7 +29,11 @@ export default defineConfig({
       {
         text: 'Wiki',
         items: [
-          { text: 'Getting Started', link: '/wiki/getting-started' },
+          { text: 'Install the Mod', link: '/wiki/installation' },
+          { text: 'Resources', link: '/wiki/resources' },
+
+          { text: 'Oxygen', link: '/wiki/oxygen' },
+
           { text: 'Fuel', link: '/wiki/fuel' },
           { text: 'Electricity', link: '/wiki/electricity' },
           { text: 'Rocket', link: '/wiki/rocket' },

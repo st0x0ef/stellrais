@@ -77,7 +77,7 @@ public class SpaceStationRecipe implements Recipe<SpaceStationInput> {
     public static class Serializer implements RecipeSerializer<SpaceStationRecipe> {
 
         public static final MapCodec<SpaceStationRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-                Ingredient.CODEC_NONEMPTY.listOf(1, 3).fieldOf("ingredients").forGetter(r -> r.recipeItems),
+                Ingredient.CODEC_NONEMPTY.listOf(1, 4).fieldOf("ingredients").forGetter(r -> r.recipeItems),
                 ItemStack.CODEC.fieldOf("output").forGetter(r -> r.output)
         ).apply(instance, SpaceStationRecipe::new));
 

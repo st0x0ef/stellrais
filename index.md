@@ -8,14 +8,11 @@ hero:
   tagline: 
   actions:
     - theme: brand
-      text: Custom Planets
-      link: /docs/custom-planets
-    - theme: alt
-      text: Custom Screen
-      link: /docs/custom-screen
-    - theme: brand
       text: Wiki
       link: /wiki/installation
+    - theme: alt
+      text: Dev Docs
+      link: /docs/custom-screen
 features:
   - title: Easy as cake
     details: Creating addons is very easy with the datapacks support

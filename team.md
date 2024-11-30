@@ -1,3 +1,6 @@
+---
+layout: home
+---
 <script setup>
 import { VPTeamMembers } from 'vitepress/theme'
 

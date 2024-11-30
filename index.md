@@ -9,10 +9,10 @@ hero:
   actions:
     - theme: brand
       text: Custom Planets
-      link: /custom-planets
+      link: /docs/custom-planets
     - theme: alt
       text: Custom Screen
-      link: /custom-screen
+      link: /docs/custom-screen
     - theme: brand
       text: Wiki
       link: /wiki/getting-started

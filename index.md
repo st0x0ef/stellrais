@@ -15,7 +15,7 @@ hero:
       link: /docs/custom-screen
     - theme: brand
       text: Wiki
-      link: /wiki/getting-started
+      link: /wiki/installation
 features:
   - title: Easy as cake
     details: Creating addons is very easy with the datapacks support

@@ -26,9 +26,10 @@ public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity
     @Override
     public void tick() {
         if (level instanceof ServerLevel serverLevel) {
-            if (this.getItem(0).has(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()) && oxygenTank.canGrow(1)) {
+            if (this.getItem(0).has(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()) && oxygenTank.canGrow(1) && this.getWrappedEnergyContainer().getStoredEnergy() > 1) {
                 if (OxygenUtils.removeOxygen(getItem(0), 1)) {
                     addOyxgen(1);
+                    this.getWrappedEnergyContainer().extractEnergy(1, false);
                 }
             }
 

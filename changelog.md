@@ -1,7 +1,7 @@
 # 1.2.0 beta 4 changelog
 
 ## Changes
-- Update sky aesthetics to 1.4
+- Update sky aesthetics to 1.3
 
 ## Fix
 - Fix typo
@@ -73,7 +73,7 @@
 - Improve rocket bar overlay
 - Unlock all planet on the selection menu if the player is in creative mode
 - Jet suit now require fuel
-- Update sky aesthetics to 1.2.12
+- Update sky aesthetics to 1.3
 
 ## Fix
 - Crash when trying to launch to any planet when you haven't launched from a planet

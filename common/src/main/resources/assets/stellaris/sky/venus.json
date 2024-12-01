@@ -1,10 +1,13 @@
 {
   "world": "stellaris:venus",
-  "cloud": false,
-  "cloud_height": 192,
-  "fog": true,
+  "fog_settings": {
+    "fog": true
+  },
+  "cloud_settings": {
+    "cloud": false,
+    "cloud_height": 192
+  },
   "rain": false,
-
   "custom_vanilla_objects": {
     "sun": true,
     "sun_texture": "textures/environment/sun.png",

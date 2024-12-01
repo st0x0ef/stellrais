@@ -9,9 +9,9 @@ import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.hoglin.Hoglin;
@@ -34,7 +34,7 @@ public class Mogler extends Hoglin {
                 .add(Attributes.ATTACK_DAMAGE, 6);
     }
 
-    public static boolean checkMoglerSpawnRules(EntityType<Mogler> entity, LevelAccessor levelAccessor, MobSpawnType spawnType, BlockPos blockPos, RandomSource random) {
+    public static boolean checkMoglerSpawnRules(EntityType<Mogler> entity, LevelAccessor levelAccessor, EntitySpawnReason spawnType , BlockPos blockPos, RandomSource random) {
         return !levelAccessor.getBlockState(blockPos.below()).is(Blocks.NETHER_WART_BLOCK);
     }
 
@@ -47,7 +47,7 @@ public class Mogler extends Hoglin {
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob) {
-        Mogler moglerentity = EntityRegistry.MOGLER.get().create(serverLevel);
+        Mogler moglerentity = EntityRegistry.MOGLER.get().create(serverLevel, EntitySpawnReason.BREEDING);
         if (moglerentity != null) {
             moglerentity.setPersistenceRequired();
         }

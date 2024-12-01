@@ -13,7 +13,7 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.Optional;
+
 
 public class CanItem extends Item {
 
@@ -45,7 +45,7 @@ public class CanItem extends Item {
     public static boolean addFoodToCan(ItemStack canStack, ItemStack foodStack) {
         int canNutrition = getNutrition(canStack) + getNutrition(foodStack);
         if (canNutrition <= ((CanItem) canStack.getItem()).getMaxNutrition()) {
-            setFoodProperties(canStack, new FoodProperties(canNutrition, Math.round((getSaturation(canStack) + getSaturation(foodStack)) * 10F) / 10F, false, 1.6F, Optional.empty(), List.of()));
+            setFoodProperties(canStack, new FoodProperties(canNutrition, Math.round((getSaturation(canStack) + getSaturation(foodStack)) * 10F) / 10F, false));
 
 
             return true;

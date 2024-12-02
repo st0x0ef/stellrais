@@ -25,6 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 
 public class PlanetUtil {
     public static Planet getPlanet(ResourceLocation level) {
@@ -37,6 +38,12 @@ public class PlanetUtil {
         AtomicBoolean isPlanet = new AtomicBoolean(false);
         StellarisData.getPlanets().forEach(planet -> {if (planet.dimension().equals(level)) isPlanet.set(true);});
         return isPlanet.get();
+    }
+
+    public static void ifPlanet(ResourceLocation level, Consumer<Planet> planetRunnable) {
+        if(isPlanet(level)) {
+            planetRunnable.accept(getPlanet(level));
+        }
     }
 
     public static boolean hasOxygen(Level level) {

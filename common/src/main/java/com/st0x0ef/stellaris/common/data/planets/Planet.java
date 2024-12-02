@@ -2,12 +2,14 @@ package com.st0x0ef.stellaris.common.data.planets;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public record Planet (
         String system,
@@ -18,6 +20,7 @@ public record Planet (
         float temperature,
         int distanceFromEarth,
         float gravity,
+        Optional<Boolean> isStormy,
         PlanetTextures textures
 
 ) {
@@ -30,6 +33,7 @@ public record Planet (
             Codec.FLOAT.fieldOf("temperature").forGetter(Planet::temperature),
             Codec.INT.fieldOf("distanceFromEarth").forGetter(Planet::distanceFromEarth), // in megameters
             Codec.FLOAT.fieldOf("gravity").forGetter(Planet::gravity),
+            Codec.BOOL.optionalFieldOf("stormy").forGetter(Planet::isStormy),
             PlanetTextures.CODEC.fieldOf("textures").forGetter(Planet::textures)
     ).apply(instance, Planet::new));
 
@@ -45,6 +49,7 @@ public record Planet (
             buffer.writeFloat(planet.temperature);
             buffer.writeInt(planet.distanceFromEarth);
             buffer.writeFloat(planet.gravity);
+            buffer.writeOptional(planet.isStormy, FriendlyByteBuf::writeBoolean);
             planet.textures.toNetwork(buffer);
         }));
 
@@ -66,6 +71,7 @@ public record Planet (
                     buffer.readFloat(),
                     buffer.readInt(),
                     buffer.readFloat(),
+                    buffer.readOptional(FriendlyByteBuf::readBoolean),
                     PlanetTextures.fromNetwork(buffer)));
         }
 

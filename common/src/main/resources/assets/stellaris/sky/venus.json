@@ -1,7 +1,8 @@
 {
   "world": "stellaris:venus",
   "fog_settings": {
-    "fog": true
+    "fog": true,
+    "fog_density": [120, 200]
   },
   "cloud_settings": {
     "cloud": false,

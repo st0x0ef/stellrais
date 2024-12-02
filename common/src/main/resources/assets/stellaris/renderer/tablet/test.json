@@ -6,7 +6,7 @@
   "infos": [
     {
         "title": "Machines Blocks",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae feugiat eros, nec tincidunt elit. Quisque erat neque, vehicula sed. ",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         "image": {
           "location": "stellaris:textures/gui/tablet/rocket_page.png",
           "width": 64,
@@ -14,13 +14,16 @@
         }
     },
     {
-      "title": "test",
-      "description": "Test"
+      "title": "The Beautiful Test !",
+      "description": "This is again a test ! Yea I know :)"
     },
     {
-      "title": "test 2",
-      "description": "Test 2",
-      "entity": "minecraft:cow"
+      "title": "Test 2",
+      "description": "Test 2"
+    },
+    {
+      "title": "Test 3",
+      "description": "Test 3"
     }
   ]
 }

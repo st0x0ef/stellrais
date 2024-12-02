@@ -4,8 +4,10 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.common.utils.Utils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractScrollWidget;
+import net.minecraft.client.gui.components.StringWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -15,6 +17,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import org.joml.Vector3f;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class TabletEntryWidget extends AbstractScrollWidget {
@@ -51,19 +55,18 @@ public class TabletEntryWidget extends AbstractScrollWidget {
         finalHeight.set(0);
         for (int i = 0; i < this.entry.infos().size(); i++) {
             TabletEntry.Info info = this.entry.infos().get(i);
-            guiGraphics.drawCenteredString(Minecraft.getInstance().font, info.title(), getWidth(),
+
+            guiGraphics.drawCenteredString(getFont(), info.title(), getWidth(),
                     getY() + finalHeight.get() + 1 + (i * 20) , Utils.getColorHexCode("white"));
 
-            guiGraphics.drawCenteredString(Minecraft.getInstance().font, info.title(), getWidth(),
-                    getY() + 20 + finalHeight.get() + (i * 20), Utils.getColorHexCode("white"));
-
-            finalHeight.addAndGet(20);
+            int descriptionHeight = renderDescription(info.description(), getX() + 5, getY() + finalHeight.get() + 20 + (i * 20), getWidth() - 5, guiGraphics);
+            finalHeight.addAndGet(descriptionHeight);
 
             int finalI = i;
             info.image().ifPresent((image) -> {
                 int height = getY() + 40 + finalHeight.get() + (finalI * 20);
                 guiGraphics.blitSprite(image.location(), getWidth() - image.width()/2, height, image.width(), image.height());
-                finalHeight.addAndGet(height);
+                finalHeight.addAndGet(height - 40);
             });
 
         }
@@ -85,5 +88,33 @@ public class TabletEntryWidget extends AbstractScrollWidget {
         RenderSystem.enableBlend();
         guiGraphics.blitSprite(SCROLLER_SPRITE, j, k, 8, i);
         RenderSystem.disableBlend();
+    }
+
+    public int renderDescription(String description, int x, int y, int maxWidth, GuiGraphics guiGraphics) {
+        List<String> lines = createLines(description, maxWidth);
+        for(int i = 0; i < lines.size(); i++) {
+            guiGraphics.drawString(getFont(), lines.get(i), x, y + (i * 10), Utils.getColorHexCode("white"));
+        }
+        return lines.size() * getFont().lineHeight;
+    }
+
+    public List<String> createLines(String message, int maxWidth) {
+        String[] words = message.split("\\s+");
+        List<String> lines = new ArrayList<>();
+
+        String currentLine = "";
+        for(String word : words) {
+            if(Minecraft.getInstance().font.width(currentLine + word) < maxWidth) {
+                currentLine += " " + word;
+            } else {
+                lines.add(currentLine);
+                currentLine = word;
+            }
+        }
+        return lines;
+    }
+
+    public Font getFont() {
+        return Minecraft.getInstance().font;
     }
 }

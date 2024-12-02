@@ -10,7 +10,7 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Documention', link: '/custom-planets' },
+      { text: 'Documention', link: '/docs/custom-planets' },
       { text: 'Wiki', link: '/wiki/installation' },
       { text: 'Team', link: '/team' }
 

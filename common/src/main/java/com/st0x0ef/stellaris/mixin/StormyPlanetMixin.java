@@ -35,7 +35,7 @@ public class StormyPlanetMixin {
                         LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(level);
                         if (lightningBolt != null) {
                             lightningBolt.moveTo(Vec3.atBottomCenterOf(blockPos));
-                            lightningBolt.setVisualOnly(true);
+                            lightningBolt.setVisualOnly(false);
                             level.addFreshEntity(lightningBolt);
                         }
                     }

@@ -59,7 +59,7 @@
 - Improve rocket bar overlay
 - Unlock all planet on the selection menu if the player is in creative mode
 - Jet suit now require fuel
-- Update sky aesthetics to 1.3
+- Update sky aesthetics to 1.4
 - Planet and star name are now translatable
 - Oxygen distributor now need energy
 

@@ -62,6 +62,7 @@
 - Update sky aesthetics to 1.4
 - Planet and star name are now translatable
 - Oxygen distributor now need energy
+- Increase minimum speed for the rocket to explode
 
 ## Fix
 - Crash when trying to launch to any planet when you haven't launched from a planet
@@ -73,3 +74,6 @@
 - Fix full jet suit
 - Fix launch button translatable pos
 - Fix water pump renderer
+- Fix rocket item in lander
+- Fix rocket doesn't keep fuel
+- Fix adding hydrogen bucket to a rocket doesn't give back a bucket

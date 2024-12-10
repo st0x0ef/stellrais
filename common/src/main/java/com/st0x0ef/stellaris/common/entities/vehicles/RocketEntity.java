@@ -537,7 +537,7 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
                 FUEL = TANK_UPGRADE.getTankCapacity();
             }
 
-            if (inventory.removeItem(0, 1).is(ItemsRegistry.FUEL_BUCKET.get())) {
+            if (inventory.removeItem(0, 1).is(ItemsRegistry.FUEL_BUCKET.get()) || inventory.removeItem(0, 1).is(ItemsRegistry.HYDROGEN_BUCKET.get())) {
                 inventory.setItem(1, new ItemStack(Items.BUCKET, inventory.getItem(1).getCount()+1));
             }
 
@@ -618,7 +618,7 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
         return ResourceLocation.parse(texture);
     }
 
-    public boolean canGoTo (Planet actual, Planet destination) {
+    public boolean canGoTo(Planet actual, Planet destination) {
         return Mth.abs(actual.distanceFromEarth() - destination.distanceFromEarth()) <= FuelType.getMegametersTraveled(this.rocketComponent.fuel(), FuelType.getItemBasedOnLoacation(ResourceLocation.parse(this.rocketComponent.fuelType())));
     }
 

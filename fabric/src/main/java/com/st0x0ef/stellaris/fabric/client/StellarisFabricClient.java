@@ -32,6 +32,7 @@ import com.st0x0ef.stellaris.client.renderers.entities.vehicle.rocket.tiny.TinyR
 import com.st0x0ef.stellaris.client.renderers.entities.vehicle.rocket.tiny.TinyRocketRenderer;
 import com.st0x0ef.stellaris.client.renderers.entities.vehicle.rover.RoverModel;
 import com.st0x0ef.stellaris.client.renderers.entities.vehicle.rover.RoverRenderer;
+import com.st0x0ef.stellaris.client.renderers.entities.venuslightningbolt.VenusLightningBoltRenderer;
 import com.st0x0ef.stellaris.client.renderers.globe.GlobeBlockRenderer;
 import com.st0x0ef.stellaris.client.renderers.globe.GlobeModel;
 import com.st0x0ef.stellaris.client.screens.*;
@@ -97,6 +98,7 @@ public class StellarisFabricClient implements ClientModInitializer {
 
         EntityRendererRegistry.register(EntityRegistry.ICE_SPIT.get(), renderManager -> new ThrownItemRenderer<>(renderManager, 1, true));
         EntityRendererRegistry.register(EntityRegistry.ICE_SHARD_ARROW.get(), IceShardArrowRenderer::new);
+        EntityRendererRegistry.register(EntityRegistry.VENUS_LIGHTNING_BOLT.get(), VenusLightningBoltRenderer::new);
 
         EntityRendererRegistry.register(EntityRegistry.TINY_ROCKET.get(), TinyRocketRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.SMALL_ROCKET.get(), SmallRocketRenderer::new);

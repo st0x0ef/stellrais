@@ -7,9 +7,13 @@
   "temperature": 462,
   "distanceFromEarth": 41000,
   "gravity": 8.87,
-  "stormy": true,
   "textures": {
     "planet": "stellaris:textures/planet_bar/venus_planet_bar.png",
     "planet_bar": "stellaris:textures/planet_bar/venus_planet_bar.png"
+  },
+  "stormParameters": {
+    "stormy": true,
+    "lightningFrequency": 12000,
+    "color": [255, 178, 102]
   }
 }

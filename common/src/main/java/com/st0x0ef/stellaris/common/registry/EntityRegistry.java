@@ -2,6 +2,7 @@ package com.st0x0ef.stellaris.common.registry;
 
 import com.google.common.base.Suppliers;
 import com.st0x0ef.stellaris.Stellaris;
+import com.st0x0ef.stellaris.common.entities.CustomLightningBolt;
 import com.st0x0ef.stellaris.common.entities.IceShardArrowEntity;
 import com.st0x0ef.stellaris.common.entities.IceSpit;
 import com.st0x0ef.stellaris.common.entities.mobs.*;
@@ -55,8 +56,8 @@ public class EntityRegistry {
     public static final RegistrySupplier<EntityType<? extends CheeseSpit>> CHEESE_SPIT = ENTITY_TYPE.register("cheese_spit",
             Suppliers.memoize(() -> EntityType.Builder.of(CheeseSpit::new, MobCategory.MISC).sized(0.5f, 0.5f).build(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "cheese_spit").toString())));
 
-    public static final RegistrySupplier<EntityType<? extends LightningBolt>> VENUS_LIGHTNING_BOLT = ENTITY_TYPE.register("venus_lightning_bolt",
-            Suppliers.memoize(() -> EntityType.Builder.of(LightningBolt::new, MobCategory.MISC).sized(0.5f, 0.5f).build(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "venus_lightning_bolt").toString())));
+    public static final RegistrySupplier<EntityType<CustomLightningBolt>> VENUS_LIGHTNING_BOLT = ENTITY_TYPE.register("custom_lightning_bolt",
+            Suppliers.memoize(() -> EntityType.Builder.of(CustomLightningBolt::new, MobCategory.MISC).sized(0.5f, 0.5f).build(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "custom_lightning_bolt").toString())));
 
 
     /**

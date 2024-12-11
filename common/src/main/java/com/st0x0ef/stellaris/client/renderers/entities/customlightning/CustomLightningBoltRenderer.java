@@ -1,7 +1,9 @@
-package com.st0x0ef.stellaris.client.renderers.entities.venuslightningbolt;
+package com.st0x0ef.stellaris.client.renderers.entities.customlightning;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.st0x0ef.stellaris.Stellaris;
+import com.st0x0ef.stellaris.common.entities.CustomLightningBolt;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -11,19 +13,18 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.LightningBolt;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
 @Environment(EnvType.CLIENT)
-public class VenusLightningBoltRenderer extends EntityRenderer<LightningBolt> {
+public class CustomLightningBoltRenderer extends EntityRenderer<CustomLightningBolt> {
 
-    public VenusLightningBoltRenderer(EntityRendererProvider.Context context) {
+    public CustomLightningBoltRenderer(EntityRendererProvider.Context context) {
         super(context);
     }
 
     @Override
-    public void render(LightningBolt entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+    public void render(CustomLightningBolt entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         float[] fs = new float[8];
         float[] gs = new float[8];
         float f = 0.0F;
@@ -78,10 +79,15 @@ public class VenusLightningBoltRenderer extends EntityRenderer<LightningBolt> {
                         w *= ((float)o - 1.0F) * 0.1F + 1.0F;
                     }
 
-                    quad(matrix4f, vertexConsumer, h, n, o, p, q, 1, 1, 0F, v, w, false, false, true, false);
-                    quad(matrix4f, vertexConsumer, h, n, o, p, q, 1, 1, 0F, v, w, true, false, true, true);
-                    quad(matrix4f, vertexConsumer, h, n, o, p, q, 1, 1, 0F, v, w, true, true, false, true);
-                    quad(matrix4f, vertexConsumer, h, n, o, p, q, 1, 1, 0F, v, w, false, true, false, false);
+                    float red = entity.getEntityData().get(CustomLightningBolt.RED);
+                    float green = entity.getEntityData().get(CustomLightningBolt.GREEN);
+                    float blue = entity.getEntityData().get(CustomLightningBolt.BLUE);
+
+                    Stellaris.LOG.info("Red: " + red + " Green: " + green + " Blue: " + blue);
+                    quad(matrix4f, vertexConsumer, h, n, o, p, q, red, green, blue, v, w, false, false, true, false);
+                    quad(matrix4f, vertexConsumer, h, n, o, p, q, red, green, blue, v, w, true, false, true, true);
+                    quad(matrix4f, vertexConsumer, h, n, o, p, q, red, green, blue, v, w, true, true, false, true);
+                    quad(matrix4f, vertexConsumer, h, n, o, p, q, red, green, blue, v, w, false, true, false, false);
                 }
             }
         }
@@ -95,7 +101,7 @@ public class VenusLightningBoltRenderer extends EntityRenderer<LightningBolt> {
         consumer.addVertex(matrix, x1 + (bl3 ? g : -g), (float)(index * 16), z1 + (bl4 ? g : -g)).setColor(red, green, blue, 0.3F);
     }
 
-    public @NotNull ResourceLocation getTextureLocation(LightningBolt entity) {
+    public @NotNull ResourceLocation getTextureLocation(CustomLightningBolt entity) {
         return TextureAtlas.LOCATION_BLOCKS;
     }
 }

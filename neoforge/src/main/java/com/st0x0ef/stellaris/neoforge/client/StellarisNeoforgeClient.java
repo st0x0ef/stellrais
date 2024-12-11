@@ -33,12 +33,13 @@ import com.st0x0ef.stellaris.client.renderers.entities.vehicle.rocket.tiny.TinyR
 import com.st0x0ef.stellaris.client.renderers.entities.vehicle.rocket.tiny.TinyRocketRenderer;
 import com.st0x0ef.stellaris.client.renderers.entities.vehicle.rover.RoverModel;
 import com.st0x0ef.stellaris.client.renderers.entities.vehicle.rover.RoverRenderer;
-import com.st0x0ef.stellaris.client.renderers.entities.venuslightningbolt.VenusLightningBoltRenderer;
+import com.st0x0ef.stellaris.client.renderers.entities.customlightning.CustomLightningBoltRenderer;
 import com.st0x0ef.stellaris.client.renderers.globe.GlobeBlockRenderer;
 import com.st0x0ef.stellaris.client.renderers.globe.GlobeModel;
 import com.st0x0ef.stellaris.client.screens.*;
 import com.st0x0ef.stellaris.common.registry.*;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.LightningBoltRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
@@ -74,7 +75,7 @@ public class StellarisNeoforgeClient {
 
         event.registerEntityRenderer(EntityRegistry.ICE_SPIT.get(), renderManager -> new ThrownItemRenderer<>(renderManager, 1, true));
         event.registerEntityRenderer(EntityRegistry.ICE_SHARD_ARROW.get(), IceShardArrowRenderer::new);
-        event.registerEntityRenderer(EntityRegistry.VENUS_LIGHTNING_BOLT.get(), VenusLightningBoltRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.VENUS_LIGHTNING_BOLT.get(), CustomLightningBoltRenderer::new);
 
         event.registerEntityRenderer(EntityRegistry.TINY_ROCKET.get(), TinyRocketRenderer::new);
         event.registerEntityRenderer(EntityRegistry.SMALL_ROCKET.get(), SmallRocketRenderer::new);

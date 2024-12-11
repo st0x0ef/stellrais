@@ -8,15 +8,15 @@ import com.st0x0ef.stellaris.common.keybinds.KeyVariables;
 import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
 import com.st0x0ef.stellaris.common.utils.Utils;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.equipment.ArmorMaterial;
+import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.phys.Vec3;
 
 public class JetSuit {
@@ -25,8 +25,8 @@ public class JetSuit {
     public static class Suit extends AbstractSpaceArmor.Chestplate {
         public float spacePressTime;
 
-        public Suit(Holder<ArmorMaterial> material, Properties properties) {
-            super(material, Type.CHESTPLATE, properties);
+        public Suit(ArmorMaterial material, Properties properties) {
+            super(material, ArmorType.CHESTPLATE, properties);
         }
 
         public int getMode(ItemStack itemStack) {

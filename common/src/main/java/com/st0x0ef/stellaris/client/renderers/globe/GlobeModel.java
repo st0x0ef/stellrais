@@ -21,7 +21,7 @@ public class GlobeModel<T extends GlobeBlockEntity> extends Model {
     public final ModelPart globe;
 
     public GlobeModel(ModelPart root) {
-        super(RenderType::entityCutout);
+        super(root, RenderType::entityCutout);
         this.globe = root.getChild("globe");
     }
 

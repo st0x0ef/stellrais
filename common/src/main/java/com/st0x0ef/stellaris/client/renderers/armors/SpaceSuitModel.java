@@ -20,7 +20,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
-public class SpaceSuitModel extends HumanoidModel<HumanoidRenderState> {
+public class SpaceSuitModel extends HumanoidModel<LivingEntity> {
 
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "spacesuit"), "main");
     public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/models/armor/spacesuit_white.png");
@@ -32,11 +32,11 @@ public class SpaceSuitModel extends HumanoidModel<HumanoidRenderState> {
 	private final ModelPart waist;
 	private final ModelPart left_leg;
 	private final ModelPart right_leg;
-    private final HumanoidModel<HumanoidRenderState> parentModel;
+    private final HumanoidModel<LivingEntity> parentModel;
 	private final EquipmentSlot slot;
 	private final ModelPart bb_main;
 
-	public SpaceSuitModel(ModelPart root, EquipmentSlot slot, ItemStack stack, @Nullable HumanoidModel<HumanoidRenderState> parentModel) {
+	public SpaceSuitModel(ModelPart root, EquipmentSlot slot, ItemStack stack, @Nullable HumanoidModel<LivingEntity> parentModel) {
         super(root, RenderType::entityTranslucent);
         this.parentModel = parentModel;
 

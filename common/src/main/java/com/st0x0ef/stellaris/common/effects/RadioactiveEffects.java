@@ -7,6 +7,8 @@ import net.minecraft.world.flag.FeatureElement;
 import org.jetbrains.annotations.NotNull;
 
 public interface RadioactiveEffects extends FeatureElement {
+
+
     boolean applyEffectTick(LivingEntity livingEntity, int amplifier);
 
     boolean shouldApplyEffectTickThisTick(int tickCount, int amplifier);

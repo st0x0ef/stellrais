@@ -11,11 +11,12 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 @Environment(EnvType.CLIENT)
-public class AlienZombieModel<T extends AlienZombie> extends EntityModel<T> {
+public class AlienZombieModel<T extends AlienZombie> extends EntityModel<EntityRenderState> {
 
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "alien_zombie"), "main");
 
@@ -31,6 +32,8 @@ public class AlienZombieModel<T extends AlienZombie> extends EntityModel<T> {
     private final ModelPart monsterarm4;
 
     public AlienZombieModel(ModelPart root) {
+        super(root);
+
         this.head = root.getChild("head");
         this.body = root.getChild("body");
         this.leg0 = root.getChild("leg0");
@@ -108,7 +111,7 @@ public class AlienZombieModel<T extends AlienZombie> extends EntityModel<T> {
     }
 
     @Override
-    public void setupAnim(T entity, float f, float f1, float f2, float f3, float f4) {
+    public void setupAnim(EntityRenderState entityRenderState) {
         //base
         this.arm2.yRot = 0.0F;
         this.arm1.yRot = 0.0F;

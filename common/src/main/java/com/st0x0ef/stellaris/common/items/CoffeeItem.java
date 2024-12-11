@@ -2,16 +2,18 @@ package com.st0x0ef.stellaris.common.items;
 
 import com.st0x0ef.stellaris.common.registry.ItemsRegistry;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 public class CoffeeItem extends Item {
     private static final int DRINK_DURATION = 40;
@@ -20,7 +22,7 @@ public class CoffeeItem extends Item {
         super(properties);
     }
 
-    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
+    public @NotNull ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
         super.finishUsingItem(stack, level, livingEntity);
         if (livingEntity instanceof ServerPlayer serverPlayer) {
             CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, stack);
@@ -47,19 +49,19 @@ public class CoffeeItem extends Item {
         return 40;
     }
 
-    public UseAnim getUseAnimation(ItemStack stack) {
-        return UseAnim.DRINK;
+    public ItemUseAnimation getUseAnimation(ItemStack stack) {
+        return ItemUseAnimation.DRINK;
     }
 
-    public SoundEvent getDrinkingSound() {
+    public Holder.Reference<SoundEvent> getDrinkingSound() {
         return SoundEvents.GENERIC_DRINK;
     }
 
-    public SoundEvent getEatingSound() {
+    public Holder.Reference<SoundEvent> getEatingSound() {
         return SoundEvents.GENERIC_DRINK;
     }
 
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
+    public InteractionResult use(Level level, Player player, InteractionHand usedHand) {
         return ItemUtils.startUsingInstantly(level, player, usedHand);
     }
 

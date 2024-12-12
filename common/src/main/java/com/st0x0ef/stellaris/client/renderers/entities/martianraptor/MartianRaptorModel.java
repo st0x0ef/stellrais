@@ -15,7 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 @Environment(EnvType.CLIENT)
-public class MartianRaptorModel<T extends MartianRaptor> extends EntityModel<T> {
+public class MartianRaptorModel<T extends MartianRaptor> extends EntityModel implements MartianRaptorModelRendere {
 
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "martian_raptor"), "main");
 
@@ -28,6 +28,7 @@ public class MartianRaptorModel<T extends MartianRaptor> extends EntityModel<T> 
     private final boolean AttackCheck = false;
 
     public MartianRaptorModel(ModelPart root) {
+        super(root);
         this.body = root.getChild("body");
         this.leg1 = root.getChild("leg1");
         this.leg2 = root.getChild("leg2");

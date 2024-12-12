@@ -6,18 +6,21 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.st0x0ef.stellaris.Stellaris;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.model.AgeableListModel;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.monster.hoglin.HoglinBase;
 
 @Environment(EnvType.CLIENT)
-public class MoglerModel<T extends Mob & HoglinBase> extends AgeableListModel<T> {
+public class MoglerModel<T extends Mob & HoglinBase> extends EntityModel {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "mogler"), "main");
     private final ModelPart body;
     private final ModelPart head;
@@ -27,6 +30,7 @@ public class MoglerModel<T extends Mob & HoglinBase> extends AgeableListModel<T>
     private final ModelPart leg4;
 
     public MoglerModel(ModelPart root) {
+        super(root);
         this.body = root.getChild("body");
         this.head = root.getChild("head");
         this.leg1 = root.getChild("leg1");

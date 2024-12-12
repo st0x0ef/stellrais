@@ -9,7 +9,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
+
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -19,6 +20,7 @@ import net.minecraft.world.level.block.TorchBlock;
 import net.minecraft.world.level.block.WallTorchBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.NotNull;
 
 public class CoalTorchBlock extends TorchBlock {
 
@@ -27,7 +29,7 @@ public class CoalTorchBlock extends TorchBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack itemstack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected @NotNull InteractionResult useItemOn(ItemStack itemstack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (level.getBlockState(pos).getBlock() == BlocksRegistry.WALL_COAL_TORCH_BLOCK.get() && PlanetUtil.hasOxygen(level) && (itemstack.getItem() == Items.FLINT_AND_STEEL || itemstack.getItem() == Items.FIRE_CHARGE)) {
             if (!level.isClientSide) {
 
@@ -36,7 +38,7 @@ public class CoalTorchBlock extends TorchBlock {
                 level.setBlock(pos, Blocks.WALL_TORCH.defaultBlockState().setValue(WallTorchBlock.FACING, state.getValue(WallCoalTorchBlock.FACING)), 3);
 
                 this.flintManager(itemstack, (ServerPlayer) player, pos, (ServerLevel) level);
-                return ItemInteractionResult.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
         }
 
@@ -46,15 +48,15 @@ public class CoalTorchBlock extends TorchBlock {
                 level.setBlock(pos, Blocks.TORCH.defaultBlockState(), 3);
 
                 this.flintManager(itemstack, (ServerPlayer) player, pos, (ServerLevel) level);
-                return ItemInteractionResult.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
         }
 
         if (itemstack.getItem() == Items.FLINT_AND_STEEL || itemstack.getItem() == Items.FIRE_CHARGE) {
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
 
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return InteractionResult.PASS;
     }
 
     public void flintManager(ItemStack itemstack, ServerPlayer player, BlockPos pos, ServerLevel level) {

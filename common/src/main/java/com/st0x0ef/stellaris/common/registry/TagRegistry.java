@@ -38,12 +38,14 @@ public class TagRegistry {
     public static final TagKey<Item> COAL_GENERATOR_FUEL_TAG = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "coal_generator_fuel"));
     public static final TagKey<Item> RADIOACTIVE_GENERATOR_FUEL_TAG = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "radioactive_generator_fuel"));
     public static final TagKey<Item> ROCKET_SKIN = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "rocket_skin"));
-
+    public static final TagKey<Item> DESH_INGOT = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "desh_ingot"));
+    public static final TagKey<Item> IRON_INGOT = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "iron_ingot"));
     /** BLOCKS */
     public static final TagKey<Block> SPACE_STATION_CAN_SPAWN_ON = TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "space_station_can_spawn_on"));
 
     public static final TagKey<Block> ENERGY_BLOCK_TAG = TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "energy_block"));
     public static final TagKey<MobEffect> RADIOACTIVEEFFECT = TagKey.create(Registries.MOB_EFFECT, ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "radioactive"));
     public static final TagKey<Block> INCORRECT_FOR_STEEL_TOOL = TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "incorrect_for_steel_tools"));
+
 
 }

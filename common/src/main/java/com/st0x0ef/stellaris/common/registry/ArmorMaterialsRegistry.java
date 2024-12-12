@@ -23,7 +23,7 @@ public class ArmorMaterialsRegistry {
             10,
             SoundEvents.ARMOR_EQUIP_ELYTRA,
             2.0F, 0.0F,
-            ItemsRegistry.DESH_INGOT,
+            TagRegistry.DESH_INGOT,
             ResourceLocation.fromNamespaceAndPath(Stellaris.MODID,"jetsuit"));
 
     public static final ArmorMaterial SPACE_SUIT = new ArmorMaterial(
@@ -38,6 +38,6 @@ public class ArmorMaterialsRegistry {
             10,
             SoundEvents.ARMOR_EQUIP_ELYTRA,
             2.0F, 0.0F,
-            Items.IRON_INGOT,
+            TagRegistry.IRON_INGOT,
             ResourceLocation.fromNamespaceAndPath(Stellaris.MODID,"spacesuit"));
 }

@@ -15,8 +15,9 @@ public class FabricItemApiEntityLookup extends FabricEntityContainerLookup<ItemC
         super(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "entity"), ItemContainer.class, Void.class);
     }
 
+    @SafeVarargs
     @Override
-    public void registerEntityTypes(EntityGetter<ItemContainer, Void> getter, Supplier<EntityType<?>>... containers) {
+    public final void registerEntityTypes(EntityGetter<ItemContainer, Void> getter, Supplier<EntityType<?>>... containers) {
         super.registerEntityTypes((entity, context) -> UpdatingItemContainer.of(getter.getContainer(entity, context)), containers);
     }
 }

@@ -12,19 +12,20 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.profiling.ProfilerFiller;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class StarPack extends SimpleJsonResourceReloadListener {
+public class StarPack extends SimpleJsonResourceReloadListener<JsonElement>  {
 
     public static final Map<String, StarRecord> STAR = new HashMap<>();
     public static int count = 0;
 
     public StarPack() {
-        super(Stellaris.GSON, "renderer/planet_screen/star");
+        super(ExtraCodecs.JSON, "renderer/planet_screen/star");
     }
 
     @Override

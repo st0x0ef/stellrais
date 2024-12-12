@@ -438,8 +438,8 @@ public abstract class AbstractRoverBase extends IVehicleEntity
             return null;
         }
 
-        if (passengers.get(0) instanceof Player) {
-            return (Player) passengers.get(0);
+        if (passengers.getFirst() instanceof Player) {
+            return (Player) passengers.getFirst();
         }
 
         return null;

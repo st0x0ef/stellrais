@@ -43,12 +43,12 @@ public record FuelRefineryRecipe(FluidStack ingredientStack, FluidStack resultSt
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<? extends Recipe<FluidInput>> getSerializer() {
         return RecipesRegistry.FUEL_REFINERY_SERIALIZER.get();
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeType<? extends Recipe<FluidInput>> getType() {
         return RecipesRegistry.FUEL_REFINERY_TYPE.get();
     }
 

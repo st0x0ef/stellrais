@@ -3,10 +3,10 @@ package com.st0x0ef.stellaris.common.data.planets;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;
-import com.st0x0ef.stellaris.Stellaris;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.profiling.ProfilerFiller;
 
@@ -14,12 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class StellarisData extends SimpleJsonResourceReloadListener {
+public class StellarisData extends SimpleJsonResourceReloadListener<JsonElement>  {
 
     private static final List<Planet> PLANETS = new ArrayList<>();
 
     public StellarisData() {
-        super(Stellaris.GSON, "planets");
+        super(ExtraCodecs.JSON, "planets");
     }
 
     @Override

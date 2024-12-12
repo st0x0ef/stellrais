@@ -11,14 +11,15 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.profiling.ProfilerFiller;
 
 import java.util.Map;
 
-public class PlanetPack extends SimpleJsonResourceReloadListener {
+public class PlanetPack extends SimpleJsonResourceReloadListener<JsonElement>  {
     public PlanetPack() {
-        super(Stellaris.GSON, "renderer/planet_screen/planet");
+        super(ExtraCodecs.JSON, "renderer/planet_screen/planet");
     }
 
     @Override

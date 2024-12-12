@@ -32,8 +32,7 @@ public class CoffeeItem extends Item {
         if (stack.isEmpty()) {
             return new ItemStack(ItemsRegistry.COFFEE_CUP);
         } else {
-            if (livingEntity instanceof Player) {
-                Player player = (Player) livingEntity;
+            if (livingEntity instanceof Player player) {
                 if (!player.hasInfiniteMaterials()) {
                     ItemStack itemStack = new ItemStack(ItemsRegistry.COFFEE_CUP);
                     if (!player.getInventory().add(itemStack)) {

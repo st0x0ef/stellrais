@@ -3,6 +3,7 @@ package com.st0x0ef.stellaris.common.blocks.entities.machines;
 import com.st0x0ef.stellaris.common.blocks.machines.CoalGeneratorBlock;
 import com.st0x0ef.stellaris.common.menus.CoalGeneratorMenu;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
+import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
 import com.st0x0ef.stellaris.common.registry.TagRegistry;
 import com.st0x0ef.stellaris.common.systems.energy.EnergyApi;
 import com.st0x0ef.stellaris.common.systems.energy.impl.WrappedBlockEnergyContainer;
@@ -16,10 +17,12 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
-import static net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity.getFuel;
+import static com.st0x0ef.stellaris.common.armors.AbstractSpaceArmor.Chestplate.getFuel;
+
 
 public class CoalGeneratorEntity extends BaseGeneratorBlockEntity {
 
@@ -61,10 +64,13 @@ public class CoalGeneratorEntity extends BaseGeneratorBlockEntity {
         super(entityType, blockPos, blockState, energyGeneratedPT, maxCapacity);
     }
 
+
+
     @Override
     protected AbstractContainerMenu createMenu(int containerId, Inventory inventory) {
         return new CoalGeneratorMenu(containerId, inventory, this, this, dataAccess);
     }
+
 
     public void tick() {
         WrappedBlockEnergyContainer energyContainer = getWrappedEnergyContainer();
@@ -84,7 +90,7 @@ public class CoalGeneratorEntity extends BaseGeneratorBlockEntity {
                 Item item = stack.getItem();
                 stack.shrink(1);
                 if (stack.isEmpty()) {
-                    Item item2 = item.getCraftingRemainingItem();
+                    Item item2 = item.getCraftingRemainder().getItem();
                     getItems().set(0, item2 == null ? ItemStack.EMPTY : new ItemStack(item2));
                 }
             }
@@ -116,8 +122,8 @@ public class CoalGeneratorEntity extends BaseGeneratorBlockEntity {
         if (fuelStack.isEmpty() || !fuelStack.is(TagRegistry.COAL_GENERATOR_FUEL_TAG)) {
             return 0;
         }
-
-        return getFuel().getOrDefault(fuelStack.getItem(), 0);
+        long fuelAmount = getFuel(fuelStack);
+        return (int) fuelAmount;
     }
 
     private boolean isLit() {

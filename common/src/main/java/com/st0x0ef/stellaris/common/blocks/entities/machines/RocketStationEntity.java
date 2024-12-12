@@ -12,6 +12,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -98,7 +99,7 @@ public class RocketStationEntity extends BaseContainerBlockEntity implements Imp
 
         ItemStack outputStack = getItem(14);
         if (outputStack.isEmpty() || outputStack.getCount() < outputStack.getMaxStackSize()) {
-            Optional<RecipeHolder<RocketStationRecipe>> recipeHolder = quickCheck.getRecipeFor(new RocketStationInput(getLevel().getBlockEntity(getBlockPos()), getItems()), level);
+            Optional<RecipeHolder<RocketStationRecipe>> recipeHolder = quickCheck.getRecipeFor(new RocketStationInput(getLevel().getBlockEntity(getBlockPos()), getItems()), (ServerLevel) level);
             if (recipeHolder.isPresent()) {
                 RocketStationRecipe recipe = recipeHolder.get().value();
                 ItemStack resultStack = recipe.getResultItem(level.registryAccess());

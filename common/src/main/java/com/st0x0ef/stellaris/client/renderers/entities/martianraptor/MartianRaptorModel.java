@@ -15,7 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 @Environment(EnvType.CLIENT)
-public class MartianRaptorModel<T extends MartianRaptor> extends EntityModel implements MartianRaptorModelRendere {
+public class MartianRaptorModel<T extends MartianRaptor> extends EntityModel  {
 
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "martian_raptor"), "main");
 
@@ -90,7 +90,7 @@ public class MartianRaptorModel<T extends MartianRaptor> extends EntityModel imp
         return LayerDefinition.create(meshdefinition, 128, 128);
     }
 
-    @Override
+
     public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
         float i = entity.getAttackAnim();

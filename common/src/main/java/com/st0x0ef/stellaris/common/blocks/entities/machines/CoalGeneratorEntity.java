@@ -21,7 +21,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
-import static com.st0x0ef.stellaris.common.armors.AbstractSpaceArmor.Chestplate.getFuel;
 
 
 public class CoalGeneratorEntity extends BaseGeneratorBlockEntity {
@@ -122,9 +121,10 @@ public class CoalGeneratorEntity extends BaseGeneratorBlockEntity {
         if (fuelStack.isEmpty() || !fuelStack.is(TagRegistry.COAL_GENERATOR_FUEL_TAG)) {
             return 0;
         }
-        long fuelAmount = getFuel(fuelStack);
-        return (int) fuelAmount;
+        return 0;
+        //so far so
     }
+
 
     private boolean isLit() {
         return this.litTime > 0;

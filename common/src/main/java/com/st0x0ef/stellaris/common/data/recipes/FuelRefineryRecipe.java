@@ -20,7 +20,7 @@ import java.util.Optional;
 
 import static com.st0x0ef.stellaris.common.data.recipes.WaterSeparatorRecipe.Serializer.convertFluidStack;
 
-public record FuelRefineryRecipe(FluidStack ingredientStack, FluidStack resultStack, boolean isMb, long energy) implements Recipe<FluidInput> {
+public record FuelRefineryRecipe(FluidStack ingredientStack, FluidStack resultStack, boolean isMb, int energy) implements Recipe<FluidInput> {
     @Override
     public boolean matches(FluidInput input, Level level) {
         FluidStack stack = ((FuelRefineryBlockEntity) input.entity()).getIngredientTank().getStack();
@@ -58,7 +58,7 @@ public record FuelRefineryRecipe(FluidStack ingredientStack, FluidStack resultSt
                 FluidStack.CODEC.fieldOf("ingredient").forGetter(FuelRefineryRecipe::ingredientStack),
                 FluidStack.CODEC.fieldOf("result").forGetter(FuelRefineryRecipe::resultStack),
                 Codec.BOOL.optionalFieldOf("isFluidMB").forGetter(recipe -> Optional.of(recipe.isMb)),
-                Codec.LONG.fieldOf("energy").forGetter(FuelRefineryRecipe::energy)
+                Codec.INT.fieldOf("energy").forGetter(FuelRefineryRecipe::energy)
         ).apply(instance, (ingredientStack, resultStack, isFluidMb, energy) -> {
             boolean isMb = isFluidMb.orElse(true);
             convertFluidStack(ingredientStack, isMb);
@@ -71,7 +71,7 @@ public record FuelRefineryRecipe(FluidStack ingredientStack, FluidStack resultSt
             recipe.resultStack().write(buf);
             buf.writeBoolean(recipe.isMb());
             buf.writeLong(recipe.energy());
-        }, buf -> new FuelRefineryRecipe(FluidStack.read(buf), FluidStack.read(buf), buf.readBoolean(), buf.readLong()));
+        }, buf -> new FuelRefineryRecipe(FluidStack.read(buf), FluidStack.read(buf), buf.readBoolean(), buf.readInt()));
 
         @Override
         public MapCodec<FuelRefineryRecipe> codec() {

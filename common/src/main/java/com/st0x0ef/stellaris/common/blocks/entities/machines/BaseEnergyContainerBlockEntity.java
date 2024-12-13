@@ -1,9 +1,8 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
+import com.fej1fun.potentials.energy.BaseEnergyStorage;
+import com.fej1fun.potentials.providers.EnergyProvider;
 import com.st0x0ef.stellaris.common.blocks.entities.ImplementedInventory;
-import com.st0x0ef.stellaris.common.systems.energy.base.EnergyBlock;
-import com.st0x0ef.stellaris.common.systems.energy.impl.SimpleEnergyContainer;
-import com.st0x0ef.stellaris.common.systems.energy.impl.WrappedBlockEnergyContainer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -13,23 +12,30 @@ import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class BaseEnergyContainerBlockEntity extends BaseContainerBlockEntity implements EnergyBlock<WrappedBlockEnergyContainer>, WrappedEnergyBlockEntity, ImplementedInventory, TickingBlockEntity {
+public abstract class BaseEnergyContainerBlockEntity extends BaseContainerBlockEntity implements EnergyProvider.BLOCK, ImplementedInventory, TickingBlockEntity {
 
     public static final String ENERGY_TAG = "stellaris.energy";
 
-    private WrappedBlockEnergyContainer energyContainer;
+    protected @NotNull BaseEnergyStorage energy;
     private NonNullList<ItemStack> items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
 
-    public BaseEnergyContainerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public BaseEnergyContainerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int initalMaxCapacity, int initialMaxInsert, int initialMaxExtract) {
         super(type, pos, state);
+        this.energy = new BaseEnergyStorage(initalMaxCapacity, initialMaxInsert, initialMaxExtract);
+    }
+
+    public BaseEnergyContainerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int initialMaxCapacity) {
+        this(type, pos, state, initialMaxCapacity, initialMaxCapacity, initialMaxCapacity);
+    }
+
+    public BaseEnergyContainerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        this(type, pos, state, 15000);
     }
 
     @Override
@@ -42,18 +48,9 @@ public abstract class BaseEnergyContainerBlockEntity extends BaseContainerBlockE
         this.items = items;
     }
 
-    protected int getMaxCapacity() {
-        return 15000;
-    }
-
     @Override
     public boolean stillValid(Player player) {
         return Container.stillValidBlockEntity(this, player);
-    }
-
-    @Override
-    public WrappedBlockEnergyContainer getEnergyStorage(Level level, BlockPos pos, BlockState state, @Nullable BlockEntity entity, @Nullable Direction direction) {
-        return energyContainer == null ? energyContainer = new WrappedBlockEnergyContainer(entity, new SimpleEnergyContainer(getMaxCapacity(), Integer.MAX_VALUE)) : energyContainer;
     }
 
     @Override
@@ -66,19 +63,19 @@ public abstract class BaseEnergyContainerBlockEntity extends BaseContainerBlockE
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
-        getWrappedEnergyContainer().setEnergy(tag.getLong(ENERGY_TAG));
+        getEnergy(null).setEnergyStored(tag.getInt(ENERGY_TAG));
         ContainerHelper.loadAllItems(tag, items, provider);
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.saveAdditional(tag, provider);
-        tag.putLong(ENERGY_TAG, getWrappedEnergyContainer().getStoredEnergy());
+        tag.putInt(ENERGY_TAG, getEnergy(null).getEnergy());
         ContainerHelper.saveAllItems(tag, items, provider);
     }
 
     @Override
-    public WrappedBlockEnergyContainer getWrappedEnergyContainer() {
-        return getEnergyStorage(level, worldPosition, getBlockState(), this, null);
+    public @NotNull BaseEnergyStorage getEnergy(@Nullable Direction direction) {
+        return energy;
     }
 }

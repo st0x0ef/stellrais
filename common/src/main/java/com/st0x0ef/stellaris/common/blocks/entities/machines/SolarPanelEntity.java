@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class SolarPanelEntity extends BaseGeneratorBlockEntity {
 
     public SolarPanelEntity(BlockPos blockPos, BlockState blockState) {
-        super(BlockEntityRegistry.SOLAR_PANEL.get(), blockPos, blockState, 1, 30000);
+        super(BlockEntityRegistry.SOLAR_PANEL.get(), blockPos, blockState, 1, 128000);
     }
 
     @Override
@@ -34,10 +34,5 @@ public class SolarPanelEntity extends BaseGeneratorBlockEntity {
     @Override
     public int getContainerSize() {
         return 1;
-    }
-
-    @Override
-    protected int getMaxCapacity() {
-        return 128000;
     }
 }

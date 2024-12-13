@@ -26,10 +26,10 @@ public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity
     @Override
     public void tick() {
         if (level instanceof ServerLevel serverLevel) {
-            if (this.getItem(0).has(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()) && oxygenTank.canGrow(1) && this.getWrappedEnergyContainer().getStoredEnergy() > 1) {
+            if (this.getItem(0).has(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()) && oxygenTank.canGrow(1) && this.energy.getEnergy() > 1) {
                 if (OxygenUtils.removeOxygen(getItem(0), 1)) {
                     addOyxgen(1);
-                    this.getWrappedEnergyContainer().extractEnergy(1, false);
+                    this.energy.extract(1, false);
                 }
             }
 
@@ -41,17 +41,17 @@ public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity
 
     public boolean useOxygenAndEnergy() {
         if (oxygenTank.getStack().isEmpty() || oxygenTank.getAmount() == 0) {
-            if (this.getItem(0).has(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()) && getWrappedEnergyContainer().getStoredEnergy() > 0) {
+            if (this.getItem(0).has(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()) && this.energy.getEnergy() > 0) {
                 if (OxygenUtils.removeOxygen(getItem(0), 1)) {
-                    getWrappedEnergyContainer().extractEnergy(1, false);
+                    this.energy.extract(1, false);
                     return true;
                 }
             }
         }
 
-        if (oxygenTank.getAmount() > 0 && getWrappedEnergyContainer().getStoredEnergy() > 0) {
+        if (oxygenTank.getAmount() > 0 && this.energy.getEnergy() > 0) {
             oxygenTank.shrink(1);
-            getWrappedEnergyContainer().extractEnergy(1, false);
+            this.energy.extract(1, false);
             return true;
         }
 

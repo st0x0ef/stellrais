@@ -66,7 +66,7 @@ public class ScreenHelper {
             RenderSystem.defaultBlendFunc();
         }
 
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShader(CoreShaders.POSITION_TEX);
         RenderSystem.setShaderTexture(0, resourceLocation);
         renderWithFloat.blit(graphics.pose(), leftPos, topPos + remainHeight, 0, remainHeight, width, ratioHeight, width, height);
 
@@ -136,7 +136,7 @@ public class ScreenHelper {
         }
 
         private static void innerBlit(Matrix4f p_93113_, float p_93114_, float p_93115_, float p_93116_, float p_93117_, float p_93118_, float p_93119_, float p_93120_, float p_93121_, float p_93122_) {
-            RenderSystem.setShader(GameRenderer::getPositionTexShader);
+            RenderSystem.setShader(CoreShaders.POSITION_TEX);
             BufferBuilder bufferBuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
             bufferBuilder.addVertex(p_93113_, p_93114_, p_93117_, p_93118_).setUv(p_93119_, p_93122_);
             bufferBuilder.addVertex(p_93113_, p_93115_, p_93117_, p_93118_).setUv(p_93120_, p_93122_);
@@ -152,7 +152,7 @@ public class ScreenHelper {
             RenderSystem.defaultBlendFunc();
         }
 
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShader(CoreShaders.POSITION_TEX);
         RenderSystem.setShaderTexture(0, texture);
         new GuiGraphics(Minecraft.getInstance(), Minecraft.getInstance().renderBuffers().bufferSource()).blit(texture, leftPos, topPos, 0, 0, width, height, width, height);
 

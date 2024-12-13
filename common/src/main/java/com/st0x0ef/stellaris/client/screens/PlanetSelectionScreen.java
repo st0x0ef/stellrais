@@ -27,7 +27,8 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
-import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.CoreShaders;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -275,10 +276,10 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
 
     @Override
     protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShader(CoreShaders.POSITION_TEX);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, BACKGROUND_TEXTURE);
-        graphics.blit(BACKGROUND_TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight);
+        graphics.blit(RenderType::guiTextured, BACKGROUND_TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight);
     }
 
     public void renderBodiesAndPlanets(GuiGraphics graphics) {
@@ -307,7 +308,7 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
             int bodyWidth = (int) (star.width * zoomLevel);
             int bodyHeight = (int) (star.height * zoomLevel);
 
-            graphics.blit(star.texture, (int) bodyX, (int) bodyY, 0, 0, bodyWidth, bodyHeight, bodyWidth, bodyHeight);
+            graphics.blit(RenderType::guiTextured, star.texture, (int) bodyX, (int) bodyY, 0, 0, bodyWidth, bodyHeight, bodyWidth, bodyHeight);
 
             int nameWidth = font.width(star.name);
             graphics.drawString(font, star.translatable, (int) (bodyX + (float) bodyWidth / 2 - (float) nameWidth / 2), (int) (bodyY + bodyHeight), 0xFFFFFF);
@@ -509,12 +510,12 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
                 graphics.drawString(font, gravityV, textX, buttonY + buttonHeight / 4 + 75, Utils.getColorHexCode("White"), true);
 
                 RenderSystem.enableBlend();
-                RenderSystem.setShader(GameRenderer::getPositionTexShader);
+                RenderSystem.setShader(CoreShaders.POSITION_TEX);
 
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, alpha);
 
                 RenderSystem.setShaderTexture(0, LARGE_MENU_TEXTURE);
-                graphics.blit(LARGE_MENU_TEXTURE, centerX, centerY, 0, 0, menuWidth, menuHeight, menuWidth, menuHeight);
+                graphics.blit(RenderType::guiTextured, LARGE_MENU_TEXTURE, centerX, centerY, 0, 0, menuWidth, menuHeight, menuWidth, menuHeight);
                 launchButton.setButtonTexture(
                         ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/launch_button.png"),
                         ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/launch_button_hovered.png")
@@ -524,7 +525,7 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
                     graphics.drawString(font, gravityV, textX, buttonY + buttonHeight / 4 + 75, Utils.getColorHexCode("White"), true);
 
                     RenderSystem.enableBlend();
-                    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+                    RenderSystem.setShader(CoreShaders.POSITION_TEX);
 
                     RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, alpha);
 
@@ -533,17 +534,17 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
                             ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/launch_button.png"),
                             ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/launch_button_hovered.png")
                     );
-                    graphics.blit(LARGE_MENU_TEXTURE, centerX, centerY, 0, 0, menuWidth, menuHeight, menuWidth, menuHeight);
+                    graphics.blit(RenderType::guiTextured, LARGE_MENU_TEXTURE, centerX, centerY, 0, 0, menuWidth, menuHeight, menuWidth, menuHeight);
                 } else {
                     graphics.drawString(font, gravityV, textX, buttonY + buttonHeight / 4 + 75, Utils.getColorHexCode("Orange"), true);
 
                     RenderSystem.enableBlend();
-                    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+                    RenderSystem.setShader(CoreShaders.POSITION_TEX);
 
                     RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, alpha);
 
                     RenderSystem.setShaderTexture(0, LARGE_MENU_TEXTURE_RED);
-                    graphics.blit(LARGE_MENU_TEXTURE_RED, centerX, centerY, 0, 0, menuWidth, menuHeight, menuWidth, menuHeight);
+                    graphics.blit(RenderType::guiTextured, LARGE_MENU_TEXTURE_RED, centerX, centerY, 0, 0, menuWidth, menuHeight, menuWidth, menuHeight);
                     launchButton.setButtonTexture(
                             ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/no_launch_button.png"),
                             ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/no_launch_button_hovered.png")
@@ -554,19 +555,19 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
             RenderSystem.setShaderTexture(0, BLACK_TEXTURE);
-            graphics.blit(BLACK_TEXTURE, centerX + menuWidth - 64, centerY + menuHeight / 2 - 32, 0, 0, 48, 48, 48, 48);
+            graphics.blit(RenderType::guiTextured, BLACK_TEXTURE, centerX + menuWidth - 64, centerY + menuHeight / 2 - 32, 0, 0, 48, 48, 48, 48);
 
             RenderSystem.setShaderTexture(0, CELESTIAL_BODY_TEXTURE);
             if (focusedBody.width != focusedBody.height) {
                 if (Math.min((int) focusedBody.width, (int) focusedBody.height) == focusedBody.width) {
                     float rate = focusedBody.height / focusedBody.width;
-                    graphics.blit(CELESTIAL_BODY_TEXTURE, centerX + menuWidth - 46, centerY + menuHeight / 2 - 14, 0, 0, 12, (int) (12 * rate), 12, (int) (12 * rate));
+                    graphics.blit(RenderType::guiTextured, CELESTIAL_BODY_TEXTURE, centerX + menuWidth - 46, centerY + menuHeight / 2 - 14, 0, 0, 12, (int) (12 * rate), 12, (int) (12 * rate));
                 } else {
                     float rate = focusedBody.width / focusedBody.height;
-                    graphics.blit(CELESTIAL_BODY_TEXTURE, centerX + menuWidth - 46, centerY + menuHeight / 2 - 14, 0, 0, (int) (12 * rate), 12, (int) (12 * rate), 12);
+                    graphics.blit(RenderType::guiTextured, CELESTIAL_BODY_TEXTURE, centerX + menuWidth - 46, centerY + menuHeight / 2 - 14, 0, 0, (int) (12 * rate), 12, (int) (12 * rate), 12);
                 }
             } else {
-                graphics.blit(CELESTIAL_BODY_TEXTURE, centerX + menuWidth - 46, centerY + menuHeight / 2 - 14, 0, 0, 12, 12, 12, 12);
+                graphics.blit(RenderType::guiTextured, CELESTIAL_BODY_TEXTURE, centerX + menuWidth - 46, centerY + menuHeight / 2 - 14, 0, 0, 12, 12, 12, 12);
             }
 
             RenderSystem.disableBlend();
@@ -769,7 +770,7 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
     public void drawOrbits() {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        RenderSystem.setShader(GameRenderer::getPositionColorShader);
+        RenderSystem.setShader(CoreShaders.POSITION_COLOR);
 
         Tesselator tesselator = Tesselator.getInstance();
 

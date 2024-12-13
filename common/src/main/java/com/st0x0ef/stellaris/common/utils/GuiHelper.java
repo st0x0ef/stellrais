@@ -7,7 +7,6 @@ import com.st0x0ef.stellaris.common.systems.energy.impl.WrappedBlockEnergyContai
 import dev.architectury.fluid.FluidStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
@@ -211,7 +210,7 @@ public class GuiHelper
         float uMax = sprite.getU1();
         float vMin = sprite.getV0();
         float vMax = sprite.getV1();
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShader(CoreShaders.POSITION_TEX);
         RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
         drawTiledSprite(graphics, left, top, width, height, tileWidth, tileHeight, uMin, uMax, vMin, vMax);
     }

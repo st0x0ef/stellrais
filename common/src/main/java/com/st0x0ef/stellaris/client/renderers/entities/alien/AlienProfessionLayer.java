@@ -38,8 +38,8 @@ public class AlienProfessionLayer<S extends LivingEntityRenderState & VillagerDa
 
     public static final ResourceLocation ALIEN_TEXTURE = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID,"textures/entity/alien/alien.png");
 
-    private final Object2ObjectMap<VillagerType, VillagerMetaDataSection.Hat> typeHatCache = new Object2ObjectOpenHashMap();
-    private final Object2ObjectMap<VillagerProfession, VillagerMetaDataSection.Hat> professionHatCache = new Object2ObjectOpenHashMap();
+    private final Object2ObjectMap<VillagerType, VillagerMetaDataSection.Hat> typeHatCache = new Object2ObjectOpenHashMap<>();
+    private final Object2ObjectMap<VillagerProfession, VillagerMetaDataSection.Hat> professionHatCache = new Object2ObjectOpenHashMap<>();
     private final ResourceManager resourceManager;
 
     public AlienProfessionLayer(RenderLayerParent<S, M> renderer, ResourceManager resourceManager) {

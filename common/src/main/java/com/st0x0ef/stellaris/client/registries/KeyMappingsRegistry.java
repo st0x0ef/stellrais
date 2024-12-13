@@ -19,19 +19,17 @@ public class KeyMappingsRegistry {
     public static void clientTick(Minecraft minecraft) {
         Player player = minecraft.player;
 
-        if (player == null) {
-            return;
-        }
-
-        else if (player.containerMenu == MenuTypesRegistry.PLANET_SELECTION_MENU) {
-            while (FREEZE_PLANET_MENU.consumeClick()) {
-                NetworkManager.sendToServer(new KeyHandlerPacket("freeze_planet_menu", true));
+        if (player != null) {
+            if (player.containerMenu == MenuTypesRegistry.PLANET_SELECTION_MENU) {
+                while (FREEZE_PLANET_MENU.consumeClick()) {
+                    NetworkManager.sendToServer(new KeyHandlerPacket("freeze_planet_menu", true));
+                }
             }
-        }
 
-        else if (Utils.isLivingInJetSuit(player)) {
-            while (CHANGE_JETSUIT_MODE.consumeClick()) {
-                NetworkManager.sendToServer(new KeyHandlerPacket("switch_jet_suit_mode", true));
+            else if (Utils.isLivingInJetSuit(player)) {
+                while (CHANGE_JETSUIT_MODE.consumeClick()) {
+                    NetworkManager.sendToServer(new KeyHandlerPacket("switch_jet_suit_mode", true));
+                }
             }
         }
     }

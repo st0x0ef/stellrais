@@ -49,7 +49,7 @@ public class SolarPanelMenu extends BaseContainer {
 
     public void syncBattery(ServerPlayer player) {
         if (!player.level().isClientSide()) {
-            NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(new long[] {blockEntity.getEnergy(null).getEnergy()}));
+            NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(new int[] {blockEntity.getEnergy(null).getEnergy()}));
         }
     }
 }

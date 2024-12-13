@@ -54,12 +54,12 @@ public class FuelRefineryMenu extends BaseContainer {
         if (!player.level().isClientSide()) {
 
             NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(
-                    new long[] {blockEntity.getIngredientTank().getAmount(), blockEntity.getResultTank().getAmount()},
+                    new int[] {blockEntity.getIngredientTank().getAmount(), blockEntity.getResultTank().getAmount()},
                     new ResourceLocation[] {blockEntity.getIngredientTank().getStack().getFluid().arch$registryName(), blockEntity.getResultTank().getStack().getFluid().arch$registryName()}
             ));
 
             NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(
-                    new long[] {blockEntity.getEnergy(null).getEnergy()}
+                    new int[] {blockEntity.getEnergy(null).getEnergy()}
             ));
 
         }

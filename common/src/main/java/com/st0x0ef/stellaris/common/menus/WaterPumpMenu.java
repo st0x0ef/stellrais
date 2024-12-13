@@ -51,11 +51,11 @@ public class WaterPumpMenu extends BaseContainer {
         if (!player.level().isClientSide()) {
             FluidTank tank = blockEntity.getWaterTank();
 
-            NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(new long[] {tank.getAmount()},
+            NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(new int[] {tank.getAmount()},
                     new ResourceLocation[] {tank.getStack().getFluid().arch$registryName()}));
 
             NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(
-                    new long[] {blockEntity.getEnergy(null).getEnergy(), 0}));
+                    new int[] {blockEntity.getEnergy(null).getEnergy(), 0}));
         }
     }
 }

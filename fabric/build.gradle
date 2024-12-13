@@ -41,7 +41,7 @@ dependencies {
     modRuntimeOnly "maven.modrinth:sky-aesthetics:${sky_version}-fabric"
     include "maven.modrinth:sky-aesthetics:${sky_version}-fabric"
 
-    include modApi("com.fej1fun.potentials:potentials-fabric-1.21:0.1.0")
+    include modApi("com.fej1fun.potentials:potentials-fabric:${rootProject.potentials_version}")
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }

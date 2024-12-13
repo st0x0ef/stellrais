@@ -2,7 +2,10 @@ package com.st0x0ef.stellaris.common.data_components;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.st0x0ef.stellaris.common.vehicle_upgrade.*;
+import com.st0x0ef.stellaris.common.vehicle_upgrade.FuelType;
+import com.st0x0ef.stellaris.common.vehicle_upgrade.MotorUpgrade;
+import com.st0x0ef.stellaris.common.vehicle_upgrade.SpeedUpgrade;
+import com.st0x0ef.stellaris.common.vehicle_upgrade.TankUpgrade;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;

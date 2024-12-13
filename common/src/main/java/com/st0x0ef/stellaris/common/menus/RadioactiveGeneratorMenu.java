@@ -112,7 +112,7 @@ public class RadioactiveGeneratorMenu extends AbstractContainerMenu {
     public void syncBattery(ServerPlayer player) {
         if (!player.level().isClientSide()) {
 
-            NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(new long[] {this.getBlockEntity().getWrappedEnergyContainer().getStoredEnergy()}
+            NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(new long[] {this.getBlockEntity().getEnergy(null).getEnergy()}
             ));
         }
     }

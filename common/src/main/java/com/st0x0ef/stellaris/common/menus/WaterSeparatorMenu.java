@@ -65,7 +65,7 @@ public class WaterSeparatorMenu extends BaseContainer {
             ));
 
             NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(
-                    new long[] {blockEntity.getWrappedEnergyContainer().getStoredEnergy(), 0, 0}
+                    new long[] {blockEntity.getEnergy(null).getEnergy(), 0, 0}
             ));
         }
     }

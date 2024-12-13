@@ -3,7 +3,6 @@ package com.st0x0ef.stellaris.common.menus;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.SolarPanelEntity;
 import com.st0x0ef.stellaris.common.network.packets.SyncWidgetsTanksPacket;
 import com.st0x0ef.stellaris.common.registry.MenuTypesRegistry;
-import com.st0x0ef.stellaris.platform.systems.energy.EnergyContainer;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;

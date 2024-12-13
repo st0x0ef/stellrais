@@ -56,7 +56,7 @@ public class PumpjackMenu extends BaseContainer {
             ));
 
             NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(
-                    new long[] {blockEntity.getWrappedEnergyContainer().getStoredEnergy()}
+                    new long[] {blockEntity.getEnergy(null).getEnergy()}
             ));
 
         }

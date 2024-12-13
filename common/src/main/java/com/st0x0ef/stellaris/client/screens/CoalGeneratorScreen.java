@@ -1,6 +1,5 @@
 package com.st0x0ef.stellaris.client.screens;
 
-import com.fej1fun.potentials.energy.UniversalEnergyStorage;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.client.screens.components.GaugeWidget;

@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 
 import java.util.function.Consumer;
 
@@ -18,9 +19,9 @@ public class GlobeItemRendererMixin extends BlockItem {
         super(block, properties);
     }
 
-    @Override
+    @Unique
     @SuppressWarnings("removal")
-    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+    public void stellaris$initializeClient(Consumer<IClientItemExtensions> consumer) {
 
         if(GlobeItemRendererMixin.this.getDefaultInstance().getItem() instanceof GlobeItem item) {
             consumer.accept(new IClientItemExtensions() {

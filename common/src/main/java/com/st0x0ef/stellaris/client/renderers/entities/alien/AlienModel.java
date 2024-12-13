@@ -3,7 +3,6 @@ package com.st0x0ef.stellaris.client.renderers.entities.alien;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.st0x0ef.stellaris.Stellaris;
-import com.st0x0ef.stellaris.common.entities.mobs.alien.Alien;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.EntityModel;
@@ -11,12 +10,12 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.client.renderer.entity.state.EntityRenderState;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 @Environment(EnvType.CLIENT)
-public class AlienModel<T extends Alien> extends EntityModel<EntityRenderState> {
+public class AlienModel extends EntityModel<LivingEntityRenderState> {
 
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "alien"), "main");
 
@@ -64,24 +63,10 @@ public class AlienModel<T extends Alien> extends EntityModel<EntityRenderState> 
 	}
 
 	@Override
-	public void setupAnim(EntityRenderState state) {
-		this.head.yRot = f3 / (180F / (float) Math.PI);
-		this.head.xRot = f4 / (180F / (float) Math.PI);
-		this.leg0.xRot = Mth.cos(f) * -1.0F * f1;
-		this.leg1.xRot = Mth.cos(f) * 1.0F * f1;
-	}
-
-	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
-		if (young) {
-			poseStack.scale(0.5f, 0.5f, 0.5f);
-			poseStack.translate(0, 1.5f, 0);
-		}
-		head.render(poseStack, buffer, packedLight, packedOverlay, color);
-		body.render(poseStack, buffer, packedLight, packedOverlay, color);
-		leg0.render(poseStack, buffer, packedLight, packedOverlay, color);
-		leg1.render(poseStack, buffer, packedLight, packedOverlay, color);
-		arms.render(poseStack, buffer, packedLight, packedOverlay, color);
-		head2.render(poseStack, buffer, packedLight, packedOverlay, color);
+	public void setupAnim(LivingEntityRenderState state) {
+		this.head.yRot = state.yRot * ((float)Math.PI / 180F);
+		this.head.xRot = state.xRot * ((float)Math.PI / 180F);
+		this.leg0.xRot = Mth.cos(state.walkAnimationPos) * -1.0F * state.walkAnimationSpeed;
+		this.leg1.xRot = Mth.cos(state.walkAnimationPos) * 1.0F * state.walkAnimationSpeed;
 	}
 }

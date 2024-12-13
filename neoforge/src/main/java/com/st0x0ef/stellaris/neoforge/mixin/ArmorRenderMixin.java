@@ -13,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 
 import java.util.function.Consumer;
 
@@ -23,9 +24,9 @@ public abstract class ArmorRenderMixin extends Item {
         super(properties);
     }
 
-    @Override
+    @Unique
     @SuppressWarnings("removal")
-    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+    public void stellaris$initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(new IClientItemExtensions() {
             private ClientUtilsPlatformImpl.ArmorRenderer renderer;
 

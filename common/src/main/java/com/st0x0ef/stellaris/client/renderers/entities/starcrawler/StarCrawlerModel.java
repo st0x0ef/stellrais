@@ -11,11 +11,12 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 @Environment(EnvType.CLIENT)
-public class StarCrawlerModel<T extends StarCrawler> extends EntityModel<T> {
+public class StarCrawlerModel extends EntityModel<LivingEntityRenderState> {
 
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "star_crawler"), "main");
 
@@ -26,6 +27,7 @@ public class StarCrawlerModel<T extends StarCrawler> extends EntityModel<T> {
     private final ModelPart arm4g;
 
     public StarCrawlerModel(ModelPart root) {
+        super(root);
         this.body = root.getChild("body");
         this.arm1g = root.getChild("arm1g");
         this.arm2g = root.getChild("arm2g");
@@ -136,17 +138,17 @@ public class StarCrawlerModel<T extends StarCrawler> extends EntityModel<T> {
     }
 
     @Override
-    public void setupAnim(T entity, float f, float f1, float f2, float f3, float f4) {
+    public void setupAnim(LivingEntityRenderState state) {
         // arm1
-        this.arm1g.getChild("Hand1").yRot = Mth.cos(f * 0.6662F) * f1;
-        this.arm2g.getChild("Hand2").yRot = Mth.cos(f * 0.6662F) * f1;
-        this.arm3g.getChild("Hand3").yRot = 80.115f + Mth.cos(f * 0.6662F) * f1;
-        this.arm4g.getChild("Hand4").yRot = -80.115f + Mth.cos(f * 0.6662F) * f1;
+        this.arm1g.getChild("Hand1").yRot = Mth.cos(state.ageInTicks * 0.6662F) * state.ageInTicks;
+        this.arm2g.getChild("Hand2").yRot = Mth.cos(state.ageInTicks * 0.6662F) * state.ageScale;
+        this.arm3g.getChild("Hand3").yRot = 80.115f + Mth.cos(state.ageInTicks * 0.6662F) * state.ageScale;
+        this.arm4g.getChild("Hand4").yRot = -80.115f + Mth.cos(state.ageInTicks * 0.6662F) * state.ageScale;
         // arm
-        this.arm1g.yRot = Mth.cos(f * 0.6662F) * f1;
-        this.arm2g.yRot = Mth.cos(f * 0.6662F) * f1;
-        this.arm3g.yRot = Mth.cos(f * 0.6662F) * f1;
-        this.arm4g.yRot = Mth.cos(f * 0.6662F) * f1;
+        this.arm1g.yRot = Mth.cos(state.ageInTicks * 0.6662F) * state.ageInTicks;
+        this.arm2g.yRot = Mth.cos(state.ageInTicks * 0.6662F) * state.ageInTicks;
+        this.arm3g.yRot = Mth.cos(state.ageInTicks * 0.6662F) * state.ageInTicks;
+        this.arm4g.yRot = Mth.cos(state.ageInTicks * 0.6662F) * state.ageInTicks;
     }
 
     @Override

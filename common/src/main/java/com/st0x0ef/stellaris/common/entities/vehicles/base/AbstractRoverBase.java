@@ -480,7 +480,7 @@ public abstract class AbstractRoverBase extends IVehicleEntity
 
         List<Entity> passengers = getPassengers();
 
-        if (passengers.size() > 0) {
+        if (!passengers.isEmpty()) {
             int i = passengers.indexOf(passenger);
 
             Vector3d offset = getPlayerOffsets()[i];

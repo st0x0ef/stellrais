@@ -3,30 +3,28 @@ package com.st0x0ef.stellaris.client.renderers.entities.cheeseboss;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.st0x0ef.stellaris.Stellaris;
-import com.st0x0ef.stellaris.common.entities.mobs.cheese_boss.CheeseBoss;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.model.HierarchicalModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 @Environment(EnvType.CLIENT)
-public class CheeseBossModel<T extends CheeseBoss> extends HierarchicalModel<T> {
+public class CheeseBossModel extends EntityModel<LivingEntityRenderState> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "cheese_boss"), "main");
 	private final ModelPart CheeseBoss;
 	private final ModelPart Head;
 
 	public CheeseBossModel(ModelPart root) {
-		this.CheeseBoss = root.getChild("CheeseBoss");
+        super(root);
+        this.CheeseBoss = root.getChild("CheeseBoss");
 		this.Head = CheeseBoss.getChild("Body").getChild("Head");
-	}
-	public ModelPart root(){
-		return this.CheeseBoss;
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -105,22 +103,22 @@ public class CheeseBossModel<T extends CheeseBoss> extends HierarchicalModel<T> 
 	}
 
 	@Override
-	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setupAnim(LivingEntityRenderState state) {
 		this.root().getAllParts().forEach(ModelPart::resetPose);
-		this.applyHeadRotation(netHeadYaw,headPitch);
+		this.applyHeadRotation(state.yRot, state.xRot);
 
-		this.animateWalk(CheeseBossAnim.walking, limbSwing,limbSwingAmount,4.1f,2.5f);
-		this.animate(entity.idleAnimationState, CheeseBossAnim.idle, ageInTicks, 1f);
-		this.animate(entity.punchAnimationState, CheeseBossAnim.punching, ageInTicks, 1f);
-		this.animate(entity.spitAnimationState, CheeseBossAnim.cheese_shooting, ageInTicks, 1f);
+		//this.animateWalk(CheeseBossAnim.walking, state.limbSwing, limbSwingAmount,4.1f,2.5f);
+		//this.animate(entity.idleAnimationState, CheeseBossAnim.idle, state.ageInTicks, 1f);
+		//this.animate(entity.punchAnimationState, CheeseBossAnim.punching, state.ageInTicks, 1f);
+		//this.animate(entity.spitAnimationState, CheeseBossAnim.cheese_shooting, state.ageInTicks, 1f);
 
 	}
 
 	private void applyHeadRotation(float netHeadYaw, float headPitch) {
 		netHeadYaw = Mth.clamp(netHeadYaw, -30.0F, 30.0F);
 		headPitch = Mth.clamp(headPitch, -25.0F, 45.0F);
-		this.Head.yRot = netHeadYaw * 0.017453292F;
-		this.Head.xRot = headPitch * 0.017453292F;
+		this.Head.yRot = (netHeadYaw * 0.017453292F);
+		this.Head.xRot = (headPitch * 0.017453292F);
 	}
 
 	@Override

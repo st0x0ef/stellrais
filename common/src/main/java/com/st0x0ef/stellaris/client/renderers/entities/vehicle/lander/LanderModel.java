@@ -9,9 +9,10 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.resources.ResourceLocation;
 
-public class LanderModel<T extends LanderEntity> extends EntityModel<T> {
+public class LanderModel extends EntityModel<EntityRenderState> {
 
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "lander"), "main");
     private final ModelPart leg1;
@@ -21,6 +22,7 @@ public class LanderModel<T extends LanderEntity> extends EntityModel<T> {
     private final ModelPart lander;
 
     public LanderModel(ModelPart root) {
+        super(root);
         this.leg1 = root.getChild("leg1");
         this.leg2 = root.getChild("leg2");
         this.leg3 = root.getChild("leg3");
@@ -117,11 +119,6 @@ public class LanderModel<T extends LanderEntity> extends EntityModel<T> {
         PartDefinition cube_r25 = lander.addOrReplaceChild("cube_r25", CubeListBuilder.create().texOffs(78, 46).addBox(-1.5F, -8.5F, -5.5F, 2.0F, 10.0F, 10.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-9.5F, -22.0F, -4.0F, 0.0F, 3.1416F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 128, 128);
-    }
-
-    @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
     }
 
     @Override

@@ -11,11 +11,12 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 @Environment(EnvType.CLIENT)
-public class MartianRaptorModel<T extends MartianRaptor> extends EntityModel  {
+public class MartianRaptorModel extends EntityModel<LivingEntityRenderState>  {
 
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "martian_raptor"), "main");
 
@@ -91,19 +92,18 @@ public class MartianRaptorModel<T extends MartianRaptor> extends EntityModel  {
     }
 
 
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
-        float i = entity.getAttackAnim();
-        float f = 1.0F - Mth.abs(10 - 2 * i) / 10.0F;
+    @Override
+    public void setupAnim(LivingEntityRenderState state) {
+        float f = 1.0F - Mth.abs(10 - 2 * state.ageInTicks) / 10.0F;
 
         this.body.getChild("head").getChild("bone2").getChild("mouth1").zRot = Mth.lerp(f, 0.0F, -1.14906584F);
         this.body.getChild("head").getChild("bone2").getChild("mouth2").zRot = -Mth.lerp(f, 0.0F, -1.14906584F);
 
-        this.leg1.xRot = Mth.cos(limbSwing) * -1.0F * limbSwingAmount;
-        this.leg2.xRot = Mth.cos(limbSwing) * 1.0F * limbSwingAmount;
+        this.leg1.xRot = Mth.cos(state.ageInTicks) * -1.0F * 2; // TODO : adjust the animation (*2 params)
+        this.leg2.xRot = Mth.cos(state.ageInTicks) * 1.0F * 2; // TODO : adjust the animation (*2 params)
 
-        this.body.getChild("head").yRot = netHeadYaw / (180F / (float) Math.PI);
-        this.body.getChild("head").xRot = headPitch / (180F / (float) Math.PI);
+        this.body.getChild("head").yRot = state.yRot / (180F / (float) Math.PI);
+        this.body.getChild("head").xRot = state.xRot / (180F / (float) Math.PI);
     }
 
     @Override

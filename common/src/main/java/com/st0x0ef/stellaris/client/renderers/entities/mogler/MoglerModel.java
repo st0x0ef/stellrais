@@ -6,21 +6,19 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.st0x0ef.stellaris.Stellaris;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.monster.hoglin.HoglinBase;
 
 @Environment(EnvType.CLIENT)
-public class MoglerModel<T extends Mob & HoglinBase> extends EntityModel {
+public class MoglerModel extends EntityModel<MoglerRenderState> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "mogler"), "main");
     private final ModelPart body;
     private final ModelPart head;
@@ -81,39 +79,14 @@ public class MoglerModel<T extends Mob & HoglinBase> extends EntityModel {
     }
 
     @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.head.yRot = netHeadYaw * ((float)Math.PI / 180F);
-        int i = entity.getAttackAnimationRemainingTicks();
-        float f = 1.0F - (float) Mth.abs(10 - 2 * i) / 10.0F;
+    public void setupAnim(MoglerRenderState state) {
+        this.head.yRot = state.yRot * ((float)Math.PI / 180F);
+        float f = 1.0F - Mth.abs(10 - 2 * state.ageInTicks) / 10.0F;
         this.head.xRot = Mth.lerp(f, 0.0F, -1.14906584F);
 
-        this.leg1.xRot = Mth.cos(limbSwing) * 1.2F * limbSwingAmount;
-        this.leg2.xRot = Mth.cos(limbSwing + (float)Math.PI) * 1.2F * limbSwingAmount;
+        this.leg1.xRot = Mth.cos(state.ageInTicks) * 1.2F * 2; // TODO : adjust the animation (*2 params)
+        this.leg2.xRot = Mth.cos(state.ageInTicks + (float)Math.PI) * 1.2F * 2; // TODO : adjust the animation (*2 params)
         this.leg3.xRot = this.leg1.xRot;
         this.leg4.xRot = this.leg2.xRot;
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
-        if (young) {
-            poseStack.scale(0.5f, 0.5f, 0.5f);
-            poseStack.translate(0, 1.5f, 0);
-        }
-        body.render(poseStack, buffer, packedLight, packedOverlay, color);
-        head.render(poseStack, buffer, packedLight, packedOverlay, color);
-        leg1.render(poseStack, buffer, packedLight, packedOverlay, color);
-        leg2.render(poseStack, buffer, packedLight, packedOverlay, color);
-        leg3.render(poseStack, buffer, packedLight, packedOverlay, color);
-        leg4.render(poseStack, buffer, packedLight, packedOverlay, color);
-    }
-
-    @Override
-    protected Iterable<ModelPart> headParts() {
-        return ImmutableList.of(this.head);
-    }
-
-    @Override
-    protected Iterable<ModelPart> bodyParts() {
-        return ImmutableList.of(this.body, this.leg1, this.leg2, this.leg3, this.leg4);
     }
 }

@@ -5,84 +5,35 @@ import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.common.entities.mobs.alien.Alien;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.layers.CrossedArmsItemLayer;
+import net.minecraft.client.renderer.entity.layers.CustomHeadLayer;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.npc.VillagerProfession;
 
 @Environment(EnvType.CLIENT)
-public class AlienRenderer extends MobRenderer<Alien, AlienModel<Alien>> {
+public class AlienRenderer extends MobRenderer<Alien, LivingEntityRenderState, AlienModel> {
 
     /** TEXTURES */
     public static final ResourceLocation ALIEN = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID,"textures/entity/alien/alien.png");
 
-    public static final ResourceLocation FARMER = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID,"textures/entity/alien/farmer.png");
-    public static final ResourceLocation FISHERMAN = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID,"textures/entity/alien/fisherman.png");
-    public static final ResourceLocation SHEPHERD = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID,"textures/entity/alien/shepherd.png");
-    public static final ResourceLocation FLETCHER = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID,"textures/entity/alien/fletcher.png");
-    public static final ResourceLocation LIBRARIAN = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID,"textures/entity/alien/librarian.png");
-    public static final ResourceLocation CARTOGRAPHER = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID,"textures/entity/alien/cartographer.png");
-    public static final ResourceLocation CLERIC = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID,"textures/entity/alien/cleric.png");
-    public static final ResourceLocation ARMORER = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID,"textures/entity/alien/armorer.png");
-    public static final ResourceLocation WEAPON_SMITH = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID,"textures/entity/alien/weapon_smith.png");
-    public static final ResourceLocation TOOL_SMITH = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID,"textures/entity/alien/tool_smith.png");
-    public static final ResourceLocation BUTCHER = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID,"textures/entity/alien/butcher.png");
-    public static final ResourceLocation LEATHER_WORKER = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID,"textures/entity/alien/leather_worker.png");
-    public static final ResourceLocation MASON = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID,"textures/entity/alien/mason.png");
-
+    public static final CustomHeadLayer.Transforms CUSTOM_HEAD_TRANSFORMS = new CustomHeadLayer.Transforms(-0.1171875F, -0.07421875F, 1.0F);
 
     public AlienRenderer(EntityRendererProvider.Context renderManagerIn) {
-        super(renderManagerIn, new AlienModel<>(renderManagerIn.bakeLayer(AlienModel.LAYER_LOCATION)), 0.5f);
+        super(renderManagerIn, new AlienModel(renderManagerIn.bakeLayer(AlienModel.LAYER_LOCATION)), 0.5f);
+        this.addLayer(new CustomHeadLayer(this, renderManagerIn.getModelSet(), CUSTOM_HEAD_TRANSFORMS, renderManagerIn.getItemRenderer()));
+        this.addLayer(new AlienProfessionLayer(this, renderManagerIn.getResourceManager()));
+        this.addLayer(new CrossedArmsItemLayer(this, renderManagerIn.getItemRenderer()));
     }
 
     @Override
-    public ResourceLocation getTextureLocation(Alien entity) {
-        if (entity.getVillagerData().getProfession() == VillagerProfession.FARMER) {
-            return FARMER;
-        }
-        else if (entity.getVillagerData().getProfession() == VillagerProfession.FISHERMAN) {
-            return FISHERMAN;
-        }
-        else if (entity.getVillagerData().getProfession() == VillagerProfession.SHEPHERD) {
-            return SHEPHERD;
-        }
-        else if (entity.getVillagerData().getProfession() == VillagerProfession.FLETCHER) {
-            return FLETCHER;
-        }
-        else if (entity.getVillagerData().getProfession() == VillagerProfession.LIBRARIAN) {
-            return LIBRARIAN;
-        }
-        else if (entity.getVillagerData().getProfession() == VillagerProfession.CARTOGRAPHER) {
-            return CARTOGRAPHER;
-        }
-        else if (entity.getVillagerData().getProfession() == VillagerProfession.CLERIC) {
-            return CLERIC;
-        }
-        else if (entity.getVillagerData().getProfession() == VillagerProfession.ARMORER) {
-            return ARMORER;
-        }
-        else if (entity.getVillagerData().getProfession() == VillagerProfession.WEAPONSMITH) {
-            return WEAPON_SMITH;
-        }
-        else if (entity.getVillagerData().getProfession() == VillagerProfession.TOOLSMITH) {
-            return TOOL_SMITH;
-        }
-        else if (entity.getVillagerData().getProfession() == VillagerProfession.BUTCHER) {
-            return BUTCHER;
-        }
-        else if (entity.getVillagerData().getProfession() == VillagerProfession.LEATHERWORKER) {
-            return LEATHER_WORKER;
-        }
-        else if (entity.getVillagerData().getProfession() == VillagerProfession.MASON) {
-            return MASON;
-        }
+    public LivingEntityRenderState createRenderState() {
+        return new LivingEntityRenderState();
+    }
 
+    @Override
+    public ResourceLocation getTextureLocation(LivingEntityRenderState renderState) {
         return ALIEN;
-    }
-
-    @Override
-    public boolean shouldRender(Alien livingEntity, Frustum camera, double camX, double camY, double camZ) {
-        return livingEntity != null && camera.isVisible(livingEntity.getBoundingBoxForCulling());
     }
 }

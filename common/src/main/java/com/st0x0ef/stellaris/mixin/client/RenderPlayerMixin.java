@@ -22,13 +22,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerRenderer.class)
 public abstract class RenderPlayerMixin extends LivingEntityRenderer<AbstractClientPlayer, PlayerModel, AbstractClientPlayer> {
-    protected abstract void setModelProperties(AbstractClientPlayer clientPlayer);
+    @Unique
+    protected abstract void stellaris$setModelProperties(AbstractClientPlayer clientPlayer);
 
     public RenderPlayerMixin(EntityRendererProvider.Context context, PlayerModel model, float shadowRadius) {
         super(context, model, shadowRadius);
@@ -42,7 +44,7 @@ public abstract class RenderPlayerMixin extends LivingEntityRenderer<AbstractCli
             ci.cancel();
 
             PlayerModel<AbstractClientPlayer> playerModel = getModel();
-            setModelProperties(player);
+            stellaris$setModelProperties(player);
             playerModel.attackTime = 0.0F;
             playerModel.crouching = false;
             playerModel.swimAmount = 0.0F;

@@ -4,11 +4,14 @@ import com.st0x0ef.stellaris.Stellaris;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.AnimationUtils;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
@@ -18,7 +21,7 @@ import net.minecraft.world.entity.monster.piglin.Piglin;
 import net.minecraft.world.entity.monster.piglin.PiglinArmPose;
 
 @Environment(EnvType.CLIENT)
-public class PygroModel<T extends Mob> extends PlayerModel<T> {
+public class PygroModel extends HumanoidModel<PygroRenderState> {
 
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "pygro"), "main");
 
@@ -30,8 +33,8 @@ public class PygroModel<T extends Mob> extends PlayerModel<T> {
     private final PartPose leftArmDefault = this.leftArm.storePose();
     private final PartPose rightArmDefault = this.rightArm.storePose();
 
-    public PygroModel(ModelPart p_170810_) {
-        super(p_170810_, false);
+    public PygroModel(ModelPart root) {
+        super(root);
     }
 
     public static MeshDefinition createMesh(CubeDeformation p_170812_) {
@@ -61,13 +64,13 @@ public class PygroModel<T extends Mob> extends PlayerModel<T> {
         return LayerDefinition.create(PygroModel.createMesh(CubeDeformation.NONE), 64, 64);
     }
 
-    public void setupAnim(T p_103366_, float p_103367_, float p_103368_, float p_103369_, float p_103370_, float p_103371_) {
+    @Override
+    public void setupAnim(PlayerRenderState renderState) {
+        super.setupAnim(renderState);
         this.body.loadPose(this.bodyDefault);
         this.head.loadPose(this.headDefault);
         this.leftArm.loadPose(this.leftArmDefault);
         this.rightArm.loadPose(this.rightArmDefault);
-        super.setupAnim(p_103366_, p_103367_, p_103368_, p_103369_, p_103370_, p_103371_);
-        float f = ((float)Math.PI / 6F);
         float f1 = p_103369_ * 0.1F + p_103367_ * 0.5F;
         float f2 = 0.08F + p_103368_ * 0.4F;
         this.leftEar.zRot = (-(float)Math.PI / 6F) - Mth.cos(f1 * 1.2F) * f2;
@@ -112,14 +115,6 @@ public class PygroModel<T extends Mob> extends PlayerModel<T> {
         this.rightSleeve.copyFrom(this.rightArm);
         this.jacket.copyFrom(this.body);
         this.hat.copyFrom(this.head);
-    }
-
-    protected void setupAttackAnimation(T p_103363_, float p_103364_) {
-        if (this.attackTime > 0.0F && p_103363_ instanceof Piglin && ((Piglin)p_103363_).getArmPose() == PiglinArmPose.ATTACKING_WITH_MELEE_WEAPON) {
-            AnimationUtils.swingWeaponDown(this.rightArm, this.leftArm, p_103363_, this.attackTime, p_103364_);
-        } else {
-            super.setupAttackAnimation(p_103363_, p_103364_);
-        }
     }
 
     private void holdWeaponHigh(T p_103361_) {

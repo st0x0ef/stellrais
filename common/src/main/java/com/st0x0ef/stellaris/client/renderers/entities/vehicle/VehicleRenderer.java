@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -26,9 +27,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 @Environment(EnvType.CLIENT)
-public abstract class VehicleRenderer<T extends IVehicleEntity, M extends EntityModel<T>> extends EntityRenderer<T> implements RenderLayerParent<T, M> {
+public abstract class VehicleRenderer<T extends Entity, S extends EntityRenderState, M extends EntityModel<S>> extends EntityRenderer<T, S> implements RenderLayerParent<S, M> {
     protected final M model;
-    protected final List<RenderLayer<T, M>> layers = Lists.newArrayList();
+    protected final List<RenderLayer<S, M>> layers = Lists.newArrayList();
 
     public VehicleRenderer(EntityRendererProvider.Context context, M model, float shadowRadius) {
         super(context);
@@ -41,7 +42,7 @@ public abstract class VehicleRenderer<T extends IVehicleEntity, M extends Entity
     }
 
     @Override
-    public void render(T entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+    public void render(S renderState, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
         poseStack.pushPose();
         boolean shouldSit = entity.isPassenger() && (entity.getVehicle() != null);
         this.model.riding = shouldSit;
@@ -144,10 +145,5 @@ public abstract class VehicleRenderer<T extends IVehicleEntity, M extends Entity
 
     protected float getBob(T p_115305_, float p_115306_) {
         return (float)p_115305_.tickCount + p_115306_;
-    }
-
-    @Override
-    public boolean shouldRender(T livingEntity, Frustum camera, double camX, double camY, double camZ) {
-        return livingEntity != null && camera.isVisible(livingEntity.getBoundingBoxForCulling());
     }
 }

@@ -1,11 +1,9 @@
 package com.st0x0ef.stellaris.common.blocks.machines;
 
+import com.fej1fun.potentials.capabilities.Capabilities;
 import com.mojang.serialization.MapCodec;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.CableBlockEntity;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
-import com.st0x0ef.stellaris.common.registry.TagRegistry;
-import com.st0x0ef.stellaris.common.systems.energy.base.EnergyBlock;
-import com.st0x0ef.stellaris.platform.systems.energy.CableUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -26,6 +24,7 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
@@ -74,34 +73,42 @@ public class CableBlock extends BaseTickingEntityBlock {
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext blockPlaceContext) {
-        Level blockGetter = blockPlaceContext.getLevel();
+        Level level = blockPlaceContext.getLevel();
         BlockPos blockPos = blockPlaceContext.getClickedPos();
-        BlockEntity blockEntity = blockGetter.getBlockEntity(blockPos);
-        return this.defaultBlockState()
-                .setValue(DOWN, isConnectable(blockEntity, blockGetter.getBlockEntity(blockPos.below()), blockGetter.getBlockState(blockPos.below()), Direction.DOWN))
-                .setValue(UP, isConnectable(blockEntity, blockGetter.getBlockEntity(blockPos.above()), blockGetter.getBlockState(blockPos.above()), Direction.UP))
-                .setValue(NORTH, isConnectable(blockEntity, blockGetter.getBlockEntity(blockPos.north()), blockGetter.getBlockState(blockPos.north()), Direction.NORTH))
-                .setValue(EAST, isConnectable(blockEntity, blockGetter.getBlockEntity(blockPos.east()), blockGetter.getBlockState(blockPos.east()), Direction.EAST))
-                .setValue(SOUTH, isConnectable(blockEntity, blockGetter.getBlockEntity(blockPos.south()), blockGetter.getBlockState(blockPos.south()), Direction.SOUTH))
-                .setValue(WEST, isConnectable(blockEntity, blockGetter.getBlockEntity(blockPos.west()), blockGetter.getBlockState(blockPos.west()), Direction.WEST));
+        BlockState state = this.defaultBlockState();
+        PROPERTY_BY_DIRECTION.forEach((direction, booleanProperty) ->
+                state.setValue(booleanProperty, isConnectable(level, blockPos.relative(direction), direction.getOpposite())));
+        return state;
     }
 
-    private boolean isConnectable(BlockEntity blockEntity,BlockEntity blockEntityTo, BlockState blockStateTo, Direction direction) {
-        return blockStateTo.is(this) || blockStateTo.is(TagRegistry.ENERGY_BLOCK_TAG) ||
-                blockEntityTo instanceof EnergyBlock<?> || CableUtil.isEnergyContainer(blockEntityTo, direction);
+    private boolean isConnectable(Level level, BlockPos pos, Direction direction) {
+        return Capabilities.Energy.BLOCK.getCapability(level, pos, direction)!=null;
     }
+
+//    @Override
+//    public BlockState updateShape(BlockState blockState, Direction direction, BlockState blockState2, LevelAccessor levelAccessor, BlockPos blockPos, BlockPos blockPos2) {
+//        BlockEntity blockEntity = levelAccessor.getBlockEntity(blockPos);
+//        BlockEntity blockEntityTo = levelAccessor.getBlockEntity(blockPos.relative(direction));
+//
+//        if (isConnectable(blockEntity, blockEntityTo, blockState2, direction)) {
+//            return blockState.setValue(PROPERTY_BY_DIRECTION.get(direction), true);
+//        }
+//        else {
+//            return blockState.setValue(PROPERTY_BY_DIRECTION.get(direction), false);
+//        }
+//    }
+
 
     @Override
-    public BlockState updateShape(BlockState blockState, Direction direction, BlockState blockState2, LevelAccessor levelAccessor, BlockPos blockPos, BlockPos blockPos2) {
-        BlockEntity blockEntity = levelAccessor.getBlockEntity(blockPos);
-        BlockEntity blockEntityTo = levelAccessor.getBlockEntity(blockPos.relative(direction));
-
-        if (isConnectable(blockEntity, blockEntityTo, blockState2, direction)) {
-            return blockState.setValue(PROPERTY_BY_DIRECTION.get(direction), true);
+    protected @NotNull BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor levelAccessor, BlockPos pos, BlockPos neighborPos) {
+        BlockEntity entity = levelAccessor.getBlockEntity(pos);
+        if (entity!=null) {
+            Level level = entity.getLevel();
+            if (level!=null)
+                if (isConnectable(level, neighborPos, direction.getOpposite()))
+                    return state.setValue(PROPERTY_BY_DIRECTION.get(direction), true);
         }
-        else {
-            return blockState.setValue(PROPERTY_BY_DIRECTION.get(direction), false);
-        }
+        return state.setValue(PROPERTY_BY_DIRECTION.get(direction), false);
     }
 
     @Override

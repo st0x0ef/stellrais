@@ -6,7 +6,6 @@ import com.st0x0ef.stellaris.client.screens.components.GaugeWidget;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.FluidTank;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.WaterSeparatorBlockEntity;
 import com.st0x0ef.stellaris.common.menus.WaterSeparatorMenu;
-import com.st0x0ef.stellaris.platform.systems.energy.EnergyContainer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.GuiGraphics;
@@ -54,8 +53,7 @@ public class WaterSeparatorScreen extends AbstractContainerScreen<WaterSeparator
         resultTank2Gauge = new GaugeWidget(leftPos + 142, topPos + 52, 12, 46, Component.translatable("stellaris.screen.oxygen"), GUISprites.OXYGEN_OVERLAY, GUISprites.LIQUID_TANK_OVERLAY, resultTank2.getMaxCapacity()-1, GaugeWidget.Direction4.DOWN_UP);
         addRenderableWidget(resultTank2Gauge);
 
-        EnergyContainer energyContainer = blockEntity.getWrappedEnergyContainer();
-        energyGauge = new GaugeWidget(leftPos + 64, topPos + 24, 47, 13, Component.translatable("stellaris.screen.energy"), GUISprites.SIDEWAYS_ENERGY_FULL, GUISprites.SIDEWAYS_ENERGY_OVERLAY, energyContainer.getMaxCapacity(), GaugeWidget.Direction4.LEFT_RIGHT);
+        energyGauge = new GaugeWidget(leftPos + 64, topPos + 24, 47, 13, Component.translatable("stellaris.screen.energy"), GUISprites.SIDEWAYS_ENERGY_FULL, GUISprites.SIDEWAYS_ENERGY_OVERLAY, blockEntity.getEnergy(null).getMaxEnergy(), GaugeWidget.Direction4.LEFT_RIGHT);
         addRenderableWidget(energyGauge);
     }
 
@@ -72,7 +70,7 @@ public class WaterSeparatorScreen extends AbstractContainerScreen<WaterSeparator
         ingredientTankGauge.updateAmount((int)blockEntity.getIngredientTank().getAmount());
         resultTank1Gauge.updateAmount((int)blockEntity.getResultTanks().getFirst().getAmount());
         resultTank2Gauge.updateAmount((int)blockEntity.getResultTanks().getLast().getAmount());
-        energyGauge.updateAmount((int)blockEntity.getWrappedEnergyContainer().getStoredEnergy());
+        energyGauge.updateAmount((int)blockEntity.getEnergy(null).getEnergy());
     }
 
     @Override

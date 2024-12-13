@@ -6,7 +6,6 @@ import com.st0x0ef.stellaris.client.screens.components.GaugeWidget;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.FluidTank;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.WaterPumpBlockEntity;
 import com.st0x0ef.stellaris.common.menus.WaterPumpMenu;
-import com.st0x0ef.stellaris.platform.systems.energy.EnergyContainer;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -39,8 +38,7 @@ public class WaterPumpScreen extends AbstractContainerScreen<WaterPumpMenu> {
         waterTankGauge = new GaugeWidget(leftPos + 25, topPos + 20, 12, 42, Component.translatable("stellaris.screen.water"), GUISprites.WATER_OVERLAY, GUISprites.LIQUID_TANK_OVERLAY, waterTank.getMaxCapacity() - 1, GaugeWidget.Direction4.DOWN_UP);
         addRenderableWidget(waterTankGauge);
 
-        EnergyContainer energyContainer = blockEntity.getWrappedEnergyContainer().container();
-        energyGauge = new GaugeWidget(leftPos + 150, topPos + 20, 13, 46, Component.translatable("stellaris.screen.energy"), GUISprites.ENERGY_FULL, GUISprites.BATTERY_OVERLAY, energyContainer.getMaxCapacity(), GaugeWidget.Direction4.DOWN_UP);
+        energyGauge = new GaugeWidget(leftPos + 150, topPos + 20, 13, 46, Component.translatable("stellaris.screen.energy"), GUISprites.ENERGY_FULL, GUISprites.BATTERY_OVERLAY, blockEntity.getEnergy(null).getMaxEnergy(), GaugeWidget.Direction4.DOWN_UP);
         addRenderableWidget(energyGauge);
     }
 
@@ -55,7 +53,7 @@ public class WaterPumpScreen extends AbstractContainerScreen<WaterPumpMenu> {
         }
 
         waterTankGauge.updateAmount((int) blockEntity.getWaterTank().getAmount());
-        energyGauge.updateAmount((int) blockEntity.getWrappedEnergyContainer().getStoredEnergy());
+        energyGauge.updateAmount((int) blockEntity.getEnergy(null).getEnergy());
     }
 
     @Override

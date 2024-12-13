@@ -1,5 +1,6 @@
 package com.st0x0ef.stellaris.client.screens;
 
+import com.fej1fun.potentials.energy.UniversalEnergyStorage;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.client.screens.components.GaugeWidget;
@@ -38,9 +39,8 @@ public class CoalGeneratorScreen extends AbstractContainerScreen<CoalGeneratorMe
             return;
         }
 
-        WrappedBlockEnergyContainer energyStorage = blockEntity.getWrappedEnergyContainer();
         energyGauge = new GaugeWidget(leftPos + 147, topPos + 52, 13, 46, Component.translatable("stellaris.screen.energy"),
-                GUISprites.ENERGY_FULL, GUISprites.BATTERY_OVERLAY, energyStorage.getMaxCapacity(), GaugeWidget.Direction4.DOWN_UP);
+                GUISprites.ENERGY_FULL, GUISprites.BATTERY_OVERLAY, blockEntity.getEnergy(null).getMaxEnergy(), GaugeWidget.Direction4.DOWN_UP);
         addRenderableWidget(energyGauge);
     }
 
@@ -54,7 +54,7 @@ public class CoalGeneratorScreen extends AbstractContainerScreen<CoalGeneratorMe
             return;
         }
 
-        energyGauge.updateAmount(blockEntity.getWrappedEnergyContainer().getStoredEnergy());
+        energyGauge.updateAmount(blockEntity.getEnergy(null).getEnergy());
     }
 
     @Override

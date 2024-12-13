@@ -16,7 +16,7 @@ import net.minecraft.world.inventory.Slot;
 public class SolarPanelMenu extends BaseContainer {
 
     private final Container inventory;
-    private final SolarPanelEntity entity;
+    private final SolarPanelEntity blockEntity;
 
     public static SolarPanelMenu create(int syncId, Inventory inventory, FriendlyByteBuf data) {
         SolarPanelEntity entity = (SolarPanelEntity) inventory.player.level().getBlockEntity(data.readBlockPos());
@@ -28,14 +28,14 @@ public class SolarPanelMenu extends BaseContainer {
 
         checkContainerSize(container, 1);
         this.inventory = container;
-        this.entity = entity;
+        this.blockEntity = entity;
 
         addSlot(new Slot(inventory, 0, 38, 44));
 
     }
 
     public SolarPanelEntity getBlockEntity() {
-        return entity;
+        return blockEntity;
     }
 
 
@@ -48,15 +48,9 @@ public class SolarPanelMenu extends BaseContainer {
         return inventory.stillValid(player);
     }
 
-
-
-    public EnergyContainer getEnergyContainer() {
-        return this.entity.getWrappedEnergyContainer();
-    }
-
     public void syncBattery(ServerPlayer player) {
         if (!player.level().isClientSide()) {
-            NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(new long[] {getEnergyContainer().getStoredEnergy()}));
+            NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(new long[] {blockEntity.getEnergy(null).getEnergy()}));
         }
     }
 }

@@ -6,11 +6,9 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Mob;
 
 @Environment(EnvType.CLIENT)
 public class PygroBruteRenderer extends HumanoidMobRenderer<PygroBrute, PygroRenderState, PygroModel> {

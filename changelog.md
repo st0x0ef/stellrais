@@ -79,6 +79,7 @@
 - Planet and star name are now translatable
 - Oxygen distributor now need energy
 - Increase minimum speed for the rocket to explode
+- Remove Cheese Boss from spawn placements
 
 ## Fix
 - Crash when trying to launch to any planet when you haven't launched from a planet

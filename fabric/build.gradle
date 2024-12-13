@@ -39,8 +39,9 @@ dependencies {
     modRuntimeOnly("mezz.jei:jei-${minecraft_version}-fabric:${jei_version}")
 
     modRuntimeOnly "maven.modrinth:sky-aesthetics:${sky_version}-fabric"
-
     include "maven.modrinth:sky-aesthetics:${sky_version}-fabric"
+
+    include modApi("com.fej1fun.potentials:potentials-fabric-1.21:0.1.0")
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }

@@ -37,8 +37,9 @@ dependencies {
     runtimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
 
     runtimeOnly "maven.modrinth:sky-aesthetics:${sky_version}-neoforge"
-
     include("maven.modrinth:sky-aesthetics:${sky_version}-neoforge")
+
+    include modApi("com.fej1fun.potentials:potentials-neoforge-1.21:0.1.0")
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowBundle project(path: ":common", configuration: "transformProductionNeoForge")

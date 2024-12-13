@@ -63,7 +63,7 @@ public class PygroModel extends HumanoidModel<PygroRenderState> {
     @Override
     public void setupAnim(PygroRenderState renderState) {
         super.setupAnim(renderState);
-        this.body.loadPose(this.bodyDefault);
+        /*this.body.loadPose(this.bodyDefault);
         this.head.loadPose(this.headDefault);
         this.leftArm.loadPose(this.leftArmDefault);
         this.rightArm.loadPose(this.rightArmDefault);
@@ -110,14 +110,14 @@ public class PygroModel extends HumanoidModel<PygroRenderState> {
         this.leftSleeve.copyFrom(this.leftArm);
         this.rightSleeve.copyFrom(this.rightArm);
         this.jacket.copyFrom(this.body);
-        this.hat.copyFrom(this.head);
+        this.hat.copyFrom(this.head);*/
     }
 
-    private void holdWeaponHigh(T p_103361_) {
+    /*private void holdWeaponHigh(T p_103361_) {
         if (p_103361_.isLeftHanded()) {
             this.leftArm.xRot = -1.8F;
         } else {
             this.rightArm.xRot = -1.8F;
         }
-    }
+    }*/
 }

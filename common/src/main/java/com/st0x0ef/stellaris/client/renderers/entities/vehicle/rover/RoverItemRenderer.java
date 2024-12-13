@@ -20,7 +20,7 @@ import net.minecraft.world.item.ItemStack;
 public class RoverItemRenderer extends BlockEntityWithoutLevelRenderer {
 
     private final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/vehicle/rover.png");
-    private RoverModel<?> model;
+    private RoverModel model;
 
     public RoverItemRenderer(BlockEntityRenderDispatcher blockEntityRenderDispatcher, EntityModelSet entityModelSet) {
         super(blockEntityRenderDispatcher, entityModelSet);
@@ -40,7 +40,7 @@ public class RoverItemRenderer extends BlockEntityWithoutLevelRenderer {
         Minecraft mc = Minecraft.getInstance();
 
         if (this.model == null) {
-            this.model = new RoverModel<>(mc.getEntityModels().bakeLayer(RoverModel.LAYER_LOCATION));
+            this.model = new RoverModel(mc.getEntityModels().bakeLayer(RoverModel.LAYER_LOCATION));
         }
 
         VertexConsumer vertexBuilder = buffer.getBuffer(RenderType.entityCutoutNoCullZOffset(TEXTURE));

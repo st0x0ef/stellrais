@@ -9,17 +9,19 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 
 
-public class RoverModel<T extends RoverEntity> extends EntityModel<T> {
+public class RoverModel extends EntityModel<EntityRenderState> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "rover"), "main");
 
     private final ModelPart rover;
     private final ModelPart antenna;
 
     public RoverModel(ModelPart root) {
+        super(root);
         this.rover = root.getChild("Frame");
         this.antenna = root.getChild("Antenna");
     }
@@ -191,8 +193,8 @@ public class RoverModel<T extends RoverEntity> extends EntityModel<T> {
 
 
     @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.rover.yRot = netHeadYaw / (180F / (float) Math.PI);
+    public void setupAnim(EntityRenderState state) {
+        /*this.rover.yRot = netHeadYaw / (180F / (float) Math.PI);
 
         float wheelRotation = (float) entity.getDeltaMovement().x / 5f;
         if (entity.getDirection() == Direction.NORTH ||entity.getDirection() == Direction.SOUTH) {
@@ -232,16 +234,14 @@ public class RoverModel<T extends RoverEntity> extends EntityModel<T> {
             this.rover.getChild("Wheels").getChild("Wheel2").xRot += entity.getXRot() / 4;
             this.rover.getChild("Wheels").getChild("Wheel3").xRot += entity.getXRot() / 4;
             this.rover.getChild("Wheels").getChild("Wheel4").xRot += entity.getXRot() / 4;
-        }
+        }*/
 
-        this.antenna.yRot = ageInTicks / 20;
+        this.antenna.yRot = state.ageInTicks / 20;
     }
-
 
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
         this.rover.render(poseStack, buffer, packedLight, packedOverlay);
         this.antenna.render(poseStack, buffer, packedLight, packedOverlay);
-
     }
 }

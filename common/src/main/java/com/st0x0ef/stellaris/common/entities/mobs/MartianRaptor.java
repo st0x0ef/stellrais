@@ -4,6 +4,7 @@ import dev.architectury.networking.NetworkManager;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerEntity;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
@@ -60,10 +61,10 @@ public class MartianRaptor extends Monster {
     }
 
     @Override
-    public boolean doHurtTarget(Entity p_21372_) {
+    public boolean doHurtTarget(ServerLevel level, Entity source) {
         this.AttackAnim = 10;
         this.level().broadcastEntityEvent(this, (byte)4);
-        return super.doHurtTarget(p_21372_);
+        return super.doHurtTarget(level, source);
     }
 
     @Override

@@ -9,13 +9,15 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.resources.ResourceLocation;
 
-public class BigRocketModel<T extends RocketEntity> extends EntityModel<T> {
+public class BigRocketModel extends EntityModel<EntityRenderState> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "big_rocket"), "main");
     private final ModelPart rocket;
 
     public BigRocketModel(ModelPart root) {
+        super(root);
         this.rocket = root.getChild("rocket");
     }
 
@@ -160,7 +162,7 @@ public class BigRocketModel<T extends RocketEntity> extends EntityModel<T> {
     }
 
     @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(EntityRenderState state) {
         this.rocket.yRot = netHeadYaw / (180F / (float) Math.PI);
     }
 

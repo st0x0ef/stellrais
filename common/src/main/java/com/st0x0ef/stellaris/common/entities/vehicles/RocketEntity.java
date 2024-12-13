@@ -230,7 +230,7 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
     @Override
     public InteractionResult interact(Player player, InteractionHand hand) {
         super.interact(player, hand);
-        InteractionResult result = InteractionResult.sidedSuccess(this.level().isClientSide);
+        InteractionResult result = InteractionResult.SUCCESS;
 
         if (!this.level().isClientSide) {
             if (player.isCrouching()) {
@@ -290,7 +290,7 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
     }
 
     @Override
-    public void kill() {
+    public void kill(ServerLevel level) {
         this.dropEquipment();
         this.spawnRocketItem();
 
@@ -300,8 +300,8 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
     }
 
     @Override
-    public boolean hurt(DamageSource source, float amount) {
-        Entity sourceEntity = source.getEntity();
+    public boolean hurtServer(ServerLevel level, DamageSource damageSource, float amount) {
+        Entity sourceEntity = damageSource.getEntity();
 
         if (sourceEntity != null && sourceEntity.isCrouching() && !this.isVehicle()) {
             this.spawnRocketItem();
@@ -436,7 +436,7 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
         for (int i = 0; i < this.inventory.getItems().size(); ++i) {
             ItemStack itemstack = this.inventory.getItem(i);
             if (!itemstack.isEmpty()) {
-                this.spawnAtLocation(itemstack);
+                this.spawnAtLocation((ServerLevel) level(), itemstack);
             }
         }
     }

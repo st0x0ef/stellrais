@@ -180,7 +180,7 @@ public abstract class IVehicleEntity extends Entity{
                 Vec3 vec35 = this.handleRelativeFrictionAndCalculateMovement(vec3, f3);
                 double d2 = vec35.y;
                 if (this.level().isClientSide && !this.level().hasChunkAt(blockpos)) {
-                    if (this.getY() > (double)this.level().getMinBuildHeight()) {
+                    if (this.getY() > (double)this.level().getMinY()) {
                         d2 = -0.1D;
                     } else {
                         d2 = 0.0D;

@@ -19,6 +19,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.*;
 import net.minecraft.world.damagesource.DamageSource;
@@ -132,7 +133,7 @@ public class RoverEntity extends AbstractRoverBase implements HasCustomInventory
     @Override
     public InteractionResult interact(Player player, InteractionHand hand) {
         super.interact(player, hand);
-        InteractionResult result = InteractionResult.sidedSuccess(this.level().isClientSide);
+        InteractionResult result = InteractionResult.SUCCESS;
 
         if (!this.level().isClientSide) {
             if (player.isCrouching()) {
@@ -239,7 +240,7 @@ public class RoverEntity extends AbstractRoverBase implements HasCustomInventory
     }
 
     @Override
-    public void kill() {
+    public void kill(ServerLevel level) {
         this.dropEquipment();
         this.spawnRoverItem();
 
@@ -249,7 +250,7 @@ public class RoverEntity extends AbstractRoverBase implements HasCustomInventory
     }
 
     @Override
-    public boolean hurt(DamageSource source, float amount) {
+    public boolean hurtServer(ServerLevel level, DamageSource source, float amount) {
         Entity sourceEntity = source.getEntity();
 
         if (sourceEntity != null && sourceEntity.isCrouching() && !this.isVehicle()) {
@@ -288,7 +289,7 @@ public class RoverEntity extends AbstractRoverBase implements HasCustomInventory
         for (int i = 0; i < this.inventory.getItems().size(); ++i) {
             ItemStack itemstack = this.inventory.getItem(i);
             if (!itemstack.isEmpty()) {
-                this.spawnAtLocation(itemstack);
+                this.spawnAtLocation((ServerLevel) level(), itemstack);
             }
         }
     }

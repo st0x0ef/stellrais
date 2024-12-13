@@ -130,7 +130,7 @@ public abstract class AbstractRoverBase extends IVehicleEntity
                     float damage = speed * 10;
                     tasks.add(() -> {
                         ServerLevel serverLevel = (ServerLevel) level();
-                        Optional<Holder.Reference<DamageType>> holder = serverLevel.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolder(DamageTypes.DROWN);
+                        Optional<Holder.Reference<DamageType>> holder = serverLevel.registryAccess().lookupOrThrow(Registries.DAMAGE_TYPE).get(DamageTypes.DROWN);
                         holder.ifPresent(damageTypeReference -> entityIn.hurt(new DamageSource(damageTypeReference, this), damage));
                     });
                 }

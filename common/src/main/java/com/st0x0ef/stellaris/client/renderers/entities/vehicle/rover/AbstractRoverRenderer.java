@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import com.st0x0ef.stellaris.common.entities.vehicles.IVehicleEntity;
 import com.st0x0ef.stellaris.common.entities.vehicles.base.AbstractRoverBase;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -16,6 +17,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -26,9 +28,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 @Environment(EnvType.CLIENT)
-public abstract class AbstractRoverRenderer<T extends AbstractRoverBase, M extends EntityModel<T>> extends EntityRenderer<T> implements RenderLayerParent<T, M> {
+public abstract class AbstractRoverRenderer<T extends AbstractRoverBase, S extends EntityRenderState, M extends EntityModel<S>> extends EntityRenderer<T, S> implements RenderLayerParent<S, M> {
     protected final M model;
-    protected final List<RenderLayer<T, M>> layers = Lists.newArrayList();
+    protected final List<RenderLayer<S, M>> layers = Lists.newArrayList();
 
     public AbstractRoverRenderer(EntityRendererProvider.Context context, M model, float shadowRadius) {
         super(context);
@@ -146,8 +148,7 @@ public abstract class AbstractRoverRenderer<T extends AbstractRoverBase, M exten
         return (float)p_115305_.tickCount + p_115306_;
     }
 
-    @Override
-    public boolean shouldRender(T livingEntity, Frustum camera, double camX, double camY, double camZ) {
-        return livingEntity != null && camera.isVisible(livingEntity.getBoundingBoxForCulling());
+    protected ResourceLocation getTextureLocation(IVehicleEntity rocket) {
+        return null;
     }
 }

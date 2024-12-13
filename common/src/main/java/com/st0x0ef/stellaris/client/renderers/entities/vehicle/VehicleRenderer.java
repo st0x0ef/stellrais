@@ -4,6 +4,10 @@ import com.google.common.collect.Lists;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import com.st0x0ef.stellaris.client.renderers.entities.vehicle.rocket.RocketModel;
+import com.st0x0ef.stellaris.common.entities.vehicles.IVehicleEntity;
+import com.st0x0ef.stellaris.common.entities.vehicles.RocketEntity;
+import com.st0x0ef.stellaris.common.vehicle_upgrade.ModelUpgrade;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
@@ -20,6 +24,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.vehicle.VehicleEntity;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -91,7 +96,7 @@ public abstract class VehicleRenderer<T extends Entity, S extends EntityRenderSt
         }
 
         if (!entity.isSpectator()) {
-            for(RenderLayer<T, M> renderlayer : this.layers) {
+            for(RenderLayer<S, M> renderlayer : this.layers) {
                 renderlayer.render(poseStack, buffer, packedLight, entity, f5, f8, partialTick, f7, f2, f6);
             }
         }
@@ -102,7 +107,7 @@ public abstract class VehicleRenderer<T extends Entity, S extends EntityRenderSt
 
 
     @Nullable
-    protected RenderType getRenderType(T entity, boolean p_115323_, boolean p_115324_, boolean p_115325_) {
+    protected RenderType getRenderType(IVehicleEntity entity, boolean p_115323_, boolean p_115324_, boolean p_115325_) {
         ResourceLocation resourcelocation = this.getTextureLocation(entity);
         if (p_115324_) {
             return RenderType.itemEntityTranslucentCull(resourcelocation);
@@ -143,5 +148,9 @@ public abstract class VehicleRenderer<T extends Entity, S extends EntityRenderSt
 
     protected float getBob(T p_115305_, float p_115306_) {
         return (float)p_115305_.tickCount + p_115306_;
+    }
+
+    protected ResourceLocation getTextureLocation(IVehicleEntity rocket) {
+        return null;
     }
 }

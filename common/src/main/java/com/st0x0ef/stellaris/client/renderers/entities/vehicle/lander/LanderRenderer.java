@@ -2,6 +2,7 @@ package com.st0x0ef.stellaris.client.renderers.entities.vehicle.lander;
 
 import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.client.renderers.entities.vehicle.VehicleRenderer;
+import com.st0x0ef.stellaris.common.entities.vehicles.IVehicleEntity;
 import com.st0x0ef.stellaris.common.entities.vehicles.LanderEntity;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -16,7 +17,7 @@ public class LanderRenderer extends VehicleRenderer<LanderEntity, EntityRenderSt
     }
 
     @Override
-    public ResourceLocation getTextureLocation(EntityRenderState entity) {
+    public ResourceLocation getTextureLocation(IVehicleEntity entity) {
         return TEXTURE;
     }
 

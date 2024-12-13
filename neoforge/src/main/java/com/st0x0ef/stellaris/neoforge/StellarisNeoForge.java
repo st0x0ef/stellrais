@@ -4,7 +4,6 @@ import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.client.StellarisClient;
 import com.st0x0ef.stellaris.common.registry.EntityRegistry;
 import com.st0x0ef.stellaris.common.registry.ItemsRegistry;
-import com.st0x0ef.stellaris.neoforge.systems.SystemsNeoForge;
 import com.st0x0ef.stellaris.platform.neoforge.EffectRegisterImpl;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
@@ -29,7 +28,6 @@ public class StellarisNeoForge {
 
         bus.addListener(StellarisNeoForge::onAttributes);
         bus.addListener(StellarisNeoForge::addItemToTab);
-        SystemsNeoForge.init(bus);
 
         if (FMLEnvironment.dist.isClient()) {
             StellarisClient.registerPacks();

@@ -52,7 +52,7 @@ public class Stellaris {
         FeaturesRegistry.FEATURES.register();
         CommandsRegistry.register();
         Events.registerEvents();
-        LookupApiRegistry.registerEnergy();
+        CapabilitiesRegistry.registerEnergy();
         RecipesRegistry.register();
         EntityRegistry.registerSpawnPlacements();
         EffectsRegistry.register();

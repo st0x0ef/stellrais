@@ -10,7 +10,8 @@
     "LivingEntityMixin",
     "MixinChunkAccess",
     "MixinChunkSerializer",
-    "PlayerDataMixin"
+    "PlayerDataMixin",
+    "client.FogRenderMixin"
   ],
   "client": [
     "client.PlayerKeyMixin",

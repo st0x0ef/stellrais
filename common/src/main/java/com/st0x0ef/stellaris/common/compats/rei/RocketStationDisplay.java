@@ -3,11 +3,14 @@ package com.st0x0ef.stellaris.common.compats.rei;
 
 import com.st0x0ef.stellaris.common.data.recipes.RocketStationRecipe;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
+import me.shedaniel.rei.api.common.display.Display;
+import me.shedaniel.rei.api.common.display.DisplaySerializer;
 import me.shedaniel.rei.api.common.display.basic.BasicDisplay;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;

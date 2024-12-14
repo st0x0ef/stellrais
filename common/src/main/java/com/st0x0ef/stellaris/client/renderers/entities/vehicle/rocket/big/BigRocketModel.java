@@ -3,7 +3,6 @@ package com.st0x0ef.stellaris.client.renderers.entities.vehicle.rocket.big;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.st0x0ef.stellaris.Stellaris;
-import com.st0x0ef.stellaris.common.entities.vehicles.RocketEntity;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;

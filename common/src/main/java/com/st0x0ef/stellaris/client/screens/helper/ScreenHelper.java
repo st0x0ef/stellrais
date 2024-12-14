@@ -4,7 +4,9 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.CoreShaders;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -46,7 +48,7 @@ public class ScreenHelper {
             int g = (int) color.y();
             int b = (int) color.z();
 
-            RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+            RenderSystem.setShader(CoreShaders.POSITION_TEX_COLOR);
             BufferBuilder bufferBuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
             bufferBuilder.addVertex(matrix4f, (float) x, (float) p_93117_, (float) p_93118_).setColor(r, g, b, 255).setUv(p_93119_, p_93122_);
             bufferBuilder.addVertex(matrix4f, (float) y, (float) p_93117_, (float) p_93118_).setColor(r, g, b, 255).setUv(p_93120_, p_93122_);
@@ -154,7 +156,7 @@ public class ScreenHelper {
 
         RenderSystem.setShader(CoreShaders.POSITION_TEX);
         RenderSystem.setShaderTexture(0, texture);
-        new GuiGraphics(Minecraft.getInstance(), Minecraft.getInstance().renderBuffers().bufferSource()).blit(texture, leftPos, topPos, 0, 0, width, height, width, height);
+        new GuiGraphics(Minecraft.getInstance(), Minecraft.getInstance().renderBuffers().bufferSource()).blit(RenderType::guiTextured, texture, leftPos, topPos, 0, 0, width, height, width, height);
 
         if (blend) {
             RenderSystem.disableBlend();
@@ -174,7 +176,7 @@ public class ScreenHelper {
         RenderSystem.defaultBlendFunc();
         RenderSystem.enableDepthTest();
 
-        graphics.blit(resourceLocation, x, y, uOffset, vOffset, width, height, textureWidth, textureHeight);
+        graphics.blit(RenderType::guiTextured, resourceLocation, x, y, uOffset, vOffset, width, height, textureWidth, textureHeight);
 
         RenderSystem.disableBlend();
         poseStack.popPose();

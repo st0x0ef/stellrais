@@ -13,7 +13,6 @@
     "MixinChunkSerializer"
   ],
   "client": [
-    "client.PlayerRiddingVehicleMixin",
     "client.PlayerKeyMixin",
     "client.RenderPlayerMixin"
   ],

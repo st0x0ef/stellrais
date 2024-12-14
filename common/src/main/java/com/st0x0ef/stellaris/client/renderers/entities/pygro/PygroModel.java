@@ -3,7 +3,6 @@ package com.st0x0ef.stellaris.client.renderers.entities.pygro;
 import com.st0x0ef.stellaris.Stellaris;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.model.AnimationUtils;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -11,10 +10,6 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
-import net.minecraft.world.entity.monster.piglin.PiglinArmPose;
 
 @Environment(EnvType.CLIENT)
 public class PygroModel extends HumanoidModel<PygroRenderState> {

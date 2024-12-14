@@ -4,10 +4,7 @@ import com.google.common.collect.Lists;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import com.st0x0ef.stellaris.client.renderers.entities.vehicle.rocket.RocketModel;
 import com.st0x0ef.stellaris.common.entities.vehicles.IVehicleEntity;
-import com.st0x0ef.stellaris.common.entities.vehicles.RocketEntity;
-import com.st0x0ef.stellaris.common.vehicle_upgrade.ModelUpgrade;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
@@ -24,7 +21,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.vehicle.VehicleEntity;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;

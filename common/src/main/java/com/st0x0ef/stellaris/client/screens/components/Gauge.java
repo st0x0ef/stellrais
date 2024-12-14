@@ -8,6 +8,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
@@ -55,12 +56,12 @@ public class Gauge extends AbstractWidget {
     public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         if (value >= max_value) {
             value = max_value;
-            graphics.blit(texture, getX(), getY(), width, height - 1, width, height - 1, width, height - 1);
+            graphics.blit(RenderType::guiTextured, texture, getX(), getY(), width, height - 1, width, height - 1, width, height - 1);
         } else if (value <= 0) {
-            graphics.blit(texture, getX(), getY(), width, height, width, 0, width, 45);
+            graphics.blit(RenderType::guiTextured, texture, getX(), getY(), width, height, width, 0, width, 45);
         } else {
             int widgetY = getY() + 45 - (45 * value / max_value) + yOffSet;
-            graphics.blit(texture, getX(), widgetY, (float) width, (float) height, width, (int) (45 / ((float) max_value / value)), width, 45);
+            graphics.blit(RenderType::guiTextured, texture, getX(), widgetY, (float) width, (float) height, width, (int) (45 / ((float) max_value / value)), width, 45);
         }
 
         if (overlay_texture != null) {
@@ -106,7 +107,7 @@ public class Gauge extends AbstractWidget {
         @Override
         public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
             int pourcent = width * value/max_value;
-            graphics.blit(texture, getX(), getY(), width, height, pourcent, height, width, height);
+            graphics.blit(RenderType::guiTextured, texture, getX(), getY(), width, height, pourcent, height, width, height);
 
             if (overlay_texture != null) {
                 ScreenHelper.drawTexture(getX(), getY(), width, height, overlay_texture, false);

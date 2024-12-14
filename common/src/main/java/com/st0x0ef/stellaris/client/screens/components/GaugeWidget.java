@@ -7,6 +7,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -38,23 +39,23 @@ public class GaugeWidget extends AbstractWidget {
         switch (DIRECTION) {
             case DOWN_UP -> {
                 int i = Mth.ceil(getProgress(amount, capacity) * (getHeight() - 1));
-                guiGraphics.blitSprite(sprite, getWidth(), getHeight(), 0, getHeight() - i, getX(), getY() + getHeight() - i, getWidth(), i);
+                guiGraphics.blitSprite(RenderType::guiTextured, sprite, getWidth(), getHeight(), 0, getHeight() - i, getX(), getY() + getHeight() - i, getWidth(), i);
             }
             case UP_DOWN -> {
                 int i = Mth.ceil(getProgress(amount, capacity) * (getHeight() - 1));
-                guiGraphics.blitSprite(sprite, getWidth(), getHeight(), 0, 0, getX(), getY(), getWidth(), i);
+                guiGraphics.blitSprite(RenderType::guiTextured, sprite, getWidth(), getHeight(), 0, 0, getX(), getY(), getWidth(), i);
             }
             case LEFT_RIGHT -> {
                 int i = Mth.ceil(getProgress(amount, capacity) * (getWidth() - 1));
-                guiGraphics.blitSprite(sprite, getWidth(), getHeight(), 0, 0, getX(), getY(), i, getHeight());
+                guiGraphics.blitSprite(RenderType::guiTextured, sprite, getWidth(), getHeight(), 0, 0, getX(), getY(), i, getHeight());
             }
             case RIGHT_LEFT -> {
                 int i = Mth.ceil(getProgress(amount, capacity) * (getWidth() - 1));
-                guiGraphics.blitSprite(sprite, getWidth(), getHeight(), getWidth() -i, 0, getX() + getWidth() - i, getY(), i, getHeight());
+                guiGraphics.blitSprite(RenderType::guiTextured, sprite, getWidth(), getHeight(), getWidth() -i, 0, getX() + getWidth() - i, getY(), i, getHeight());
             }
         }
         if (this.overlay_sprite != null) {
-            guiGraphics.blitSprite(overlay_sprite, getX(), getY(), width, height);
+            guiGraphics.blitSprite(RenderType::guiTextured, overlay_sprite, getX(), getY(), width, height);
         }
     }
 

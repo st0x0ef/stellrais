@@ -3,14 +3,12 @@ package com.st0x0ef.stellaris.client.renderers.entities.vehicle.rover;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.st0x0ef.stellaris.Stellaris;
-import com.st0x0ef.stellaris.common.entities.vehicles.RoverEntity;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
-import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 
 

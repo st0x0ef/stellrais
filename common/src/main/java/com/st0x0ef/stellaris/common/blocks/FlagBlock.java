@@ -3,14 +3,12 @@ package com.st0x0ef.stellaris.common.blocks;
 import com.st0x0ef.stellaris.common.registry.ItemsRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -49,15 +47,15 @@ public class FlagBlock extends Block implements SimpleWaterloggedBlock {
     }
 
     @Override
-    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
+    protected BlockState updateShape(BlockState stateIn, LevelReader level, ScheduledTickAccess scheduledTickAccess, BlockPos currentPos, Direction facing, BlockPos facingPos, BlockState facingState, RandomSource random) {
         DoubleBlockHalf doubleblockhalf = stateIn.getValue(HALF);
         if (stateIn.getValue(WATERLOGGED)) {
-            worldIn.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
+            scheduledTickAccess.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         }
         if (facing.getAxis() == Direction.Axis.Y && doubleblockhalf == DoubleBlockHalf.LOWER == (facing == Direction.UP)) {
             return facingState.is(this) && facingState.getValue(HALF) != doubleblockhalf ? stateIn.setValue(FACING, facingState.getValue(FACING)) : Blocks.AIR.defaultBlockState();
         } else {
-            return doubleblockhalf == DoubleBlockHalf.LOWER && facing == Direction.DOWN && !stateIn.canSurvive(worldIn, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+            return doubleblockhalf == DoubleBlockHalf.LOWER && facing == Direction.DOWN && !stateIn.canSurvive(level, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, level, scheduledTickAccess, currentPos, facing, facingPos, facingState, random);
         }
     }
 
@@ -89,7 +87,7 @@ public class FlagBlock extends Block implements SimpleWaterloggedBlock {
         BlockPos blockpos = p_49820_.getClickedPos();
         Level level = p_49820_.getLevel();
 
-        if (blockpos.getY() < level.getMaxBuildHeight() - 1 && p_49820_.getLevel().getBlockState(blockpos.above()).canBeReplaced(p_49820_)) {
+        if (blockpos.getY() < level.getMaxY() - 1 && p_49820_.getLevel().getBlockState(blockpos.above()).canBeReplaced(p_49820_)) {
             boolean flag = p_49820_.getLevel().getFluidState(p_49820_.getClickedPos()).is(Fluids.WATER);
             return this.defaultBlockState().setValue(FACING, p_49820_.getHorizontalDirection()).setValue(HALF, DoubleBlockHalf.LOWER).setValue(WATERLOGGED, flag);
         } else {

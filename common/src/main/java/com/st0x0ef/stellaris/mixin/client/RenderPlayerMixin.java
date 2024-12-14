@@ -17,6 +17,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -28,7 +29,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerRenderer.class)
-public abstract class RenderPlayerMixin extends LivingEntityRenderer<AbstractClientPlayer, PlayerModel, AbstractClientPlayer> {
+public abstract class RenderPlayerMixin extends LivingEntityRenderer<AbstractClientPlayer, PlayerRenderState, PlayerModel> {
     @Unique
     protected abstract void stellaris$setModelProperties(AbstractClientPlayer clientPlayer);
 
@@ -43,7 +44,7 @@ public abstract class RenderPlayerMixin extends LivingEntityRenderer<AbstractCli
         if(stack.getItem() instanceof JetSuit.Suit || (stack.getItem() instanceof AbstractSpaceArmor)) {
             ci.cancel();
 
-            PlayerModel<AbstractClientPlayer> playerModel = getModel();
+            PlayerModel playerModel = getModel();
             stellaris$setModelProperties(player);
             playerModel.attackTime = 0.0F;
             playerModel.crouching = false;

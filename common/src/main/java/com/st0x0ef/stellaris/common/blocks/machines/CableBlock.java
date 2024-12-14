@@ -8,10 +8,9 @@ import com.st0x0ef.stellaris.common.systems.energy.base.EnergyBlock;
 import com.st0x0ef.stellaris.platform.systems.energy.CableUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -84,25 +83,27 @@ public class CableBlock extends BaseTickingEntityBlock {
     }
 
     private boolean isConnectable(BlockEntity blockEntity,BlockEntity blockEntityTo, BlockState blockStateTo, Direction direction) {
-        return blockStateTo.is(this) || blockStateTo.is(TagRegistry.ENERGY_BLOCK_TAG) ||
-                blockEntityTo instanceof EnergyBlock<?> || CableUtil.isEnergyContainer(blockEntityTo, direction);
+        if (!blockStateTo.is(this) && !blockStateTo.is(TagRegistry.ENERGY_BLOCK_TAG) && !(blockEntityTo instanceof EnergyBlock<?>)) {
+            CableUtil.isEnergyContainer(blockEntityTo, direction);
+        }
+        return true;
     }
 
     @Override
-    public BlockState updateShape(BlockState blockState, Direction direction, BlockState blockState2, LevelAccessor levelAccessor, BlockPos blockPos, BlockPos blockPos2) {
-        BlockEntity blockEntity = levelAccessor.getBlockEntity(blockPos);
-        BlockEntity blockEntityTo = levelAccessor.getBlockEntity(blockPos.relative(direction));
+    protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess scheduledTickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        BlockEntity blockEntityTo = level.getBlockEntity(pos.relative(direction));
 
-        if (isConnectable(blockEntity, blockEntityTo, blockState2, direction)) {
-            return blockState.setValue(PROPERTY_BY_DIRECTION.get(direction), true);
+        if (isConnectable(blockEntity, blockEntityTo, neighborState, direction)) {
+            return state.setValue(PROPERTY_BY_DIRECTION.get(direction), true);
         }
         else {
-            return blockState.setValue(PROPERTY_BY_DIRECTION.get(direction), false);
+            return state.setValue(PROPERTY_BY_DIRECTION.get(direction), false);
         }
     }
 
     @Override
-    public boolean propagatesSkylightDown(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {
+    protected boolean propagatesSkylightDown(BlockState state) {
         return true;
     }
 

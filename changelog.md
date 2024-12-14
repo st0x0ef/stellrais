@@ -1,19 +1,3 @@
-# 1.2.0 beta 5 changelog
-
-## Changes
-- Update sky aesthetics to 1.4
-- Planet and star name are now translatable
-- Oxygen distributor now need energy
-- Increase minimum speed for the rocket to explode
-
-## Fix
-- Fix launch button translatable pos
-- Fix water pump renderer
-- Fix rocket item in lander
-- Fix rocket doesn't keep fuel
-- Fix adding hydrogen bucket to a rocket doesn't give back a bucket
-
-
 # 1.2.0 changelog
 
 ## Additions

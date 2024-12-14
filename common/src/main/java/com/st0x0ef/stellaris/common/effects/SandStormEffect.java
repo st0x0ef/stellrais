@@ -1,10 +1,12 @@
 package com.st0x0ef.stellaris.common.effects;
 
+import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.common.registry.EffectsRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -12,6 +14,9 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 
 public class SandStormEffect extends MobEffect {
+
+    public static ResourceLocation SANDSTORM_OVERLAY =  ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/overlay/sandstorm_overlay.png");
+
     public SandStormEffect(MobEffectCategory mobEffectCategory, int color) {
         super(mobEffectCategory, color);
     }
@@ -48,5 +53,6 @@ public class SandStormEffect extends MobEffect {
 
         }
     }
+
 
 }

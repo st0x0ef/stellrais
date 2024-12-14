@@ -22,3 +22,4 @@ mutable field  net/minecraft/client/renderer/FogRenderer MOB_EFFECT_FOG Ljava/ut
 accessible field  net/minecraft/client/renderer/FogRenderer MOB_EFFECT_FOG Ljava/util/List;
 accessible class net/minecraft/client/renderer/FogRenderer$MobEffectFogFunction
 accessible class net/minecraft/client/renderer/FogRenderer$FogData
+accessible method net/minecraft/client/gui/Gui renderTextureOverlay (Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/resources/ResourceLocation;F)V

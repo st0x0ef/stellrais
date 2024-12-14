@@ -3,6 +3,7 @@ package com.st0x0ef.stellaris.common.blocks.entities.machines;
 import com.fej1fun.potentials.energy.BaseEnergyStorage;
 import com.fej1fun.potentials.providers.EnergyProvider;
 import com.st0x0ef.stellaris.common.blocks.entities.ImplementedInventory;
+import com.st0x0ef.stellaris.common.energy.OnChangeEnergyStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -22,12 +23,18 @@ public abstract class BaseEnergyContainerBlockEntity extends BaseContainerBlockE
 
     public static final String ENERGY_TAG = "stellaris.energy";
 
-    protected @NotNull BaseEnergyStorage energy;
+    protected @NotNull OnChangeEnergyStorage energy;
     private NonNullList<ItemStack> items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
 
-    public BaseEnergyContainerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int initalMaxCapacity, int initialMaxInsert, int initialMaxExtract) {
+    public BaseEnergyContainerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int initialMaxCapacity, int initialMaxInsert, int initialMaxExtract) {
         super(type, pos, state);
-        this.energy = new BaseEnergyStorage(initalMaxCapacity, initialMaxInsert, initialMaxExtract);
+        this.energy = new OnChangeEnergyStorage(initialMaxCapacity, initialMaxInsert, initialMaxExtract) {
+            @Override
+            protected void onChange() {
+                setChanged();
+                //TODO networking
+            }
+        };
     }
 
     public BaseEnergyContainerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int initialMaxCapacity) {

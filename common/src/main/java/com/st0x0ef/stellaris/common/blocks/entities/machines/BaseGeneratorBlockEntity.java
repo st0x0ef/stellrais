@@ -7,12 +7,10 @@ import net.minecraft.world.level.block.state.BlockState;
 public abstract class BaseGeneratorBlockEntity extends BaseEnergyContainerBlockEntity {
 
     protected int energyGeneratedPT;
-    private final int maxCapacity;
 
     public BaseGeneratorBlockEntity(BlockEntityType<?> entityType, BlockPos blockPos, BlockState blockState, int energyGeneratedPT, int maxCapacity) {
         super(entityType, blockPos, blockState, maxCapacity, 0, maxCapacity);
         this.energyGeneratedPT = energyGeneratedPT;
-        this.maxCapacity = maxCapacity;
     }
 
     public int getEnergyGeneratedPT() {

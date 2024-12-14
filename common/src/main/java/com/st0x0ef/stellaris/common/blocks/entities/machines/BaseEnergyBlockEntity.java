@@ -2,6 +2,7 @@ package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
 import com.fej1fun.potentials.energy.BaseEnergyStorage;
 import com.fej1fun.potentials.providers.EnergyProvider;
+import com.st0x0ef.stellaris.common.energy.OnChangeEnergyStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -16,11 +17,17 @@ import static com.st0x0ef.stellaris.common.blocks.entities.machines.BaseEnergyCo
 
 public abstract class BaseEnergyBlockEntity extends BlockEntity implements EnergyProvider.BLOCK, TickingBlockEntity {
 
-    protected @NotNull BaseEnergyStorage energyContainer;
+    protected @NotNull OnChangeEnergyStorage energyContainer;
 
     public BaseEnergyBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int maxCapacity) {
         super(type, pos, state);
-        this.energyContainer = new BaseEnergyStorage(maxCapacity, maxCapacity, maxCapacity);
+        this.energyContainer = new OnChangeEnergyStorage(maxCapacity) {
+            @Override
+            protected void onChange() {
+                setChanged();
+                //TODO networking
+            }
+        };
     }
 
     @Override

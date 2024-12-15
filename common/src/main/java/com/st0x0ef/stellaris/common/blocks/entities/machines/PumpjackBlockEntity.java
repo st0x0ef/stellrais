@@ -1,6 +1,7 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
 import com.st0x0ef.stellaris.common.blocks.machines.CoalGeneratorBlock;
+import com.st0x0ef.stellaris.common.capabilities.FluidTank;
 import com.st0x0ef.stellaris.common.menus.PumpjackMenu;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import com.st0x0ef.stellaris.common.registry.FluidRegistry;
@@ -18,7 +19,7 @@ public class PumpjackBlockEntity extends BaseEnergyContainerBlockEntity implemen
 
     private boolean isGenerating = false;
     private final long oilToExtract = FluidTankHelper.convertFromNeoMb(10);
-    public final FluidTank resultTank = new FluidTank("resultTank", 5);
+    public final FluidTank resultTank = new FluidTank("resultTank");
     public int chunkOilLevel = 0;
     public PumpjackBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityRegistry.PUMPJACK.get(), pos, state);

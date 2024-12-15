@@ -1,6 +1,6 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
-import com.fej1fun.potentials.fluid.BaseFluidTank;
+import com.st0x0ef.stellaris.common.capabilities.FluidTank;
 import com.st0x0ef.stellaris.common.menus.OxygenGeneratorMenu;
 import com.st0x0ef.stellaris.common.oxygen.GlobalOxygenManager;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity implements WrappedFluidBlockEntity {
 
-    public final FluidTank oxygenTank = new FluidTank(10, FluidRegistry.OXYGEN_ATTRIBUTES.getSourceFluid());
+    public final FluidTank oxygenTank = new FluidTank(10);
 
 
     public OxygenDistributorBlockEntity(BlockPos pos, BlockState state) {

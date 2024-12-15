@@ -1,5 +1,6 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
+import com.st0x0ef.stellaris.common.capabilities.FluidTank;
 import com.st0x0ef.stellaris.common.data.recipes.WaterSeparatorRecipe;
 import com.st0x0ef.stellaris.common.data.recipes.input.FluidInput;
 import com.st0x0ef.stellaris.common.menus.WaterSeparatorMenu;
@@ -25,12 +26,12 @@ import java.util.Optional;
 public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity implements RecipeInput, WrappedFluidBlockEntity {
 
     private static final int TANK_CAPACITY = 3;
-    public final FluidTank ingredientTank = new FluidTank("ingredientTank", TANK_CAPACITY);
+    public final FluidTank ingredientTank = new FluidTank("ingredientTank");
     public final NonNullList<FluidTank> resultTanks = Util.make(NonNullList.createWithCapacity(2), list -> {
         //HYDROGEN
-        list.add(0, new FluidTank("resultTank1", TANK_CAPACITY));
+        list.add(0, new FluidTank("resultTank1"));
         //OXYGEN
-        list.add(1, new FluidTank("resultTank2", TANK_CAPACITY));
+        list.add(1, new FluidTank("resultTank2"));
     });
     private final RecipeManager.CachedCheck<FluidInput, WaterSeparatorRecipe> cachedCheck = RecipeManager.createCheck(RecipesRegistry.WATER_SEPERATOR_TYPE.get());
 

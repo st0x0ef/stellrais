@@ -1,5 +1,6 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
+import com.st0x0ef.stellaris.common.capabilities.FluidTank;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import dev.architectury.fluid.FluidStack;
 import net.minecraft.core.BlockPos;
@@ -13,7 +14,7 @@ import net.minecraft.world.level.material.Fluids;
 public class WaterPumpBlockEntity extends BaseEnergyBlockEntity implements WrappedFluidBlockEntity{
 
     private static final int NEEDED_ENERGY = 100;
-    private final FluidTank waterTank = new FluidTank("waterTank", 3);
+    private final FluidTank waterTank = new FluidTank("waterTank");
 
     public WaterPumpBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityRegistry.WATER_PUMP.get(), pos, state, 2000);

@@ -1,5 +1,6 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
+import com.st0x0ef.stellaris.common.capabilities.FluidTank;
 import com.st0x0ef.stellaris.common.data.recipes.FuelRefineryRecipe;
 import com.st0x0ef.stellaris.common.data.recipes.input.FluidInput;
 import com.st0x0ef.stellaris.common.items.armors.JetSuit;
@@ -22,8 +23,8 @@ import java.util.Optional;
 
 public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity implements WrappedFluidBlockEntity {
 
-    private final FluidTank ingredientTank = new FluidTank("ingredientTank", 5);
-    private final FluidTank resultTank = new FluidTank("resultTank", 5);
+    private final FluidTank ingredientTank = new FluidTank("ingredientTank");
+    private final FluidTank resultTank = new FluidTank("resultTank");
     private final RecipeManager.CachedCheck<FluidInput, FuelRefineryRecipe> cachedCheck = RecipeManager.createCheck(RecipesRegistry.FUEL_REFINERY_TYPE.get());
 
     public FuelRefineryBlockEntity(BlockPos pos, BlockState state) {

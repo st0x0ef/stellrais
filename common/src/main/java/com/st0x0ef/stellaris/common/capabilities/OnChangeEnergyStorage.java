@@ -1,4 +1,4 @@
-package com.st0x0ef.stellaris.common.energy;
+package com.st0x0ef.stellaris.common.capabilities;
 
 import com.fej1fun.potentials.energy.BaseEnergyStorage;
 
@@ -13,20 +13,22 @@ public abstract class OnChangeEnergyStorage extends BaseEnergyStorage {
 
     @Override
     public void setEnergyStored(int energy) {
-        onChange();
         super.setEnergyStored(energy);
+        onChange();
     }
 
     @Override
     public int insert(int amount, boolean simulate) {
+        int inserted = super.insert(amount, simulate);
         if (!simulate) onChange();
-        return super.insert(amount, simulate);
+        return inserted;
     }
 
     @Override
     public int extract(int amount, boolean simulate) {
+        int extracted = super.extract(amount, simulate);
         if (!simulate) onChange();
-        return super.extract(amount, simulate);
+        return extracted;
     }
 
     protected abstract void onChange();

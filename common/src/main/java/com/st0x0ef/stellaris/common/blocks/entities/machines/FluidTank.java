@@ -18,6 +18,9 @@ public class FluidTank extends BaseFluidTank {
         this.fluid = Fluid;
     }
 
+    public boolean canGrow(long amount) {
+        return this.getFluidValue() + amount <= this.getMaxAmount();
+    }
 
     public void drainFluid(long amount) {
         this.addFluid(-amount);

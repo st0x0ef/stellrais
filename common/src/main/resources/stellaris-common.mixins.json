@@ -14,7 +14,6 @@
     "client.FogRenderMixin"
   ],
   "client": [
-    "client.FogRenderMixin$RenderSandStormOverlay",
     "client.PlayerKeyMixin",
     "client.PlayerRiddingVehicleMixin",
     "client.RenderPlayerMixin",

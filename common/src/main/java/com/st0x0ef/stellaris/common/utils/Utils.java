@@ -274,7 +274,7 @@ public class Utils {
 
         if(recusion > 10) return false;
 
-        if(entity.level().getBlockState(pos.above()).is(BlockTags.AIR)) {
+        if(entity.level().getBlockState(pos).is(BlockTags.AIR)) {
             recusion += 1;
             return !entityHasBlockAbove(entity, pos.above(), recusion);
         }

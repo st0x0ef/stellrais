@@ -69,6 +69,8 @@ public class StellarisClient {
         ClientGuiEvent.RENDER_HUD.register(LanderOverlay::render);
         ClientGuiEvent.RENDER_HUD.register(JetSuitOverlay::render);
         ClientGuiEvent.RENDER_HUD.register(SpaceSuitOverlay::render);
+        ClientGuiEvent.RENDER_HUD.register(EffectOverlays::render);
+
     }
 
     public static void setupOpenGLDebugMessageCallback() {

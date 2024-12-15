@@ -5,6 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.common.registry.EffectsRegistry;
 import com.st0x0ef.stellaris.common.registry.TagRegistry;
+import com.st0x0ef.stellaris.common.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
@@ -44,7 +45,11 @@ public class SandStormMixin {
              Level level = this.minecraft.level;
              if (level.getBiome(mutableBlockPos).is(TagRegistry.SANDSTORM_BIOMES_TAG)) {
                  RenderSystem.setShaderTexture(0, ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/environment/sandstorm.png"));
-                 this.minecraft.player.addEffect(new MobEffectInstance(EffectsRegistry.SANDSTORM, 30));
+
+                 if(Utils.entityHasBlockAbove(this.minecraft.player, null, null)) {
+                     this.minecraft.player.addEffect(new MobEffectInstance(EffectsRegistry.SANDSTORM, 30));
+
+                 }
              }
          }
     }

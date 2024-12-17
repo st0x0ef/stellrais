@@ -49,7 +49,7 @@ public class BlockEntityRegistry {
     public static final Supplier<BlockEntityType<?>> FUEL_REFINERY = BLOCK_ENTITY_TYPE.register("fuel_refinery",
             () -> BlockEntityType.Builder.of(FuelRefineryBlockEntity::new, BlocksRegistry.FUEL_REFINERY.get()).build(null));
 
-    public static final Supplier<BlockEntityType<WaterPumpBlockEntity>> WATER_PUMP = BLOCK_ENTITY_TYPE.register("water_pump",
+    public static final Supplier<BlockEntityType<?>> WATER_PUMP = BLOCK_ENTITY_TYPE.register("water_pump",
             () -> BlockEntityType.Builder.of(WaterPumpBlockEntity::new, BlocksRegistry.WATER_PUMP.get()).build(null));
     public static final Supplier<BlockEntityType<?>> PUMPJACK = BLOCK_ENTITY_TYPE.register("pumpjack",
             () -> BlockEntityType.Builder.of(PumpjackBlockEntity::new, BlocksRegistry.PUMPJACK.get()).build(null));

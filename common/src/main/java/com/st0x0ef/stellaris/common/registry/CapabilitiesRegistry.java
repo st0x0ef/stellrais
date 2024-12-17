@@ -20,6 +20,7 @@ public class CapabilitiesRegistry {
 //        Capabilities.Energy.BLOCK.registerForBlock(BlocksRegistry.COAL_GENERATOR);
 //        Capabilities.Energy.BLOCK.registerForBlock(BlocksRegistry.RADIOACTIVE_GENERATOR);
     }
+
     static void registerEnergyBlockEntities() {
         Capabilities.Energy.BLOCK.registerForBlockEntity(BlockEntityRegistry.SOLAR_PANEL);
         Capabilities.Energy.BLOCK.registerForBlockEntity(BlockEntityRegistry.CABLE_ENTITY);
@@ -28,6 +29,16 @@ public class CapabilitiesRegistry {
         Capabilities.Energy.BLOCK.registerForBlockEntity(BlockEntityRegistry.OXYGEN_DISTRIBUTOR);
         Capabilities.Energy.BLOCK.registerForBlockEntity(BlockEntityRegistry.WATER_SEPARATOR_ENTITY);
         Capabilities.Energy.BLOCK.registerForBlockEntity(BlockEntityRegistry.FUEL_REFINERY);
+    }
+
+    static void registerFluidBlocks() {
+
+    }
+    static void registerFluidBlockEntities() {
+        Capabilities.Fluid.BLOCK.registerForBlockEntity(BlockEntityRegistry.WATER_SEPARATOR_ENTITY);
+        Capabilities.Fluid.BLOCK.registerForBlockEntity(BlockEntityRegistry.WATER_PUMP);
+        Capabilities.Fluid.BLOCK.registerForBlockEntity(BlockEntityRegistry.PUMPJACK);
+        Capabilities.Fluid.BLOCK.registerForBlockEntity(BlockEntityRegistry.OXYGEN_DISTRIBUTOR);
     }
 
 }

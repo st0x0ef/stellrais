@@ -55,17 +55,17 @@ public class WaterSeparatorMenu extends BaseContainer {
             FluidTank resultTank2 = blockEntity.getResultTanks().get(1);
 
 
-            NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(new long[] {resultTank1.getAmount(), resultTank2.getAmount()},
-                    new ResourceLocation[] {resultTank1.getStack().getFluid().arch$registryName(), resultTank2.getStack().getFluid().arch$registryName()}
+            NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(new long[] {resultTank1.getFluidValue(), resultTank2.getFluidValue()},
+                    new ResourceLocation[] {resultTank1.getFluidStack().getFluid().arch$registryName(), resultTank2.getFluidStack().getFluid().arch$registryName()}
             ));
 
             NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(
-                    new int[] {blockEntity.ingredientTank.getAmount()},
-                    new ResourceLocation[] {blockEntity.ingredientTank.getStack().getFluid().arch$registryName()}
+                    new long[] {blockEntity.ingredientTank.getFluidValue()},
+                    new ResourceLocation[] {blockEntity.ingredientTank.getFluidStack().getFluid().arch$registryName()}
             ));
 
             NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(
-                    new int[] {blockEntity.getEnergy(null).getEnergy(), 0, 0}
+                    new long[] {blockEntity.getEnergy(null).getEnergy(), 0, 0}
             ));
         }
     }

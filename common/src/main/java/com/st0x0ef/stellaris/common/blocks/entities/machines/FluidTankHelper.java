@@ -32,13 +32,13 @@ public class FluidTankHelper {
     public static <T extends BlockEntity & Container> void extractFluidToItem(T blockEntity, FluidTank tank, int slot) {
         ItemStack inputStack = blockEntity.getItem(slot);
         if (!inputStack.isEmpty()) {
-            if (!tank.isEmpty()) {
+            if (!tank.getFluidStack().isEmpty()) {
                 boolean isTank = inputStack.has(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get());
 
-                if (tank.getAmount() >= BUCKET_AMOUNT || (isTank && !tank.isEmpty())) {
+                if (tank.getFluidValue() >= BUCKET_AMOUNT || (isTank && !tank.getFluidStack().isEmpty())) {
                     ItemStack resultStack = ItemStack.EMPTY;
 
-                    if (isTank && tank.getStack().getFluid().isSame(FluidRegistry.OXYGEN_STILL.get())) {
+                    if (isTank && tank.getFluidStack().getFluid().isSame(FluidRegistry.OXYGEN_STILL.get())) {
                         resultStack = inputStack.copy();
                         long storedOxygen = OxygenUtils.getOxygen(inputStack);
 
@@ -46,16 +46,17 @@ public class FluidTankHelper {
                             return;
                         }
 
-                        else if (OxygenUtils.getOxygenCapacity(inputStack) - storedOxygen > convertFromNeoMb(10) && tank.getAmount() > convertFromNeoMb(10)) {
+                        else if (OxygenUtils.getOxygenCapacity(inputStack) - storedOxygen > convertFromNeoMb(10) && tank.getFluidValue() > convertFromNeoMb(10)) {
                             OxygenUtils.addOxygen(resultStack, convertFromNeoMb(10));
-                            tank.shrink(convertFromNeoMb(10));
-                        } else if (tank.getAmount() < convertFromNeoMb(10) && storedOxygen + tank.getAmount() <= OxygenUtils.getOxygenCapacity(inputStack)) {
-                            OxygenUtils.addOxygen(resultStack, tank.getAmount());
-                            tank.shrink(tank.getAmount());
+                        } else if (tank.getFluidValue() < convertFromNeoMb(10) && storedOxygen + tank.getFluidValue() <= OxygenUtils.getOxygenCapacity(inputStack)) {
+                            OxygenUtils.addOxygen(resultStack, tank.getFluidValue());
+
+                            tank.drainFluid(FluidStack.create(tank.getBaseFluid(), tank.getFluidValue()), false);
                         }
-                        else if (tank.getAmount() > OxygenUtils.getOxygenCapacity(inputStack) - storedOxygen){
+                        else if (tank.getFluidValue() > OxygenUtils.getOxygenCapacity(inputStack) - storedOxygen){
                             OxygenUtils.addOxygen(resultStack, OxygenUtils.getOxygenCapacity(inputStack) - storedOxygen);
-                            tank.shrink(OxygenUtils.getOxygenCapacity(inputStack) - storedOxygen);
+                            tank.drainFluid(FluidStack.create(tank.getBaseFluid(), OxygenUtils.getOxygenCapacity(inputStack)), false);
+
                         }
                     }
                     else if (!isTank && isEmptyBucket(inputStack.getItem())) {

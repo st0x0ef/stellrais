@@ -23,7 +23,7 @@ import static com.st0x0ef.stellaris.common.data.recipes.WaterSeparatorRecipe.Ser
 public record FuelRefineryRecipe(FluidStack ingredientStack, FluidStack resultStack, boolean isMb, int energy) implements Recipe<FluidInput> {
     @Override
     public boolean matches(FluidInput input, Level level) {
-        FluidStack stack = ((FuelRefineryBlockEntity) input.entity()).getIngredientTank().getStack();
+        FluidStack stack = ((FuelRefineryBlockEntity) input.entity()).getIngredientTank().getFluidStack();
         return stack.isFluidEqual(ingredientStack) && stack.getAmount() >= ingredientStack.getAmount();
     }
 

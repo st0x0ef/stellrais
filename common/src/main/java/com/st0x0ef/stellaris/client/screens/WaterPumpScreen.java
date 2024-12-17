@@ -35,7 +35,7 @@ public class WaterPumpScreen extends AbstractContainerScreen<WaterPumpMenu> {
         }
 
         FluidTank waterTank = blockEntity.getWaterTank();
-        waterTankGauge = new GaugeWidget(leftPos + 25, topPos + 20, 12, 42, Component.translatable("stellaris.screen.water"), GUISprites.WATER_OVERLAY, GUISprites.LIQUID_TANK_OVERLAY, waterTank.getMaxCapacity() - 1, GaugeWidget.Direction4.DOWN_UP);
+        waterTankGauge = new GaugeWidget(leftPos + 25, topPos + 20, 12, 42, Component.translatable("stellaris.screen.water"), GUISprites.WATER_OVERLAY, GUISprites.LIQUID_TANK_OVERLAY, waterTank.getMaxAmount() - 1, GaugeWidget.Direction4.DOWN_UP);
         addRenderableWidget(waterTankGauge);
 
         energyGauge = new GaugeWidget(leftPos + 150, topPos + 20, 13, 46, Component.translatable("stellaris.screen.energy"), GUISprites.ENERGY_FULL, GUISprites.BATTERY_OVERLAY, blockEntity.getEnergy(null).getMaxEnergy(), GaugeWidget.Direction4.DOWN_UP);
@@ -52,7 +52,7 @@ public class WaterPumpScreen extends AbstractContainerScreen<WaterPumpMenu> {
             return;
         }
 
-        waterTankGauge.updateAmount((int) blockEntity.getWaterTank().getAmount());
+        waterTankGauge.updateAmount((int) blockEntity.getWaterTank().getFluidValue());
         energyGauge.updateAmount((int) blockEntity.getEnergy(null).getEnergy());
     }
 

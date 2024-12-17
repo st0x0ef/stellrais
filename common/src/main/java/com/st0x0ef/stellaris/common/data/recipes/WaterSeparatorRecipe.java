@@ -26,7 +26,7 @@ public record WaterSeparatorRecipe(FluidStack ingredientStack, List<FluidStack> 
 
     @Override
     public boolean matches(FluidInput container, Level level) {
-        FluidStack stack = ((WaterSeparatorBlockEntity) container.entity()).getIngredientTank().getStack();
+        FluidStack stack = ((WaterSeparatorBlockEntity) container.entity()).getIngredientTank().getFluidStack();
         return stack.isFluidEqual(ingredientStack) && stack.getAmount() >= ingredientStack.getAmount();
     }
 

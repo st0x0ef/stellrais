@@ -45,7 +45,7 @@ public class OxygenGeneratorMenu extends BaseContainer {
         if (!player.level().isClientSide) {
             NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(new long[] {
                     blockEntity.getEnergy(null).getEnergy(),
-                    blockEntity.oxygenTank.getAmount()
+                    blockEntity.oxygenTank.getFluidValue()
             }));
         }
     }

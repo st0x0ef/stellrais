@@ -117,7 +117,7 @@ public class CoalGeneratorMenu extends AbstractContainerMenu {
         if (!player.level().isClientSide()) {
 
             NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(
-                    new int[]{this.getBlockEntity().getEnergy(null).getEnergy()}
+                    new long[]{this.getBlockEntity().getEnergy(null).getEnergy()}
             ));
 
         }

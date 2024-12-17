@@ -13,6 +13,14 @@ public class FluidTank extends BaseFluidTank {
         super(maxAmount, maxAmount, maxAmount);
     }
 
+    public void save(HolderLookup.Provider provider, CompoundTag compoundTag) {
+        this.save(compoundTag, provider);
+    }
+
+    public void load(HolderLookup.Provider provider, CompoundTag compoundTag) {
+        this.load(compoundTag, provider);
+    }
+
     public void save(CompoundTag compoundTag, HolderLookup.Provider provider) {
         if(!this.getFluidStack().isEmpty()) {
             Tag tag = new CompoundTag();
@@ -23,5 +31,11 @@ public class FluidTank extends BaseFluidTank {
 
     public void load(CompoundTag compoundTag, HolderLookup.Provider provider) {
         FluidStack.read(provider, compoundTag).ifPresent(this::setFluidStack);
+    }
+
+    public boolean canGrow() {
+        long toReceive = Math.clamp(this.getMaxAmount() - getFluidValue(), 0, Math.min(this.getMaxAmount(), getFluidStack().getAmount()));
+
+        return this.getFluidValue() < this.getMaxAmount();
     }
 }

@@ -1,15 +1,19 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
+import com.fej1fun.potentials.fluid.UniversalFluidTank;
+import com.fej1fun.potentials.providers.FluidProvider;
 import com.st0x0ef.stellaris.common.capabilities.FluidTank;
 import com.st0x0ef.stellaris.common.data.recipes.FuelRefineryRecipe;
 import com.st0x0ef.stellaris.common.data.recipes.input.FluidInput;
 import com.st0x0ef.stellaris.common.items.armors.JetSuit;
 import com.st0x0ef.stellaris.common.menus.FuelRefineryMenu;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
+import com.st0x0ef.stellaris.common.registry.FluidRegistry;
 import com.st0x0ef.stellaris.common.registry.RecipesRegistry;
 import com.st0x0ef.stellaris.common.utils.FuelUtils;
 import dev.architectury.fluid.FluidStack;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -18,13 +22,14 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity implements WrappedFluidBlockEntity {
+public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity implements FluidProvider.BLOCK {
 
-    private final FluidTank ingredientTank = new FluidTank("ingredientTank");
-    private final FluidTank resultTank = new FluidTank("resultTank");
+    private final FluidTank ingredientTank = new FluidTank(10000);
+    private final FluidTank resultTank = new FluidTank(10000);
     private final RecipeManager.CachedCheck<FluidInput, FuelRefineryRecipe> cachedCheck = RecipeManager.createCheck(RecipesRegistry.FUEL_REFINERY_TYPE.get());
 
     public FuelRefineryBlockEntity(BlockPos pos, BlockState state) {
@@ -36,8 +41,8 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
         if (getItem(2).getItem() instanceof JetSuit.Suit) {
             int fuel = FluidTankHelper.convertFromNeoMb(10);
 
-            if (resultTank.getAmount() < fuel) {
-                fuel = (int) resultTank.getAmount();
+            if (resultTank.getFluidValue() < fuel) {
+                fuel = (int) resultTank.getFluidValue();
             }
 
             else if (FuelUtils.getFuel(getItem(2)) + fuel > JetSuit.MAX_FUEL_CAPACITY) {
@@ -45,7 +50,7 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
             }
 
             if (FuelUtils.addFuel(getItem(2), fuel)) {
-                resultTank.shrink(fuel);
+                resultTank.drainFluid(FluidStack.create(FluidRegistry.FLOWING_FUEL.get(), fuel), false);
                 this.setChanged();
             }
         } else {
@@ -63,10 +68,10 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
             if (energy.getEnergy() >= recipe.energy()) {
                 FluidStack resultStack = recipe.resultStack();
 
-                if (resultTank.isEmpty() || resultTank.getStack().isFluidEqual(resultStack)) {
-                    if (resultTank.getAmount() + resultStack.getAmount() < resultTank.getMaxCapacity()) {
+                if (resultTank.getFluidStack().isEmpty() || resultTank.getFluidStack().isFluidEqual(resultStack)) {
+                    if (resultTank.getFluidValue() + resultStack.getAmount() < resultTank.getMaxAmount()) {
                         energy.extract(recipe.energy(), false);
-                        ingredientTank.shrink(recipe.ingredientStack().getAmount());
+                        ingredientTank.drainFluid(FluidStack.create(recipe.ingredientStack().getFluid(), recipe.ingredientStack().getAmount()), false);
                         FluidTankHelper.addToTank(resultTank, resultStack);
                         setChanged();
                     }
@@ -112,8 +117,17 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
         return resultTank;
     }
 
+
     @Override
-    public FluidTank[] getFluidTanks() {
-        return new FluidTank[]{resultTank, ingredientTank};
+    public @Nullable UniversalFluidTank getFluidTank(@Nullable Direction direction) {
+
+        if(direction == null) {
+            return resultTank;
+        }
+
+        return switch (direction) {
+            case UP, WEST, SOUTH -> ingredientTank;
+            case DOWN, EAST, NORTH -> resultTank;
+        };
     }
 }

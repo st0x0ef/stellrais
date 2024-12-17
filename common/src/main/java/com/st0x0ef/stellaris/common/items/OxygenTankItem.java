@@ -71,7 +71,7 @@ public class OxygenTankItem extends Item {
         if (block instanceof OxygenDistributorBlockEntity entity) {
             ItemStack stack = context.getItemInHand();
             if (stack.has(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get())) {
-                entity.addOyxgen(OxygenUtils.getOxygen(stack));
+                entity.addOxygen(OxygenUtils.getOxygen(stack));
                 OxygenUtils.setOxygen(stack, 0);
                 return InteractionResult.SUCCESS;
             }

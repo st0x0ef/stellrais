@@ -6,6 +6,8 @@ import com.st0x0ef.stellaris.common.blocks.entities.machines.WaterPumpBlockEntit
 import com.st0x0ef.stellaris.common.blocks.entities.machines.WaterSeparatorBlockEntity;
 import com.st0x0ef.stellaris.common.menus.*;
 import com.st0x0ef.stellaris.common.network.NetworkRegistry;
+import com.st0x0ef.stellaris.common.registry.FluidRegistry;
+import dev.architectury.fluid.FluidStack;
 import dev.architectury.networking.NetworkManager;
 import net.fabricmc.api.EnvType;
 import net.minecraft.client.player.LocalPlayer;
@@ -30,7 +32,7 @@ public class SyncWidgetsTanksPacket implements CustomPacketPayload {
 
         @Override
         public void encode(RegistryFriendlyByteBuf buf, SyncWidgetsTanksPacket packet) {
-            buf.writeVC(packet.component);
+            buf.writeLongArray(packet.component);
 
             buf.writeInt(packet.locations.length);
             for (ResourceLocation location : packet.locations) {
@@ -41,7 +43,7 @@ public class SyncWidgetsTanksPacket implements CustomPacketPayload {
 
 
     public SyncWidgetsTanksPacket(RegistryFriendlyByteBuf buffer) {
-        this.component = buffer.readVarIntArray();
+        this.component = buffer.readLongArray();
         int length = buffer.readInt();
         this.locations = new ResourceLocation[length];
 
@@ -70,51 +72,52 @@ public class SyncWidgetsTanksPacket implements CustomPacketPayload {
             case WaterSeparatorMenu menu -> {
                 WaterSeparatorBlockEntity blockEntity = menu.getBlockEntity();
                 if (syncWidgetsTanks.component.length == 2 && syncWidgetsTanks.locations.length == 2) {
-                    blockEntity.resultTanks.getFirst().setFluid(BuiltInRegistries.FLUID.get(syncWidgetsTanks.locations[0]), syncWidgetsTanks.component[0]);
-                    blockEntity.resultTanks.getLast().setFluid(BuiltInRegistries.FLUID.get(syncWidgetsTanks.locations[1]), syncWidgetsTanks.component[1]);
+                    blockEntity.resultTanks.getFirst().setFluidStack(FluidStack.create(BuiltInRegistries.FLUID.get(syncWidgetsTanks.locations[0]), syncWidgetsTanks.component[0]));
+                    blockEntity.resultTanks.getFirst().setFluidStack(FluidStack.create(BuiltInRegistries.FLUID.get(syncWidgetsTanks.locations[1]), syncWidgetsTanks.component[1]));
                 }
                 else if (syncWidgetsTanks.component.length == 1 && syncWidgetsTanks.locations.length == 1) {
-                    blockEntity.ingredientTank.setFluid(BuiltInRegistries.FLUID.get(syncWidgetsTanks.locations[0]), syncWidgetsTanks.component[0]);
+                    blockEntity.resultTanks.getFirst().setFluidStack(FluidStack.create(BuiltInRegistries.FLUID.get(syncWidgetsTanks.locations[0]), syncWidgetsTanks.component[0]));
                 }
                 else if (syncWidgetsTanks.component.length == 3) {
-                    blockEntity.getEnergy(null).setEnergyStored(syncWidgetsTanks.component[0]);
+                    blockEntity.getEnergy(null).setEnergyStored((int) syncWidgetsTanks.component[0]);
                 }
             }
             case FuelRefineryMenu menu -> {
                 FuelRefineryBlockEntity blockEntity = menu.getBlockEntity();
                 if (syncWidgetsTanks.component.length == 2 && syncWidgetsTanks.locations.length == 2) {
-                    blockEntity.getIngredientTank().setFluid(BuiltInRegistries.FLUID.get(syncWidgetsTanks.locations[0]), syncWidgetsTanks.component[0]);
-                    blockEntity.getResultTank().setFluid(BuiltInRegistries.FLUID.get(syncWidgetsTanks.locations[1]), syncWidgetsTanks.component[1]);
+                    blockEntity.getIngredientTank().setFluidStack(FluidStack.create(BuiltInRegistries.FLUID.get(syncWidgetsTanks.locations[0]), syncWidgetsTanks.component[0]));
+                    blockEntity.getResultTank().setFluidStack(FluidStack.create(BuiltInRegistries.FLUID.get(syncWidgetsTanks.locations[1]), syncWidgetsTanks.component[1]));
                 }
                 else if (syncWidgetsTanks.component.length == 1) {
-                    blockEntity.getEnergy(null).setEnergyStored(syncWidgetsTanks.component[0]);
+                    blockEntity.getEnergy(null).setEnergyStored((int) syncWidgetsTanks.component[0]);
                 }
             }
             case WaterPumpMenu menu -> {
                 WaterPumpBlockEntity blockEntity = menu.getBlockEntity();
                 if (syncWidgetsTanks.component.length == 1 && syncWidgetsTanks.locations.length == 1) {
-                    blockEntity.getWaterTank().setFluid(BuiltInRegistries.FLUID.get(syncWidgetsTanks.locations[0]), syncWidgetsTanks.component[0]);
+                    blockEntity.getWaterTank().setFluidStack(FluidStack.create(BuiltInRegistries.FLUID.get(syncWidgetsTanks.locations[0]), syncWidgetsTanks.component[0]));
                 }
                 else if (syncWidgetsTanks.component.length == 2) {
-                    blockEntity.getEnergy(null).setEnergyStored(syncWidgetsTanks.component[0]);
+                    blockEntity.getEnergy(null).setEnergyStored((int) syncWidgetsTanks.component[0]);
                 }
             }
-            case SolarPanelMenu menu -> menu.getBlockEntity().getEnergy(null).setEnergyStored(syncWidgetsTanks.component[0]);
+            case SolarPanelMenu menu -> menu.getBlockEntity().getEnergy(null).setEnergyStored((int) syncWidgetsTanks.component[0]);
             case CoalGeneratorMenu menu ->
-                    menu.getBlockEntity().getEnergy(null).setEnergyStored(syncWidgetsTanks.component[0]);
+                    menu.getBlockEntity().getEnergy(null).setEnergyStored((int) syncWidgetsTanks.component[0]);
             case RadioactiveGeneratorMenu menu ->
-                    menu.getBlockEntity().getEnergy(null).setEnergyStored(syncWidgetsTanks.component[0]);
+                    menu.getBlockEntity().getEnergy(null).setEnergyStored((int) syncWidgetsTanks.component[0]);
             case OxygenGeneratorMenu menu -> {
-                    menu.getBlockEntity().getEnergy(null).setEnergyStored(syncWidgetsTanks.component[0]);
-                    menu.getBlockEntity().oxygenTank.setAmount(syncWidgetsTanks.component[1]);
+                    menu.getBlockEntity().getEnergy(null).setEnergyStored((int) syncWidgetsTanks.component[0]);
+                menu.getBlockEntity().oxygenTank.setFluidStack(FluidStack.create(FluidRegistry.FLOWING_OXYGEN.get(), syncWidgetsTanks.component[1]));
             }
             case PumpjackMenu menu -> {
                 PumpjackBlockEntity blockEntity = menu.getBlockEntity();
                 if (syncWidgetsTanks.component.length == 2 && syncWidgetsTanks.locations.length == 1) {
-                    blockEntity.resultTank.setFluid(BuiltInRegistries.FLUID.get(syncWidgetsTanks.locations[0]), syncWidgetsTanks.component[0]);
-                    blockEntity.chunkOilLevel = syncWidgetsTanks.component[1];
+
+                    blockEntity.resultTank.setFluidStack(FluidStack.create(BuiltInRegistries.FLUID.get(syncWidgetsTanks.locations[0]), syncWidgetsTanks.component[0]));
+                    blockEntity.chunkOilLevel = (int)  syncWidgetsTanks.component[1];
                 } else {
-                    menu.getBlockEntity().getEnergy(null).setEnergyStored(syncWidgetsTanks.component[0]);
+                    menu.getBlockEntity().getEnergy(null).setEnergyStored((int) syncWidgetsTanks.component[0]);
 
                 }
 

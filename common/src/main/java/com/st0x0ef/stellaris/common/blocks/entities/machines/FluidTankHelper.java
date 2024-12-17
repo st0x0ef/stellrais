@@ -26,7 +26,8 @@ import java.util.List;
 
 public class FluidTankHelper {
 
-    public static final long BUCKET_AMOUNT = FluidStackHooks.bucketAmount();
+    //Handled by Potentials
+    public static final long BUCKET_AMOUNT = 1000;
 
     public static <T extends BlockEntity & Container> void extractFluidToItem(T blockEntity, FluidTank tank, int slot) {
         ItemStack inputStack = blockEntity.getItem(slot);
@@ -58,10 +59,10 @@ public class FluidTankHelper {
                         }
                     }
                     else if (!isTank && isEmptyBucket(inputStack.getItem())) {
-                        ItemStack stack = new ItemStack(tank.getStack().getFluid().getBucket());
+                        ItemStack stack = new ItemStack(tank.getFluidStack().getFluid().getBucket());
                         if (!stack.isEmpty() && !isEmptyBucket(stack.getItem())) {
                             resultStack = stack;
-                            tank.shrink(BUCKET_AMOUNT);
+                            tank.drainFluid(FluidStack.create(tank.getBaseFluid(), BUCKET_AMOUNT), false);
                         }
                     }
 
@@ -86,11 +87,11 @@ public class FluidTankHelper {
         if (!inputStack.isEmpty() && (outputStack.isEmpty() || hasSpace)) {
             boolean canFuel = inputStack.has(DataComponentsRegistry.STORED_FUEL_COMPONENT.get());
 
-            if (!tank.isEmpty() && (tank.getAmount() >= BUCKET_AMOUNT || canFuel)) {
+            if (!tank.getFluidStack().isEmpty() && (tank.getFluidValue() >= BUCKET_AMOUNT || canFuel)) {
                 ItemStack resultStack = ItemStack.EMPTY;
 
                 if (isEmptyBucket(inputStack.getItem())) {
-                    resultStack = new ItemStack(tank.getStack().getFluid().getBucket());
+                    resultStack = new ItemStack(tank.getFluidStack().getFluid().getBucket());
                 }
                 else if (canFuel) {
                     resultStack = inputStack.copy();
@@ -112,13 +113,13 @@ public class FluidTankHelper {
                     if (success) {
                         if (canFuel) {
                             long fuel = FuelUtils.getFuel(inputStack);
-                            amount = Math.min(FuelUtils.getFuelCapacity(inputStack) - fuel, tank.getAmount());
+                            amount = Math.min(FuelUtils.getFuelCapacity(inputStack) - fuel, tank.getFluidValue());
                             resultStack.set(DataComponentsRegistry.STORED_FUEL_COMPONENT.get(), new CappedLongComponent(
                                     Mth.clamp(fuel + amount, 0, FuelUtils.getFuelCapacity(inputStack)), FuelUtils.getFuelCapacity(inputStack)));
                         }
 
                         inputStack.shrink(1);
-                        tank.shrink(amount);
+                        tank.drainFluid(FluidStack.create(tank.getBaseFluid(), amount), false);
                         blockEntity.setChanged();
                     }
                 }
@@ -127,17 +128,12 @@ public class FluidTankHelper {
     }
 
     public static void addToTank(FluidTank tank, FluidStack stack) {
-        FluidStack tankStack = tank.getStack();
-        if (tankStack.isEmpty()) {
-            tank.setFluid(stack.getFluid(), stack.getAmount());
-        }
-        else if (tank.getStack().isFluidEqual(stack)) {
-            tank.grow(stack.getAmount());
-        }
+        tank.fillFluid(stack, false);
+
     }
 
     public static <T extends BlockEntity & Container> boolean addFluidFromBucket(T blockEntity, FluidTank tank, int inputSlot, int outputSlot) {
-        if (tank.getAmount() + BUCKET_AMOUNT < tank.getMaxCapacity()) {
+        if (tank.getFluidValue() + BUCKET_AMOUNT < tank.getMaxAmount()) {
             ItemStack inputStack = blockEntity.getItem(inputSlot);
             ItemStack outputStack = blockEntity.getItem(outputSlot);
             boolean hasSpace = outputStack.getCount() < outputStack.getMaxStackSize();
@@ -146,7 +142,7 @@ public class FluidTankHelper {
                 if (inputStack.getItem() instanceof BucketItem item) {
                     Fluid fluid = FluidBucketHooks.getFluid(item);
 
-                    if ((!tank.isEmpty() && tank.getStack().getFluid() == fluid) || (tank.isEmpty() && !fluid.isSame(Fluids.EMPTY))) {
+                    if (tank.getFluidStack().getFluid() == fluid) {
                         if (outputStack.isEmpty()) {
                             blockEntity.setItem(outputSlot, new ItemStack(Items.BUCKET));
                         }
@@ -166,34 +162,6 @@ public class FluidTankHelper {
             }
         }
         return false;
-    }
-
-    public static void transferFluidNearby(BlockEntity entity, FluidTank fluidTank) {
-        BlockPos pos = entity.getBlockPos();
-        List<BlockPos> adjacentBlocks = List.of(pos.above(), pos.below(), pos.relative(Direction.SOUTH), pos.relative(Direction.EAST), pos.relative(Direction.NORTH),pos.relative(Direction.WEST));
-
-        BlockPos[] pos1 = adjacentBlocks.toArray(new BlockPos[0]);
-        for (BlockPos pos2 : pos1) {
-            BlockEntity block = entity.getLevel().getBlockEntity(pos2);
-            if(block == null) return;
-            if (block instanceof WrappedFluidBlockEntity fluidBlock) {
-                for (FluidTank tank : fluidBlock.getFluidTanks()) {
-                    if (tank.getStack().getFluid() == fluidTank.getStack().getFluid()) {
-                        if (fluidTank.getAmount() - convertFromNeoMb(10) > 0 && tank.canGrow(convertFromNeoMb(10))) {
-                            tank.grow(convertFromNeoMb(10));
-                            fluidTank.shrink(convertFromNeoMb(10));
-
-                            entity.setChanged();
-                        }
-                    } else if (tank.getStack().isEmpty()) {
-                        tank.setFluid(fluidTank.getStack().getFluid(), convertFromNeoMb(10));
-                        fluidTank.shrink(convertFromNeoMb(10));
-
-                        entity.setChanged();
-                    }
-                }
-            }
-        }
     }
 
     public static long convertFromNeoMb(long amount) {

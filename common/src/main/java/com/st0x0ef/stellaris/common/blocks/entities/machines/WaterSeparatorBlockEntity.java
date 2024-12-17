@@ -89,9 +89,6 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
             }
         }
 
-        if (!resultTanks.getLast().isEmpty()) {
-            FluidTankHelper.transferFluidNearby(this, resultTanks.getLast());
-        }
     }
 
     @Override

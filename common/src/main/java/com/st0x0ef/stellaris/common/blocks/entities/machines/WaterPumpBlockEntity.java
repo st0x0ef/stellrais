@@ -16,7 +16,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import org.jetbrains.annotations.Nullable;
 
-public class WaterPumpBlockEntity extends BaseEnergyBlockEntity implements FluidProvider.BLOCK{
+public class WaterPumpBlockEntity extends BaseEnergyBlockEntity implements FluidProvider.BLOCK {
 
     private static final int NEEDED_ENERGY = 100;
     private final FluidTank waterTank = new FluidTank(2000);
@@ -27,29 +27,27 @@ public class WaterPumpBlockEntity extends BaseEnergyBlockEntity implements Fluid
 
     @Override
     public void tick() {
-        if (energyContainer.getEnergy() >= NEEDED_ENERGY) {
-            BlockPos belowPos = worldPosition.below();
-            BlockState belowState = level.getBlockState(belowPos);
-            FluidState belowFluidState = level.getFluidState(belowPos);
+        if (energyContainer.getEnergy() < NEEDED_ENERGY) return;
 
-            if (belowFluidState.is(Fluids.WATER) && belowFluidState.isSource()) {
-                if (belowState.getBlock() instanceof BucketPickup bucketPickup) {
-                    if (!bucketPickup.pickupBlock(null, level, belowPos, belowState).isEmpty()) {
-                        waterTank.fillFluid(FluidStack.create(Fluids.WATER, 1000), false);
-                        energyContainer.extract(NEEDED_ENERGY, false);
-                        setChanged();
-                    }
-                }
+        BlockPos belowPos = worldPosition.below();
+        FluidState belowFluidState = level.getFluidState(belowPos);
 
+        if (!(belowFluidState.is(Fluids.WATER) && belowFluidState.isSource())) return;
 
-                else if (waterTank.getFluidValue() + FluidTankHelper.BUCKET_AMOUNT <= waterTank.getMaxAmount()) {
-                    if (belowState.getBlock() instanceof BucketPickup bucketPickup) {
-                        if (!bucketPickup.pickupBlock(null, level, belowPos, belowState).isEmpty()) {
-                            FluidTankHelper.addToTank(waterTank, FluidStack.create(Fluids.WATER, FluidTankHelper.BUCKET_AMOUNT));
-                            energyContainer.extract(NEEDED_ENERGY, false);
-                            setChanged();
-                        }
-                    }
+        BlockState belowState = level.getBlockState(belowPos);
+        if (belowState.getBlock() instanceof BucketPickup bucketPickup) {
+            if (!bucketPickup.pickupBlock(null, level, belowPos, belowState).isEmpty()) {
+                waterTank.fillFluid(FluidStack.create(Fluids.WATER, 1000), false);
+                energyContainer.extract(NEEDED_ENERGY, false);
+                setChanged();
+            }
+        }
+        else if (waterTank.getFluidValue() + FluidTankHelper.BUCKET_AMOUNT <= waterTank.getMaxAmount()) {
+            if (belowState.getBlock() instanceof BucketPickup bucketPickup) {
+                if (!bucketPickup.pickupBlock(null, level, belowPos, belowState).isEmpty()) {
+                    FluidTankHelper.addToTank(waterTank, FluidStack.create(Fluids.WATER, FluidTankHelper.BUCKET_AMOUNT));
+                    energyContainer.extract(NEEDED_ENERGY, false);
+                    setChanged();
                 }
             }
         }

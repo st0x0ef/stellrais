@@ -1,7 +1,6 @@
 package com.st0x0ef.stellaris.common.utils;
 
 import com.mojang.serialization.Codec;
-import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.common.data.planets.Planet;
 import com.st0x0ef.stellaris.common.entities.vehicles.LanderEntity;
 import com.st0x0ef.stellaris.common.entities.vehicles.RocketEntity;
@@ -9,7 +8,7 @@ import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
 import com.st0x0ef.stellaris.common.registry.EntityData;
 import com.st0x0ef.stellaris.common.registry.ItemsRegistry;
 import com.st0x0ef.stellaris.common.vehicle_upgrade.FuelType;
-import net.minecraft.client.telemetry.TelemetryProperty;
+import dev.architectury.utils.GameInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
@@ -18,7 +17,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.level.ServerPlayerGameMode;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -26,12 +24,12 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 
 public class Utils {
@@ -51,8 +49,8 @@ public class Utils {
     }
 
     /** Should be call after teleporting the player */
-    public static LanderEntity createLanderFromRocket(Entity player, RocketEntity rocket, int yPos) {
-        LanderEntity lander = new LanderEntity(player.level());
+    public static LanderEntity createLanderFromRocket(Entity player, RocketEntity rocket, int yPos, Level destination) {
+        LanderEntity lander = new LanderEntity(destination);
         lander.setPos(player.getX(), yPos, player.getZ());
         transfertInventory(rocket, lander);
 
@@ -78,7 +76,7 @@ public class Utils {
         if (player instanceof ServerPlayer serverPlayer) {
             if (serverPlayer.getVehicle() instanceof RocketEntity rocket) {
                 serverPlayer.stopRiding();
-
+                serverPlayer.closeContainer();
 
                 ItemStack fuelType = rocket.getInventory().getItem(10);
                 if (fuelType.isEmpty()) {
@@ -91,19 +89,19 @@ public class Utils {
                     rocket.syncRocketData(serverPlayer);
                 }
 
+                LanderEntity lander = createLanderFromRocket(serverPlayer, rocket, 600, getPlanetLevel(destination));
+
                 teleportEntity(serverPlayer, destination);
 
-                /** We create the lander */
-                LanderEntity lander = createLanderFromRocket(serverPlayer, rocket, 600);
-
-                /** We remove the player from the Rocket */
-                serverPlayer.closeContainer();
-
                 serverPlayer.level().addFreshEntity(lander);
-                serverPlayer.startRiding(lander);
+
+                while(!serverPlayer.startRiding(lander, true)) {
+                    continue;
+                }
+
                 serverPlayer.sendSystemMessage(Component.translatable("message.stellaris.lander"));
             } else {
-                player.closeContainer();
+                serverPlayer.closeContainer();
                 teleportEntity(serverPlayer, destination);
             }
         }
@@ -127,7 +125,7 @@ public class Utils {
                 }
             }
         }
-        LanderEntity lander = createLanderFromRocket(entities.getFirst(), rocket, 600);
+        LanderEntity lander = createLanderFromRocket(entities.getFirst(), rocket, 600, getPlanetLevel(destination));
         entities.getFirst().level().addFreshEntity(lander);
 
         for (Entity entity : entities) {
@@ -276,5 +274,16 @@ public class Utils {
 
     public static ResourceKey<Level> getPlanetLevel(ResourceLocation planet) {
         return ResourceKey.create(ResourceKey.createRegistryKey(planet), planet);
+    }
+
+    public static ServerLevel getPlanetLevel(Planet planet) {
+        AtomicReference<ServerLevel> l = new AtomicReference<>(null);
+        GameInstance.getServer().getAllLevels().forEach(level -> {
+            if (level.dimension().location().equals(planet.dimension())) {
+                l.set(level);
+            }
+        });
+
+        return l.get();
     }
 }

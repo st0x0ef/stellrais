@@ -53,7 +53,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Set;
 
-public class RocketEntity extends IVehicleEntity implements HasCustomInventoryScreen, ContainerListener {
+public class RocketEntity extends IVehicleEntity implements HasCustomInventoryScreen {
     public int START_TIMER;
 
     public boolean needsModelChange = false;
@@ -449,11 +449,6 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
         rocket.set(DataComponentsRegistry.ROCKET_COMPONENT.get(), rocketComponent);
 
         return rocket;
-    }
-
-    @Override
-    public void containerChanged(Container container) {
-
     }
 
     protected void doPlayerRide(Entity player) {

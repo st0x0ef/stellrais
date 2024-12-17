@@ -79,3 +79,4 @@
 - Fix rocket doesn't keep fuel
 - Fix adding hydrogen bucket to a rocket doesn't give back a bucket
 - Fix water pump loot table
+- Fix lander on fabric

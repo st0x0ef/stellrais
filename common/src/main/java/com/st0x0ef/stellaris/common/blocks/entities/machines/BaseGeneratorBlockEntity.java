@@ -9,7 +9,7 @@ public abstract class BaseGeneratorBlockEntity extends BaseEnergyContainerBlockE
     protected int energyGeneratedPT;
 
     public BaseGeneratorBlockEntity(BlockEntityType<?> entityType, BlockPos blockPos, BlockState blockState, int energyGeneratedPT, int maxCapacity) {
-        super(entityType, blockPos, blockState, maxCapacity, 0, maxCapacity);
+        super(entityType, blockPos, blockState, maxCapacity, maxCapacity, maxCapacity);
         this.energyGeneratedPT = energyGeneratedPT;
     }
 
@@ -30,7 +30,8 @@ public abstract class BaseGeneratorBlockEntity extends BaseEnergyContainerBlockE
     @Override
     public void tick() {
         if (canGenerate())
-            getEnergy(null).insert(energyGeneratedPT, false);
+            energy.setEnergyStored(energy.getEnergy()+energyGeneratedPT);
+
         //EnergyApi.distributeEnergyNearby(this, 100);
     }
 }

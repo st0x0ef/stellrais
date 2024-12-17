@@ -92,13 +92,13 @@ public class CoalGeneratorEntity extends BaseGeneratorBlockEntity {
             level.setBlock(getBlockPos(), state, 3);
         }
 
-        if (shouldUpdate) {
+        if (shouldUpdate)
             setChanged(level, getBlockPos(), getBlockState());
-        }
 
-        if (isLit()) {
-            energy.insert(energyGeneratedPT, false);
-        }
+
+        if (isLit())
+            energy.setEnergyStored(energy.getEnergy()+energyGeneratedPT);
+
         //EnergyApi.distributeEnergyNearby(this,100);
     }
 

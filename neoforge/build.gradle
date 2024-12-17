@@ -41,6 +41,8 @@ dependencies {
 
     include modApi("com.fej1fun.potentials:potentials-neoforge:${rootProject.potentials_version}")
 
+    implementation "curse.maven:energized-power-782147:5510706"
+
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowBundle project(path: ":common", configuration: "transformProductionNeoForge")
 

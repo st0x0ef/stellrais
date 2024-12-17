@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class SyncWidgetsTanksPacket implements CustomPacketPayload {
 
-    private final int[] component;
+    private final long[] component;
     private final ResourceLocation[] locations;
 
 
@@ -30,7 +30,7 @@ public class SyncWidgetsTanksPacket implements CustomPacketPayload {
 
         @Override
         public void encode(RegistryFriendlyByteBuf buf, SyncWidgetsTanksPacket packet) {
-            buf.writeVarIntArray(packet.component);
+            buf.writeVC(packet.component);
 
             buf.writeInt(packet.locations.length);
             for (ResourceLocation location : packet.locations) {
@@ -50,11 +50,11 @@ public class SyncWidgetsTanksPacket implements CustomPacketPayload {
         }
     }
 
-    public SyncWidgetsTanksPacket(int[] component) {
+    public SyncWidgetsTanksPacket(long[] component) {
         this(component, new ResourceLocation[] {});
     }
 
-    public SyncWidgetsTanksPacket(int[] values, ResourceLocation[] locations) {
+    public SyncWidgetsTanksPacket(long[] values, ResourceLocation[] locations) {
         this.component = values;
         this.locations = locations;
     }

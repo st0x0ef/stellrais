@@ -9,7 +9,7 @@ public abstract class BaseGeneratorBlockEntity extends BaseEnergyContainerBlockE
     protected int energyGeneratedPT;
 
     public BaseGeneratorBlockEntity(BlockEntityType<?> entityType, BlockPos blockPos, BlockState blockState, int energyGeneratedPT, int maxCapacity) {
-        super(entityType, blockPos, blockState, maxCapacity, maxCapacity, maxCapacity);
+        super(entityType, blockPos, blockState, maxCapacity, 0, maxCapacity);
         this.energyGeneratedPT = energyGeneratedPT;
     }
 

@@ -1,4 +1,4 @@
-package com.st0x0ef.stellaris.common.capabilities;
+package com.st0x0ef.stellaris.common.capabilities.energy;
 
 import com.fej1fun.potentials.capabilities.Capabilities;
 import com.fej1fun.potentials.energy.UniversalEnergyStorage;
@@ -26,9 +26,11 @@ public class EnergyUtil {
         for (Direction direction : outputDirections) {
             from = Capabilities.Energy.BLOCK.getCapability(level, pos, direction);
             if (from==null) continue;
+            if (!from.canExtractEnergy()) continue;
             if (!(from.extract(amount, true)>0)) continue;
             to = Capabilities.Energy.BLOCK.getCapability(level, pos, direction);
             if (to==null) continue;
+            if (!to.canInsertEnergy()) continue;
             if (!(to.insert(amount, true)>0)) continue;
             pairs.put(from, to);
         }
@@ -45,27 +47,29 @@ public class EnergyUtil {
     private static int distributeInAllDirections(Level level, BlockPos pos, int amount) {
         UniversalEnergyStorage from = Capabilities.Energy.BLOCK.getCapability(level, pos, null);
         if (from==null) return 0;
-        if (from.extract(amount, false) > 0) return 0;
+        if (!from.canExtractEnergy()) return 0;
+        if (!(from.extract(amount, true) > 0)) return 0;
 
         List<UniversalEnergyStorage> toSend = Direction.stream()
                 .map(direction -> Capabilities.Energy.BLOCK.getCapability(level, pos.relative(direction), direction.getOpposite()))
                 .filter(Objects::nonNull)
                 .sorted(Comparator.comparing(energyStorage -> energyStorage.insert(amount, true)))
+                .filter(UniversalEnergyStorage::canInsertEnergy)
                 .toList();
+        if (toSend.isEmpty()) return 0;
 
         int receivers = toSend.size();
         int toDistribute = amount;
         for (UniversalEnergyStorage to : toSend) {
-           toDistribute -= moveEnergy(from, to, toDistribute/receivers);
-           receivers--;
+            toDistribute -= moveEnergy(from, to, toDistribute/receivers);
+            receivers--;
         }
         return amount - toDistribute;
     }
 
 
     public static int moveEnergy(UniversalEnergyStorage from, UniversalEnergyStorage to, int amount) {
-        int extracted = from.extract(amount, true);
-        int inserted = to.insert(extracted, true);
+        int inserted = to.insert(from.extract(amount, true), true);
         if (inserted > 0) {
             from.extract(inserted, false);
             to.insert(inserted, false);

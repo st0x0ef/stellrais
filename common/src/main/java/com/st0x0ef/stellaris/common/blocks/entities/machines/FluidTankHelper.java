@@ -1,6 +1,6 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
-import com.st0x0ef.stellaris.common.capabilities.FluidTank;
+import com.st0x0ef.stellaris.common.capabilities.fluid.FluidTank;
 import com.st0x0ef.stellaris.common.data_components.CappedLongComponent;
 import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
 import com.st0x0ef.stellaris.common.registry.FluidRegistry;
@@ -8,10 +8,7 @@ import com.st0x0ef.stellaris.common.utils.FuelUtils;
 import com.st0x0ef.stellaris.common.utils.OxygenUtils;
 import dev.architectury.fluid.FluidStack;
 import dev.architectury.hooks.fluid.FluidBucketHooks;
-import dev.architectury.hooks.fluid.FluidStackHooks;
 import dev.architectury.platform.Platform;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.BucketItem;
@@ -21,8 +18,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
-
-import java.util.List;
 
 public class FluidTankHelper {
 

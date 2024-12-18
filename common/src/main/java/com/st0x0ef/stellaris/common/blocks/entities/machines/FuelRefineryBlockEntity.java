@@ -2,7 +2,7 @@ package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
 import com.fej1fun.potentials.fluid.UniversalFluidTank;
 import com.fej1fun.potentials.providers.FluidProvider;
-import com.st0x0ef.stellaris.common.capabilities.FluidTank;
+import com.st0x0ef.stellaris.common.capabilities.fluid.FluidTank;
 import com.st0x0ef.stellaris.common.data.recipes.FuelRefineryRecipe;
 import com.st0x0ef.stellaris.common.data.recipes.input.FluidInput;
 import com.st0x0ef.stellaris.common.items.armors.JetSuit;

@@ -1,4 +1,4 @@
-package com.st0x0ef.stellaris.common.capabilities;
+package com.st0x0ef.stellaris.common.capabilities.fluid;
 
 import dev.architectury.fluid.FluidStack;
 import net.minecraft.world.level.material.Fluid;

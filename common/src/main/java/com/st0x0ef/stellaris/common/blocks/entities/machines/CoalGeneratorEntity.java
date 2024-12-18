@@ -1,6 +1,7 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
 import com.st0x0ef.stellaris.common.blocks.machines.CoalGeneratorBlock;
+import com.st0x0ef.stellaris.common.capabilities.energy.EnergyUtil;
 import com.st0x0ef.stellaris.common.menus.CoalGeneratorMenu;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import com.st0x0ef.stellaris.common.registry.TagRegistry;
@@ -91,15 +92,12 @@ public class CoalGeneratorEntity extends BaseGeneratorBlockEntity {
             BlockState state = getBlockState().setValue(CoalGeneratorBlock.LIT, isLit());
             level.setBlock(getBlockPos(), state, 3);
         }
-
         if (shouldUpdate)
-            setChanged(level, getBlockPos(), getBlockState());
-
-
+            setChanged();
         if (isLit())
             energy.setEnergyStored(energy.getEnergy()+energyGeneratedPT);
 
-        //EnergyApi.distributeEnergyNearby(this,100);
+        EnergyUtil.distributeEnergyNearby(level, worldPosition, maxCapacity);
     }
 
     protected int getBurnDuration(ItemStack fuelStack) {

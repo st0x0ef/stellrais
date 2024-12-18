@@ -1,4 +1,4 @@
-package com.st0x0ef.stellaris.common.capabilities;
+package com.st0x0ef.stellaris.common.capabilities.fluid;
 
 import com.fej1fun.potentials.fluid.BaseFluidTank;
 import dev.architectury.fluid.FluidStack;

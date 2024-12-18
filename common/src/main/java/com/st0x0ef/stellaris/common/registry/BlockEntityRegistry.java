@@ -40,6 +40,8 @@ public class BlockEntityRegistry {
             () -> BlockEntityType.Builder.of(RadioactiveGeneratorEntity::new, BlocksRegistry.RADIOACTIVE_GENERATOR.get()).build(null));
     public static final Supplier<BlockEntityType<?>> CABLE_ENTITY = BLOCK_ENTITY_TYPE.register("cable",
             () -> BlockEntityType.Builder.of(CableBlockEntity::new, BlocksRegistry.CABLE.get()).build(null));
+    public static final Supplier<BlockEntityType<?>> PIPE_ENTITY = BLOCK_ENTITY_TYPE.register("pipe",
+            () -> BlockEntityType.Builder.of(PipeBlockEntity::new, BlocksRegistry.PIPE.get()).build(null));
     public static final RegistrySupplier<BlockEntityType<VacuumatorBlockEntity>> VACUUMATOR_ENTITY = BLOCK_ENTITY_TYPE.register("vacuumator",
             () -> BlockEntityType.Builder.of(VacuumatorBlockEntity::new, BlocksRegistry.VACUMATOR.get()).build(null));
     public static final Supplier<BlockEntityType<?>> WATER_SEPARATOR_ENTITY = BLOCK_ENTITY_TYPE.register("water_separator",

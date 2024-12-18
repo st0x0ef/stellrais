@@ -10,24 +10,25 @@ import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import org.jetbrains.annotations.NotNull;
 
-public class CableBlock extends BaseCableBlock {
+public class PipeBlock extends BaseCableBlock {
 
-    public CableBlock(Properties properties) {
+    public PipeBlock(Properties properties) {
         super(properties);
     }
 
     @Override
     boolean isConnectable(Level level, BlockPos pos, Direction direction) {
-        return Capabilities.Energy.BLOCK.getCapability(level, pos, direction) != null;
+        return Capabilities.Fluid.BLOCK.getCapability(level, pos, direction) != null;
     }
 
     @Override
     public BlockEntityType<?> getBlockEntityType() {
-        return BlockEntityRegistry.CABLE_ENTITY.get();
+        return BlockEntityRegistry.PIPE_ENTITY.get();
     }
 
     @Override
     protected @NotNull MapCodec<? extends BaseEntityBlock> codec() {
-        return simpleCodec(CableBlock::new);
+        return simpleCodec(PipeBlock::new);
     }
+
 }

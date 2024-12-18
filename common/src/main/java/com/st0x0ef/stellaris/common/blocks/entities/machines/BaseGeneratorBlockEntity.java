@@ -1,5 +1,6 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
+import com.st0x0ef.stellaris.common.capabilities.EnergyUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -7,10 +8,12 @@ import net.minecraft.world.level.block.state.BlockState;
 public abstract class BaseGeneratorBlockEntity extends BaseEnergyContainerBlockEntity {
 
     protected int energyGeneratedPT;
+    private final int maxCapacity;
 
     public BaseGeneratorBlockEntity(BlockEntityType<?> entityType, BlockPos blockPos, BlockState blockState, int energyGeneratedPT, int maxCapacity) {
         super(entityType, blockPos, blockState, maxCapacity, 0, maxCapacity);
         this.energyGeneratedPT = energyGeneratedPT;
+        this.maxCapacity = maxCapacity;
     }
 
     public int getEnergyGeneratedPT() {
@@ -31,7 +34,6 @@ public abstract class BaseGeneratorBlockEntity extends BaseEnergyContainerBlockE
     public void tick() {
         if (canGenerate())
             energy.setEnergyStored(energy.getEnergy()+energyGeneratedPT);
-
-        //EnergyApi.distributeEnergyNearby(this, 100);
+        //EnergyUtil.distributeEnergyNearby(level, worldPosition, maxCapacity);
     }
 }

@@ -61,7 +61,7 @@ public class Utils {
 
     /** Teleport an entity to the planet wanted */
     public static void teleportEntity(Entity entity, Planet destination) {
-        if(entity.level().isClientSide()) return;
+        if (entity.level().isClientSide()) return;
         entity.setNoGravity(false);
 
         entity.level().getServer().getAllLevels().forEach(level -> {
@@ -83,20 +83,18 @@ public class Utils {
                     fuelType = ItemsRegistry.FUEL_BUCKET.get().getDefaultInstance();
                 }
 
-                if (!serverPlayer.isCreative() || !serverPlayer.isSpectator()) {
+                if (!serverPlayer.isCreative() && !serverPlayer.isSpectator()) {
                     int fuelConsumption = Math.round(FuelType.getFuelNeededToGoOnPlanet(PlanetUtil.getPlanet(serverPlayer.level().dimension().location()), destination, fuelType.getItem()));
                     rocket.FUEL -= fuelConsumption;
                     rocket.syncRocketData(serverPlayer);
                 }
 
                 LanderEntity lander = createLanderFromRocket(serverPlayer, rocket, 600, getPlanetLevel(destination));
-
                 teleportEntity(serverPlayer, destination);
-
                 serverPlayer.level().addFreshEntity(lander);
 
-                while(!serverPlayer.startRiding(lander, true)) {
-                    continue;
+                while (!serverPlayer.startRiding(lander, true)) {
+                    // Wait until the player starts riding the lander
                 }
 
                 serverPlayer.sendSystemMessage(Component.translatable("message.stellaris.lander"));

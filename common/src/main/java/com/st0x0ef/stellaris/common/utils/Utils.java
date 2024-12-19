@@ -64,11 +64,7 @@ public class Utils {
         if (entity.level().isClientSide()) return;
         entity.setNoGravity(false);
 
-        entity.level().getServer().getAllLevels().forEach(level -> {
-            if (level.dimension().location().equals(destination.dimension())) {
-                TeleportUtil.teleportToPlanet(entity, level, 600);
-            }
-        });
+        TeleportUtil.teleportToPlanet(entity, getPlanetLevel(destination), 600);
     }
 
     /** To use with the planetSelection menu */
@@ -275,13 +271,11 @@ public class Utils {
     }
 
     public static ServerLevel getPlanetLevel(Planet planet) {
-        AtomicReference<ServerLevel> l = new AtomicReference<>(null);
-        GameInstance.getServer().getAllLevels().forEach(level -> {
+        for (ServerLevel level : GameInstance.getServer().getAllLevels()) {
             if (level.dimension().location().equals(planet.dimension())) {
-                l.set(level);
+                return level;
             }
-        });
-
-        return l.get();
+        }
+        return null;
     }
 }

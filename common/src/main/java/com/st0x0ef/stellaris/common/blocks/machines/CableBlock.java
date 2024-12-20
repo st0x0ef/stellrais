@@ -87,8 +87,10 @@ public class CableBlock extends BaseTickingEntityBlock {
     }
 
     private boolean isConnectable(BlockEntity blockEntity,BlockEntity blockEntityTo, BlockState blockStateTo, Direction direction) {
-        return blockStateTo.is(this) || blockStateTo.is(TagRegistry.ENERGY_BLOCK_TAG) ||
-                blockEntityTo instanceof EnergyBlock<?> || CableUtil.isEnergyContainer(blockEntityTo, direction);
+        if (!blockStateTo.is(this) && !blockStateTo.is(TagRegistry.ENERGY_BLOCK_TAG) && !(blockEntityTo instanceof EnergyBlock<?>)) {
+            CableUtil.isEnergyContainer(blockEntityTo, direction);
+        }
+        return true;
     }
 
     @Override

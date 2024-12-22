@@ -11,12 +11,15 @@
     "MixinChunkAccess",
     "MixinChunkSerializer",
     "PlayerDataMixin",
-    "StormyPlanetMixin"
+    "StormyPlanetMixin",
+    "client.FogRenderMixin"
   ],
   "client": [
     "client.PlayerKeyMixin",
     "client.PlayerRiddingVehicleMixin",
-    "client.RenderPlayerMixin"
+    "client.RenderPlayerMixin",
+    "client.RenderPlayerMixin",
+    "client.SandStormMixin"
   ],
   "injectors": {
     "defaultRequire": 1

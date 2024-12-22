@@ -92,7 +92,7 @@ public class EntityRegistry {
         SpawnPlacementsRegistry.register(PYGRO, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Pygro::checkMonsterSpawnRules);
         SpawnPlacementsRegistry.register(MOGLER, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mogler::checkMoglerSpawnRules);
         SpawnPlacementsRegistry.register(STAR_CRAWLER, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, StarCrawler::checkMonsterSpawnRules);
-        SpawnPlacementsRegistry.register(CHEESE_BOSS, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, CheeseBoss::checkMonsterSpawnRules);
+        //SpawnPlacementsRegistry.register(CHEESE_BOSS, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, CheeseBoss::checkMonsterSpawnRules);
     }
 
     //Entity Sensor

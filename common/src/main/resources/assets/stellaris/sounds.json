@@ -7,7 +7,7 @@
       }
     ]
   },
-    "boost": {
+  "boost": {
     "sounds": [
       {
         "name": "stellaris:boost",
@@ -15,7 +15,15 @@
       }
     ]
   },
-    "beep": {
+  "wind": {
+    "sounds": [
+      {
+        "name": "stellaris:wind",
+        "stream": false
+      }
+    ]
+  },
+  "beep": {
     "sounds": [
       {
         "name": "stellaris:beep",

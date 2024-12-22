@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ICI",
+    "SWS",
+    "SRS"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "C": {
+      "item": "stellaris:cable"
+    },
+    "W": {
+      "item": "minecraft:bucket"
+    },
+    "S": {
+      "tag": "c:ingots/heavy_metal"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "stellaris:rover"
+  }
+}

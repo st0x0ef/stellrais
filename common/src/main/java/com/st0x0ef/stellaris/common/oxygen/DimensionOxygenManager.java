@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DimensionOxygenManager {
     private final Set<OxygenRoom> oxygenRooms;
@@ -40,7 +39,7 @@ public class DimensionOxygenManager {
 
     public void removeOxygenRoom(BlockPos pos) {
         oxygenRooms.removeIf(room -> room.getDistributorPosition().equals(pos));
-        this.setChanged();
+        setChanged();
     }
 
     public void addRoomToCheckIfOpen(BlockPos pos, OxygenRoom room) {
@@ -50,12 +49,7 @@ public class DimensionOxygenManager {
     }
 
     public boolean checkIfRoomOpen(BlockPos pos) {
-        if (roomToCheckIfOpen.containsKey(pos)) {
-            roomToCheckIfOpen.remove(pos);
-            return false;
-        }
-
-        return true;
+        return roomToCheckIfOpen.remove(pos) == null;
     }
 
     private void setChanged() {
@@ -92,25 +86,11 @@ public class DimensionOxygenManager {
     }
 
     public boolean breathOxygenAt(BlockPos pos) {
-        AtomicBoolean canBreath = new AtomicBoolean(false);
-        oxygenRooms.forEach(room -> {
-            if (room.breathOxygenAt(pos)) {
-                canBreath.set(true);
-            }
-        });
-        return canBreath.get();
+        return oxygenRooms.stream().anyMatch(room -> room.breathOxygenAt(pos));
     }
 
-
     public boolean hasOxygenAt(BlockPos pos) {
-        AtomicBoolean canBreath = new AtomicBoolean(false);
-        oxygenRooms.forEach(room -> {
-            if (room.hasOxygenAt(pos)) {
-                canBreath.set(true);
-            }
-        });
-
-        return canBreath.get();
+        return oxygenRooms.stream().anyMatch(room -> room.hasOxygenAt(pos));
     }
 
     public Set<OxygenRoom> getOxygenRooms() {
@@ -118,13 +98,10 @@ public class DimensionOxygenManager {
     }
 
     public OxygenRoom getOxygenRoom(BlockPos distributorPos) {
-        for (OxygenRoom room : oxygenRooms) {
-            if (room.getDistributorPosition().equals(distributorPos)) {
-                return room;
-            }
-        }
-
-        return null;
+        return oxygenRooms.stream()
+                .filter(room -> room.getDistributorPosition().equals(distributorPos))
+                .findFirst()
+                .orElse(null);
     }
 
     public void setOxygensRooms(Set<OxygenRoom> rooms) {

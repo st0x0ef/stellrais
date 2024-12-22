@@ -39,7 +39,6 @@ import com.st0x0ef.stellaris.client.renderers.globe.GlobeModel;
 import com.st0x0ef.stellaris.client.screens.*;
 import com.st0x0ef.stellaris.common.registry.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.LightningBoltRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;

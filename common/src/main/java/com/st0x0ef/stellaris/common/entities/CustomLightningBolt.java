@@ -1,6 +1,5 @@
 package com.st0x0ef.stellaris.common.entities;
 
-import com.st0x0ef.stellaris.common.entities.vehicles.RocketEntity;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;

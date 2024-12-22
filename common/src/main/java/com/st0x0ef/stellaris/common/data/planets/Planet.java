@@ -2,7 +2,6 @@ package com.st0x0ef.stellaris.common.data.planets;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -10,7 +9,6 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public record Planet (
         String system,

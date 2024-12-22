@@ -1,8 +1,11 @@
-# 1.3.0
+# 1.3.0 changelog
+
+## Additions
+- Mars storm
+- Custom lightnings bolt
 
 ## Changes
-
 - Better Venus Atmosphere
-  - Added more fog
-  - Added custom lightnings bolt
-  - A lot of LIGHTNING BOLTS !!!
+
+## Fixes
+- Fix candle still burning in space

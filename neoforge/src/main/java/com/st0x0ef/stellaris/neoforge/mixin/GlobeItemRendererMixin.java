@@ -20,7 +20,6 @@ public class GlobeItemRendererMixin extends BlockItem {
     }
 
     @Unique
-    @SuppressWarnings("removal")
     public void stellaris$initializeClient(Consumer<IClientItemExtensions> consumer) {
 
         if(GlobeItemRendererMixin.this.getDefaultInstance().getItem() instanceof GlobeItem item) {

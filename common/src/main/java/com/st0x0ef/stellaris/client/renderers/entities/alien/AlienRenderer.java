@@ -22,8 +22,8 @@ public class AlienRenderer extends MobRenderer<Alien, LivingEntityRenderState, A
 
     public AlienRenderer(EntityRendererProvider.Context renderManagerIn) {
         super(renderManagerIn, new AlienModel(renderManagerIn.bakeLayer(AlienModel.LAYER_LOCATION)), 0.5f);
-        this.addLayer(new CustomHeadLayer(this, renderManagerIn.getModelSet(), CUSTOM_HEAD_TRANSFORMS, renderManagerIn.getItemRenderer()));
-        this.addLayer(new AlienProfessionLayer(this, renderManagerIn.getResourceManager()));
+        this.addLayer(new CustomHeadLayer<>(this, renderManagerIn.getModelSet(), CUSTOM_HEAD_TRANSFORMS, renderManagerIn.getItemRenderer()));
+        this.addLayer(new AlienProfessionLayer<>(this, renderManagerIn.getResourceManager()));
         this.addLayer(new CrossedArmsItemLayer<>(this, renderManagerIn.getItemRenderer()));
     }
 

@@ -38,4 +38,9 @@ public class RocketStationDisplay extends BasicDisplay {
     public CategoryIdentifier<?> getCategoryIdentifier() {
         return RocketStationCategory.ROCKET_CRAFTING;
     }
+
+    @Override
+    public @Nullable DisplaySerializer<? extends Display> getSerializer() {
+        return null;
+    }
 }

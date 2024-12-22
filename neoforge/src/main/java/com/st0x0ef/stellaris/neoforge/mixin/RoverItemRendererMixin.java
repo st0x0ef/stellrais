@@ -19,7 +19,6 @@ public class RoverItemRendererMixin extends Item {
     }
 
     @Unique
-    @SuppressWarnings("removal")
     public void stellaris$initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(new IClientItemExtensions() {
             @Override

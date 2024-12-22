@@ -22,7 +22,7 @@ public class ModifiedBlockBlobFeature extends Feature<BlockStateConfiguration> {
         RandomSource randomsource = p_159471_.random();
 
         BlockStateConfiguration blockstateconfiguration;
-        for(blockstateconfiguration = p_159471_.config(); blockpos.getY() > worldgenlevel.getMinBuildHeight() + 3; blockpos = blockpos.below()) {
+        for(blockstateconfiguration = p_159471_.config(); blockpos.getY() > worldgenlevel.getMinY() + 3; blockpos = blockpos.below()) {
             if (!worldgenlevel.isEmptyBlock(blockpos.below())) {
                 BlockState blockstate = worldgenlevel.getBlockState(blockpos.below());
                 if (isDirt(blockstate) || isStone(blockstate) || blockstate.is(BlockTags.SAND)) {
@@ -31,7 +31,7 @@ public class ModifiedBlockBlobFeature extends Feature<BlockStateConfiguration> {
             }
         }
 
-        if (blockpos.getY() <= worldgenlevel.getMinBuildHeight() + 3) {
+        if (blockpos.getY() <= worldgenlevel.getMinY() + 3) {
             return false;
         } else {
             for(int l = 0; l < 3; ++l) {

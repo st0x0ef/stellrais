@@ -2,7 +2,6 @@ package com.st0x0ef.stellaris.client.renderers.entities.alien;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.st0x0ef.stellaris.Stellaris;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
@@ -28,7 +27,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class AlienProfessionLayer<S extends LivingEntityRenderState & VillagerDataHolderRenderState, M extends EntityModel<S> & VillagerHeadModel> extends RenderLayer<S, M> {
-    private static final Int2ObjectMap<ResourceLocation> LEVEL_LOCATIONS = Util.make(new Int2ObjectOpenHashMap(), (int2ObjectOpenHashMap) -> {
+    private static final Int2ObjectOpenHashMap<ResourceLocation> LEVEL_LOCATIONS = Util.make(new Int2ObjectOpenHashMap<>(), (int2ObjectOpenHashMap) -> {
         int2ObjectOpenHashMap.put(1, ResourceLocation.withDefaultNamespace("stone"));
         int2ObjectOpenHashMap.put(2, ResourceLocation.withDefaultNamespace("iron"));
         int2ObjectOpenHashMap.put(3, ResourceLocation.withDefaultNamespace("gold"));

@@ -70,11 +70,11 @@ public class SyncWidgetsTanksPacket implements CustomPacketPayload {
             case WaterSeparatorMenu menu -> {
                 WaterSeparatorBlockEntity blockEntity = menu.getBlockEntity();
                 if (syncWidgetsTanks.component.length == 2 && syncWidgetsTanks.locations.length == 2) {
-                    blockEntity.resultTanks.getFirst().setFluid(BuiltInRegistries.FLUID.get(syncWidgetsTanks.locations[0]), syncWidgetsTanks.component[0]);
-                    blockEntity.resultTanks.getLast().setFluid(BuiltInRegistries.FLUID.get(syncWidgetsTanks.locations[1]), syncWidgetsTanks.component[1]);
+                    blockEntity.resultTanks.getFirst().setFluid(BuiltInRegistries.FLUID.get(syncWidgetsTanks.locations[0]).get().value(), syncWidgetsTanks.component[0]);
+                    blockEntity.resultTanks.getLast().setFluid(BuiltInRegistries.FLUID.get(syncWidgetsTanks.locations[1]).get().value(), syncWidgetsTanks.component[1]);
                 }
                 else if (syncWidgetsTanks.component.length == 1 && syncWidgetsTanks.locations.length == 1) {
-                    blockEntity.ingredientTank.setFluid(BuiltInRegistries.FLUID.get(syncWidgetsTanks.locations[0]), syncWidgetsTanks.component[0]);
+                    blockEntity.ingredientTank.setFluid(BuiltInRegistries.FLUID.get(syncWidgetsTanks.locations[0]).get().value(), syncWidgetsTanks.component[0]);
                 }
                 else if (syncWidgetsTanks.component.length == 3) {
                     blockEntity.getWrappedEnergyContainer().setEnergy(syncWidgetsTanks.component[0]);
@@ -83,8 +83,8 @@ public class SyncWidgetsTanksPacket implements CustomPacketPayload {
             case FuelRefineryMenu menu -> {
                 FuelRefineryBlockEntity blockEntity = menu.getBlockEntity();
                 if (syncWidgetsTanks.component.length == 2 && syncWidgetsTanks.locations.length == 2) {
-                    blockEntity.getIngredientTank().setFluid(BuiltInRegistries.FLUID.get(syncWidgetsTanks.locations[0]), syncWidgetsTanks.component[0]);
-                    blockEntity.getResultTank().setFluid(BuiltInRegistries.FLUID.get(syncWidgetsTanks.locations[1]), syncWidgetsTanks.component[1]);
+                    blockEntity.getIngredientTank().setFluid(BuiltInRegistries.FLUID.get(syncWidgetsTanks.locations[0]).get().value(), syncWidgetsTanks.component[0]);
+                    blockEntity.getResultTank().setFluid(BuiltInRegistries.FLUID.get(syncWidgetsTanks.locations[1]).get().value(), syncWidgetsTanks.component[1]);
                 }
                 else if (syncWidgetsTanks.component.length == 1) {
                     blockEntity.getWrappedEnergyContainer().setEnergy(syncWidgetsTanks.component[0]);
@@ -93,7 +93,7 @@ public class SyncWidgetsTanksPacket implements CustomPacketPayload {
             case WaterPumpMenu menu -> {
                 WaterPumpBlockEntity blockEntity = menu.getBlockEntity();
                 if (syncWidgetsTanks.component.length == 1 && syncWidgetsTanks.locations.length == 1) {
-                    blockEntity.getWaterTank().setFluid(BuiltInRegistries.FLUID.get(syncWidgetsTanks.locations[0]), syncWidgetsTanks.component[0]);
+                    blockEntity.getWaterTank().setFluid(BuiltInRegistries.FLUID.get(syncWidgetsTanks.locations[0]).get().value(), syncWidgetsTanks.component[0]);
                 }
                 else if (syncWidgetsTanks.component.length == 2) {
                     blockEntity.getWrappedEnergyContainer().setEnergy(syncWidgetsTanks.component[0]);
@@ -111,7 +111,7 @@ public class SyncWidgetsTanksPacket implements CustomPacketPayload {
             case PumpjackMenu menu -> {
                 PumpjackBlockEntity blockEntity = menu.getBlockEntity();
                 if (syncWidgetsTanks.component.length == 2 && syncWidgetsTanks.locations.length == 1) {
-                    blockEntity.resultTank.setFluid(BuiltInRegistries.FLUID.get(syncWidgetsTanks.locations[0]), syncWidgetsTanks.component[0]);
+                    blockEntity.resultTank.setFluid(BuiltInRegistries.FLUID.get(syncWidgetsTanks.locations[0]).get().value(), syncWidgetsTanks.component[0]);
                     blockEntity.chunkOilLevel = (int) syncWidgetsTanks.component[1];
                 } else {
                     menu.getBlockEntity().getWrappedEnergyContainer().setEnergy(syncWidgetsTanks.component[0]);

@@ -434,7 +434,7 @@ public abstract class AbstractRoverBase extends IVehicleEntity
     //I Drive
     public Player getDriver() {
         List<Entity> passengers = getPassengers();
-        if (passengers.size() <= 0) {
+        if (passengers.isEmpty()) {
             return null;
         }
 

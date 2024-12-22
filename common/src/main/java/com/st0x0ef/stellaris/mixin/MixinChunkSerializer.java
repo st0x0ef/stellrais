@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(SerializableChunkData.class)
 public class MixinChunkSerializer {
     @Inject(at = @At("HEAD"), method = "parse")
-    private void readDataLevel(LevelHeightAccessor levelHeightAccessor, RegistryAccess registries, CompoundTag tag, CallbackInfoReturnable<SerializableChunkData> cir) {
+    private static void readDataLevel(LevelHeightAccessor levelHeightAccessor, RegistryAccess registries, CompoundTag tag, CallbackInfoReturnable<SerializableChunkData> cir) {
         if (tag.contains("oilLevel")) {
             instance.stellaris$setChunkOilLevel(tag.getInt("oilLevel"));
         } else {

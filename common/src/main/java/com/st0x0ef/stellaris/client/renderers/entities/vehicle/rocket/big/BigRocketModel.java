@@ -162,7 +162,7 @@ public class BigRocketModel extends EntityModel<EntityRenderState> {
 
     @Override
     public void setupAnim(EntityRenderState state) {
-        this.rocket.yRot = netHeadYaw / (180F / (float) Math.PI);
+        this.rocket.yRot = (float) (state.y / (180F / (float) Math.PI));
     }
 
     @Override

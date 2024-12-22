@@ -11,9 +11,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
 import java.util.Optional;
@@ -33,16 +31,6 @@ public record FuelRefineryRecipe(FluidStack ingredientStack, FluidStack resultSt
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return true;
-    }
-
-    @Override
-    public ItemStack getResultItem(HolderLookup.Provider registries) {
-        return null;
-    }
-
-    @Override
     public RecipeSerializer<? extends Recipe<FluidInput>> getSerializer() {
         return RecipesRegistry.FUEL_REFINERY_SERIALIZER.get();
     }
@@ -50,6 +38,16 @@ public record FuelRefineryRecipe(FluidStack ingredientStack, FluidStack resultSt
     @Override
     public RecipeType<? extends Recipe<FluidInput>> getType() {
         return RecipesRegistry.FUEL_REFINERY_TYPE.get();
+    }
+
+    @Override
+    public PlacementInfo placementInfo() {
+        return null;
+    }
+
+    @Override
+    public RecipeBookCategory recipeBookCategory() {
+        return null;
     }
 
     public static class Serializer implements RecipeSerializer<FuelRefineryRecipe> {

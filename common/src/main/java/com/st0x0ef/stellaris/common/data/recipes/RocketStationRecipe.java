@@ -6,7 +6,6 @@ import com.st0x0ef.stellaris.common.blocks.entities.machines.RocketStationEntity
 import com.st0x0ef.stellaris.common.data.recipes.input.RocketStationInput;
 import com.st0x0ef.stellaris.common.registry.RecipesRegistry;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -42,19 +41,6 @@ public class RocketStationRecipe implements Recipe<RocketStationInput> {
     @Override
     public ItemStack assemble(RocketStationInput container, HolderLookup.Provider provider) {
         return output;
-    }
-
-
-    @Override
-    public ItemStack getResultItem(HolderLookup.Provider provider) {
-        return output;
-    }
-
-    @Override
-    public NonNullList<Ingredient> getIngredients() {
-        NonNullList<Ingredient> list = NonNullList.createWithCapacity(this.recipeItems.size());
-        list.addAll(this.recipeItems);
-        return list;
     }
 
     @Override

@@ -20,3 +20,5 @@ accessible method net/minecraft/world/level/levelgen/feature/DripstoneClusterFea
 extendable method net/minecraft/client/model/Model renderToBuffer (Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;III)V
 
 accessible method net/minecraft/client/MouseHandler onScroll (JDD)V
+
+accessible method net/minecraft/world/level/block/entity/BlockEntityType <init> (Lnet/minecraft/world/level/block/entity/BlockEntitySupplier;Ljava/util/Set;)V

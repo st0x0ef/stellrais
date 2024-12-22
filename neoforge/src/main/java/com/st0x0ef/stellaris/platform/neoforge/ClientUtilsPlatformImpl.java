@@ -12,13 +12,13 @@ public class ClientUtilsPlatformImpl {
 
     public static final Map<Item, ArmorRenderer> ARMOR_RENDERERS = new HashMap<>();
 
-    public static void registerArmor(ModelLayerLocation layer, ClientUtilsPlatform.ArmorFactory factory, Item... items) {
+    public static void registerArmor(ModelLayerLocation layer, ClientUtilsPlatform.ArmorFactory<?> factory, Item... items) {
         for (Item item : items) {
             ARMOR_RENDERERS.put(item, new ArmorRenderer(ResourceLocation.fromNamespaceAndPath("", ""), layer, factory));
         }
     }
 
-    public record ArmorRenderer(ResourceLocation texture, ModelLayerLocation layer, ClientUtilsPlatform.ArmorFactory factory) {
+    public record ArmorRenderer(ResourceLocation texture, ModelLayerLocation layer, ClientUtilsPlatform.ArmorFactory<?> factory) {
 
     }
 

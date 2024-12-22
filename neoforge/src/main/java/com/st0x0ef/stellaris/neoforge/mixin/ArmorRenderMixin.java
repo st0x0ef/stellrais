@@ -25,7 +25,6 @@ public abstract class ArmorRenderMixin extends Item {
     }
 
     @Unique
-    @SuppressWarnings("removal")
     public void stellaris$initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(new IClientItemExtensions() {
             private ClientUtilsPlatformImpl.ArmorRenderer renderer;
@@ -45,7 +44,7 @@ public abstract class ArmorRenderMixin extends Item {
 
                 ModelPart root = Minecraft.getInstance().getEntityModels().bakeLayer(renderer.layer());
 
-                return renderer.factory().create(root, slot, stack, (HumanoidModel<LivingEntity>) original);
+                return renderer.factory().create(root, slot, stack, original);
             }
 
             @Override

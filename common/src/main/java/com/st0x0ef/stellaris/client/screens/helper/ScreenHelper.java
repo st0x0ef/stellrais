@@ -5,7 +5,6 @@ import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.CoreShaders;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;

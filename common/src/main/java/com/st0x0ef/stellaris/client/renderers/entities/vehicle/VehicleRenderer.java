@@ -2,7 +2,6 @@ package com.st0x0ef.stellaris.client.renderers.entities.vehicle;
 
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.st0x0ef.stellaris.common.entities.vehicles.IVehicleEntity;
 import net.fabricmc.api.EnvType;
@@ -18,9 +17,7 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -42,7 +39,7 @@ public abstract class VehicleRenderer<T extends Entity, S extends EntityRenderSt
 
     @Override
     public void render(S renderState, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
-        poseStack.pushPose();
+        /*poseStack.pushPose();
         boolean shouldSit = entity.isPassenger() && (entity.getVehicle() != null);
         this.model.riding = shouldSit;
         float f = Mth.rotLerp(partialTick, entity.yRotO, entity.getYRot());
@@ -71,7 +68,7 @@ public abstract class VehicleRenderer<T extends Entity, S extends EntityRenderSt
         float f6 = Mth.lerp(partialTick, entity.xRotO, entity.getXRot());
 
         float f7 = this.getBob(entity, partialTick);
-        this.setupRotations(entity, poseStack, f7, f, partialTick);
+        this.setupRotations(entity, poseStack, f, partialTick);
         poseStack.scale(-1.0F, -1.0F, 1.0F);
         poseStack.translate(0.0D, -1.501F, 0.0D);
         float f8 = 0.0F;
@@ -79,26 +76,26 @@ public abstract class VehicleRenderer<T extends Entity, S extends EntityRenderSt
 
 
         this.model.prepareMobModel(entity, f5, f8, partialTick);
-        this.model.setupAnim(entity, f5, f8, f7, f2, f6);
+        this.model.setupAnim(renderState);
         Minecraft minecraft = Minecraft.getInstance();
         boolean flag = this.isBodyVisible(entity);
         boolean flag1 = !flag && !entity.isInvisibleTo(minecraft.player);
         boolean flag2 = minecraft.shouldEntityAppearGlowing(entity);
         RenderType rendertype = this.getRenderType(entity, flag, flag1, flag2);
         if (rendertype != null) {
-            VertexConsumer vertexconsumer = buffer.getBuffer(rendertype);
-            int i = getOverlayCoords(entity, this.getWhiteOverlayProgress(entity, partialTick));
+            VertexConsumer vertexconsumer = bufferSource.getBuffer(rendertype);
+            int i = getOverlayCoords(this.getWhiteOverlayProgress());
             this.model.renderToBuffer(poseStack, vertexconsumer, packedLight, i, -1);
         }
 
         if (!entity.isSpectator()) {
             for(RenderLayer<S, M> renderlayer : this.layers) {
-                renderlayer.render(poseStack, buffer, packedLight, entity, f5, f8, partialTick, f7, f2, f6);
+                renderlayer.render(poseStack, bufferSource, packedLight, renderState, this.setupRotations();, f8, partialTick, f7, f2, f6);
             }
         }
 
-        poseStack.popPose();
-        super.render(entity, entityYaw, partialTick, poseStack, buffer, packedLight);
+        poseStack.popPose();*/
+        super.render(renderState, poseStack, bufferSource, packedLight);
     }
 
 
@@ -122,15 +119,15 @@ public abstract class VehicleRenderer<T extends Entity, S extends EntityRenderSt
         return false;
     }
 
-    public static int getOverlayCoords(Entity entity, float p_115340_) {
+    public static int getOverlayCoords(float p_115340_) {
         return OverlayTexture.pack(OverlayTexture.u(p_115340_), OverlayTexture.v(false));
     }
 
-    protected float getWhiteOverlayProgress(T p_115334_, float p_115335_) {
+    protected float getWhiteOverlayProgress() {
         return 0.0F;
     }
 
-    protected void setupRotations(T entity, PoseStack poseStack, float p_115319_, float p_115320_, float p_115321_) {
+    protected void setupRotations(T entity, PoseStack poseStack, float p_115320_, float p_115321_) {
         if (this.isShaking(entity)) {
             if (!Minecraft.getInstance().isPaused()) {
                 double shakeDirection1 = (p_115321_ * (entity.level().random.nextBoolean() ? 1 : -1)) / 50;

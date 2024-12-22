@@ -12,7 +12,7 @@ public class DamageSourceRegistry {
     public static final ResourceKey<DamageType> OXYGEN = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "oxygen"));
 
     public static DamageSource of(Level level, ResourceKey<DamageType> key) {
-        return new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(key));
+        return new DamageSource(level.registryAccess().lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(key));
     }
 }
 

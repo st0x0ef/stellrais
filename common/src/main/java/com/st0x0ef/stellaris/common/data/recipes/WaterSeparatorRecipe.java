@@ -34,16 +34,6 @@ public record WaterSeparatorRecipe(FluidStack ingredientStack, List<FluidStack> 
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return true;
-    }
-
-    @Override
-    public ItemStack getResultItem(HolderLookup.Provider registries) {
-        return null;
-    }
-
-    @Override
     public RecipeSerializer<? extends Recipe<FluidInput>> getSerializer() {
         return RecipesRegistry.WATER_SEPERATOR_SERIALIZER.get();
     }

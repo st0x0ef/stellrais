@@ -2,7 +2,6 @@ package com.st0x0ef.stellaris.client.renderers.entities.vehicle.rover;
 
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.st0x0ef.stellaris.common.entities.vehicles.IVehicleEntity;
 import com.st0x0ef.stellaris.common.entities.vehicles.base.AbstractRoverBase;
@@ -19,9 +18,7 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -42,8 +39,8 @@ public abstract class AbstractRoverRenderer<T extends AbstractRoverBase, S exten
     }
 
     @Override
-    public void render(T entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
-        poseStack.pushPose();
+    public void render(S renderState, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+        /*poseStack.pushPose();
         boolean shouldSit = entity.isPassenger() && (entity.getVehicle() != null);
         this.model.riding = shouldSit;
         float f = Mth.rotLerp(partialTick, entity.yRotO, entity.getYRot());
@@ -93,13 +90,13 @@ public abstract class AbstractRoverRenderer<T extends AbstractRoverBase, S exten
         }
 
         if (!entity.isSpectator()) {
-            for(RenderLayer<T, M> renderlayer : this.layers) {
+            for(RenderLayer<S, M> renderlayer : this.layers) {
                 renderlayer.render(poseStack, buffer, packedLight, entity, f5, f8, partialTick, f7, f2, f6);
             }
         }
 
-        poseStack.popPose();
-        super.render(entity, entityYaw, partialTick, poseStack, buffer, packedLight);
+        poseStack.popPose();*/
+        super.render(renderState, poseStack, bufferSource, packedLight);
     }
 
 

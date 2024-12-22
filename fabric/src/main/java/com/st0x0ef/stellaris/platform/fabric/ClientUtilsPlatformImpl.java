@@ -7,6 +7,7 @@ import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ARGB;
@@ -18,7 +19,7 @@ import net.minecraft.world.item.equipment.EquipmentModel;
 
 public class ClientUtilsPlatformImpl {
 
-    public static void registerArmor(ModelLayerLocation layer, ClientUtilsPlatform.ArmorFactory factory, Item... items) {
+    public static void registerArmor(ModelLayerLocation layer, ClientUtilsPlatform.ArmorFactory<HumanoidRenderState> factory, Item... items) {
         ArmorRenderer.register((poseStack, buffer, stack, entity, slot, packedLight, original) -> {
             ModelPart root = Minecraft.getInstance().getEntityModels().bakeLayer(layer);
             HumanoidModel<?> model = factory.create(root, slot, stack, original);

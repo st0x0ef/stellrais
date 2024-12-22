@@ -73,7 +73,7 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
                 fuel = 243000 -  (int)JetSuit.Suit.getFuel(getItem(2));
             }
 
-            JetSuit.Suit.addFuel(getItem(2), (int) fuel);
+            JetSuit.Suit.addFuel(getItem(2), fuel);
             resultTank.grow(-fuel);
 
         }

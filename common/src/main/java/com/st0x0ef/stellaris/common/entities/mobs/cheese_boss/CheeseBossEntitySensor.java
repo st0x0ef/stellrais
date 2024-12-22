@@ -33,14 +33,4 @@ public class CheeseBossEntitySensor extends NearestLivingEntitySensor<CheeseBoss
     private static Optional<LivingEntity> getClosest(CheeseBoss cheeseBoss, Predicate<LivingEntity> predicate) {
         return cheeseBoss.getBrain().getMemory(MemoryModuleType.NEAREST_LIVING_ENTITIES).stream().flatMap(Collection::stream).filter(cheeseBoss::canTargetEntity).filter(predicate).findFirst();
     }
-
-    @Override
-    protected int radiusXZ() {
-        return 32;
-    }
-
-    @Override
-    protected int radiusY() {
-        return 24;
-    }
 }

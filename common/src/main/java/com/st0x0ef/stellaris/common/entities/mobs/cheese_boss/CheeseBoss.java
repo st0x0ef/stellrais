@@ -9,6 +9,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerEntity;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.BossEvent;
@@ -107,9 +108,8 @@ public class CheeseBoss extends Monster implements Enemy, RangedAttackMob {
         this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0));
     }
 
-    /**boss bar event*/
     @Override
-    protected void customServerAiStep() {
+    protected void customServerAiStep(ServerLevel level) {
         this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
     }
 
@@ -161,7 +161,7 @@ public class CheeseBoss extends Monster implements Enemy, RangedAttackMob {
         double g = Math.sqrt(d * d + f * f) * 0.20000000298023224;
         cheeseSpit.shoot(d, e + g, f, 1.5F, 10.0F);
         if (!this.isSilent()) {
-            this.level().playSound((Player)null, this.getX(), this.getY(), this.getZ(), SoundEvents.LLAMA_SPIT, this.getSoundSource(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+            this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.LLAMA_SPIT, this.getSoundSource(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
         }
 
         this.level().addFreshEntity(cheeseSpit);
@@ -174,7 +174,7 @@ public class CheeseBoss extends Monster implements Enemy, RangedAttackMob {
 
     @Override
     protected Brain<?> makeBrain(Dynamic<?> dynamic) {
-        return CheeseBossAi.makeBrain((CheeseBoss) this, dynamic);
+        return CheeseBossAi.makeBrain(this, dynamic);
     }
 
     @Contract(value="null->false")

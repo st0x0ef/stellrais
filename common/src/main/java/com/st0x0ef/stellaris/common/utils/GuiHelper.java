@@ -7,6 +7,8 @@ import com.st0x0ef.stellaris.common.systems.energy.impl.WrappedBlockEnergyContai
 import dev.architectury.fluid.FluidStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.CoreShaders;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
@@ -291,7 +293,7 @@ public class GuiHelper
         int ratioHeight = (int) Math.ceil(height * ratio);
         int remainHeight = height - ratioHeight;
         RenderSystem.setShaderTexture(0, resource);
-        graphics.blit(resource, left, top + remainHeight, 0, remainHeight, width, ratioHeight, width, height);
+        graphics.blit(RenderType::guiTextured, resource, left, top + remainHeight, 0, remainHeight, width, ratioHeight, width, height);
     }
 
     public static void drawVerticalReverse(GuiGraphics graphics, int left, int top, int width, int height,
@@ -299,7 +301,7 @@ public class GuiHelper
         int ratioHeight = (int) Math.ceil(height * ratio);
         int remainHeight = height - ratioHeight;
         RenderSystem.setShaderTexture(0, resource);
-        graphics.blit(resource, left, top, 0, 0, width, remainHeight, width, height);
+        graphics.blit(RenderType::guiTextured, resource, left, top, 0, 0, width, remainHeight, width, height);
     }
 
     public static void drawHorizontal(GuiGraphics graphics, int left, int top, int width, int height,
@@ -307,7 +309,7 @@ public class GuiHelper
         int ratioWidth = (int) Math.ceil(width * ratio);
 
         RenderSystem.setShaderTexture(0, resource);
-        graphics.blit(resource, left, top, 0, 0, ratioWidth, height, width, height);
+        graphics.blit(RenderType::guiTextured, resource, left, top, 0, 0, ratioWidth, height, width, height);
     }
 
     public static void drawHorizontalReverse(GuiGraphics graphics, int left, int top, int width, int height,
@@ -315,7 +317,7 @@ public class GuiHelper
         int ratioWidth = (int) Math.ceil(width * ratio);
         int remainWidth = width - ratioWidth;
         RenderSystem.setShaderTexture(0, resource);
-        graphics.blit(resource, left + ratioWidth, top, ratioWidth, 0, remainWidth, height, width, height);
+        graphics.blit(RenderType::guiTextured, resource, left + ratioWidth, top, ratioWidth, 0, remainWidth, height, width, height);
     }
 
     public static void innerBlit(Matrix4f matrix, float x1, float x2, float y1, float y2, int blitOffset, float minU,

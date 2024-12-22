@@ -4,8 +4,11 @@ import com.mojang.serialization.Codec;
 import com.st0x0ef.stellaris.common.data.planets.Planet;
 import com.st0x0ef.stellaris.common.entities.vehicles.LanderEntity;
 import com.st0x0ef.stellaris.common.entities.vehicles.RocketEntity;
+import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
 import com.st0x0ef.stellaris.common.registry.EntityData;
 import com.st0x0ef.stellaris.common.registry.ItemsRegistry;
+import com.st0x0ef.stellaris.common.vehicle_upgrade.FuelType;
+import dev.architectury.utils.GameInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
@@ -26,6 +29,7 @@ import net.minecraft.world.level.Level;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 
 public class Utils {
@@ -34,19 +38,19 @@ public class Utils {
     public static void transfertInventory(RocketEntity rocket, LanderEntity lander) {
         Container rocketContainer = rocket.getInventory();
         Container landerContainer = lander.getInventory();
-        /** We set the rocket in the first slot */
-        ItemStack rocketStack = new ItemStack(ItemsRegistry.ROCKET.get());
-        rocketContainer.setItem(13, rocketStack);
 
-        /** We start at two because we don"t want the oil inputs */
-        for (int i = 0; i <= lander.getInventory().getContainerSize() - 1; i++) {
+        for (int i = 2; i < lander.getInventory().getContainerSize() - 1; i++) {
             landerContainer.setItem(i, rocketContainer.getItem(i));
         }
+
+        ItemStack rocketStack = new ItemStack(ItemsRegistry.ROCKET.get());
+        rocketStack.set(DataComponentsRegistry.ROCKET_COMPONENT.get(), rocket.getRocketComponent());
+        landerContainer.setItem(14, rocketStack);
     }
 
     /** Should be call after teleporting the player */
-    public static LanderEntity createLanderFromRocket(Entity player, RocketEntity rocket, int yPos) {
-        LanderEntity lander = new LanderEntity(player.level());
+    public static LanderEntity createLanderFromRocket(Entity player, RocketEntity rocket, int yPos, Level destination) {
+        LanderEntity lander = new LanderEntity(destination);
         lander.setPos(player.getX(), yPos, player.getZ());
         transfertInventory(rocket, lander);
 
@@ -57,42 +61,47 @@ public class Utils {
 
     /** Teleport an entity to the planet wanted */
     public static void teleportEntity(Entity entity, Planet destination) {
-        if(entity.level().isClientSide()) return;
+        if (entity.level().isClientSide()) return;
         entity.setNoGravity(false);
 
-        entity.level().getServer().getAllLevels().forEach(level -> {
-            if (level.dimension().location().equals(destination.dimension())) {
-                TeleportUtil.teleportToPlanet(entity, level, 600);
-            }
-        });
+        TeleportUtil.teleportToPlanet(entity, getPlanetLevel(destination), 600);
     }
 
     /** To use with the planetSelection menu */
     public static void changeDimension(Player player, Planet destination) {
-        if (player.level().isClientSide()) return;
+        if (player instanceof ServerPlayer serverPlayer) {
+            if (serverPlayer.getVehicle() instanceof RocketEntity rocket) {
+                serverPlayer.stopRiding();
+                serverPlayer.closeContainer();
 
-        if (player.getVehicle() instanceof RocketEntity rocket) {
-            player.stopRiding();
+                ItemStack fuelType = rocket.getInventory().getItem(10);
+                if (fuelType.isEmpty()) {
+                    fuelType = ItemsRegistry.FUEL_BUCKET.get().getDefaultInstance();
+                }
 
-            teleportEntity(player, destination);
+                if (!serverPlayer.isCreative() && !serverPlayer.isSpectator()) {
+                    int fuelConsumption = Math.round(FuelType.getFuelNeededToGoOnPlanet(PlanetUtil.getPlanet(serverPlayer.level().dimension().location()), destination, fuelType.getItem()));
+                    rocket.FUEL -= fuelConsumption;
+                    rocket.syncRocketData(serverPlayer);
+                }
 
-            /** We create the lander */
-            LanderEntity lander = createLanderFromRocket(player, rocket, 600);
+                LanderEntity lander = createLanderFromRocket(serverPlayer, rocket, 600, getPlanetLevel(destination));
+                teleportEntity(serverPlayer, destination);
+                serverPlayer.level().addFreshEntity(lander);
 
-            /** We remove the player from the Rocket */
-            player.closeContainer();
+                while (!serverPlayer.startRiding(lander, true)) {
+                    // Wait until the player starts riding the lander
+                }
 
-            player.level().addFreshEntity(lander);
-            player.startRiding(lander);
-            player.sendSystemMessage(Component.translatable("message.stellaris.lander"));
-        } else {
-            player.closeContainer();
-            teleportEntity(player, destination);
+                serverPlayer.sendSystemMessage(Component.translatable("message.stellaris.lander"));
+            } else {
+                serverPlayer.closeContainer();
+                teleportEntity(serverPlayer, destination);
+            }
         }
     }
 
     public static void changeDimensionForPlayers(List<Entity> entities, Planet destination) {
-
         RocketEntity rocket = (RocketEntity) entities.getFirst().getVehicle();
 
         for (Entity entity : entities) {
@@ -110,13 +119,12 @@ public class Utils {
                 }
             }
         }
-        LanderEntity lander = createLanderFromRocket(entities.getFirst(), rocket, 600);
+        LanderEntity lander = createLanderFromRocket(entities.getFirst(), rocket, 600, getPlanetLevel(destination));
         entities.getFirst().level().addFreshEntity(lander);
 
         for (Entity entity : entities) {
             entity.startRiding(lander, true);
             entity.sendSystemMessage(Component.translatable("message.stellaris.lander"));
-
         }
     }
 
@@ -260,5 +268,14 @@ public class Utils {
 
     public static ResourceKey<Level> getPlanetLevel(ResourceLocation planet) {
         return ResourceKey.create(ResourceKey.createRegistryKey(planet), planet);
+    }
+
+    public static ServerLevel getPlanetLevel(Planet planet) {
+        for (ServerLevel level : GameInstance.getServer().getAllLevels()) {
+            if (level.dimension().location().equals(planet.dimension())) {
+                return level;
+            }
+        }
+        return null;
     }
 }

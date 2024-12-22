@@ -1,18 +1,4 @@
-# 1.2.0 beta 4 changelog
-
-## Changes
-- Update sky aesthetics to 1.3
-
-## Fix
-- Fix typo
-- Fix datapack error on server
-- Fix pumpjack duplicate oil
-- Fix fluid transfer
-- Fix jet suit
-- fix full jet suit
-
-
-# 1.2.0 final changelog
+# 1.2.0 changelog
 
 ## Additions
 - Structures :
@@ -73,7 +59,11 @@
 - Improve rocket bar overlay
 - Unlock all planet on the selection menu if the player is in creative mode
 - Jet suit now require fuel
-- Update sky aesthetics to 1.3
+- Update sky aesthetics to 1.4
+- Planet and star name are now translatable
+- Oxygen distributor now need energy
+- Increase minimum speed for the rocket to explode
+- Remove Cheese Boss from spawn placements
 
 ## Fix
 - Crash when trying to launch to any planet when you haven't launched from a planet
@@ -82,4 +72,11 @@
 - Fix fuel refinery doesn't convert convert neo mb to fabric mb
 - Fix fluid transfer
 - Fix jet suit
-- fix full jet suit
+- Fix full jet suit
+- Fix launch button translatable pos
+- Fix water pump renderer
+- Fix rocket item in lander
+- Fix rocket doesn't keep fuel
+- Fix adding hydrogen bucket to a rocket doesn't give back a bucket
+- Fix water pump loot table
+- Fix lander on fabric

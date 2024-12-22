@@ -14,12 +14,16 @@ import dev.architectury.event.events.common.TickEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.item.FlintAndSteelItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
 public class Events {
     private static final int RADIATION_CHECK_INTERVAL = 100;
     private static int tickBeforeNextRadioactiveCheck = RADIATION_CHECK_INTERVAL;
+
 
     public static void registerEvents() {
         TickEvent.PLAYER_POST.register(player -> {
@@ -64,11 +68,16 @@ public class Events {
                 } else if (state.is(Blocks.CAMPFIRE)) {
                     serverLevel.setBlock(pos, state.setValue(CampfireBlock.LIT, false), 3);
                     return EventResult.interruptFalse();
+                } else if (state.is(Blocks.CANDLE)) {
+                    serverLevel.setBlock(pos, state.setValue(CandleBlock.LIT, true), 3);
+                    return EventResult.interruptFalse();
+
                 }
             }
 
             return EventResult.pass();
         });
+
 
     }
 
@@ -76,3 +85,4 @@ public class Events {
         GlobalOxygenManager.getInstance().getOrCreateDimensionManager(level).removeOxygenRoom(pos);
     }
 }
+

@@ -1,7 +1,7 @@
 {
   "temperature": 0.8,
   "downfall": 1,
-  "precipitation": "none",
+  "precipitation": "rain",
   "has_precipitation": true,
 
   "effects": {

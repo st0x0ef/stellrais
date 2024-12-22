@@ -1,14 +1,12 @@
 package com.st0x0ef.stellaris.common.utils;
 
 import com.mojang.serialization.Codec;
-import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.common.data.planets.Planet;
 import com.st0x0ef.stellaris.common.entities.vehicles.LanderEntity;
 import com.st0x0ef.stellaris.common.entities.vehicles.RocketEntity;
 import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
 import com.st0x0ef.stellaris.common.registry.EntityData;
 import com.st0x0ef.stellaris.common.registry.ItemsRegistry;
-import net.minecraft.core.BlockPos;
 import com.st0x0ef.stellaris.common.vehicle_upgrade.FuelType;
 import dev.architectury.utils.GameInstance;
 import net.minecraft.network.chat.Component;
@@ -19,7 +17,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -28,8 +25,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.levelgen.Heightmap;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Locale;
@@ -273,21 +268,6 @@ public class Utils {
 
     public static ResourceKey<Level> getPlanetLevel(ResourceLocation planet) {
         return ResourceKey.create(ResourceKey.createRegistryKey(planet), planet);
-    }
-
-    public static boolean entityHasBlockAbove(LivingEntity entity, @Nullable BlockPos pos, @Nullable Integer recusion) {
-
-        if(pos == null) pos = entity.blockPosition();
-        if(recusion == null) recusion = 0;
-
-        if(recusion > 10) return false;
-
-        if(entity.level().getBlockState(pos).is(BlockTags.AIR)) {
-            recusion += 1;
-            return !entityHasBlockAbove(entity, pos.above(), recusion);
-        }
-
-        return false;
     }
 
     public static ServerLevel getPlanetLevel(Planet planet) {

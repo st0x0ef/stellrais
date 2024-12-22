@@ -11,11 +11,13 @@
     "MixinChunkAccess",
     "MixinChunkSerializer",
     "PlayerDataMixin",
+    "StormyPlanetMixin",
     "client.FogRenderMixin"
   ],
   "client": [
     "client.PlayerKeyMixin",
     "client.PlayerRiddingVehicleMixin",
+    "client.RenderPlayerMixin",
     "client.RenderPlayerMixin",
     "client.SandStormMixin"
   ],

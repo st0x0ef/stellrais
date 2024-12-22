@@ -32,6 +32,7 @@ import com.st0x0ef.stellaris.client.renderers.entities.vehicle.rocket.tiny.TinyR
 import com.st0x0ef.stellaris.client.renderers.entities.vehicle.rocket.tiny.TinyRocketRenderer;
 import com.st0x0ef.stellaris.client.renderers.entities.vehicle.rover.RoverModel;
 import com.st0x0ef.stellaris.client.renderers.entities.vehicle.rover.RoverRenderer;
+import com.st0x0ef.stellaris.client.renderers.entities.customlightning.CustomLightningBoltRenderer;
 import com.st0x0ef.stellaris.client.renderers.globe.GlobeBlockRenderer;
 import com.st0x0ef.stellaris.client.renderers.globe.GlobeModel;
 import com.st0x0ef.stellaris.client.screens.*;
@@ -50,6 +51,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.Minecraft;
 
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.client.renderer.entity.LightningBoltRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -97,7 +99,7 @@ public class StellarisFabricClient implements ClientModInitializer {
 
         EntityRendererRegistry.register(EntityRegistry.ICE_SPIT.get(), renderManager -> new ThrownItemRenderer<>(renderManager, 1, true));
         EntityRendererRegistry.register(EntityRegistry.ICE_SHARD_ARROW.get(), IceShardArrowRenderer::new);
-
+        EntityRendererRegistry.register(EntityRegistry.VENUS_LIGHTNING_BOLT.get(), CustomLightningBoltRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.TINY_ROCKET.get(), TinyRocketRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.SMALL_ROCKET.get(), SmallRocketRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.NORMAL_ROCKET.get(), NormalRocketRenderer::new);

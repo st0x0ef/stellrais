@@ -80,3 +80,4 @@
 - Fix adding hydrogen bucket to a rocket doesn't give back a bucket
 - Fix water pump loot table
 - Fix lander on fabric
+- Fix Radioactive Generator Only being able to extract 100 (F)E/t

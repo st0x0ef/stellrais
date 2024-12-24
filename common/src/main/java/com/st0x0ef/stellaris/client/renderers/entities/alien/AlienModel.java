@@ -4,6 +4,7 @@ import com.st0x0ef.stellaris.Stellaris;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -13,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 @Environment(EnvType.CLIENT)
-public class AlienModel extends EntityModel<LivingEntityRenderState> {
+public class AlienModel extends EntityModel<LivingEntityRenderState> implements HeadedModel {
 
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "alien"), "main");
 
@@ -66,5 +67,10 @@ public class AlienModel extends EntityModel<LivingEntityRenderState> {
 		this.head.xRot = state.xRot * ((float)Math.PI / 180F);
 		this.leg0.xRot = Mth.cos(state.walkAnimationPos) * -1.0F * state.walkAnimationSpeed;
 		this.leg1.xRot = Mth.cos(state.walkAnimationPos) * 1.0F * state.walkAnimationSpeed;
+	}
+
+	@Override
+	public ModelPart getHead() {
+		return AlienModel.this.head;
 	}
 }

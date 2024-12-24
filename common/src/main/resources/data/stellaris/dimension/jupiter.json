@@ -1,0 +1,11 @@
+{
+  "type": "stellaris:jupiter",
+  "generator": {
+    "type": "minecraft:noise",
+    "settings": "stellaris:space",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "stellaris:jupiter"
+    }
+  }
+}

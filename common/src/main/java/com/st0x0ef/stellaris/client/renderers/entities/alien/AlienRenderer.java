@@ -10,10 +10,12 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.CrossedArmsItemLayer;
 import net.minecraft.client.renderer.entity.layers.CustomHeadLayer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.client.renderer.entity.state.VillagerDataHolderRenderState;
+import net.minecraft.client.renderer.entity.state.VillagerRenderState;
 import net.minecraft.resources.ResourceLocation;
 
 @Environment(EnvType.CLIENT)
-public class AlienRenderer extends MobRenderer<Alien, LivingEntityRenderState, AlienModel> {
+public class AlienRenderer extends MobRenderer<Alien, VillagerRenderState, AlienModel> {
 
     /** TEXTURES */
     public static final ResourceLocation ALIEN = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID,"textures/entity/alien/alien.png");
@@ -28,12 +30,12 @@ public class AlienRenderer extends MobRenderer<Alien, LivingEntityRenderState, A
     }
 
     @Override
-    public LivingEntityRenderState createRenderState() {
-        return new LivingEntityRenderState();
+    public VillagerRenderState createRenderState() {
+        return new VillagerRenderState();
     }
 
     @Override
-    public ResourceLocation getTextureLocation(LivingEntityRenderState renderState) {
+    public ResourceLocation getTextureLocation(VillagerRenderState renderState) {
         return ALIEN;
     }
 }

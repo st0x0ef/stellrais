@@ -20,7 +20,9 @@ import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -39,19 +41,23 @@ public abstract class RenderPlayerMixin extends LivingEntityRenderer<AbstractCli
 
     @Inject(method = "renderHand", at = @At("HEAD"), cancellable = true)
     private void renderPlayerHand(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, ResourceLocation skinTexture, ModelPart arm, boolean isSleeveVisible, CallbackInfo ci) {
-        ItemStack stack = player.getItemBySlot(EquipmentSlot.CHEST);
+        AbstractClientPlayer player = Minecraft.getInstance().player;
+        ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
 
         if(stack.getItem() instanceof JetSuit.Suit || (stack.getItem() instanceof AbstractSpaceArmor)) {
             ci.cancel();
 
             PlayerModel playerModel = getModel();
             stellaris$setModelProperties(player);
-            playerModel.attackTime = 0.0F;
-            playerModel.crouching = false;
-            playerModel.swimAmount = 0.0F;
-            playerModel.setupAnim(player, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
-            renderedArm.xRot = 0.0F;
 
+            PlayerRenderState renderState = new PlayerRenderState();
+            renderState.attackTime = 0.0F;
+            renderState.isCrouching = false;
+            renderState.swimAmount = 0.0F;
+
+            playerModel.setupAnim(renderState);
+
+            arm.xRot = 0.0F;
 
             ModelLayerLocation layer;
             ResourceLocation  texture = null;
@@ -70,22 +76,16 @@ public abstract class RenderPlayerMixin extends LivingEntityRenderer<AbstractCli
                 model = new SpaceSuitModel(rootPart, EquipmentSlot.CHEST, stack, null);
 
             }
-            boolean isRightHand = (renderedArm == model.rightArm);
+
+            boolean isRightHand = arm == model.rightArm;
 
             if (isRightHand) {
-                model.rightArm.copyFrom(renderedArm);
-                model.rightArm.render(poseStack, buffer.getBuffer(RenderType.entityTranslucent(texture)), packedLight, OverlayTexture.NO_OVERLAY);
+                model.rightArm.copyFrom(arm);
+                model.rightArm.render(poseStack, bufferSource.getBuffer(RenderType.entityTranslucent(texture)), packedLight, OverlayTexture.NO_OVERLAY);
             } else {
-                model.leftArm.copyFrom(renderedArm);
-                model.leftArm.render(poseStack, buffer.getBuffer(RenderType.entityTranslucent(texture)), packedLight, OverlayTexture.NO_OVERLAY);
+                model.leftArm.copyFrom(arm);
+                model.leftArm.render(poseStack, bufferSource.getBuffer(RenderType.entityTranslucent(texture)), packedLight, OverlayTexture.NO_OVERLAY);
             }
-        }
-    }
-
-    @Inject(method = "render*", at = @At("HEAD"), cancellable = true)
-    public void renderPlayer(AbstractClientPlayer entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight, CallbackInfo ci) {
-        if (entity.getVehicle() instanceof LanderEntity) {
-            ci.cancel();
         }
     }
 }

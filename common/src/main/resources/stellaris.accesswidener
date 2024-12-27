@@ -21,4 +21,4 @@ extendable method net/minecraft/client/model/Model renderToBuffer (Lcom/mojang/b
 
 accessible method net/minecraft/client/MouseHandler onScroll (JDD)V
 
-accessible method net/minecraft/world/level/block/entity/BlockEntityType <init> (Lnet/minecraft/world/level/block/entity/BlockEntitySupplier;Ljava/util/Set;)V
+accessible method net/minecraft/world/level/block/entity/BlockEntityType <init> (Lnet/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier;Ljava/util/Set;)V

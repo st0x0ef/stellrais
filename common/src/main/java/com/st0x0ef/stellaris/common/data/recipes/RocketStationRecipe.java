@@ -66,7 +66,7 @@ public class RocketStationRecipe implements Recipe<RocketStationInput> {
     public static class Serializer implements RecipeSerializer<RocketStationRecipe> {
 
         public static final MapCodec<RocketStationRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-                Ingredient.CODEC_NONEMPTY.listOf(1, 14).fieldOf("ingredients").forGetter(r -> r.recipeItems),
+                Ingredient.CODEC.listOf(1, 14).fieldOf("ingredients").forGetter(r -> r.recipeItems),
                 ItemStack.CODEC.fieldOf("output").forGetter(r -> r.output)
         ).apply(instance, RocketStationRecipe::new));
 

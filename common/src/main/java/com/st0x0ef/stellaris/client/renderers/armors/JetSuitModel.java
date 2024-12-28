@@ -6,6 +6,7 @@ import com.st0x0ef.stellaris.Stellaris;
 import dev.architectury.platform.Platform;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -31,10 +32,10 @@ public class JetSuitModel extends HumanoidModel<HumanoidRenderState> {
 	private final ModelPart right_boot;
 	private final ModelPart left_leg;
 	private final ModelPart right_leg;
-    private final HumanoidModel<HumanoidRenderState> parentModel;
+    private final Model parentModel;
 	private final EquipmentSlot slot;
 
-	public JetSuitModel(ModelPart root, EquipmentSlot slot, ItemStack stack, @Nullable HumanoidModel<HumanoidRenderState> parentModel) {
+	public JetSuitModel(ModelPart root, EquipmentSlot slot, ItemStack stack, Model parentModel) {
         super(root, RenderType::entityTranslucent);
         this.parentModel = parentModel;
 
@@ -98,8 +99,6 @@ public class JetSuitModel extends HumanoidModel<HumanoidRenderState> {
 			MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
 			vertexConsumer = bufferSource.getBuffer(RenderType.entityTranslucent(TEXTURE));
 		}
-
-		parentModel.copyPropertiesTo(this);
 
 		super.renderToBuffer(poseStack, vertexConsumer, packedLight, packedOverlay, color);
 	}

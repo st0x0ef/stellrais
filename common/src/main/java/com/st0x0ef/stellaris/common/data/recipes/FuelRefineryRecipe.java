@@ -47,7 +47,7 @@ public record FuelRefineryRecipe(FluidStack ingredientStack, FluidStack resultSt
 
     @Override
     public RecipeBookCategory recipeBookCategory() {
-        return null;
+        return RecipeBookCategories.CRAFTING_MISC;
     }
 
     public static class Serializer implements RecipeSerializer<FuelRefineryRecipe> {

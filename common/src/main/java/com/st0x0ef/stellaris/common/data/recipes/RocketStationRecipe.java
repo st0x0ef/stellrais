@@ -58,9 +58,17 @@ public class RocketStationRecipe implements Recipe<RocketStationInput> {
         return null;
     }
 
+    public List<Ingredient> getRecipeItems() {
+        return recipeItems;
+    }
+
+    public ItemStack getOutput() {
+        return output;
+    }
+
     @Override
     public RecipeBookCategory recipeBookCategory() {
-        return null;
+        return RecipeBookCategories.CRAFTING_MISC;
     }
 
     public static class Serializer implements RecipeSerializer<RocketStationRecipe> {

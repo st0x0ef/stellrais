@@ -24,9 +24,9 @@ public class AutoFeederModule extends Item implements SpaceSuitModule {
             for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
                 ItemStack foodStack = player.getInventory().getItem(i);
                 FoodProperties foodProperties = foodStack.get(DataComponents.FOOD);
-                if (foodProperties!=null) {
+                if (foodProperties != null) {
                     if(PlanetUtil.hasOxygen(level) || foodStack.is(TagRegistry.SPACE_FOOD)) {
-                        player.eat(level, foodStack ,foodProperties);
+                        player.getFoodData().eat(foodProperties);
                         break;
                     }
 

@@ -31,8 +31,8 @@ configurations {
 dependencies {
     neoForge "net.neoforged:neoforge:${neoforge_version}"
     modApi "dev.architectury:architectury-neoforge:${architectury_version}"
-    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:${rei_version}"
-    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
+    //modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:${rei_version}"
+    //modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
     //modCompileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
     //runtimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
 

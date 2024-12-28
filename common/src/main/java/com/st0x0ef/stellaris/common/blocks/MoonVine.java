@@ -27,7 +27,6 @@ import org.jetbrains.annotations.Nullable;
 public class MoonVine extends GrowingPlantHeadBlock implements BonemealableBlock, CaveVines {
 
     public static final MapCodec<CaveVinesBlock> CODEC = simpleCodec(CaveVinesBlock::new);
-    private static final float CHANCE_OF_BERRIES_ON_GROWTH = 0.11F;
 
     public MapCodec<CaveVinesBlock> codec() {
         return CODEC;

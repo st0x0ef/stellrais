@@ -36,6 +36,7 @@ public class Stellaris {
         EntityData.register();
         NetworkRegistry.init();
 
+        CreativeTabsRegistry.TABS.register();
         ProcessorsRegistry.STRUCTURE_PROCESSORS.register();
         SoundRegistry.SOUNDS.register();
         DataComponentsRegistry.DATA_COMPONENT_TYPE.register();
@@ -44,9 +45,8 @@ public class Stellaris {
         BlocksRegistry.BLOCKS.register();
         EntityRegistry.ENTITY_TYPE.register();
         EntityRegistry.SENSOR.register();
-        BlockEntityRegistry.BLOCK_ENTITY_TYPE.register();
         ItemsRegistry.ITEMS.register();
-        CreativeTabsRegistry.TABS.register();
+        BlockEntityRegistry.BLOCK_ENTITY_TYPE.register();
         MenuTypesRegistry.MENU_TYPE.register();
         FeaturesRegistry.FEATURES.register();
         CommandsRegistry.register();

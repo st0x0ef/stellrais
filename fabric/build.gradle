@@ -34,7 +34,7 @@ dependencies {
     modApi "dev.architectury:architectury-fabric:${architectury_version}"
     modApi "com.terraformersmc:modmenu:${modmenu_version}"
     include modApi("teamreborn:energy:${energy_version}") { transitive = false }
-    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${rootProject.rei_version}"
+    //modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${rootProject.rei_version}"
     //modCompileOnlyApi("mezz.jei:jei-${minecraft_version}-fabric-api:${jei_version}")
     //modRuntimeOnly("mezz.jei:jei-${minecraft_version}-fabric:${jei_version}")
 

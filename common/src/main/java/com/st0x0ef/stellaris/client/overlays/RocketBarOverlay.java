@@ -28,9 +28,9 @@ public class RocketBarOverlay {
 
             if (level == null) return;
 
-            double min = player.level().getMinBuildHeight();
+            double min = player.level().getMinY();
 
-            for (int i = player.level().getMinBuildHeight(); i < player.level().getMaxBuildHeight(); i++) {
+            for (int i = player.level().getMinY(); i < player.level().getMaxY(); i++) {
                 if (level.getBlockState(new BlockPos(player.getBlockX(), i, player.getBlockZ())).getBlock() != Blocks.AIR) {
                     min = i;
                 }
@@ -42,11 +42,10 @@ public class RocketBarOverlay {
 
             /** ROCKET BAR IMAGE */
             RenderSystem.setShaderTexture(0, planet);
-            graphics.blit(planet, 0, (graphics.guiHeight() / 2) - 128 / 2, 0, 0, 16, 128, 16, 128);
+            graphics.blit(RenderType::guiTextured, planet, 0, (graphics.guiHeight() / 2) - 128 / 2, 0, 0, 16, 128, 16, 128);
 
             /** ROCKET_Y IMAGE */
             RenderSystem.setShaderTexture(0, ROCKET);
-            graphicst.blit(RenderType::guiTextured, graphics.pose(), 4F, (float) (((float) graphics.guiHeight() / 2) + (103f / 2f) - yHeight), 0, 0, 8, 11, 8, 11);
-        }
+            ScreenHelper.renderWithFloat.blit(graphics.pose(), 4F, (float) (((float) graphics.guiHeight() / 2) + ((float) 103 / 2) - yHeight), 0, 0, 8, 11, 8, 11);}
     }
 }

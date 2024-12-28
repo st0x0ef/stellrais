@@ -9,6 +9,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -30,11 +31,11 @@ public class SpaceSuitOverlay {
 
 
                     //We can add default gui stuff for the space suit here
-                    graphics.blit(GUISprites.SPACESUIT_OXYGEN_BAR, 5, 5, 0, 0, 37, 10, 37, 10);
+                    graphics.blit(RenderType::guiTextured, GUISprites.SPACESUIT_OXYGEN_BAR, 5, 5, 0, 0, 37, 10, 37, 10);
 
                     int i = Mth.ceil(Mth.clamp((float) OxygenUtils.getOxygen(itemStack) / (float) OxygenUtils.getOxygenCapacity(itemStack),
                             0.0F, 1.0F) * (24 - 1));
-                    graphics.blitSprite(GUISprites.SPACESUIT_FULL_BAR_SPRITE, 24, 4, 0, 0, 15, 8, i, 4);
+                    graphics.blitSprite(RenderType::guiTextured, GUISprites.SPACESUIT_FULL_BAR_SPRITE, 24, 4, 0, 0, 15, 8, i, 4);
 
 
                     //Logic for modules

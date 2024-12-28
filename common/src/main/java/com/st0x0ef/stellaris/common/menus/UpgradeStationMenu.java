@@ -24,7 +24,11 @@ public class UpgradeStationMenu extends ItemCombinerMenu {
     }
 
     public UpgradeStationMenu(int containerId, Inventory playerInventory, ContainerLevelAccess access) {
-        super(MenuTypesRegistry.UPGRADE_STATION_MENU.get(), containerId, playerInventory, access);
+        super(MenuTypesRegistry.UPGRADE_STATION_MENU.get(), containerId, playerInventory, access, ItemCombinerMenuSlotDefinition.create()
+                .withSlot(0, 30, 40, itemStack -> itemStack.getItem() instanceof SpaceSuit)
+                .withSlot(1, 78, 40, itemStack -> itemStack.getItem() instanceof SpaceSuitModule)
+                .withResultSlot(2, 134, 40)
+                .build());
     }
 
     @Override
@@ -64,16 +68,5 @@ public class UpgradeStationMenu extends ItemCombinerMenu {
 
             } else this.resultSlots.setItem(0, ItemStack.EMPTY);
         }
-    }
-
-
-
-    @Override
-    protected @NotNull ItemCombinerMenuSlotDefinition createInputSlotDefinitions() {
-        return ItemCombinerMenuSlotDefinition.create()
-                .withSlot(0, 30, 40, itemStack -> itemStack.getItem() instanceof SpaceSuit)
-                .withSlot(1, 78, 40, itemStack -> itemStack.getItem() instanceof SpaceSuitModule)
-                .withResultSlot(2, 134, 40)
-                .build();
     }
 }

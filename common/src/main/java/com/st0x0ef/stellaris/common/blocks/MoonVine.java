@@ -96,7 +96,7 @@ public class MoonVine extends GrowingPlantHeadBlock implements BonemealableBlock
             BlockState blockState = state.setValue(BERRIES, false);
             level.setBlock(pos, blockState, 2);
             level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(entity, blockState));
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.SUCCESS;
         } else {
             return InteractionResult.PASS;
         }

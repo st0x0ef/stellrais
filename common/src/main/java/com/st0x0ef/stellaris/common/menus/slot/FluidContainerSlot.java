@@ -1,7 +1,7 @@
 package com.st0x0ef.stellaris.common.menus.slot;
 
+import com.st0x0ef.stellaris.common.armors.AbstractSpaceArmor;
 import com.st0x0ef.stellaris.common.items.OxygenTankItem;
-import com.st0x0ef.stellaris.common.items.armors.AbstractSpaceArmor;
 import dev.architectury.hooks.fluid.FluidBucketHooks;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;

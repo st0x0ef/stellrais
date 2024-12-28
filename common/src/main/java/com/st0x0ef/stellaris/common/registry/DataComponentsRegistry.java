@@ -20,8 +20,8 @@ public class DataComponentsRegistry {
     public static final RegistrySupplier<DataComponentType<JetSuitComponent>> JET_SUIT_COMPONENT = DATA_COMPONENT_TYPE.register("jet_suit_component",
             () -> DataComponentType.<JetSuitComponent>builder().persistent(JetSuitComponent.CODEC).networkSynchronized(JetSuitComponent.STREAM_CODEC).build());
 
-    public static final RegistrySupplier<DataComponentType<CappedLongComponent>> STORED_OXYGEN_COMPONENT = DATA_COMPONENT_TYPE.register("stored_oxygen",
-            () -> DataComponentType.<CappedLongComponent>builder().persistent(CappedLongComponent.CODEC).networkSynchronized(CappedLongComponent.STREAM_CODEC).build());
+    public static final RegistrySupplier<DataComponentType<OxygenComponent>> STORED_OXYGEN_COMPONENT = DATA_COMPONENT_TYPE.register("stored_oxygen",
+            () -> DataComponentType.<OxygenComponent>builder().persistent(OxygenComponent.CODEC).networkSynchronized(OxygenComponent.STREAM_CODEC).build());
 
     public static final RegistrySupplier<DataComponentType<RadioactiveComponent>> RADIOACTIVE = DATA_COMPONENT_TYPE.register("radioactive_component",
             () -> DataComponentType.<RadioactiveComponent>builder().persistent(RadioactiveComponent.CODEC).networkSynchronized(RadioactiveComponent.STREAM_CODEC).build());

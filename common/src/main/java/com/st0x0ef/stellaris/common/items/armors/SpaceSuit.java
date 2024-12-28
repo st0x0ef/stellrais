@@ -1,5 +1,6 @@
 package com.st0x0ef.stellaris.common.items.armors;
 
+import com.st0x0ef.stellaris.common.armors.AbstractSpaceArmor;
 import com.st0x0ef.stellaris.common.data_components.SpaceSuitModules;
 import com.st0x0ef.stellaris.common.items.module.SpaceSuitModule;
 import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
@@ -11,16 +12,17 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.equipment.ArmorMaterial;
+import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
 
 public class SpaceSuit extends AbstractSpaceArmor.AbstractSpaceChestplate {
 
-    public SpaceSuit(Holder<ArmorMaterial> material, Type type, Properties properties) {
+    public SpaceSuit(ArmorMaterial material, ArmorType type, Properties properties) {
         super(material, type, properties);
     }
 

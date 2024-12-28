@@ -31,11 +31,8 @@ public class AutoFeederModule extends Item implements SpaceSuitModule {
                     }
 
                 }
-
             }
-
         }
-
     }
 
     @Override

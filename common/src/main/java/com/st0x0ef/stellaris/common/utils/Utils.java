@@ -124,7 +124,9 @@ public class Utils {
 
         for (Entity entity : entities) {
             entity.startRiding(lander, true);
-            entity.sendSystemMessage(Component.translatable("message.stellaris.lander"));
+            if (entity instanceof Player player) {
+                player.displayClientMessage(Component.translatable("message.stellaris.lander"), true);
+            }
         }
     }
 

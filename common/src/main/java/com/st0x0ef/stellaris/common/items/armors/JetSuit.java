@@ -2,6 +2,7 @@ package com.st0x0ef.stellaris.common.items.armors;
 
 import com.mojang.serialization.Codec;
 import com.st0x0ef.stellaris.Stellaris;
+import com.st0x0ef.stellaris.common.armors.AbstractSpaceArmor;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.FluidTankHelper;
 import com.st0x0ef.stellaris.common.data_components.JetSuitComponent;
 import com.st0x0ef.stellaris.common.keybinds.KeyVariables;
@@ -18,10 +19,13 @@ import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.equipment.ArmorMaterial;
+import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+
+import static com.st0x0ef.stellaris.common.data.recipes.RocketStationRecipe.Type;
 
 public class JetSuit {
     public static final long MAX_FUEL_CAPACITY = FluidTankHelper.convertFromNeoMb(1000);
@@ -31,8 +35,8 @@ public class JetSuit {
 
         private int nextFuelCheckTick = 0;
 
-        public Suit(Holder<ArmorMaterial> material, Properties properties) {
-            super(material, Type.CHESTPLATE, properties);
+        public Suit(ArmorMaterial material, Properties properties) {
+            super(material, ArmorType.CHESTPLATE, properties);
         }
 
         public int getMode(ItemStack itemStack) {

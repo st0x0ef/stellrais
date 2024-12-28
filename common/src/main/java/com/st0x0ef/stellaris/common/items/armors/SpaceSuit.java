@@ -6,7 +6,6 @@ import com.st0x0ef.stellaris.common.items.module.SpaceSuitModule;
 import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;

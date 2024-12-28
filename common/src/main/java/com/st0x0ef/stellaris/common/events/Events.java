@@ -2,6 +2,7 @@ package com.st0x0ef.stellaris.common.events;
 
 import com.st0x0ef.stellaris.common.blocks.CoalLanternBlock;
 import com.st0x0ef.stellaris.common.blocks.WallCoalTorchBlock;
+import com.st0x0ef.stellaris.common.oil.OilData;
 import com.st0x0ef.stellaris.common.oxygen.GlobalOxygenManager;
 import com.st0x0ef.stellaris.common.registry.BlocksRegistry;
 import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
@@ -10,6 +11,7 @@ import com.st0x0ef.stellaris.common.utils.PlanetUtil;
 import com.st0x0ef.stellaris.common.utils.Utils;
 import dev.architectury.event.EventResult;
 import dev.architectury.event.events.common.BlockEvent;
+import dev.architectury.event.events.common.ChunkEvent;
 import dev.architectury.event.events.common.TickEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -69,6 +71,10 @@ public class Events {
 
             return EventResult.pass();
         });
+
+        ChunkEvent.LOAD_DATA.register((chunkAccess, level, data) -> OilData.addOilLevel(chunkAccess.getPos(), data));
+
+        ChunkEvent.SAVE_DATA.register((chunkAccess, level, data) -> data.write().putInt("oilLevel", OilData.getOilLevel(chunkAccess.getPos())));
 
     }
 

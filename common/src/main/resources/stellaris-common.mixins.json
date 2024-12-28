@@ -8,9 +8,7 @@
     "EntityTick",
     "LivingEntityMixin",
     "PlayerDataMixin",
-    "ItemEntityGravityMixin",
-    "MixinChunkAccess",
-    "MixinChunkSerializer"
+    "ItemEntityGravityMixin"
   ],
   "client": [
     "client.PlayerKeyMixin",

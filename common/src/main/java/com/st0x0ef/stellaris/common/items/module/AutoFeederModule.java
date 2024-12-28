@@ -29,7 +29,6 @@ public class AutoFeederModule extends Item implements SpaceSuitModule {
                         player.getFoodData().eat(foodProperties);
                         break;
                     }
-
                 }
             }
         }

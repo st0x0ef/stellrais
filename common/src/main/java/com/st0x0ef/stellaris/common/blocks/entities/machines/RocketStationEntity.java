@@ -102,7 +102,7 @@ public class RocketStationEntity extends BaseContainerBlockEntity implements Imp
             Optional<RecipeHolder<RocketStationRecipe>> recipeHolder = quickCheck.getRecipeFor(new RocketStationInput(getLevel().getBlockEntity(getBlockPos()), getItems()), (ServerLevel) level);
             if (recipeHolder.isPresent()) {
                 RocketStationRecipe recipe = recipeHolder.get().value();
-                ItemStack resultStack = recipe.getOutput();
+                ItemStack resultStack = recipe.output();
                 if (outputStack.isEmpty() || (ItemStack.isSameItemSameComponents(outputStack, resultStack)
                         && outputStack.getCount() + resultStack.getCount() <= outputStack.getMaxStackSize())) {
 

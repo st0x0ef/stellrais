@@ -16,16 +16,10 @@ import net.minecraft.world.level.Level;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RocketStationRecipe implements Recipe<RocketStationInput> {
+public record RocketStationRecipe(List<Ingredient> recipeItems,
+                                  ItemStack output) implements Recipe<RocketStationInput> {
 
-    private final ItemStack output;
-    private final List<Ingredient> recipeItems;
     public static RecipeType<RocketStationRecipe> Type = RecipesRegistry.ROCKET_STATION_TYPE.get();
-
-    public RocketStationRecipe(List<Ingredient> recipeItems, ItemStack output) {
-        this.recipeItems = recipeItems;
-        this.output = output;
-    }
 
     @Override
     public boolean matches(RocketStationInput container, Level level) {
@@ -56,14 +50,6 @@ public class RocketStationRecipe implements Recipe<RocketStationInput> {
     @Override
     public PlacementInfo placementInfo() {
         return null;
-    }
-
-    public List<Ingredient> getRecipeItems() {
-        return recipeItems;
-    }
-
-    public ItemStack getOutput() {
-        return output;
     }
 
     @Override

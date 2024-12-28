@@ -1,10 +1,13 @@
 {
   "world": "stellaris:deimos",
-  "cloud": false,
-  "cloud_height": 192,
-  "fog": true,
   "rain": false,
-
+  "fog_settings": {
+    "fog": true
+  },
+  "cloud_settings": {
+    "cloud": false,
+    "cloud_height": 192
+  },
   "custom_vanilla_objects": {
     "sun": true,
     "sun_texture": "textures/environment/sun.png",
@@ -18,22 +21,19 @@
     "moon_size": 20
 
   },
-  "sunrise_color": 16755035,
+  "sunrise_color": [255, 169, 91],
   "stars": {
     "vanilla": false,
     "moving_stars": true,
     "count": 30000,
     "all_days_visible": true,
     "scale": 0.05,
-    "color": {
-      "r": 190,
-      "g": 160,
-      "b": -1
-    }
+    "color": [190, 160, -1]
+
   },
   "sky_color": {
     "custom_color": false,
-    "color": [255, 255, 255]
+    "color": [255, 255, 255, 0]
   },
 
   "sky_type": "NORMAL",

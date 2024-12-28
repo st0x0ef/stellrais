@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " c ",
+    "cbc",
+    " c "
+  ],
+  "key": {
+    "c": {
+      "item": "stellaris:hydrogen_bucket"
+    },
+    "b": {
+      "item": "stellaris:rocket_engine"
+    }
+  },
+  "result": {
+    "id": "stellaris:hydrogen_motor",
+    "count": 1
+  }
+}

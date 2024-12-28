@@ -1,5 +1,4 @@
 {
-  "name": "stellaris:earth_operation_base/earth_operation_base",
   "fallback": "minecraft:empty",
   "elements": [
     {

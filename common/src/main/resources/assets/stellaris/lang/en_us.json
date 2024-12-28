@@ -281,10 +281,22 @@
   "block.stellaris.vacuumator": "Vacuumator",
   "block.stellaris.pumpjack": "Pumpjack",
   "block.stellaris.fuel_refinery": "Fuel Refinery",
+  "block.stellaris.upgrade_station": "Upgrade Station",
 
   "item.stellaris.oil_finder": "Oil Finder",
 
 
+  "item.stellaris.raw_steel_ingot": "Raw Steel Ingot",
+  "item.stellaris.steel_ingot": "Steel Ingot",
+  "item.stellaris.raw_desh_ingot": "Raw Desh Ingot",
+  "item.stellaris.desh_ingot": "Desh Ingot",
+  "item.stellaris.ice_shard": "Ice Shard",
+  "item.stellaris.steel_nugget": "Steel Nugget",
+  "item.stellaris.heavy_metal_ingot": "Heavy Metal Ingot",
+  "item.stellaris.heavy_metal_nugget": "Heavy Metal Nugget",
+  "item.stellaris.raw_uranium": "Raw Uranium",
+  "item.stellaris.uranium_ingot": "Uranium Ingot",
+  "item.stellaris.moon_berries": "Moon Berry",
 
   "STELLARIS VEHICLE STUFF":
   ""
@@ -336,7 +348,14 @@
   "item.stellaris.jetsuit_leggings": "Jet Suit Leggings",
   "item.stellaris.jetsuit_boots": "Jet Suit Boots",
   "item.stellaris.jetsuit_suit": "Jet Suit Chest",
+  "item.stellaris.base_module_tier_1": "Tier 1 Base Module",
+  "item.stellaris.base_module_tier_2": "Tier 2 Base Module",
 
+  "item.stellaris.fuel_module": "Fuel Module",
+  "item.stellaris.oil_finder_module": "Oil Finder Module",
+  "item.stellaris.auto_feeder_module": "Auto Feeder Module",
+  "item.stellaris.gravity_normalizer_module": "Gravity Normalizer Module",
+  "item.stellaris.jet_module": "Jet Module",
 
 
   "STELLARIS TOOLS/WEAPONS":
@@ -613,6 +632,10 @@
   "tag.item.stellaris.can": "Cans",
   "tag.item.stellaris.space_food": "Space Food",
   "tag.item.stellaris.rocket_skin": "Rocket Skin",
-  "tag.item.stellaris.coal_generator_fuel": "Coal Generator Fuel"
+  "tag.item.stellaris.coal_generator_fuel": "Coal Generator Fuel",
 
+  "spacesuit.stellaris.auto_feeder": "Auto Feeder",
+  "spacesuit.stellaris.shift_for_modules": "Hold shift for module list",
+  "spacesuit.stellaris.modules": "Modules",
+  "container.stellaris.upgrade": "Upgrade"
 }

@@ -1,6 +1,6 @@
 package com.st0x0ef.stellaris.common.registry;
 
-import com.st0x0ef.stellaris.common.blocks.entities.machines.*;
+import com.st0x0ef.stellaris.common.blocks.entities.machines.WrappedEnergyBlockEntity;
 import com.st0x0ef.stellaris.common.systems.energy.EnergyApi;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;

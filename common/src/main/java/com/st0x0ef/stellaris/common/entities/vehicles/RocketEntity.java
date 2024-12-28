@@ -9,8 +9,8 @@ import com.st0x0ef.stellaris.common.keybinds.KeyVariables;
 import com.st0x0ef.stellaris.common.menus.RocketMenu;
 import com.st0x0ef.stellaris.common.network.packets.SyncRocketComponentPacket;
 import com.st0x0ef.stellaris.common.registry.*;
-import com.st0x0ef.stellaris.common.vehicle_upgrade.*;
 import com.st0x0ef.stellaris.common.utils.PlanetUtil;
+import com.st0x0ef.stellaris.common.vehicle_upgrade.*;
 import dev.architectury.networking.NetworkManager;
 import dev.architectury.registry.menu.ExtendedMenuProvider;
 import dev.architectury.registry.menu.MenuRegistry;
@@ -52,9 +52,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
 
-public class RocketEntity extends IVehicleEntity implements HasCustomInventoryScreen, ContainerListener {
+public class RocketEntity extends IVehicleEntity implements HasCustomInventoryScreen {
     public int START_TIMER;
 
     public boolean needsModelChange = false;
@@ -113,8 +112,23 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
     }
 
     @Override
+    public boolean setPassengersRiding() {
+        return false;
+    }
+
+    @Override
     public void tick() {
         super.tick();
+
+        if (this.getY() > 600) {
+            this.openPlanetMenu(getFirstPlayerPassenger());
+
+            this.getPassengers().forEach((entity -> {
+                if (entity instanceof Player passenger && !passenger.is(getFirstPlayerPassenger())) {
+                    this.openWaitMenu(passenger);
+                }
+            }));
+        }
 
         this.rocketExplosion();
         this.burnEntities();
@@ -127,21 +141,6 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
         if (this.entityData.get(ROCKET_START)) {
             this.spawnParticle();
             this.startTimerAndFlyMovement();
-        }
-
-        if (this.getY() > 600) {
-            AtomicBoolean firstPlayer = new AtomicBoolean(true);
-
-            this.getPassengers().forEach((entity -> {
-                if (entity instanceof Player passenger) {
-                    if(firstPlayer.get()) {
-                        this.openPlanetMenu(passenger);
-                        firstPlayer.set(false);
-                    } else {
-                        this.openWaitMenu(passenger);
-                    }
-                }
-            }));
         }
     }
 
@@ -426,9 +425,13 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
     }
 
     public Player getFirstPlayerPassenger() {
-        if (!this.getPassengers().isEmpty() && this.getPassengers().getFirst() instanceof Player player) {
-            return player;
+        if (!this.getPassengers().isEmpty()) {
+            for (int i = 0; i < this.getPassengers().size(); i++) {
+                if (this.getPassengers().get(i) instanceof Player player)
+                    return player;
+            }
         }
+
         return null;
     }
 
@@ -446,11 +449,6 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
         rocket.set(DataComponentsRegistry.ROCKET_COMPONENT.get(), rocketComponent);
 
         return rocket;
-    }
-
-    @Override
-    public void containerChanged(Container container) {
-
     }
 
     protected void doPlayerRide(Entity player) {
@@ -534,7 +532,7 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
                 FUEL = TANK_UPGRADE.getTankCapacity();
             }
 
-            if (inventory.removeItem(0, 1).is(ItemsRegistry.FUEL_BUCKET.get())) {
+            if (inventory.removeItem(0, 1).is(ItemsRegistry.FUEL_BUCKET.get()) || inventory.removeItem(0, 1).is(ItemsRegistry.HYDROGEN_BUCKET.get())) {
                 inventory.setItem(1, new ItemStack(Items.BUCKET, inventory.getItem(1).getCount()+1));
             }
 
@@ -554,12 +552,12 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
     }
 
     private void openPlanetMenu(Player player) {
-        if(player == null) return;
+        if (player == null) return;
 
-        if(!player.getEntityData().get(EntityData.DATA_PLANET_MENU_OPEN)) {
+        if (!player.getEntityData().get(EntityData.DATA_PLANET_MENU_OPEN)) {
             player.setNoGravity(true);
             player.getVehicle().setNoGravity(true);
-            PlanetUtil.openPlanetSelectionMenu(player, false);
+            PlanetUtil.openPlanetSelectionMenu(player, player.isCreative());
             player.getEntityData().set(EntityData.DATA_PLANET_MENU_OPEN, true);
         }
     }
@@ -615,7 +613,7 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
         return ResourceLocation.parse(texture);
     }
 
-    public boolean canGoTo (Planet actual, Planet destination) {
+    public boolean canGoTo(Planet actual, Planet destination) {
         return Mth.abs(actual.distanceFromEarth() - destination.distanceFromEarth()) <= FuelType.getMegametersTraveled(this.rocketComponent.fuel(), FuelType.getItemBasedOnLoacation(ResourceLocation.parse(this.rocketComponent.fuelType())));
     }
 

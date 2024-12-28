@@ -4,8 +4,8 @@ import com.st0x0ef.stellaris.common.systems.SystemsMain;
 import com.st0x0ef.stellaris.common.systems.energy.base.EnergyBlock;
 import com.st0x0ef.stellaris.common.systems.energy.base.EnergyItem;
 import com.st0x0ef.stellaris.common.systems.item.ItemStackHolder;
-import com.st0x0ef.stellaris.platform.systems.energy.EnergyContainer;
 import com.st0x0ef.stellaris.common.systems.util.Updatable;
+import com.st0x0ef.stellaris.platform.systems.energy.EnergyContainer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.Item;
@@ -16,7 +16,10 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 public class EnergyApi {

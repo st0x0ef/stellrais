@@ -345,8 +345,7 @@ public abstract class AbstractRoverBase extends IVehicleEntity
     }
 
     public boolean isAccelerating() {
-        boolean b = (isForward() || isBackward()) && !horizontalCollision;
-        return b;
+        return (isForward() || isBackward()) && !horizontalCollision;
     }
 
     @Override

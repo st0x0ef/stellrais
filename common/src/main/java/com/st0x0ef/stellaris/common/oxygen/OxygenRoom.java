@@ -29,11 +29,7 @@ public class OxygenRoom {
     }
 
     public OxygenDistributorBlockEntity getDistributorBlockEntity() {
-        if (level.getBlockEntity(distributorPos) instanceof OxygenDistributorBlockEntity distributor) {
-            return distributor;
-        }
-
-        return null;
+        return level.getBlockEntity(distributorPos) instanceof OxygenDistributorBlockEntity distributor ? distributor : null;
     }
 
     public void updateOxygenRoom() {
@@ -47,15 +43,14 @@ public class OxygenRoom {
         while (!positionsToCheck.isEmpty()) {
             BlockPos currentPos = positionsToCheck.poll();
             visited.add(currentPos);
-            if (isAirBlock(currentPos)) {
-                if (addOxygenatedPosition(currentPos)) {
-                    if (isOnBorderBox(currentPos)) {
-                        oxygenManager.addRoomToCheckIfOpen(currentPos, this);
-                    } else {
-                        for (Direction direction : Direction.values()) {
-                            if (!visited.contains(currentPos.relative(direction))) {
-                                positionsToCheck.offer(currentPos.relative(direction));
-                            }
+            if (isAirBlock(currentPos) && addOxygenatedPosition(currentPos)) {
+                if (isOnBorderBox(currentPos)) {
+                    oxygenManager.addRoomToCheckIfOpen(currentPos, this);
+                } else {
+                    for (Direction direction : Direction.values()) {
+                        BlockPos nextPos = currentPos.relative(direction);
+                        if (!visited.contains(nextPos)) {
+                            positionsToCheck.offer(nextPos);
                         }
                     }
                 }
@@ -84,28 +79,21 @@ public class OxygenRoom {
 
     private boolean addOxygenatedPosition(BlockPos pos) {
         OxygenDistributorBlockEntity distributor = getDistributorBlockEntity();
-        if (distributor != null) {
-            if (distributor.useOxygenAndEnergy()) {
-                oxygenatedPositions.add(pos);
-                return true;
-            }
+        if (distributor != null && distributor.useOxygenAndEnergy()) {
+            oxygenatedPositions.add(pos);
+            return true;
         }
-
         return false;
     }
 
     public boolean breathOxygenAt(BlockPos pos) {
         if (hasOxygenAt(pos)) {
             OxygenDistributorBlockEntity distributor = getDistributorBlockEntity();
-            if (distributor != null) {
-                if (!distributor.useOxygenAndEnergy()) {
-                    oxygenatedPositions.remove(pos);
-                }
-
+            if (distributor != null && distributor.useOxygenAndEnergy()) {
                 return true;
             }
+            oxygenatedPositions.remove(pos);
         }
-
         return false;
     }
 }

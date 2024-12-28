@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "stellaris:base_module_tier_2"
+    },
+    {
+      "item": "stellaris:rocket_engine"
+    },
+    {
+      "item": "stellaris:rocket_engine"
+    }
+  ],
+  "result": {
+    "id": "stellaris:jet_module",
+    "count": 1
+  }
+}

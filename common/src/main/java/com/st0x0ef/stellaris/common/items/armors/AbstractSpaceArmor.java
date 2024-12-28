@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.minecraft.world.item.equipment.ArmorType;
+import com.st0x0ef.stellaris.common.utils.FuelUtils;
 
 import java.util.List;
 
@@ -44,7 +45,7 @@ public abstract class AbstractSpaceArmor extends CustomArmorItem {
         public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
             super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
 
-            tooltipComponents.add(Component.translatable("jetsuit.stellaris.fuel", getFuel(stack)));
+            tooltipComponents.add(Component.translatable("jetsuit.stellaris.fuel", FuelUtils.getFuel(stack)));
         }
 
         public static void addFuel(ItemStack stack, int amount) {

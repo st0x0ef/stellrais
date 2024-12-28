@@ -3,7 +3,6 @@ package com.st0x0ef.stellaris.common.data_components;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 
@@ -16,14 +15,4 @@ public record OxygenComponent(long oxygen, long capacity) implements Serializabl
     ).apply(instance, OxygenComponent::new));
 
     public static final StreamCodec<ByteBuf, OxygenComponent> STREAM_CODEC = StreamCodec.composite(ByteBufCodecs.VAR_LONG, OxygenComponent::oxygen, ByteBufCodecs.VAR_LONG, OxygenComponent::capacity, OxygenComponent::new);
-
-    public static OxygenComponent fromNetwork(RegistryFriendlyByteBuf buffer) {
-        return new OxygenComponent(buffer.readLong(), buffer.readLong());
-    }
-
-    public RegistryFriendlyByteBuf toNetwork(RegistryFriendlyByteBuf buffer) {
-        buffer.writeLong(this.oxygen);
-        buffer.writeLong(this.capacity);
-        return buffer;
-    }
 }

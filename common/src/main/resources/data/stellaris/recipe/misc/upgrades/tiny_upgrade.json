@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " c ",
+    " b ",
+    "ydy"
+  ],
+  "key": {
+    "c": {
+      "item": "stellaris:rocket_nose_cone"
+    },
+    "b": {
+      "tag": "c:nuggets/heavy_metal"
+    },
+    "d": {
+      "item": "stellaris:engine_fan"
+    },
+    "y": {
+      "item": "stellaris:rocket_fin"
+    }
+  },
+  "result": {
+    "id": "stellaris:tiny_rocket_upgrade",
+    "count": 1
+  }
+}

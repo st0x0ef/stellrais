@@ -1,8 +1,8 @@
 package com.st0x0ef.stellaris.common.systems.energy.impl;
 
 import com.st0x0ef.stellaris.common.systems.SystemsMain;
-import com.st0x0ef.stellaris.platform.systems.energy.EnergyContainer;
 import com.st0x0ef.stellaris.common.systems.energy.base.EnergySnapshot;
+import com.st0x0ef.stellaris.platform.systems.energy.EnergyContainer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 

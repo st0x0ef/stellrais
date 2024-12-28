@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ccc",
+    "cbc",
+    "ccc"
+  ],
+  "key": {
+    "c": {
+      "tag": "c:ingots/desh"
+    },
+    "b": {
+      "item": "stellaris:tiny_rocket_upgrade"
+    }
+  },
+  "result": {
+    "id": "stellaris:small_rocket_upgrade",
+    "count": 1
+  }
+}

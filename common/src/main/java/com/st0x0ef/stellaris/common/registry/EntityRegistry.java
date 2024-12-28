@@ -2,12 +2,13 @@ package com.st0x0ef.stellaris.common.registry;
 
 import com.google.common.base.Suppliers;
 import com.st0x0ef.stellaris.Stellaris;
-import com.st0x0ef.stellaris.common.entities.*;
+import com.st0x0ef.stellaris.common.entities.IceShardArrowEntity;
+import com.st0x0ef.stellaris.common.entities.IceSpit;
+import com.st0x0ef.stellaris.common.entities.mobs.*;
+import com.st0x0ef.stellaris.common.entities.mobs.alien.Alien;
 import com.st0x0ef.stellaris.common.entities.mobs.cheese_boss.CheeseBoss;
 import com.st0x0ef.stellaris.common.entities.mobs.cheese_boss.CheeseBossEntitySensor;
 import com.st0x0ef.stellaris.common.entities.mobs.cheese_boss.attack_entities.CheeseSpit;
-import com.st0x0ef.stellaris.common.entities.mobs.*;
-import com.st0x0ef.stellaris.common.entities.mobs.alien.Alien;
 import com.st0x0ef.stellaris.common.entities.mobs.pygro.Pygro;
 import com.st0x0ef.stellaris.common.entities.mobs.pygro.PygroMobsSensor;
 import com.st0x0ef.stellaris.common.entities.vehicles.LanderEntity;
@@ -89,7 +90,7 @@ public class EntityRegistry {
         SpawnPlacementsRegistry.register(PYGRO, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Pygro::checkMonsterSpawnRules);
         SpawnPlacementsRegistry.register(MOGLER, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mogler::checkMoglerSpawnRules);
         SpawnPlacementsRegistry.register(STAR_CRAWLER, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, StarCrawler::checkMonsterSpawnRules);
-        SpawnPlacementsRegistry.register(CHEESE_BOSS, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, CheeseBoss::checkMonsterSpawnRules);
+        //SpawnPlacementsRegistry.register(CHEESE_BOSS, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, CheeseBoss::checkMonsterSpawnRules);
     }
 
     //Entity Sensor

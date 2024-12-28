@@ -3,7 +3,9 @@ package com.st0x0ef.stellaris.client.screens;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.st0x0ef.stellaris.Stellaris;
-import com.st0x0ef.stellaris.client.screens.components.*;
+import com.st0x0ef.stellaris.client.screens.components.InvisibleButton;
+import com.st0x0ef.stellaris.client.screens.components.LaunchButton;
+import com.st0x0ef.stellaris.client.screens.components.ModifiedButton;
 import com.st0x0ef.stellaris.client.screens.helper.ScreenHelper;
 import com.st0x0ef.stellaris.client.screens.info.CelestialBody;
 import com.st0x0ef.stellaris.client.screens.info.MoonInfo;
@@ -16,7 +18,6 @@ import com.st0x0ef.stellaris.common.registry.EntityData;
 import com.st0x0ef.stellaris.common.registry.TranslatableRegistry;
 import com.st0x0ef.stellaris.common.utils.PlanetUtil;
 import com.st0x0ef.stellaris.common.utils.Utils;
-
 import dev.architectury.networking.NetworkManager;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -42,7 +43,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 @Environment(EnvType.CLIENT)
 public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelectionMenu> {
@@ -109,7 +111,6 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
         this.imageWidth = 1200;
         this.imageHeight = 1600;
         this.inventoryLabelY = this.imageHeight - 110;
-        initializeLaunchButton();
     }
 
     @Override
@@ -199,12 +200,13 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
         int buttonX = (this.width - buttonWidth) / 4 + 100;
         int buttonY = (this.height - buttonHeight) / 4;
 
-        launchButton = new LaunchButton(buttonX, buttonY, buttonWidth, buttonHeight, Component.literal("Launch"), (btn) -> onLaunchButtonClick());
+        launchButton = new LaunchButton(buttonX, buttonY, buttonWidth, buttonHeight, launch, (btn) -> onLaunchButtonClick());
+        launchButton.setButtonTexture(LAUNCH_BUTTON_TEXTURE, ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/launch_button_hovered.png"));
 
         this.addRenderableWidget(launchButton);
-
         launchButton.visible = false;
     }
+
 
     public static CelestialBody focusedBody = null;
     public static CelestialBody hoveredBody = null;
@@ -238,8 +240,6 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
             showLargeMenu = false;
         }
     }
-
-
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
@@ -310,7 +310,7 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
 
             graphics.blit(RenderType::guiTextured, star.texture, (int) bodyX, (int) bodyY, 0, 0, bodyWidth, bodyHeight, bodyWidth, bodyHeight);
 
-            int nameWidth = font.width(star.name);
+            int nameWidth = font.width(star.translatable);
             graphics.drawString(font, star.translatable, (int) (bodyX + (float) bodyWidth / 2 - (float) nameWidth / 2), (int) (bodyY + bodyHeight), 0xFFFFFF);
         }
     }
@@ -331,8 +331,8 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
 
             ScreenHelper.drawTexturewithRotation(graphics, planet.texture, (int) planetX, (int) planetY, 0, 0, planetWidth, planetHeight, planetWidth, planetHeight, (float) planet.currentAngle);
 
-            int nameWidth = font.width(planet.name);
-            graphics.drawString(font, planet.name, (int) (planetX + (float) planetWidth / 2 - (float) nameWidth / 2), (int) (planetY + planetHeight), 0xFFFFFF);
+            int nameWidth = font.width(planet.translatable);
+            graphics.drawString(font, planet.translatable, (int) (planetX + (float) planetWidth / 2 - (float) nameWidth / 2), (int) (planetY + planetHeight), 0xFFFFFF);
         }
     }
 
@@ -347,8 +347,6 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
             ScreenHelper.drawTexturewithRotation(graphics, moon.texture, (int) moonX, (int) moonY, 0, 0, moonWidth, moonHeight, moonWidth, moonHeight, (float) moon.currentAngle);
         }
     }
-
-
 
     private int currentHighlighterFrame = 0;
     private final int totalHighlighterFrames = 30;
@@ -489,7 +487,6 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
 
             RenderSystem.disableBlend();
 
-            graphics.drawString(font, launch, buttonX + buttonWidth / 4, buttonY + buttonHeight / 4 + 1, 0xFFFFFF);
             graphics.drawString(font, CELESTIAL_BODY_NAME, textX, buttonY + buttonHeight / 4 + 37, 0xFFFFFF, true);
 
             graphics.drawString(font, "￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣", textX, buttonY + buttonHeight / 4 + 50, 0xFFFFFF, true);

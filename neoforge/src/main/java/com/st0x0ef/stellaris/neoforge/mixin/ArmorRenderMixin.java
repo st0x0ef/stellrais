@@ -1,15 +1,20 @@
 package com.st0x0ef.stellaris.neoforge.mixin;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.st0x0ef.stellaris.common.items.CustomArmorItem;
 import com.st0x0ef.stellaris.platform.neoforge.ClientUtilsPlatformImpl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.equipment.EquipmentModel;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
@@ -29,29 +34,27 @@ public abstract class ArmorRenderMixin extends Item {
         consumer.accept(new IClientItemExtensions() {
             private ClientUtilsPlatformImpl.ArmorRenderer renderer;
 
-            @SuppressWarnings("unchecked")
-            private static <T extends LivingEntity> void uncheckedCopyTo(HumanoidModel<T> from, HumanoidModel<?> to) {
+            private static <T extends HumanoidRenderState> void uncheckedCopyTo(HumanoidModel<T> from, HumanoidModel<?> to) {
                 from.copyPropertiesTo((HumanoidModel<T>) to);
             }
 
-            @SuppressWarnings("unchecked")
             @Override
-            public @NotNull HumanoidModel<?> getHumanoidArmorModel(LivingEntity entity, ItemStack stack, EquipmentSlot slot, HumanoidModel<?> original) {
+            public Model getHumanoidArmorModel(ItemStack itemStack, EquipmentModel.LayerType layerType, Model original) {
                 if (renderer == null) {
-                    renderer = ClientUtilsPlatformImpl.ARMOR_RENDERERS.get(stack.getItem());
+                    renderer = ClientUtilsPlatformImpl.ARMOR_RENDERERS.get(itemStack.getItem());
                 }
                 if (renderer == null) return original;
 
                 ModelPart root = Minecraft.getInstance().getEntityModels().bakeLayer(renderer.layer());
 
-                return renderer.factory().create(root, slot, stack, original);
+                return renderer.factory().create(root, itemStack.getEquipmentSlot(), itemStack, original);
             }
 
             @Override
-            public @NotNull Model getGenericArmorModel(LivingEntity livingEntity, ItemStack itemStack, EquipmentSlot equipmentSlot, HumanoidModel<?> original) {
-                HumanoidModel<?> replacement = getHumanoidArmorModel(livingEntity, itemStack, equipmentSlot, original);
+            public Model getGenericArmorModel(ItemStack itemStack, EquipmentModel.LayerType layerType, Model original) {
+                HumanoidModel<?> replacement = (HumanoidModel<?>) getHumanoidArmorModel(itemStack, layerType, original);
                 if (replacement != original) {
-                    uncheckedCopyTo(original, replacement);
+                    uncheckedCopyTo((HumanoidModel<? extends HumanoidRenderState>) original, replacement);
                     return replacement;
                 } else {
                     return original;

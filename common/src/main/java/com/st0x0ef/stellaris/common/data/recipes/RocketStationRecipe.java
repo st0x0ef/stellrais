@@ -49,7 +49,7 @@ public record RocketStationRecipe(List<Ingredient> recipeItems,
 
     @Override
     public PlacementInfo placementInfo() {
-        return null;
+        return PlacementInfo.create(this.recipeItems());
     }
 
     @Override

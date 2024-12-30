@@ -45,7 +45,7 @@ public record WaterSeparatorRecipe(FluidStack ingredientStack, List<FluidStack> 
 
     @Override
     public PlacementInfo placementInfo() {
-        return null;
+        return PlacementInfo.NOT_PLACEABLE;
     }
 
     @Override

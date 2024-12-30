@@ -42,7 +42,7 @@ public record FuelRefineryRecipe(FluidStack ingredientStack, FluidStack resultSt
 
     @Override
     public PlacementInfo placementInfo() {
-        return null;
+        return PlacementInfo.NOT_PLACEABLE;
     }
 
     @Override

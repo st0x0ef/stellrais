@@ -21,7 +21,7 @@
     "moon_size": 150
 
   },
-  "sunrise_color": [0, 140 , 205 ],
+  "sunrise_color": [0, 140, 205],
   "sunrise_alpha_modifier": 0,
   "stars": {
     "vanilla": false,
@@ -45,7 +45,7 @@
   "sky_type": "NORMAL",
   "sky_color": {
     "custom_color": false,
-    "color": [255, 255, 255, 0]
+    "color": [255, 255, 255]
   },
   "sky_objects": [
     {

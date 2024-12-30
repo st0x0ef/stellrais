@@ -19,14 +19,16 @@ public class IceShardArrowRenderer extends ArrowRenderer<IceShardArrowEntity, Ar
     }
 
     @Override
-    public ArrowRenderState createRenderState() {
-        return null;
+    protected ResourceLocation getTextureLocation(ArrowRenderState renderState) {
+        return null ;
     }
 
     @Override
-    protected ResourceLocation getTextureLocation(ArrowRenderState arrowRenderState) {
-        return null;
+    public ArrowRenderState createRenderState() {
+        return new ArrowRenderState();
     }
+
+
 
     @Override
     public ResourceLocation getTextureLocation(IceShardArrowEntity entity) {

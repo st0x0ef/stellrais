@@ -3,7 +3,7 @@
   "downfall": 0,
   "precipitation": "none",
   "has_precipitation": false,
-
+  "temperature_modifier": "none",
   "effects": {
     "sky_color": 2105376,
     "fog_color": 1447444,
@@ -39,13 +39,11 @@
       "charge": 0.4
     }
   },
-  "carvers": {
-    "air": [
-      "minecraft:cave",
-      "minecraft:cave_extra_underground",
-      "minecraft:canyon"
-    ]
-  },
+  "carvers":[
+    "minecraft:cave",
+    "minecraft:cave_extra_underground",
+    "minecraft:canyon"
+  ],
   "features": [
     [],
     [],

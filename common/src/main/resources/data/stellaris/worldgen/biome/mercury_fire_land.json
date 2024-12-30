@@ -3,6 +3,7 @@
   "downfall": 0,
   "has_precipitation": false,
   "creature_spawn_probability": 0.2,
+  "temperature_modifier": "none",
   "effects": {
     "sky_color": -16777216,
     "fog_color": -16777216,
@@ -33,11 +34,9 @@
       "charge": 0.4
     }
   },
-  "carvers": {
-    "air": [
-      "minecraft:canyon"
-    ]
-  },
+  "carvers": [
+    "minecraft:canyon"
+  ],
   "features": [
     [
       "minecraft:basalt_pillar"

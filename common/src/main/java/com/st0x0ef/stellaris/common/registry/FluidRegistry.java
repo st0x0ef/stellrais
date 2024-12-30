@@ -91,6 +91,4 @@ public class FluidRegistry {
         FLUIDS_INFOS.add(HYDROGEN_ATTRIBUTES);
         FLUIDS_INFOS.add(FUEL_ATTRIBUTES);
     }
-
-
 }

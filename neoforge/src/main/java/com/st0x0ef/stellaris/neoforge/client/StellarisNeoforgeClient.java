@@ -139,7 +139,7 @@ public class StellarisNeoforgeClient {
         NeoForge.EVENT_BUS.addListener(StellarisNeoforgeClient::clientTick);
     }
 
-    @SubscribeEvent
+    /*@SubscribeEvent
     private static void initializeClient(RegisterClientExtensionsEvent event) {
         FluidRegistry.FLUIDS_INFOS.forEach((attributes -> event.registerFluidType(new IClientFluidTypeExtensions() {
             @Override
@@ -152,7 +152,7 @@ public class StellarisNeoforgeClient {
                 return attributes.getFlowingTexture();
             }
         }, attributes.getFlowingFluid().getFluidType())));
-    }
+    }*/
 
     private static void clientTick(ClientTickEvent.Post event) {
         KeyMappingsRegistry.clientTick(Minecraft.getInstance());

@@ -35,12 +35,12 @@ public class Stellaris {
         CustomConfig.init();
         EntityData.register();
         NetworkRegistry.init();
+        FluidRegistry.init();
 
         CreativeTabsRegistry.TABS.register();
         ProcessorsRegistry.STRUCTURE_PROCESSORS.register();
         SoundRegistry.SOUNDS.register();
         DataComponentsRegistry.DATA_COMPONENT_TYPE.register();
-        FluidRegistry.init();
         ParticleRegistry.PARTICLES.register();
         BlocksRegistry.BLOCKS.register();
         EntityRegistry.ENTITY_TYPE.register();

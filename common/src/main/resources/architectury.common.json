@@ -1,6 +1,3 @@
 {
-  "accessWidener": "stellaris.accesswidener",
-  "injected_interfaces": {
-    "net/minecraft/class_2791": ["com/st0x0ef/stellaris/common/oil/ChunkOilLevelGetter"]
-  }
+  "accessWidener": "stellaris.accesswidener"
 }

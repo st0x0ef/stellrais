@@ -1,6 +1,7 @@
 package com.st0x0ef.stellaris.common.items;
 
 import com.st0x0ef.stellaris.common.blocks.entities.machines.FluidTankHelper;
+import com.st0x0ef.stellaris.common.oil.OilData;
 import com.st0x0ef.stellaris.common.utils.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -27,9 +28,9 @@ public class OilFinderItem extends Item {
             return InteractionResult.FAIL;
         }
 
-        int oilLevel = level.getChunk(player.getOnPos()).stellaris$getChunkOilLevel();
+        int oilLevel = OilData.getOrCreateOilLevel(level.getChunk(player.getOnPos()).getPos(), null);
 
-        MutableComponent component = Component.literal("Found Oil " + level.getChunk(player.getOnPos()).stellaris$getChunkOilLevel() + "mb");
+        MutableComponent component = Component.literal("Found Oil " + OilData.getOrCreateOilLevel(level.getChunk(player.getOnPos()).getPos(), null) + "mb");
         if(FluidTankHelper.convertToNeoMb(oilLevel) > 40000) {
             component.withColor(Utils.getColorHexCode("green"));
         } else if(FluidTankHelper.convertToNeoMb(oilLevel) > 0) {

@@ -2,6 +2,7 @@ package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
 import com.st0x0ef.stellaris.common.blocks.machines.CoalGeneratorBlock;
 import com.st0x0ef.stellaris.common.menus.PumpjackMenu;
+import com.st0x0ef.stellaris.common.oil.OilData;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import com.st0x0ef.stellaris.common.registry.FluidRegistry;
 import com.st0x0ef.stellaris.common.systems.energy.impl.WrappedBlockEnergyContainer;
@@ -32,21 +33,21 @@ public class PumpjackBlockEntity extends BaseEnergyContainerBlockEntity implemen
 
         ChunkAccess access = this.level.getChunk(this.worldPosition);
 
-        chunkOilLevel = access.stellaris$getChunkOilLevel();
+        chunkOilLevel = OilData.getOrCreateOilLevel(access.getPos(), null);
 
         WrappedBlockEnergyContainer energyContainer = getWrappedEnergyContainer();
 
         int actualOilToExtract = (int) oilToExtract;
 
-        if (access.stellaris$getChunkOilLevel() < oilToExtract) {
-            actualOilToExtract = access.stellaris$getChunkOilLevel();
+        if (chunkOilLevel < oilToExtract) {
+            actualOilToExtract = chunkOilLevel;
 
             if (actualOilToExtract == 0) return;
         }
 
         if (energyContainer.getStoredEnergy() >= 2L * actualOilToExtract) {
             if (resultTank.getAmount() + actualOilToExtract <= resultTank.getMaxCapacity()) {
-                access.stellaris$setChunkOilLevel(access.stellaris$getChunkOilLevel() - actualOilToExtract);
+                OilData.setOilLevel(access.getPos(), chunkOilLevel - actualOilToExtract);
                 FluidStack tankStack = resultTank.getStack();
 
                 if (tankStack.isEmpty()) {

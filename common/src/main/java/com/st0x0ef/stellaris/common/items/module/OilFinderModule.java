@@ -1,5 +1,6 @@
 package com.st0x0ef.stellaris.common.items.module;
 
+import com.st0x0ef.stellaris.common.oil.OilData;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -25,7 +26,7 @@ public class OilFinderModule extends Item implements SpaceSuitModule {
     public void tick(ItemStack stack, Level level, Player player) {
         SpaceSuitModule.super.tick(stack, level, player);
         if(!level.isClientSide) {
-            this.oilLevel = level.getChunk(player.blockPosition()).stellaris$getChunkOilLevel();
+            this.oilLevel = OilData.getOrCreateOilLevel(level.getChunk(player.blockPosition()).getPos(), null);
         }
     }
 

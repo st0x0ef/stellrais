@@ -9,7 +9,7 @@ import java.util.Map;
 public class OilData {
     private static final Map<ChunkPos, Integer> oilLevels = new HashMap<>();
 
-    public static void addOilLevel(ChunkPos chunkPos, SerializableChunkData data) {
+    public static int getOrCreateOilLevel(ChunkPos chunkPos, SerializableChunkData data) {
         if (!oilLevels.containsKey(chunkPos)) {
             if (data.write().contains("oilLevel")) {
                 oilLevels.put(chunkPos, data.write().getInt("oilLevel"));
@@ -17,9 +17,6 @@ public class OilData {
                 oilLevels.put(chunkPos, OilUtils.getRandomOilLevel());
             }
         }
-    }
-
-    public static int getOilLevel(ChunkPos chunkPos) {
         return oilLevels.get(chunkPos);
     }
 }

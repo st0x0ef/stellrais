@@ -72,9 +72,9 @@ public class Events {
             return EventResult.pass();
         });
 
-        ChunkEvent.LOAD_DATA.register((chunkAccess, level, data) -> OilData.addOilLevel(chunkAccess.getPos(), data));
+        ChunkEvent.LOAD_DATA.register((chunkAccess, level, data) -> OilData.getOrCreateOilLevel(chunkAccess.getPos(), data));
 
-        ChunkEvent.SAVE_DATA.register((chunkAccess, level, data) -> data.write().putInt("oilLevel", OilData.getOilLevel(chunkAccess.getPos())));
+        ChunkEvent.SAVE_DATA.register((chunkAccess, level, data) -> data.write().putInt("oilLevel", OilData.getOrCreateOilLevel(chunkAccess.getPos(), data)));
 
     }
 

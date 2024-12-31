@@ -8,12 +8,12 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 
-public class RadioactiveEffect extends MobEffect implements RadioactiveEffects {
+public class RadioactiveEffect extends MobEffect{
     public RadioactiveEffect(MobEffectCategory mobEffectCategory, int color) {
         super(mobEffectCategory, color);
     }
 
-    @Override
+
     public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
         if (livingEntity.getHealth() > 0.0F) {
             if (amplifier == 0) {

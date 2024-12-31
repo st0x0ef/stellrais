@@ -1,11 +1,13 @@
 package com.st0x0ef.stellaris.common.items;
 
 import com.st0x0ef.stellaris.common.blocks.entities.machines.FluidTankHelper;
+import com.st0x0ef.stellaris.common.oil.GlobalOilManager;
 import com.st0x0ef.stellaris.common.oil.OilData;
 import com.st0x0ef.stellaris.common.utils.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -28,9 +30,11 @@ public class OilFinderItem extends Item {
             return InteractionResult.FAIL;
         }
 
-        int oilLevel = OilData.getOrCreateOilLevel(level.getChunk(player.getOnPos()).getPos(), null);
+        OilData oilData = GlobalOilManager.getInstance().getOrCreateDimensionManager((ServerLevel) level);
 
-        MutableComponent component = Component.literal("Found Oil " + OilData.getOrCreateOilLevel(level.getChunk(player.getOnPos()).getPos(), null) + "mb");
+        int oilLevel = oilData.getOrCreateOilLevel(level.getChunk(player.getOnPos()).getPos());
+
+        MutableComponent component = Component.literal("Found Oil " + oilData.getOrCreateOilLevel(level.getChunk(player.getOnPos()).getPos()) + "mb");
         if(FluidTankHelper.convertToNeoMb(oilLevel) > 40000) {
             component.withColor(Utils.getColorHexCode("green"));
         } else if(FluidTankHelper.convertToNeoMb(oilLevel) > 0) {

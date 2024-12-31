@@ -2,7 +2,7 @@ package com.st0x0ef.stellaris.common.events;
 
 import com.st0x0ef.stellaris.common.blocks.CoalLanternBlock;
 import com.st0x0ef.stellaris.common.blocks.WallCoalTorchBlock;
-import com.st0x0ef.stellaris.common.oil.OilData;
+import com.st0x0ef.stellaris.common.oil.GlobalOilManager;
 import com.st0x0ef.stellaris.common.oxygen.GlobalOxygenManager;
 import com.st0x0ef.stellaris.common.registry.BlocksRegistry;
 import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
@@ -72,10 +72,7 @@ public class Events {
             return EventResult.pass();
         });
 
-        ChunkEvent.LOAD_DATA.register((chunkAccess, level, data) -> OilData.getOrCreateOilLevel(chunkAccess.getPos(), data));
-
-        ChunkEvent.SAVE_DATA.register((chunkAccess, level, data) -> data.write().putInt("oilLevel", OilData.getOrCreateOilLevel(chunkAccess.getPos(), data)));
-
+        ChunkEvent.LOAD_DATA.register((chunkAccess, level, data) -> GlobalOilManager.getInstance().getOrCreateDimensionManager(level).getOrCreateOilLevel(chunkAccess.getPos()));
     }
 
     private static void removeOxygenRoom(ServerLevel level, BlockPos pos) {

@@ -2,7 +2,7 @@ package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
 import com.st0x0ef.stellaris.common.blocks.machines.CoalGeneratorBlock;
 import com.st0x0ef.stellaris.common.menus.PumpjackMenu;
-import com.st0x0ef.stellaris.common.oil.OilData;
+import com.st0x0ef.stellaris.common.oil.GlobalOilManager;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import com.st0x0ef.stellaris.common.registry.FluidRegistry;
 import com.st0x0ef.stellaris.common.systems.energy.impl.WrappedBlockEnergyContainer;
@@ -11,6 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.state.BlockState;
@@ -33,7 +34,7 @@ public class PumpjackBlockEntity extends BaseEnergyContainerBlockEntity implemen
 
         ChunkAccess access = this.level.getChunk(this.worldPosition);
 
-        chunkOilLevel = OilData.getOrCreateOilLevel(access.getPos(), null);
+        chunkOilLevel = GlobalOilManager.getInstance().getOrCreateDimensionManager((ServerLevel) level).getOrCreateOilLevel(access.getPos());
 
         WrappedBlockEnergyContainer energyContainer = getWrappedEnergyContainer();
 
@@ -47,7 +48,7 @@ public class PumpjackBlockEntity extends BaseEnergyContainerBlockEntity implemen
 
         if (energyContainer.getStoredEnergy() >= 2L * actualOilToExtract) {
             if (resultTank.getAmount() + actualOilToExtract <= resultTank.getMaxCapacity()) {
-                OilData.setOilLevel(access.getPos(), chunkOilLevel - actualOilToExtract);
+                GlobalOilManager.getInstance().getOrCreateDimensionManager((ServerLevel) level).setOilLevel(access.getPos(), chunkOilLevel - actualOilToExtract);
                 FluidStack tankStack = resultTank.getStack();
 
                 if (tankStack.isEmpty()) {

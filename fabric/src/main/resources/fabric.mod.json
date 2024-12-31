@@ -21,9 +21,9 @@
     "stellaris-common.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.15.11",
-    "minecraft": ">=1.21",
-    "architectury": ">=13.0.6",
-    "fabric-api": ">=0.100.8"
+    "fabricloader": ">=0.16.8",
+    "minecraft": ">=1.21.3",
+    "architectury": ">=14.0.4",
+    "fabric-api": ">=0.107.3"
   }
 }

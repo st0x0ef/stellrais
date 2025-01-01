@@ -42,6 +42,6 @@ public class SyncSpaceStationDatapackPacket implements CustomPacketPayload {
 
     @Override
     public Type<? extends CustomPacketPayload> type() {
-        return NetworkRegistry.SYNC_PLANETS_DATAPACK;
+        return NetworkRegistry.SYNC_SPACE_STATION_DATAPACK;
     }
 }

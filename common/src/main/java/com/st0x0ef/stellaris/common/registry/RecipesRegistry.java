@@ -24,8 +24,6 @@ public class RecipesRegistry {
             () -> new Type<>("water_seperator"));
     public static final RegistrySupplier<RecipeType<FuelRefineryRecipe>> FUEL_REFINERY_TYPE = RECIPE_TYPES.register("fuel_refinery",
             () -> new Type<>("fuel_refinery"));
-    public static final RegistrySupplier<RecipeType<SpaceStationRecipe>> SPACE_STATION_TYPE = RECIPE_TYPES.register("space_station",
-            () -> new Type<>("space_station"));
 
 
     public static final RegistrySupplier<RecipeSerializer<RocketStationRecipe>> ROCKET_STATION = RECIPE_SERIALIZERS.register(
@@ -40,10 +38,7 @@ public class RecipesRegistry {
             "fuel_refinery",
             FuelRefineryRecipe.Serializer::new
     );
-    public static final RegistrySupplier<RecipeSerializer<SpaceStationRecipe>> SPACE_STATION_SERIALIZER = RECIPE_SERIALIZERS.register(
-            "space_station",
-            SpaceStationRecipe.Serializer::new
-    );
+
 
     public static void register() {
         RECIPE_TYPES.register();

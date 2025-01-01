@@ -65,16 +65,25 @@ public record SpaceStationRecipe (List<ItemStack> items, ResourceLocation locati
         return true;
     }
 
-    public List<MutableComponent> getTooltip(Player player) {
-        List<MutableComponent> tooltip = new ArrayList<>();
+
+    public MutableComponent getTooltip(Player player) {
+        MutableComponent tooltip = Component.translatable("tooltip." + this.location.getNamespace() + ".space_station_recipe." + this.location.getPath());
         for (ItemStack item : items) {
+
+            String name = "\n" + item.getHoverName().getString() + " x" + item.getCount() ;
             if (!player.getInventory().contains(item)) {
-                tooltip.add(item.getHoverName().copy().withStyle(ChatFormatting.RED));
+                tooltip.append(Component.literal(name).withStyle(ChatFormatting.RED));
             } else {
-                tooltip.add(item.getHoverName().copy().withStyle(ChatFormatting.GREEN));
+                tooltip.append(Component.literal(name).withStyle(ChatFormatting.GREEN));
             }
         }
+
         return tooltip;
+    }
+
+
+    public SpaceStationRecipesManager.SpaceStationRecipeState fromRecipe(Player player) {
+        return new SpaceStationRecipesManager.SpaceStationRecipeState(this, this.getTooltip(player), this.haveMaterials(player));
     }
 
 }

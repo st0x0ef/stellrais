@@ -13,6 +13,7 @@ import com.st0x0ef.stellaris.client.screens.info.PlanetInfo;
 import com.st0x0ef.stellaris.common.data.planets.Planet;
 import com.st0x0ef.stellaris.common.data.recipes.RocketStationRecipe;
 import com.st0x0ef.stellaris.common.data.recipes.SpaceStationRecipe;
+import com.st0x0ef.stellaris.common.data.recipes.SpaceStationRecipesManager;
 import com.st0x0ef.stellaris.common.data.recipes.input.RocketStationInput;
 import com.st0x0ef.stellaris.common.data.recipes.input.SpaceStationInput;
 import com.st0x0ef.stellaris.common.entities.vehicles.RocketEntity;
@@ -80,8 +81,6 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
     public static final Component system = Component.translatable("text.stellaris.planetscreen.system");
     public static final Component error_message = Component.translatable("text.stellaris.planetscreen.error_message");
 
-    private final RecipeManager.CachedCheck<SpaceStationInput, SpaceStationRecipe> quickCheck = RecipeManager.createCheck(RecipesRegistry.SPACE_STATION_TYPE.get());
-
 
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private static final long UPDATE_INTERVAL = 1L;
@@ -113,6 +112,8 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
     private final List<InvisibleButton> planetButtons = new ArrayList<>();
     private final List<InvisibleButton> moonButtons = new ArrayList<>();
 
+    public ArrayList<SpaceStationRecipesManager.SpaceStationRecipeState> spaceStationRecipeStates = new ArrayList<>();
+
     public PlanetSelectionScreen(PlanetSelectionMenu abstractContainerMenu, Inventory inventory, Component component) {
         super(abstractContainerMenu, inventory, component);
         this.imageWidth = 1200;
@@ -126,7 +127,7 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
         super.init();
         getMenu().freeze_gui = false;
         centerSun();
-
+        initSpaceStationRecipes();
         isPlanetScreenOpened = true;
 
         RenderSystem.enableBlend();
@@ -238,8 +239,8 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
         if (focusedBody != null && focusedBody.dimension != null) {
             if (canLaunch(PlanetUtil.getPlanet(focusedBody.dimension))) {
 
-                if(focusedBody.spaceStation && this.playerHaveSpaceStationRecipes()) {
-                    //TP and CREATE STATION
+                if(focusedBody.spaceStation) {
+                    //Add Tooltips
                 } else {
                     tpToFocusedPlanet();
                 }
@@ -498,7 +499,7 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
             System.out.println("Space Station " + focusedBody.spaceStation);
 
             if(focusedBody.spaceStation) {
-                launchButton.setTooltip(Tooltip.create(Component.literal("Require Space Station")));
+                launchButton.setTooltip(Tooltip.create(spaceStationRecipeStates.getFirst().tooltip));
 
             }
 
@@ -1031,15 +1032,15 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
         super.onClose();
     }
 
-    public boolean playerHaveSpaceStationRecipes() {
-        Optional<RecipeHolder<SpaceStationRecipe>> recipeHolder = quickCheck.getRecipeFor(new SpaceStationInput( this.getPlayer(), this.getPlayer().getInventory()) , this.getPlayer().level());
-        if(recipeHolder.isPresent()) {
-            SpaceStationRecipe recipe = recipeHolder.get().value();
-            //Remove Items
-        }
+    /** Space Station **/
 
-        return recipeHolder.isPresent();
+    //We only check one time if the player have the recipes because normally he can't get item during the screen
+    private void initSpaceStationRecipes() {
+        for (SpaceStationRecipe recipe : SpaceStationRecipesManager.SPACE_STATION_RECIPES) {
+            spaceStationRecipeStates.add(recipe.fromRecipe(this.getPlayer()));
+        }
     }
+
 
     public Player getPlayer() {
         return menu.getPlayer();

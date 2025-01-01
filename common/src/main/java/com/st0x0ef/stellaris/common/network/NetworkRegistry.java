@@ -19,13 +19,18 @@ public interface NetworkRegistry {
     CustomPacketPayload.Type<TeleportEntityToPlanetPacket> TELEPORT_ENTITY_ID = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "teleport_entity"));
 
     CustomPacketPayload.Type<SyncPlanetsDatapackPacket> SYNC_PLANETS_DATAPACK = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "sync_planet_datapack"));
+    CustomPacketPayload.Type<SyncSpaceStationDatapackPacket> SYNC_SPACE_STATION_DATAPACK = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "sync_space_station_datapack"));
     CustomPacketPayload.Type<SyncWidgetsTanksPacket> SYNC_FLUID_TANKS_ID = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "sync_fluid_tanks"));
     CustomPacketPayload.Type<SyncRocketComponentPacket> SYNC_ROCKET_COMPONENT_ID = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "sync_rocket_component"));
     CustomPacketPayload.Type<SyncRoverComponentPacket> SYNC_ROVER_COMPONENT_ID = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "sync_rover_component"));
     CustomPacketPayload.Type<SyncRoverPacket> SYNC_ROVER_CONTROLS = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "sync_rover_packet"));
+
+
     static void init() {
         registerC2S(KEY_HANDLER_ID, KeyHandlerPacket.STREAM_CODEC, KeyHandlerPacket::handle);
         registerC2S(TELEPORT_ENTITY_ID, TeleportEntityToPlanetPacket.STREAM_CODEC, TeleportEntityToPlanetPacket::handle);
+
+        registerS2C(SYNC_SPACE_STATION_DATAPACK, SyncSpaceStationDatapackPacket.STREAM_CODEC, SyncSpaceStationDatapackPacket::handle);
 
         registerS2C(SYNC_PLANETS_DATAPACK, SyncPlanetsDatapackPacket.STREAM_CODEC, SyncPlanetsDatapackPacket::handle);
         registerS2C(SYNC_FLUID_TANKS_ID, SyncWidgetsTanksPacket.STREAM_CODEC, SyncWidgetsTanksPacket::handle);

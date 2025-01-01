@@ -1,14 +1,21 @@
 package com.st0x0ef.stellaris.common.data.recipes;
 
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.st0x0ef.stellaris.common.data.planets.Planet;
+import com.st0x0ef.stellaris.common.data.planets.PlanetTextures;
 import com.st0x0ef.stellaris.common.data.recipes.input.SpaceStationInput;
 import com.st0x0ef.stellaris.common.registry.RecipesRegistry;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -20,81 +27,54 @@ import net.minecraft.world.level.Level;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpaceStationRecipe implements Recipe<SpaceStationInput> {
+public record SpaceStationRecipe (List<ItemStack> items, ResourceLocation location) {
 
-    private final ItemStack output;
-    private final List<Ingredient> recipeItems;
-    public static RecipeType<SpaceStationRecipe> Type = RecipesRegistry.SPACE_STATION_TYPE.get();
+    public static final Codec<SpaceStationRecipe> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            ItemStack.CODEC.listOf().fieldOf("items").forGetter(SpaceStationRecipe::items),
+            ResourceLocation.CODEC.fieldOf("location").forGetter(SpaceStationRecipe::location)
+    ).apply(instance, SpaceStationRecipe::new));
 
-    public SpaceStationRecipe(List<Ingredient> recipeItems, ItemStack output) {
-        this.recipeItems = recipeItems;
-        this.output = output;
+    public static RegistryFriendlyByteBuf toBuffer(SpaceStationRecipe recipe, final RegistryFriendlyByteBuf buffer) {
+        buffer.writeInt(recipe.items.size());
+
+        recipe.items.forEach(((item) -> {
+            ItemStack.STREAM_CODEC.encode(buffer, item);
+        }));
+        buffer.writeResourceLocation(recipe.location);
+        return buffer;
+
+    }
+    public static SpaceStationRecipe readFromBuffer(RegistryFriendlyByteBuf buffer) {
+        ArrayList<ItemStack> planets = new ArrayList<>();
+
+        int k = buffer.readInt();
+
+        for (int i = 0; i < k; i++) {
+            planets.add(ItemStack.STREAM_CODEC.decode(buffer));
+        }
+        return new SpaceStationRecipe(planets, buffer.readResourceLocation());
     }
 
-    @Override
-    public boolean matches(SpaceStationInput container, Level level) {
-        for (int i = 0; i < ((Player) container.entity()).getInventory().getContainerSize() - 1; i++) {
-            if (!recipeItems.get(i).test(container.getItem(i))) {
+
+    public boolean haveMaterials(Player player) {
+        for (ItemStack item : items) {
+            if (!player.getInventory().contains(item)) {
                 return false;
             }
         }
-
         return true;
     }
 
-    @Override
-    public ItemStack assemble(SpaceStationInput container, HolderLookup.Provider provider) {
-        return output;
-    }
-
-    @Override
-    public boolean canCraftInDimensions(int i, int j) {
-        return true;
-    }
-
-    @Override
-    public ItemStack getResultItem(HolderLookup.Provider provider) {
-        return output;
-    }
-
-    @Override
-    public NonNullList<Ingredient> getIngredients() {
-        NonNullList<Ingredient> list = NonNullList.createWithCapacity(this.recipeItems.size());
-        list.addAll(this.recipeItems);
-        return list;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
-        return RecipesRegistry.SPACE_STATION_SERIALIZER.get();
-    }
-
-    @Override
-    public RecipeType<?> getType() {
-        return Type;
-    }
-
-    public static class Serializer implements RecipeSerializer<SpaceStationRecipe> {
-
-        public static final MapCodec<SpaceStationRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-                Ingredient.CODEC_NONEMPTY.listOf(1, 4).fieldOf("ingredients").forGetter(r -> r.recipeItems),
-                ItemStack.CODEC.fieldOf("output").forGetter(r -> r.output)
-        ).apply(instance, SpaceStationRecipe::new));
-
-        public static final StreamCodec<RegistryFriendlyByteBuf, List<Ingredient>> INGREDIENT_LIST_STREAM_CODEC = ByteBufCodecs.collection(ArrayList::new, Ingredient.CONTENTS_STREAM_CODEC, 14);
-        public static final StreamCodec<RegistryFriendlyByteBuf, SpaceStationRecipe> STREAM_CODEC = StreamCodec.of((buf, recipe) -> {
-            INGREDIENT_LIST_STREAM_CODEC.encode(buf, recipe.recipeItems);
-            ItemStack.STREAM_CODEC.encode(buf, recipe.output);
-        }, buf -> new SpaceStationRecipe(INGREDIENT_LIST_STREAM_CODEC.decode(buf), ItemStack.STREAM_CODEC.decode(buf)));
-
-        @Override
-        public MapCodec<SpaceStationRecipe> codec() {
-            return CODEC;
+    public List<MutableComponent> getTooltip(Player player) {
+        List<MutableComponent> tooltip = new ArrayList<>();
+        for (ItemStack item : items) {
+            if (!player.getInventory().contains(item)) {
+                tooltip.add(item.getHoverName().copy().withStyle(ChatFormatting.RED));
+            } else {
+                tooltip.add(item.getHoverName().copy().withStyle(ChatFormatting.GREEN));
+            }
         }
-
-        @Override
-        public StreamCodec<RegistryFriendlyByteBuf, SpaceStationRecipe> streamCodec() {
-            return STREAM_CODEC;
-        }
+        return tooltip;
     }
+
 }

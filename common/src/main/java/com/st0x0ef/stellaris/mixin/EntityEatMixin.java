@@ -24,6 +24,8 @@ public abstract class EntityEatMixin extends LivingEntity {
 
     @Shadow protected FoodData foodData;
 
+    @Shadow public abstract boolean canEat(boolean canAlwaysEat);
+
     @Unique
     public abstract boolean stellaris$canEat(TagKey<Item> canAlwaysEat);
 
@@ -36,7 +38,7 @@ public abstract class EntityEatMixin extends LivingEntity {
     private void cancelEat(boolean canAlwaysEat, CallbackInfoReturnable<Boolean> cir) {
         if(PlanetUtil.isPlanet(level().dimension().location())) {
             if(!PlanetUtil.hasOxygen(level()) && !stellaris$canEat(TagRegistry.SPACE_FOOD)) {
-                cir.setReturnValue(false);
+                cir.setReturnValue(canAlwaysEat);
             }
         }
     }

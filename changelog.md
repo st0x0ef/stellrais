@@ -1,83 +1,8 @@
-# 1.2.0 changelog
+# 1.2.1 changelog
 
-## Additions
-- Structures :
-  - Earth Operation Base
-  - Earth Satellite
-  - Moon Space Base
-  - Moon Sphere
-  - Moon First Landing
-  - Moon Launchpad
-  - Moon Dungeon
-  - Moon Destroyed Spaceship
-  - Small Moon Dungeon
-  - Moon Destroyed Village
-  - Moon Village
-  - Mars Maze
-  - Mars Main Temple
-  - Mars Ruins
-  - Mars Temple
-  - Mars Tower
-  - Venus Catacombs
-  - Venus Crash Site
-  - Venus Lava Outpost
-  - Venus Outpost
-  - Venus Outpost Dungeon
-  - Venus Plaza
-  - Venus Ruins
-  - Venus Tower
-  - Mercury Big Castle
-  - Mercury Temple
-  - Mercury Structure
-  - Mercury Small Castle
-  - Mercury Lava Mines
-  - Mercury Quarry
-  - Mercury Volcano
-  - Mercury Factory
-  - Mercury Mining Ship
-- Biomes :
-  - Blue luna Lagoon
-  - Mercury Fire Land
-- Rover
-- Speed Upgrade
-- Meteor can now spawn on moon
-- Moon Vines
-- Rocket bar overlay now showing in lander
-- Modular jet suit
-- Upgrade station
-- Added sunrise color for planets
-
-## Changes
-- Rework config screen
-- GUI textures for all machines
-- Optimization of the oxygen system
-- Oxygen distributor now propagate in all directions
-- Improve achievement screen
-- Update minimum architectury api version to 13.0.8
-- Upgrade quantity of oil in oil chunk but make them a bit rarer
-- Improve oil finder
-- Improve rocket bar overlay
-- Unlock all planet on the selection menu if the player is in creative mode
-- Jet suit now require fuel
-- Update sky aesthetics to 1.4
-- Planet and star name are now translatable
-- Oxygen distributor now need energy
-- Increase minimum speed for the rocket to explode
-- Remove Cheese Boss from spawn placements
 
 ## Fix
-- Crash when trying to launch to any planet when you haven't launched from a planet
-- Remove configurable start rocket key and slow down lander key to fix an issue with jumping
-- Fix bug where the rocket don't open the planet menu when higher than 600 blocks
-- Fix fuel refinery doesn't convert convert neo mb to fabric mb
-- Fix fluid transfer
-- Fix jet suit
-- Fix full jet suit
-- Fix launch button translatable pos
-- Fix water pump renderer
-- Fix rocket item in lander
-- Fix rocket doesn't keep fuel
-- Fix adding hydrogen bucket to a rocket doesn't give back a bucket
-- Fix water pump loot table
-- Fix lander on fabric
-- Fix Radioactive Generator Only being able to extract 100 (F)E/t
+- Fix earth operation base
+- Fix mercury lava mines
+- Fix mercury quarry
+- Fix mercury volcano

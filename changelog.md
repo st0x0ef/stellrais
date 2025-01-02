@@ -2,6 +2,7 @@
 
 ## Changes
 - Update Sky Aesthetics to 1.4.1
+- Normal food can now be eaten in space if there is oxygen
 
 ## Fix
 - Fix earth operation base

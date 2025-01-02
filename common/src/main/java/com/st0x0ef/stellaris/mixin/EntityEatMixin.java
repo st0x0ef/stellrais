@@ -2,6 +2,7 @@ package com.st0x0ef.stellaris.mixin;
 
 import com.st0x0ef.stellaris.common.registry.TagRegistry;
 import com.st0x0ef.stellaris.common.utils.PlanetUtil;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -27,10 +28,8 @@ public abstract class EntityEatMixin extends LivingEntity {
 
     @Inject(at = @At(value = "HEAD"), method = "eat", cancellable = true)
     private void cancelEat(Level level, ItemStack food, FoodProperties foodProperties, CallbackInfoReturnable<ItemStack> cir) {
-        if(PlanetUtil.isPlanet(level.dimension().location())) {
-            if(!PlanetUtil.hasOxygen(level) && !food.is(TagRegistry.SPACE_FOOD)) {
-                cir.setReturnValue(food);
-            }
+        if(!PlanetUtil.hasOxygenAt((ServerLevel) level, getOnPos()) && !food.is(TagRegistry.SPACE_FOOD)) {
+            cir.setReturnValue(food);
         }
     }
 }

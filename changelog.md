@@ -1,5 +1,7 @@
 # 1.2.1 changelog
 
+## Changes
+- Update Sky Aesthetics to 1.4.1
 
 ## Fix
 - Fix earth operation base

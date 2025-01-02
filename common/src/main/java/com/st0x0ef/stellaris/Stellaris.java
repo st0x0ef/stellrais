@@ -60,12 +60,14 @@ public class Stellaris {
         EffectsRegistry.register();
 
         ReloadListenerRegistry.register(PackType.SERVER_DATA, new StellarisData());
+        ReloadListenerRegistry.register(PackType.SERVER_DATA, new SpaceStationRecipesManager());
+
     }
 
     public static void onDatapackSyncEvent(ServerPlayer player, boolean joined) {
         if (joined) {
             NetworkManager.sendToPlayer(player, new SyncPlanetsDatapackPacket(StellarisData.getPlanets()));
-            NetworkManager.sendToPlayer(player, new SyncSpaceStationDatapackPacket(SpaceStationRecipesManager.SPACE_STATION_RECIPES));
+            NetworkManager.sendToPlayer(player, new SyncSpaceStationDatapackPacket(SpaceStationRecipesManager.getSpaceStationRecipes()));
 
         }
     }

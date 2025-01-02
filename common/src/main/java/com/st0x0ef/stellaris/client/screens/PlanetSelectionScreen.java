@@ -3,24 +3,18 @@ package com.st0x0ef.stellaris.client.screens;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.st0x0ef.stellaris.Stellaris;
-import com.st0x0ef.stellaris.client.screens.components.InvisibleButton;
-import com.st0x0ef.stellaris.client.screens.components.LaunchButton;
-import com.st0x0ef.stellaris.client.screens.components.ModifiedButton;
+import com.st0x0ef.stellaris.client.screens.components.*;
 import com.st0x0ef.stellaris.client.screens.helper.ScreenHelper;
 import com.st0x0ef.stellaris.client.screens.info.CelestialBody;
 import com.st0x0ef.stellaris.client.screens.info.MoonInfo;
 import com.st0x0ef.stellaris.client.screens.info.PlanetInfo;
 import com.st0x0ef.stellaris.common.data.planets.Planet;
-import com.st0x0ef.stellaris.common.data.recipes.RocketStationRecipe;
 import com.st0x0ef.stellaris.common.data.recipes.SpaceStationRecipe;
 import com.st0x0ef.stellaris.common.data.recipes.SpaceStationRecipesManager;
-import com.st0x0ef.stellaris.common.data.recipes.input.RocketStationInput;
-import com.st0x0ef.stellaris.common.data.recipes.input.SpaceStationInput;
 import com.st0x0ef.stellaris.common.entities.vehicles.RocketEntity;
 import com.st0x0ef.stellaris.common.menus.PlanetSelectionMenu;
 import com.st0x0ef.stellaris.common.network.packets.TeleportEntityToPlanetPacket;
 import com.st0x0ef.stellaris.common.registry.EntityData;
-import com.st0x0ef.stellaris.common.registry.RecipesRegistry;
 import com.st0x0ef.stellaris.common.registry.TranslatableRegistry;
 import com.st0x0ef.stellaris.common.utils.PlanetUtil;
 import com.st0x0ef.stellaris.common.utils.Utils;
@@ -41,8 +35,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWScrollCallback;
@@ -50,6 +42,7 @@ import org.lwjgl.glfw.GLFWScrollCallback;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Environment(EnvType.CLIENT)
 public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelectionMenu> {
@@ -72,7 +65,6 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
     public static final List<CelestialBody> STARS = new ArrayList<>();
     public static final List<PlanetInfo> PLANETS = new ArrayList<>();
     public static final List<MoonInfo> MOONS = new ArrayList<>();
-//    public static final List<SubMoonInfo> SUBMOONS = new ArrayList<>();
 
     public static final Component temperature = Component.translatable("text.stellaris.planetscreen.temperature");
     public static final Component gravity = Component.translatable("text.stellaris.planetscreen.gravity");
@@ -84,9 +76,6 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
 
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private static final long UPDATE_INTERVAL = 1L;
-
-    public final static Player p = Minecraft.getInstance().player;
-
 
     private boolean isLaunching = false;
     private boolean showLargeMenu = false;
@@ -101,13 +90,16 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
     private double lastMouseY;
     private boolean dragging = false;
 
-    private boolean isPausePressed = false;
+    public boolean isPausePressed = false;
     private boolean isShiftPressed = false;
     private boolean isWheelButtonDown = false;
     public boolean isPlanetScreenOpened;
 
     private double zoomLevel = 1.0;
     private GLFWScrollCallback prevScrollCallback;
+
+    public ArrayList<ArrayList<TexturedButton>> planetsButton = new ArrayList<>();
+    public int currentPage = 0;
 
     private final List<InvisibleButton> planetButtons = new ArrayList<>();
     private final List<InvisibleButton> moonButtons = new ArrayList<>();
@@ -120,6 +112,7 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
         this.imageHeight = 1600;
         this.inventoryLabelY = this.imageHeight - 110;
         initializeLaunchButton();
+
     }
 
     @Override
@@ -129,16 +122,51 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
         centerSun();
         initSpaceStationRecipes();
         isPlanetScreenOpened = true;
-
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.enableDepthTest();
 
         long windowHandle = Minecraft.getInstance().getWindow().getWindow();
         prevScrollCallback = GLFW.glfwSetScrollCallback(windowHandle, this::onMouseScroll);
-
+        initPlanetList();
         initializeAllButtons();
+
     }
+
+    @Override
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        this.renderBg(graphics, partialTicks, mouseX, mouseY);
+        super.render(graphics, mouseX, mouseY, partialTicks);
+
+        if (!isPausePressed) {
+            updatePlanets();
+        }
+        if (focusedBody != null) {
+            centerOnBody(focusedBody);
+        }
+        if (!showLargeMenu) {
+            launchButton.visible = false;
+        }
+
+        renderHelp(graphics);
+        drawOrbits();
+
+        renderBodiesAndPlanets(graphics);
+        renderHighlighter(graphics, mouseX, mouseY);
+
+        if (hoveredBody != null) {
+            updateHighlighterPosition(graphics, hoveredBody);
+        }
+        if (focusedBody != null) {
+            updateHighlighterPosition(graphics, focusedBody);
+        }
+
+        renderLargeMenu(graphics);
+        renderPlanetList(currentPage);
+
+        this.renderTooltip(graphics, mouseX, mouseY);
+    }
+
 
     public boolean canLaunch(Planet planet) {
         if (this.getMenu().getForceCanGoTo()) return true;
@@ -256,38 +284,6 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
 
 
 
-    @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        this.renderBg(graphics, partialTicks, mouseX, mouseY);
-        super.render(graphics, mouseX, mouseY, partialTicks);
-
-        if (!isPausePressed) {
-            updatePlanets();
-        }
-        if (focusedBody != null) {
-            centerOnBody(focusedBody);
-        }
-        if (!showLargeMenu) {
-            launchButton.visible = false;
-        }
-
-        renderHelp(graphics);
-        drawOrbits();
-
-        renderBodiesAndPlanets(graphics);
-        renderHighlighter(graphics, mouseX, mouseY);
-
-        if (hoveredBody != null) {
-            updateHighlighterPosition(graphics, hoveredBody);
-        }
-        if (focusedBody != null) {
-            updateHighlighterPosition(graphics, focusedBody);
-        }
-
-        renderLargeMenu(graphics);
-
-        this.renderTooltip(graphics, mouseX, mouseY);
-    }
 
     @Override
     protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
@@ -496,11 +492,9 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
             int buttonY = centerY + buttonHeight / 2 + 1;
 
             int textX = buttonX + buttonWidth / 4 - 20;
-            System.out.println("Space Station " + focusedBody.spaceStation);
 
             if(focusedBody.spaceStation) {
-                launchButton.setTooltip(Tooltip.create(spaceStationRecipeStates.getFirst().tooltip));
-
+                launchButton.setTooltip(Tooltip.create(SpaceStationRecipesManager.getTotalTooltip(spaceStationRecipeStates)));
             }
 
             launchButton.visible = true;
@@ -884,7 +878,7 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
         return null;
     }
 
-    private void centerOnBody(CelestialBody body) {
+    public void centerOnBody(CelestialBody body) {
         if (isLaunching) {
             zoomLevel = 1.6;
         } else {
@@ -919,6 +913,87 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
                         i++;
                     }
                     zoomLevel = Math.max(0.02, Math.min(zoomLevel, 2.0));
+                }
+            }
+        }
+    }
+
+    public void initPlanetList() {
+        for (int i = 0; i < PlanetSelectionScreen.PLANETS.size(); i++) {
+            PlanetInfo planet = PlanetSelectionScreen.PLANETS.get(i);
+            int x = 2;
+            int buttonWidth = 74;
+            int buttonHeight = 20;
+
+            TexturedButton focusButton = new TexturedButton(x + 5, 20, buttonWidth, buttonHeight, planet.translatable, (btn) -> {
+                focusedBody = planet;
+                centerOnBody(planet);
+                isPausePressed = true;
+            })
+                    .tex(
+                            ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/launch_button.png"),
+                            ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/launch_button_hovered.png")
+                    );
+
+            for (MoonInfo moon : MOONS) {
+                if (moon.orbitCenter == planet) {
+                    TexturedButton moonButton = new TexturedButton(x + 5, 20, buttonWidth, buttonHeight, moon.translatable, (btn) -> {
+                        focusedBody = moon;
+                        centerOnBody(moon);
+                        isPausePressed = true;
+                    })
+                            .tex(
+                                    ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/launch_button.png"),
+                                    ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/launch_button_hovered.png")
+                            );
+                    addButtonToList(moonButton);
+                    moonButton.visible = false;
+                    this.addRenderableWidget(moonButton);
+
+                }
+            }
+            focusButton.visible = false;
+            addButtonToList(focusButton);
+            this.addRenderableWidget(focusButton);
+        }
+
+    }
+
+    public void addButtonToList(TexturedButton button){
+        if (planetsButton.isEmpty()) {
+            ArrayList<TexturedButton> list = new ArrayList<>();
+            list.add(button);
+            planetsButton.add(list);
+            return;
+        }
+
+        for ( ArrayList<TexturedButton> buttons : planetsButton) {
+            if(buttons.size() < 5){
+                buttons.add(button);
+                break;
+            } else if (buttons.size() == 5) {
+                ArrayList<TexturedButton> list = new ArrayList<>();
+                list.add(button);
+                planetsButton.add(list);
+                break;
+            }
+        }
+    }
+
+    public void renderPlanetList(int page) {
+        ScreenHelper.drawTexture(0, (height / 2) - 177 / 2, 105, 177, PlanetSelectionScreen.SMALL_MENU_LIST, true);
+
+        AtomicInteger number = new AtomicInteger(0);
+
+        for (TexturedButton buttons : this.planetsButton.get(page)) {
+            buttons.setY((height / 2) - 177 / 2 + 47 + (number.getAndAdd(1) * 23));
+            buttons.visible = true;
+        }
+
+        for (int i = 0; i < planetsButton.size(); i++) {
+            if (i != page) {
+                for (TexturedButton buttons : this.planetsButton.get(i)) {
+                    buttons.visible = false;
                 }
             }
         }

@@ -38,6 +38,10 @@ public class SpaceStationRecipesManager extends SimpleJsonResourceReloadListener
 
     }
 
+    public static List<SpaceStationRecipe> getSpaceStationRecipes() {
+        return SPACE_STATION_RECIPES;
+    }
+
     public static RegistryFriendlyByteBuf toBuffer(List<SpaceStationRecipe> recipes, final RegistryFriendlyByteBuf buffer) {
         buffer.writeInt(recipes.size());
 
@@ -69,7 +73,8 @@ public class SpaceStationRecipesManager extends SimpleJsonResourceReloadListener
         MutableComponent tooltip = Component.empty();
 
         for (SpaceStationRecipeState recipe : recipes) {
-            tooltip.append(recipe.tooltip + "\n");
+            tooltip.append(recipe.tooltip);
+            tooltip.append("\n");
         }
         return tooltip;
     }

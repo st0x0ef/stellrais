@@ -22,10 +22,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class EntityEatMixin extends LivingEntity {
     @Shadow public abstract void playSound(SoundEvent soundEvent, float f, float g);
 
-    @Shadow protected FoodData foodData;
-
-    @Shadow public abstract boolean canEat(boolean canAlwaysEat);
-
     @Unique
     public abstract boolean stellaris$canEat(TagKey<Item> canAlwaysEat);
 

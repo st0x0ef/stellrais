@@ -6,3 +6,8 @@
 - Fix mercury lava mines
 - Fix mercury quarry
 - Fix mercury volcano
+- Fix mercury temple
+- Fix biomes error
+
+## Removed
+- Removed has_structure/mercury_temple tag

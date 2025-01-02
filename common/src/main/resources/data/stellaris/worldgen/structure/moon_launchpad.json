@@ -7,7 +7,7 @@
   "start_pool": "stellaris:moon/moon_launchpad",
   "size": 1,
   "start_height": {
-    "absolute": 1
+    "absolute": 0
   },
   "max_distance_from_center": 80,
   "use_expansion_hack": false,

@@ -150,6 +150,15 @@ public class Utils {
 
     /** COLOR!!! */
     public static int getColorHexCode(String colorName) {
+        // Custom Colour Hex Code Support
+        if (colorName.startsWith("#")) {
+            try {
+                return Integer.parseInt(colorName.substring(1), 16);
+            } catch (NumberFormatException e) {
+                return 0xFFFFFF; // Return white if invalid hex format
+            }
+        }
+
         return switch (colorName.toLowerCase()) {
             case "black" -> 0x000000;
             case "red" -> 0xFF0000;

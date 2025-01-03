@@ -1,6 +1,5 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
-import com.fej1fun.potentials.fluid.UniversalFluidTank;
 import com.fej1fun.potentials.providers.FluidProvider;
 import com.st0x0ef.stellaris.common.capabilities.fluid.FluidTank;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
@@ -36,7 +35,7 @@ public class WaterPumpBlockEntity extends BaseEnergyBlockEntity implements Fluid
         BlockState belowState = level.getBlockState(belowPos);
         if (belowState.getBlock() instanceof BucketPickup bucketPickup) {
             if (!bucketPickup.pickupBlock(null, level, belowPos, belowState).isEmpty()) {
-                waterTank.fillFluid(FluidStack.create(Fluids.WATER, 1000), false);
+                waterTank.fill(FluidStack.create(Fluids.WATER, 1000), false);
                 energyContainer.extract(NEEDED_ENERGY, false);
                 setChanged();
             }
@@ -69,7 +68,7 @@ public class WaterPumpBlockEntity extends BaseEnergyBlockEntity implements Fluid
     }
 
     @Override
-    public @Nullable UniversalFluidTank getFluidTank(@Nullable Direction direction) {
+    public @Nullable FluidTank getFluidTank(@Nullable Direction direction) {
         return this.waterTank;
     }
 }

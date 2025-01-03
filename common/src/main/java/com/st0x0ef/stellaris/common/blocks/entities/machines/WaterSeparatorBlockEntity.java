@@ -1,6 +1,5 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
-import com.fej1fun.potentials.fluid.UniversalFluidTank;
 import com.fej1fun.potentials.providers.FluidProvider;
 import com.st0x0ef.stellaris.common.capabilities.fluid.FluidTank;
 import com.st0x0ef.stellaris.common.data.recipes.WaterSeparatorRecipe;
@@ -29,7 +28,6 @@ import java.util.Optional;
 
 public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity implements RecipeInput, FluidProvider.BLOCK {
 
-    private static final int TANK_CAPACITY = 3;
     public final FluidTank ingredientTank = new FluidTank(10_000);
     public final NonNullList<FluidTank> resultTanks = Util.make(NonNullList.createWithCapacity(2), list -> {
         //HYDROGEN
@@ -85,7 +83,7 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
 
                     if (tank1.getFluidValue() + stack1.getAmount() <= tank1.getMaxAmount() && tank2.getFluidValue() + stack2.getAmount() <= tank2.getMaxAmount()) {
                         energy.extract(recipe.energy(), false);
-                        ingredientTank.drainFluid(FluidStack.create(recipe.ingredientStack().getFluid(), recipe.ingredientStack().getAmount()), false);
+                        ingredientTank.drain(FluidStack.create(recipe.ingredientStack().getFluid(), recipe.ingredientStack().getAmount()), false);
                         FluidTankHelper.addToTank(tank1, stack1);
                         FluidTankHelper.addToTank(tank2, stack2);
                         setChanged();
@@ -124,7 +122,7 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
     }
 
     @Override
-    public @Nullable UniversalFluidTank getFluidTank(@Nullable Direction direction) {
+    public @Nullable FluidTank getFluidTank(@Nullable Direction direction) {
         return null;
     }
 }

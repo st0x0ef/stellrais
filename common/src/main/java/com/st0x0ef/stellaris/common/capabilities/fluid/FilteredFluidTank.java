@@ -13,7 +13,7 @@ public abstract class FilteredFluidTank extends OnChangeFluidTank {
     }
 
     @Override
-    public boolean isValid(FluidStack stack) {
-        return super.isValid(stack) && stack.getFluid()==fluid;
+    public boolean isFluidValid(int tank, FluidStack stack) {
+        return super.isFluidValid(tank, stack) && stack.getFluid() == fluid;
     }
 }

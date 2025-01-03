@@ -46,19 +46,19 @@ public class FluidTankHelper {
                         } else if (tank.getFluidValue() < convertFromNeoMb(10) && storedOxygen + tank.getFluidValue() <= OxygenUtils.getOxygenCapacity(inputStack)) {
                             OxygenUtils.addOxygen(resultStack, tank.getFluidValue());
 
-                            tank.drainFluid(FluidStack.create(tank.getBaseFluid(), tank.getFluidValue()), false);
+                            tank.drain(FluidStack.create(tank.getFluidInTank(0).getFluid(), tank.getFluidValue()), false);
                         }
                         else if (tank.getFluidValue() > OxygenUtils.getOxygenCapacity(inputStack) - storedOxygen){
                             OxygenUtils.addOxygen(resultStack, OxygenUtils.getOxygenCapacity(inputStack) - storedOxygen);
-                            tank.drainFluid(FluidStack.create(tank.getBaseFluid(), OxygenUtils.getOxygenCapacity(inputStack)), false);
+                            tank.drain(FluidStack.create(tank.getFluidInTank(0).getFluid(), OxygenUtils.getOxygenCapacity(inputStack)), false);
 
                         }
                     }
                     else if (!isTank && isEmptyBucket(inputStack.getItem())) {
-                        ItemStack stack = new ItemStack(tank.getFluidStack().getFluid().getBucket());
+                        ItemStack stack = new ItemStack(tank.getFluidInTank(0).getFluid().getBucket());
                         if (!stack.isEmpty() && !isEmptyBucket(stack.getItem())) {
                             resultStack = stack;
-                            tank.drainFluid(FluidStack.create(tank.getBaseFluid(), BUCKET_AMOUNT), false);
+                            tank.drain(FluidStack.create(tank.getFluidInTank(0).getFluid(), BUCKET_AMOUNT), false);
                         }
                     }
 
@@ -87,7 +87,7 @@ public class FluidTankHelper {
                 ItemStack resultStack = ItemStack.EMPTY;
 
                 if (isEmptyBucket(inputStack.getItem())) {
-                    resultStack = new ItemStack(tank.getFluidStack().getFluid().getBucket());
+                    resultStack = new ItemStack(tank.getFluidInTank(0).getFluid().getBucket());
                 }
                 else if (canFuel) {
                     resultStack = inputStack.copy();
@@ -115,7 +115,7 @@ public class FluidTankHelper {
                         }
 
                         inputStack.shrink(1);
-                        tank.drainFluid(FluidStack.create(tank.getBaseFluid(), amount), false);
+                        tank.drain(FluidStack.create(tank.getFluidInTank(0).getFluid(), amount), false);
                         blockEntity.setChanged();
                     }
                 }
@@ -124,8 +124,7 @@ public class FluidTankHelper {
     }
 
     public static void addToTank(FluidTank tank, FluidStack stack) {
-        tank.fillFluid(stack, false);
-
+        tank.fill(stack, false);
     }
 
     public static <T extends BlockEntity & Container> boolean addFluidFromBucket(T blockEntity, FluidTank tank, int inputSlot, int outputSlot) {
@@ -138,7 +137,7 @@ public class FluidTankHelper {
                 if (inputStack.getItem() instanceof BucketItem item) {
                     Fluid fluid = FluidBucketHooks.getFluid(item);
 
-                    if (tank.getFluidStack().getFluid() == fluid) {
+                    if (tank.getFluidInTank(0).getFluid() == fluid) {
                         if (outputStack.isEmpty()) {
                             blockEntity.setItem(outputSlot, new ItemStack(Items.BUCKET));
                         }

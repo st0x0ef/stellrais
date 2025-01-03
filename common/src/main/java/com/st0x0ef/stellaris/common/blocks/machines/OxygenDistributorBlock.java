@@ -19,7 +19,7 @@ public class OxygenDistributorBlock extends BaseLitMachineBlock {
 
     @Override
     public boolean hasTicker(Level level) {
-        return !level.isClientSide;
+        return true;
     }
 
     @Override

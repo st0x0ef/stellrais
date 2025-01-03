@@ -1,3 +1,3 @@
-# 1.2.0 changelog
+# 1.2.2 changelog
 
 port to 1.21.3

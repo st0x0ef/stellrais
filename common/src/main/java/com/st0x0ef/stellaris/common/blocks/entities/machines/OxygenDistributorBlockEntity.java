@@ -54,7 +54,6 @@ public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity
             getWrappedEnergyContainer().extractEnergy(1, false);
             return true;
         }
-
         return false;
     }
 

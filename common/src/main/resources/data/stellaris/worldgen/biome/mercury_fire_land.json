@@ -56,8 +56,6 @@
     [
       "minecraft:ore_magma"
     ],
-    [
-      "minecraft:spring_lava"
-    ]
+    []
   ]
 }

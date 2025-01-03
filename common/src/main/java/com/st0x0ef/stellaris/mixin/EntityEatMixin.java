@@ -2,13 +2,15 @@ package com.st0x0ef.stellaris.mixin;
 
 import com.st0x0ef.stellaris.common.registry.TagRegistry;
 import com.st0x0ef.stellaris.common.utils.PlanetUtil;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.food.FoodData;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -32,10 +34,8 @@ public abstract class EntityEatMixin extends LivingEntity {
 
     @Inject(at = @At(value = "HEAD"), method = "canEat")
     private void cancelEat(boolean canAlwaysEat, CallbackInfoReturnable<Boolean> cir) {
-        if(PlanetUtil.isPlanet(level().dimension().location())) {
-            if(!PlanetUtil.hasOxygen(level()) && !stellaris$canEat(TagRegistry.SPACE_FOOD)) {
-                cir.setReturnValue(canAlwaysEat);
-            }
+        if(level() instanceof ServerLevel serverLevel && !PlanetUtil.hasOxygenAt(serverLevel, getOnPos()) && !stellaris$canEat(TagRegistry.SPACE_FOOD)) {
+            cir.setReturnValue(canAlwaysEat);
         }
     }
 }

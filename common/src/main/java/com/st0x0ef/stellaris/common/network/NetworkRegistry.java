@@ -17,6 +17,7 @@ import java.util.List;
 public interface NetworkRegistry {
     CustomPacketPayload.Type<KeyHandlerPacket> KEY_HANDLER_ID = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "key_handler"));
     CustomPacketPayload.Type<TeleportEntityToPlanetPacket> TELEPORT_ENTITY_ID = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "teleport_entity"));
+    CustomPacketPayload.Type<PlaceStationPacket> PLACE_STATION_ID = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "place_station"));
 
     CustomPacketPayload.Type<SyncPlanetsDatapackPacket> SYNC_PLANETS_DATAPACK = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "sync_planet_datapack"));
     CustomPacketPayload.Type<SyncSpaceStationDatapackPacket> SYNC_SPACE_STATION_DATAPACK = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "sync_space_station_datapack"));
@@ -29,6 +30,7 @@ public interface NetworkRegistry {
     static void init() {
         registerC2S(KEY_HANDLER_ID, KeyHandlerPacket.STREAM_CODEC, KeyHandlerPacket::handle);
         registerC2S(TELEPORT_ENTITY_ID, TeleportEntityToPlanetPacket.STREAM_CODEC, TeleportEntityToPlanetPacket::handle);
+        registerC2S(PLACE_STATION_ID, PlaceStationPacket.STREAM_CODEC, PlaceStationPacket::handle);
 
         registerS2C(SYNC_SPACE_STATION_DATAPACK, SyncSpaceStationDatapackPacket.STREAM_CODEC, SyncSpaceStationDatapackPacket::handle);
 

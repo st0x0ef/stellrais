@@ -1,6 +1,6 @@
 {
   "system": "solar_system",
-  "level": "stellaris:phobos",
+  "level": "stellaris:jupiter",
   "name": "Phobos",
   "translatable": "stellaris.moon.phobos",
   "oxygen": false,

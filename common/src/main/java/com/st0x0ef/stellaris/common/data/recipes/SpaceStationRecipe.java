@@ -3,6 +3,7 @@ package com.st0x0ef.stellaris.common.data.recipes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.common.data.planets.Planet;
 import com.st0x0ef.stellaris.common.data.planets.PlanetTextures;
 import com.st0x0ef.stellaris.common.data.recipes.input.SpaceStationInput;
@@ -63,6 +64,13 @@ public record SpaceStationRecipe (List<ItemStack> items, ResourceLocation locati
             }
         }
         return true;
+    }
+
+    public void removeMaterials(Player player) {
+        for (ItemStack item : items) {
+            player.getInventory().removeItem(item);
+
+        }
     }
 
 

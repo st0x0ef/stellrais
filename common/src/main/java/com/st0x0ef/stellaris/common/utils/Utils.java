@@ -2,10 +2,12 @@ package com.st0x0ef.stellaris.common.utils;
 
 import com.mojang.serialization.Codec;
 import com.st0x0ef.stellaris.common.data.planets.Planet;
+import com.st0x0ef.stellaris.common.data.recipes.SpaceStationRecipe;
 import com.st0x0ef.stellaris.common.entities.vehicles.LanderEntity;
 import com.st0x0ef.stellaris.common.entities.vehicles.RocketEntity;
 import com.st0x0ef.stellaris.common.registry.EntityData;
 import com.st0x0ef.stellaris.common.registry.ItemsRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
@@ -22,6 +24,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import java.util.List;
 import java.util.Locale;
@@ -261,4 +265,13 @@ public class Utils {
     public static ResourceKey<Level> getPlanetLevel(ResourceLocation planet) {
         return ResourceKey.create(ResourceKey.createRegistryKey(planet), planet);
     }
+
+    /** Place the space station */
+    public static void placeSpaceStation(Player player, ServerLevel serverLevel, SpaceStationRecipe recipe) {
+        StructureTemplate structureTemplate = serverLevel.getStructureManager().getOrCreate(recipe.location());
+        BlockPos pos = new BlockPos((int)player.getX() - (structureTemplate.getSize().getX() / 2), 100, (int)player.getZ() - (structureTemplate.getSize().getZ() / 2));
+
+        structureTemplate.placeInWorld(serverLevel, pos, pos, new StructurePlaceSettings(), serverLevel.random, 2);
+    }
+
 }

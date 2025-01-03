@@ -1,4 +1,4 @@
-package com.st0x0ef.stellaris.common.utils.capabilities.energy;
+package com.st0x0ef.stellaris.common.capabilities.energy;
 
 import com.fej1fun.potentials.capabilities.Capabilities;
 import com.fej1fun.potentials.energy.UniversalEnergyStorage;

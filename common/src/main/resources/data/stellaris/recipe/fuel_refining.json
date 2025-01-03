@@ -1,15 +1,15 @@
-//{
-//  "type": "stellaris:fuel_refinery",
-//  "isFluidMB": true,
-//  "energy": 10,
-//  "ingredient": {
-//    "fluid": "stellaris:oil",
-//    "id": "stellaris:oil",
-//    "amount": 1
-//  },
-//  "result": {
-//    "fluid": "stellaris:fuel",
-//    "id": "stellaris:fuel",
-//    "amount": 1
-//  }
-//}
+{
+  "type": "stellaris:fuel_refinery",
+  "isFluidMB": true,
+  "energy": 10,
+  "ingredient": {
+    "fluid": "stellaris:oil",
+    "id": "stellaris:oil",
+    "amount": 1
+  },
+  "result": {
+    "fluid": "stellaris:fuel",
+    "id": "stellaris:fuel",
+    "amount": 1
+  }
+}

@@ -1,22 +1,22 @@
-//{
-//  "type": "stellaris:water_seperator",
-//  "isFluidMB": true,
-//  "energy": 10,
-//  "ingredient": {
-//    "fluid": "minecraft:water",
-//    "id": "minecraft:water",
-//    "amount": 2
-//  },
-//  "results": [
-//    {
-//      "fluid": "stellaris:hydrogen",
-//      "id": "stellaris:hydrogen",
-//      "amount": 2
-//    },
-//    {
-//      "fluid": "stellaris:oxygen",
-//      "id": "stellaris:oxygen",
-//      "amount": 1
-//    }
-//  ]
-//}
+{
+  "type": "stellaris:water_seperator",
+  "isFluidMB": true,
+  "energy": 10,
+  "ingredient": {
+    "fluid": "minecraft:water",
+    "id": "minecraft:water",
+    "amount": 2
+  },
+  "results": [
+    {
+      "fluid": "stellaris:hydrogen",
+      "id": "stellaris:hydrogen",
+      "amount": 2
+    },
+    {
+      "fluid": "stellaris:oxygen",
+      "id": "stellaris:oxygen",
+      "amount": 1
+    }
+  ]
+}

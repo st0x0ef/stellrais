@@ -7,23 +7,22 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.EntityModelSet;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.special.NoDataSpecialModelRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
-import net.minecraft.world.item.ItemStack;
 
 @Environment(EnvType.CLIENT)
-public class RoverItemRenderer extends BlockEntityWithoutLevelRenderer {
+public class RoverItemRenderer implements NoDataSpecialModelRenderer {
 
     private final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/vehicle/rover.png");
     private RoverModel model;
 
     public RoverItemRenderer(BlockEntityRenderDispatcher blockEntityRenderDispatcher, EntityModelSet entityModelSet) {
-        super(blockEntityRenderDispatcher, entityModelSet);
+
     }
 
     public RoverItemRenderer get() {
@@ -31,11 +30,11 @@ public class RoverItemRenderer extends BlockEntityWithoutLevelRenderer {
     }
 
     @Override
-    public void renderByItem(ItemStack stack, ItemDisplayContext displayContext, PoseStack matrixStackIn, MultiBufferSource buffer, int combinedLight, int packedOverlay) {
-        matrixStackIn.pushPose();
+    public void render(ItemDisplayContext displayContext, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, boolean hasFoilType) {
+        poseStack.pushPose();
 
-        matrixStackIn.translate(0.5D, 1.5D, 0.5D);
-        matrixStackIn.scale(-1.0F, -1.0F, 1.0F);
+        poseStack.translate(0.5D, 1.5D, 0.5D);
+        poseStack.scale(-1.0F, -1.0F, 1.0F);
 
         Minecraft mc = Minecraft.getInstance();
 
@@ -43,10 +42,10 @@ public class RoverItemRenderer extends BlockEntityWithoutLevelRenderer {
             this.model = new RoverModel(mc.getEntityModels().bakeLayer(RoverModel.LAYER_LOCATION));
         }
 
-        VertexConsumer vertexBuilder = buffer.getBuffer(RenderType.entityCutoutNoCullZOffset(TEXTURE));
+        VertexConsumer vertexBuilder = bufferSource.getBuffer(RenderType.entityCutoutNoCullZOffset(TEXTURE));
 
-        this.model.renderToBuffer(matrixStackIn, vertexBuilder, combinedLight, OverlayTexture.NO_OVERLAY, -1);
+        this.model.renderToBuffer(poseStack, vertexBuilder, packedLight, OverlayTexture.NO_OVERLAY, -1);
 
-        matrixStackIn.popPose();
+        poseStack.popPose();
     }
 }

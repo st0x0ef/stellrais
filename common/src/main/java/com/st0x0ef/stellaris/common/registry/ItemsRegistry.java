@@ -277,25 +277,25 @@ public class ItemsRegistry {
      */
 
     public static final RegistrySupplier<SpawnEggItem> ALIEN_SPAWN_EGG = ITEMS.register("alien_spawn_egg",
-            () -> new ArchitecturySpawnEggItem(EntityRegistry.ALIEN, 0xc4c4c4, 0xadadad, new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB).setId(id("alien_spawn_egg"))));
+            () -> new ArchitecturySpawnEggItem(EntityRegistry.ALIEN, new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB).setId(id("alien_spawn_egg"))));
 
     public static final RegistrySupplier<SpawnEggItem> ALIEN_ZOMBIE_SPAWN_EGG = ITEMS.register("alien_zombie_spawn_egg",
-            () -> new ArchitecturySpawnEggItem(EntityRegistry.ALIEN_ZOMBIE, 0xc4c4c4, 0xadadad, new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB).setId(id("alien_zombie_spawn_egg"))));
+            () -> new ArchitecturySpawnEggItem(EntityRegistry.ALIEN_ZOMBIE, new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB).setId(id("alien_zombie_spawn_egg"))));
 
     public static final RegistrySupplier<SpawnEggItem> PYGRO_SPAWN_EGG = ITEMS.register("pygro_spawn_egg",
-            () -> new ArchitecturySpawnEggItem(EntityRegistry.PYGRO, 0xc4c4c4, 0xadadad, new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB).setId(id("pygro_spawn_egg"))));
+            () -> new ArchitecturySpawnEggItem(EntityRegistry.PYGRO, new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB).setId(id("pygro_spawn_egg"))));
 
     public static final RegistrySupplier<SpawnEggItem> PYGRO_BRUTE_SPAWN_EGG = ITEMS.register("pygro_brute_spawn_egg",
-            () -> new ArchitecturySpawnEggItem(EntityRegistry.PYGRO_BRUTE, 0xc4c4c4, 0xadadad, new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB).setId(id("pygro_brute_spawn_egg"))));
+            () -> new ArchitecturySpawnEggItem(EntityRegistry.PYGRO_BRUTE, new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB).setId(id("pygro_brute_spawn_egg"))));
 
     public static final RegistrySupplier<SpawnEggItem> MARTIAN_RAPTOR_SPAWN_EGG = ITEMS.register("martian_raptor_spawn_egg",
-            () -> new ArchitecturySpawnEggItem(EntityRegistry.MARTIAN_RAPTOR, 0xc4c4c4, 0xadadad, new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB).setId(id("martian_raptor_spawn_egg"))));
+            () -> new ArchitecturySpawnEggItem(EntityRegistry.MARTIAN_RAPTOR, new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB).setId(id("martian_raptor_spawn_egg"))));
 
     public static final RegistrySupplier<SpawnEggItem> STAR_CRAWLER_SPAWN_EGG = ITEMS.register("star_crawler_spawn_egg",
-            () -> new ArchitecturySpawnEggItem(EntityRegistry.STAR_CRAWLER, 0xc4c4c4, 0xadadad, new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB).setId(id("star_crawler_spawn_egg"))));
+            () -> new ArchitecturySpawnEggItem(EntityRegistry.STAR_CRAWLER, new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB).setId(id("star_crawler_spawn_egg"))));
 
     public static final RegistrySupplier<SpawnEggItem> MOGLER_SPAWN_EGG = ITEMS.register("mogler_spawn_egg",
-            () -> new ArchitecturySpawnEggItem(EntityRegistry.MOGLER, 0xc4c4c4, 0xadadad, new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB).setId(id("mogler_spawn_egg"))));
+            () -> new ArchitecturySpawnEggItem(EntityRegistry.MOGLER, new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB).setId(id("mogler_spawn_egg"))));
 
     /**
      * Bucket Items

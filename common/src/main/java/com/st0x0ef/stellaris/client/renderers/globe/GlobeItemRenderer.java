@@ -9,23 +9,25 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.special.NoDataSpecialModelRenderer;
+import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 @Environment(EnvType.CLIENT)
-public class GlobeItemRenderer extends BlockEntityWithoutLevelRenderer {
+public class GlobeItemRenderer implements SpecialModelRenderer<ItemDisplayContext> {
 
     private ResourceLocation texture;
     private GlobeModel<?> model;
 
     public GlobeItemRenderer(BlockEntityRenderDispatcher blockEntityRenderDispatcher, EntityModelSet entityModelSet) {
-        super(blockEntityRenderDispatcher, entityModelSet);
+
     }
 
     
@@ -35,16 +37,16 @@ public class GlobeItemRenderer extends BlockEntityWithoutLevelRenderer {
     }
 
     @Override
-    public void renderByItem(ItemStack stack, ItemDisplayContext displayContext, PoseStack matrixStackIn, MultiBufferSource buffer, int combinedLight, int packedOverlay) {
-        if (stack.getItem() instanceof GlobeItem globeItem) {
+    public void render(@Nullable ItemDisplayContext patterns, ItemDisplayContext displayContext, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, boolean hasFoilType) {
+        if (patterns.getItem() instanceof GlobeItem globeItem) {
             this.texture = globeItem.getTexture();
         } else {
             this.texture = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/block/globes/earth_globe.png");
         }
-        matrixStackIn.pushPose();
+        poseStack.pushPose();
 
-        matrixStackIn.translate(0.5D, 1.5D, 0.5D);
-        matrixStackIn.scale(-1.0F, -1.0F, 1.0F);
+        poseStack.translate(0.5D, 1.5D, 0.5D);
+        poseStack.scale(-1.0F, -1.0F, 1.0F);
 
         Minecraft mc = Minecraft.getInstance();
         ClientLevel level = mc.level;
@@ -53,7 +55,7 @@ public class GlobeItemRenderer extends BlockEntityWithoutLevelRenderer {
             this.model = new GlobeModel<>(mc.getEntityModels().bakeLayer(GlobeModel.LAYER_LOCATION));
         }
 
-        VertexConsumer vertexBuilder = buffer.getBuffer(RenderType.entityCutoutNoCullZOffset(texture));
+        VertexConsumer vertexBuilder = bufferSource.getBuffer(RenderType.entityCutoutNoCullZOffset(texture));
 
         /** Animation */
         if (level != null) {
@@ -62,8 +64,13 @@ public class GlobeItemRenderer extends BlockEntityWithoutLevelRenderer {
             }
         }
 
-        this.model.renderToBuffer(matrixStackIn, vertexBuilder, combinedLight, OverlayTexture.NO_OVERLAY, -1);
+        this.model.renderToBuffer(poseStack, vertexBuilder, packedLight, OverlayTexture.NO_OVERLAY, -1);
 
-        matrixStackIn.popPose();
+        poseStack.popPose();
+    }
+
+    @Override
+    public @Nullable ItemDisplayContext extractArgument(ItemStack stack) {
+        return null;
     }
 }

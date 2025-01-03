@@ -24,10 +24,14 @@ public class GlobeItemRendererMixin extends BlockItem {
 
         if(GlobeItemRendererMixin.this.getDefaultInstance().getItem() instanceof GlobeItem item) {
             consumer.accept(new IClientItemExtensions() {
+
                 @Override
                 public @NotNull BlockEntityWithoutLevelRenderer getCustomRenderer() {
                     return ItemRendererRegistry.GLOBE_ITEM_RENDERER.setTexture(item.getTexture());
                 }
+            });
+
+            consumer.accept(new IClientItemExtensions() {
             });
         }
     }

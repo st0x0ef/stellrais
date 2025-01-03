@@ -8,6 +8,7 @@ import com.st0x0ef.stellaris.client.screens.PlanetSelectionScreen;
 import com.st0x0ef.stellaris.client.screens.info.PlanetInfo;
 import com.st0x0ef.stellaris.client.screens.record.PlanetRecord;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.FileToIdConverter;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -19,7 +20,7 @@ import java.util.Map;
 
 public class PlanetPack extends SimpleJsonResourceReloadListener<JsonElement>  {
     public PlanetPack() {
-        super(ExtraCodecs.JSON, "renderer/planet_screen/planet");
+        super(ExtraCodecs.JSON, FileToIdConverter.json("renderer/planet_screen/planet"));
     }
 
     @Override

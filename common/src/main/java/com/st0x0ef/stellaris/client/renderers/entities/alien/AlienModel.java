@@ -1,11 +1,12 @@
 package com.st0x0ef.stellaris.client.renderers.entities.alien;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.st0x0ef.stellaris.Stellaris;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
-import net.minecraft.client.model.VillagerHeadModel;
+import net.minecraft.client.model.VillagerLikeModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -15,7 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 @Environment(EnvType.CLIENT)
-public class AlienModel extends EntityModel<VillagerRenderState> implements VillagerHeadModel, HeadedModel {
+public class AlienModel extends EntityModel<VillagerRenderState> implements VillagerLikeModel, HeadedModel {
 
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "alien"), "main");
 
@@ -73,6 +74,11 @@ public class AlienModel extends EntityModel<VillagerRenderState> implements Vill
 	@Override
 	public void hatVisible(boolean visible) {
 		this.head2.visible = visible;
+	}
+
+	@Override
+	public void translateToArms(PoseStack poseStack) {
+
 	}
 
 	@Override

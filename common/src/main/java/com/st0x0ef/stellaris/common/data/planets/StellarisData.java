@@ -3,6 +3,7 @@ package com.st0x0ef.stellaris.common.data.planets;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;
+import net.minecraft.resources.FileToIdConverter;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -19,7 +20,7 @@ public class StellarisData extends SimpleJsonResourceReloadListener<JsonElement>
     private static final List<Planet> PLANETS = new ArrayList<>();
 
     public StellarisData() {
-        super(ExtraCodecs.JSON, "planets");
+        super(ExtraCodecs.JSON, FileToIdConverter.json("planets"));
     }
 
     @Override

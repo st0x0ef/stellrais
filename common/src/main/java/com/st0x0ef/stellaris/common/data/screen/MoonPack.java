@@ -8,6 +8,7 @@ import com.st0x0ef.stellaris.client.screens.PlanetSelectionScreen;
 import com.st0x0ef.stellaris.client.screens.info.MoonInfo;
 import com.st0x0ef.stellaris.client.screens.record.MoonRecord;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.FileToIdConverter;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -24,7 +25,7 @@ public class MoonPack extends SimpleJsonResourceReloadListener<JsonElement>  {
     public static int count = 0;
 
     public MoonPack() {
-        super(ExtraCodecs.JSON, "renderer/planet_screen/moon");
+        super(ExtraCodecs.JSON, FileToIdConverter.json("renderer/planet_screen/moon"));
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.st0x0ef.stellaris.client.screens.info.CelestialBody;
 import com.st0x0ef.stellaris.client.screens.record.StarRecord;
 import com.st0x0ef.stellaris.common.utils.Utils;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.FileToIdConverter;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -25,7 +26,7 @@ public class StarPack extends SimpleJsonResourceReloadListener<JsonElement>  {
     public static int count = 0;
 
     public StarPack() {
-        super(ExtraCodecs.JSON, "renderer/planet_screen/star");
+        super(ExtraCodecs.JSON, FileToIdConverter.json("renderer/planet_screen/star"));
     }
 
     @Override

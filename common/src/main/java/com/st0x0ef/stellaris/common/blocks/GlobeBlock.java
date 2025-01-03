@@ -105,7 +105,7 @@ public class GlobeBlock extends BaseEntityBlock implements SimpleWaterloggedBloc
 
     @Override
     public RenderShape getRenderShape(BlockState p_49232_) {
-        return RenderShape.ENTITYBLOCK_ANIMATED;
+        return RenderShape.MODEL;
     }
 
     @Override

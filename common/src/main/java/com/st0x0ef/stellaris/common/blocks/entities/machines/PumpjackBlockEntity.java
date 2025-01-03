@@ -3,7 +3,7 @@ package com.st0x0ef.stellaris.common.blocks.entities.machines;
 import com.fej1fun.potentials.fluid.UniversalFluidTank;
 import com.fej1fun.potentials.providers.FluidProvider;
 import com.st0x0ef.stellaris.common.blocks.machines.CoalGeneratorBlock;
-import com.st0x0ef.stellaris.common.capabilities.fluid.FluidTank;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidTank;
 import com.st0x0ef.stellaris.common.menus.PumpjackMenu;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import com.st0x0ef.stellaris.common.registry.FluidRegistry;

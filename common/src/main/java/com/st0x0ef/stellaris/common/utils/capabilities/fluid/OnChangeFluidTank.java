@@ -1,4 +1,4 @@
-package com.st0x0ef.stellaris.common.capabilities.fluid;
+package com.st0x0ef.stellaris.common.utils.capabilities.fluid;
 
 import dev.architectury.fluid.FluidStack;
 

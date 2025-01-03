@@ -57,6 +57,9 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
     public static final ResourceLocation BUTTON_TEXTURE = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/button.png");
     public static final ResourceLocation LARGE_BUTTON_TEXTURE = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/large_button.png");
     public static final ResourceLocation LAUNCH_BUTTON_TEXTURE = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/launch_button.png");
+    public static final ResourceLocation NEXT_BUTTON = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/next_button.png");
+    public static final ResourceLocation BACK_BUTTON = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/back_button.png");
+
 
     public static final ResourceLocation SMALL_MENU_LIST = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/planet_menu.png");
     public static final ResourceLocation LARGE_MENU_TEXTURE = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/large_planet_menu.png");
@@ -935,6 +938,11 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
                             ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/launch_button_hovered.png")
                     );
 
+            focusButton.visible = false;
+            addButtonToList(focusButton);
+            this.addRenderableWidget(focusButton);
+
+
             for (MoonInfo moon : MOONS) {
                 if (moon.orbitCenter == planet) {
                     TexturedButton moonButton = new TexturedButton(x + 5, 20, buttonWidth, buttonHeight, moon.translatable, (btn) -> {
@@ -952,10 +960,26 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
 
                 }
             }
-            focusButton.visible = false;
-            addButtonToList(focusButton);
-            this.addRenderableWidget(focusButton);
         }
+
+        //Add back and next button
+        TexturedButton backButton = new TexturedButton(5, 5, 15, 15, (btn) -> {
+            if(currentPage != 0) {
+                currentPage--;
+            }
+        })
+                .tex(BACK_BUTTON, BACK_BUTTON);
+        backButton.setPosition(10, (height / 2) - 177 / 2 + 52);
+        this.addRenderableWidget(backButton);
+
+        TexturedButton nextButton = new TexturedButton(5, 5, 15, 15, (btn) -> {
+            if(currentPage < planetsButton.size() - 1) {
+                currentPage++;
+            }
+        })
+                .tex(NEXT_BUTTON, NEXT_BUTTON);
+        nextButton.setPosition(30, (height / 2) - 177 / 2 + 52);
+        this.addRenderableWidget(nextButton);
 
     }
 
@@ -967,15 +991,17 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
             return;
         }
 
-        for ( ArrayList<TexturedButton> buttons : planetsButton) {
+        for (ArrayList<TexturedButton> buttons : planetsButton) {
             if(buttons.size() < 5){
                 buttons.add(button);
                 break;
             } else if (buttons.size() == 5) {
-                ArrayList<TexturedButton> list = new ArrayList<>();
-                list.add(button);
-                planetsButton.add(list);
-                break;
+                if (planetsButton.indexOf(buttons) + 1 >= planetsButton.size()) {
+                    ArrayList<TexturedButton> list = new ArrayList<>();
+                    list.add(button);
+                    planetsButton.add(list);
+                    break;
+                }
             }
         }
     }

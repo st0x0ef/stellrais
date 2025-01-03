@@ -6,10 +6,10 @@
   "width": 4.0,
   "height": 4.0,
   "parent": "stellaris:mars",
-  "dimensionId": "stellaris:jupiter",
+  "dimensionId": "stellaris:phobos",
   "translatable": "text.stellaris.planetscreen.phobos",
   "id": "stellaris:phobos",
-  "clickable": true,
+  "clickable": false,
   "space_station": true
 
 }

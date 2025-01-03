@@ -1,0 +1,14 @@
+{
+  "texture": "stellaris:textures/environment/solar_system/jupiter.png",
+  "name": "Mars",
+  "distance": 180,
+  "period": 10000,
+  "width": 10.0,
+  "height": 10.0,
+  "parent": "stellaris:sun",
+  "dimensionId": "stellaris:jupiter",
+  "translatable": "text.stellaris.planetscreen.jupiter",
+  "id": "stellaris:jupiter",
+  "space_station": true
+
+}

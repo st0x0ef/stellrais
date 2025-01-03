@@ -669,22 +669,13 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
     }
 
     public void onSpaceStationButtonClick(SpaceStationRecipesManager.SpaceStationRecipeState stationRecipeState) {
-        Stellaris.LOG.info("Sending space station packet {}", focusedBody);
-
         if(stationRecipeState.isUnlocked && focusedBody != null) {
 
-
             NetworkManager.sendToServer(new PlaceStationPacket(focusedBody.dimension, stationRecipeState.recipe));
-            NetworkManager.sendToServer(new TeleportEntityToPlanetPacket(focusedBody.dimension));
-
-            resetScrollCallback();
+            tpToFocusedPlanet();
         }
     }
 
-    public void resetScrollCallback() {
-        long windowHandle = Minecraft.getInstance().getWindow().getWindow();
-        prevScrollCallback = GLFW.glfwSetScrollCallback(windowHandle, this::onMouseScroll);
-    }
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
@@ -849,7 +840,8 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
         if (focusedBody != null) {
 
             NetworkManager.sendToServer(new TeleportEntityToPlanetPacket(focusedBody.dimension));
-            resetScrollCallback();
+            long windowHandle = Minecraft.getInstance().getWindow().getWindow();
+            prevScrollCallback = GLFW.glfwSetScrollCallback(windowHandle, this::onMouseScroll);
         } else {
             Stellaris.LOG.error("Focused body is null");
         }

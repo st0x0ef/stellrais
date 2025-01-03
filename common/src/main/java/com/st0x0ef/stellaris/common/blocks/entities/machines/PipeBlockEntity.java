@@ -1,6 +1,5 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
-import com.fej1fun.potentials.fluid.UniversalFluidTank;
 import com.fej1fun.potentials.providers.FluidProvider;
 import com.st0x0ef.stellaris.common.capabilities.fluid.OnChangeFluidTank;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
@@ -25,7 +24,7 @@ public class PipeBlockEntity extends BlockEntity implements FluidProvider.BLOCK,
     }
 
     @Override
-    public @Nullable UniversalFluidTank getFluidTank(@Nullable Direction direction) {
+    public @Nullable OnChangeFluidTank getFluidTank(@Nullable Direction direction) {
         return fluidTank;
     }
 

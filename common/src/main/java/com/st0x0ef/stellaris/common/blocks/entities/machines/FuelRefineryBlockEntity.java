@@ -1,6 +1,5 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
-import com.fej1fun.potentials.fluid.UniversalFluidTank;
 import com.fej1fun.potentials.providers.FluidProvider;
 import com.st0x0ef.stellaris.common.capabilities.fluid.FluidTank;
 import com.st0x0ef.stellaris.common.data.recipes.FuelRefineryRecipe;
@@ -50,7 +49,7 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
             }
 
             if (FuelUtils.addFuel(getItem(2), fuel)) {
-                resultTank.drainFluid(FluidStack.create(FluidRegistry.FLOWING_FUEL.get(), fuel), false);
+                resultTank.drain(FluidStack.create(FluidRegistry.FLOWING_FUEL.get(), fuel), false);
                 this.setChanged();
             }
         } else {
@@ -71,7 +70,7 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
                 if (resultTank.getFluidStack().isEmpty() || resultTank.getFluidStack().isFluidEqual(resultStack)) {
                     if (resultTank.getFluidValue() + resultStack.getAmount() < resultTank.getMaxAmount()) {
                         energy.extract(recipe.energy(), false);
-                        ingredientTank.drainFluid(FluidStack.create(recipe.ingredientStack().getFluid(), recipe.ingredientStack().getAmount()), false);
+                        ingredientTank.drain(FluidStack.create(recipe.ingredientStack().getFluid(), recipe.ingredientStack().getAmount()), false);
                         FluidTankHelper.addToTank(resultTank, resultStack);
                         setChanged();
                     }
@@ -119,7 +118,7 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
 
 
     @Override
-    public @Nullable UniversalFluidTank getFluidTank(@Nullable Direction direction) {
+    public @Nullable FluidTank getFluidTank(@Nullable Direction direction) {
 
         if(direction == null) {
             return resultTank;

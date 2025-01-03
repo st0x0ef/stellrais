@@ -1,6 +1,5 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
-import com.fej1fun.potentials.fluid.UniversalFluidTank;
 import com.fej1fun.potentials.providers.FluidProvider;
 import com.st0x0ef.stellaris.common.capabilities.fluid.FluidTank;
 import com.st0x0ef.stellaris.common.menus.OxygenGeneratorMenu;
@@ -57,7 +56,7 @@ public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity
         }
 
         if (oxygenTank.getFluidValue() > 0 && this.energy.getEnergy() > 0) {
-            oxygenTank.drainFluid(FluidStack.create(FluidRegistry.OXYGEN_ATTRIBUTES.getSourceFluid(), 1), false);
+            oxygenTank.drain(FluidStack.create(FluidRegistry.OXYGEN_ATTRIBUTES.getSourceFluid(), 1), false);
             this.energy.extract(1, false);
             return true;
         }
@@ -66,7 +65,7 @@ public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity
     }
 
     public void addOxygen(long amount) {
-        oxygenTank.fillFluid(FluidStack.create(FluidRegistry.OXYGEN_ATTRIBUTES.getSourceFluid(), amount), false);
+        oxygenTank.fill(FluidStack.create(FluidRegistry.OXYGEN_ATTRIBUTES.getSourceFluid(), amount), false);
     }
 
     @Override
@@ -98,7 +97,7 @@ public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity
 
 
     @Override
-    public @Nullable UniversalFluidTank getFluidTank(@Nullable Direction direction) {
+    public @Nullable FluidTank getFluidTank(@Nullable Direction direction) {
         return oxygenTank;
     }
 }

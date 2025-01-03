@@ -15,15 +15,22 @@ public abstract class OnChangeFluidTank extends FluidTank {
     }
 
     @Override
-    public long fillFluid(FluidStack stack, boolean simulate) {
-        long filled = super.fillFluid(stack, simulate);
+    public long fill(FluidStack stack, boolean simulate) {
+        long filled = super.fill(stack, simulate);
         if (!simulate) onChange();
         return filled;
     }
 
     @Override
-    public long drainFluid(FluidStack stack, boolean simulate) {
-        long drained = super.drainFluid(stack, simulate);
+    public FluidStack drain(FluidStack stack, boolean simulate) {
+        FluidStack drained = super.drain(stack, simulate);
+        if (!simulate) onChange();
+        return drained;
+    }
+
+    @Override
+    public FluidStack drain(long maxDrain, boolean simulate) {
+        FluidStack drained = super.drain(maxDrain, simulate);
         if (!simulate) onChange();
         return drained;
     }

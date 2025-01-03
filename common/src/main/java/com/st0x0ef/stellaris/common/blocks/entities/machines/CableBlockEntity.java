@@ -1,6 +1,6 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
-import com.st0x0ef.stellaris.common.capabilities.energy.EnergyUtil;
+import com.st0x0ef.stellaris.common.utils.capabilities.energy.EnergyUtil;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;

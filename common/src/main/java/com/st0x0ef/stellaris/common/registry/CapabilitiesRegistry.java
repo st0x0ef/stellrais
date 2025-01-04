@@ -1,9 +1,6 @@
 package com.st0x0ef.stellaris.common.registry;
 
 import com.fej1fun.potentials.capabilities.Capabilities;
-import net.minecraft.world.level.block.Block;
-
-import java.util.function.Supplier;
 
 public class CapabilitiesRegistry {
     public static void init() {

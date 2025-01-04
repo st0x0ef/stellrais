@@ -2,9 +2,8 @@ package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
 import com.fej1fun.potentials.fluid.UniversalFluidStorage;
 import com.fej1fun.potentials.providers.FluidProvider;
-import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
-import com.st0x0ef.stellaris.common.utils.capabilities.fluid.OnChangeFluidTank;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;

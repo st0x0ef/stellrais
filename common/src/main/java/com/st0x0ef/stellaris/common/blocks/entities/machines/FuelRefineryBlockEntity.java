@@ -1,17 +1,17 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
 import com.fej1fun.potentials.providers.FluidProvider;
-import com.st0x0ef.stellaris.common.network.packets.SyncFluidPacket;
-import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FilteredFluidStorage;
-import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
 import com.st0x0ef.stellaris.common.data.recipes.FuelRefineryRecipe;
 import com.st0x0ef.stellaris.common.data.recipes.input.FluidInput;
 import com.st0x0ef.stellaris.common.items.armors.JetSuit;
 import com.st0x0ef.stellaris.common.menus.FuelRefineryMenu;
+import com.st0x0ef.stellaris.common.network.packets.SyncFluidPacket;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import com.st0x0ef.stellaris.common.registry.FluidRegistry;
 import com.st0x0ef.stellaris.common.registry.RecipesRegistry;
 import com.st0x0ef.stellaris.common.utils.FuelUtils;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FilteredFluidStorage;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
 import dev.architectury.fluid.FluidStack;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.core.BlockPos;

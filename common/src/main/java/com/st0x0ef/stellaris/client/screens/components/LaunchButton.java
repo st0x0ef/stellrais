@@ -2,6 +2,7 @@ package com.st0x0ef.stellaris.client.screens.components;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.st0x0ef.stellaris.client.screens.helper.ScreenHelper;
+import com.st0x0ef.stellaris.common.utils.Utils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
@@ -105,10 +106,9 @@ public class LaunchButton extends Button {
 
         /** FONT RENDERER */
         Font fontRenderer = minecraft.font;
-//        int j = getFGColor();
-//
-//        graphics.drawCenteredString(fontRenderer, this.getMessage(), this.getX() + this.width / 2,
-//                this.getY() + (this.height - 8) / 2, j | Mth.ceil(this.alpha * 255.0F) << 24);
+
+        graphics.drawCenteredString(fontRenderer, this.getMessage(), this.getX() + this.width / 2,
+                this.getY() + (this.height - 8) / 2, Utils.getColorHexCode("White"));
 
         RenderSystem.disableDepthTest();
         RenderSystem.disableBlend();

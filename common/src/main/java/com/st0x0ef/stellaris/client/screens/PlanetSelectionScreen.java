@@ -151,7 +151,7 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
         if (focusedBody != null) {
             centerOnBody(focusedBody);
         }
-        if (!showLargeMenu) {
+        if (!showLargeMenu || !showSpaceStationMenu) {
             launchButton.visible = false;
         }
 
@@ -246,7 +246,11 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
         int buttonY = (this.height - buttonHeight) / 4;
 
         launchButton = new LaunchButton(buttonX, buttonY, buttonWidth, buttonHeight, Component.literal("Launch"), (btn) -> onLaunchButtonClick());
-
+        launchButton.setButtonTexture(
+                ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/launch_button.png"),
+                ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/launch_button_hovered.png")
+        );
+        launchButton.setMessage(launch);
         this.addRenderableWidget(launchButton);
 
         launchButton.visible = false;
@@ -275,7 +279,7 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
         if (focusedBody != null && focusedBody.dimension != null) {
             if (canLaunch(PlanetUtil.getPlanet(focusedBody.dimension))) {
 
-                if(focusedBody.spaceStation) {
+                if(focusedBody.spaceStation && !showSpaceStationMenu) {
                     this.showSpaceStationMenu = true;
                 } else {
                     tpToFocusedPlanet();
@@ -513,7 +517,6 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
 
             RenderSystem.disableBlend();
 
-            graphics.drawString(font, launch, buttonX + buttonWidth / 4, buttonY + buttonHeight / 4 + 1, 0xFFFFFF);
             graphics.drawString(font, CELESTIAL_BODY_NAME, textX, buttonY + buttonHeight / 4 + 37, 0xFFFFFF, true);
 
             graphics.drawString(font, "￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣", textX, buttonY + buttonHeight / 4 + 50, 0xFFFFFF, true);
@@ -540,10 +543,7 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
 
                 RenderSystem.setShaderTexture(0, LARGE_MENU_TEXTURE);
                 graphics.blit(LARGE_MENU_TEXTURE, centerX, centerY, 0, 0, menuWidth, menuHeight, menuWidth, menuHeight);
-                launchButton.setButtonTexture(
-                        ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/launch_button.png"),
-                        ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/launch_button_hovered.png")
-                );
+
             } else {
                 if (Objects.equals(focusedBody.name, "Earth")) {
                     graphics.drawString(font, gravityV, textX, buttonY + buttonHeight / 4 + 75, Utils.getColorHexCode("White"), true);
@@ -554,10 +554,6 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
                     RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, alpha);
 
                     RenderSystem.setShaderTexture(0, LARGE_MENU_TEXTURE);
-                    launchButton.setButtonTexture(
-                            ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/launch_button.png"),
-                            ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/launch_button_hovered.png")
-                    );
                     graphics.blit(LARGE_MENU_TEXTURE, centerX, centerY, 0, 0, menuWidth, menuHeight, menuWidth, menuHeight);
                 } else {
                     graphics.drawString(font, gravityV, textX, buttonY + buttonHeight / 4 + 75, Utils.getColorHexCode("Orange"), true);
@@ -643,16 +639,20 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
     }
 
     private void renderSpaceStation(GuiGraphics graphics) {
-        if(!showSpaceStationMenu)return;
-        //Stellaris.LOG.info("Rendering space station menu {}", focusedBody.dimension);
-
+        if(!showSpaceStationMenu) {
+            for (TexturedButton button : spaceStationButtons) {
+                button.visible = false;
+            }
+            return;
+        }
         int menuWidth = 215;
         int menuHeight = 177;
 
         int centerX = (this.width - menuWidth) / 2;
         int centerY = (this.height - menuHeight) / 2;
 
-        graphics.drawString(font, "Space Station", centerX + 12, centerY + 15, Utils.getColorHexCode("Orange"));
+        launchButton.visible = true;
+        launchButton.setTooltip(Tooltip.create(Component.translatable("text.stellaris.planetscreen.space_station_launch")));
 
         RenderSystem.enableBlend();
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -671,8 +671,8 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
     public void onSpaceStationButtonClick(SpaceStationRecipesManager.SpaceStationRecipeState stationRecipeState) {
         if(stationRecipeState.isUnlocked && focusedBody != null) {
 
-            NetworkManager.sendToServer(new PlaceStationPacket(focusedBody.dimension, stationRecipeState.recipe));
             tpToFocusedPlanet();
+            NetworkManager.sendToServer(new PlaceStationPacket(focusedBody.dimension, stationRecipeState.recipe));
         }
     }
 
@@ -841,7 +841,7 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
 
             NetworkManager.sendToServer(new TeleportEntityToPlanetPacket(focusedBody.dimension));
             long windowHandle = Minecraft.getInstance().getWindow().getWindow();
-            prevScrollCallback = GLFW.glfwSetScrollCallback(windowHandle, this::onMouseScroll);
+            prevScrollCallback = GLFW.glfwSetScrollCallback(windowHandle, Minecraft.getInstance().mouseHandler::onScroll);
         } else {
             Stellaris.LOG.error("Focused body is null");
         }
@@ -1024,6 +1024,7 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
                 focusedBody = planet;
                 centerOnBody(planet);
                 isPausePressed = true;
+                showLargeMenu = true;
             })
                     .tex(
                             ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/launch_button.png"),
@@ -1236,6 +1237,7 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
 
     //We only check one time if the player have the recipes because normally he can't get item during the screen
     private void initSpaceStationRecipes() {
+        spaceStationRecipeStates.clear();
         for (SpaceStationRecipe recipe : SpaceStationRecipesManager.SPACE_STATION_RECIPES) {
             spaceStationRecipeStates.add(recipe.fromRecipe(this.getPlayer()));
         }

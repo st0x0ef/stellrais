@@ -70,6 +70,8 @@ public class PlanetUtil {
     }
 
     public static int openPlanetSelectionMenu(Player player, boolean forceCanGoTo) {
+        Stellaris.LOG.info("Placing space station at " + player.blockPosition());
+
         ExtendedMenuProvider provider = new ExtendedMenuProvider() {
             @Override
             public void saveExtraData(FriendlyByteBuf buffer) {

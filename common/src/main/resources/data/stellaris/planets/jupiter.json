@@ -1,0 +1,14 @@
+{
+  "system": "solar_system",
+  "level": "stellaris:jupiter",
+  "name": "jupiter",
+  "translatable": "stellaris.planet.jupiter",
+  "oxygen": false,
+  "temperature": 462,
+  "distanceFromEarth": 7150000,
+  "gravity": 24.7,
+  "textures": {
+    "planet": "stellaris:textures/planet_bar/venus_planet_bar.png",
+    "planet_bar": "stellaris:textures/planet_bar/venus_planet_bar.png"
+  }
+}

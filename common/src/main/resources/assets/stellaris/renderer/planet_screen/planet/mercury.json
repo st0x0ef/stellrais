@@ -1,7 +1,7 @@
 {
   "texture": "stellaris:textures/environment/solar_system/mercury.png",
   "name": "Mercury",
-  "distance": 38,
+  "distance": 68,
   "period": 3000,
   "width": 6.0,
   "height": 6.0,

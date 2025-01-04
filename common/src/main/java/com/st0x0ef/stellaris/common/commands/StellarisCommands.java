@@ -3,10 +3,13 @@ package com.st0x0ef.stellaris.common.commands;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
+import com.st0x0ef.stellaris.common.data.recipes.SpaceStationRecipesManager;
 import com.st0x0ef.stellaris.common.utils.PlanetUtil;
+import com.st0x0ef.stellaris.common.utils.Utils;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.chunk.ChunkAccess;
 
 public class StellarisCommands {
@@ -50,6 +53,14 @@ public class StellarisCommands {
                                 }))
                 )
 
+                .then(Commands.literal("test")
+                        .requires(c -> c.hasPermission(2))
+                        .then(Commands.literal("placeSpaceStation")
+                                .executes((CommandContext<CommandSourceStack> context) -> {
+                                    Utils.placeSpaceStation(context.getSource().getPlayer(), (ServerLevel) context.getSource().getPlayer().level(), SpaceStationRecipesManager.SPACE_STATION_RECIPES.getLast());
+                                    return 0;
+                                }))
+                )
 
         );
     }

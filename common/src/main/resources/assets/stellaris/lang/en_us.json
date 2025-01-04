@@ -555,7 +555,7 @@
   "text.stellaris.planetscreen.launch": "Launch!",
   "text.stellaris.planetscreen.system": "Planetary System",
   "text.stellaris.planetscreen.error_message": "You can't reach that celestial body",
-
+  "text.stellaris.planetscreen.space_station_launch": "Launch in space without constructing a space station",
   "text.stellaris.rocketscreen.fuel": "Fuel Capacity",
 
   "text.stellaris.planetscreen.press_space": "To pause the screen, press Space",

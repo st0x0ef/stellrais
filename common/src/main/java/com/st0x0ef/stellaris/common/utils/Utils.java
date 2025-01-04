@@ -1,6 +1,7 @@
 package com.st0x0ef.stellaris.common.utils;
 
 import com.mojang.serialization.Codec;
+import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.common.data.planets.Planet;
 import com.st0x0ef.stellaris.common.data.recipes.SpaceStationRecipe;
 import com.st0x0ef.stellaris.common.entities.vehicles.LanderEntity;
@@ -268,9 +269,12 @@ public class Utils {
 
     /** Place the space station */
     public static void placeSpaceStation(Player player, ServerLevel serverLevel, SpaceStationRecipe recipe) {
+
+        Stellaris.LOG.info("Placing space station {}", recipe.location());
+
         StructureTemplate structureTemplate = serverLevel.getStructureManager().getOrCreate(recipe.location());
         BlockPos pos = new BlockPos((int)player.getX() - (structureTemplate.getSize().getX() / 2), 100, (int)player.getZ() - (structureTemplate.getSize().getZ() / 2));
-
+        Stellaris.LOG.info("Placing space station at " + pos);
         structureTemplate.placeInWorld(serverLevel, pos, pos, new StructurePlaceSettings(), serverLevel.random, 2);
     }
 

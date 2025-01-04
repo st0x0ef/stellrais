@@ -1,7 +1,7 @@
 {
   "texture": "stellaris:textures/environment/solar_system/jupiter.png",
   "name": "Mars",
-  "distance": 180,
+  "distance": 210,
   "period": 10000,
   "width": 10.0,
   "height": 10.0,

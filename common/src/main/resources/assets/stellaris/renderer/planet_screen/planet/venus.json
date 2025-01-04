@@ -1,7 +1,7 @@
 {
   "texture": "stellaris:textures/environment/solar_system/venus.png",
   "name": "Venus",
-  "distance": 68,
+  "distance": 98,
   "period": 5000,
   "width": 8.0,
   "height": 8.0,

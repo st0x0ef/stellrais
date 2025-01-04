@@ -7,7 +7,9 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 
+import java.util.Comparator;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class FluidStorage extends BaseFluidStorage {
 
@@ -20,16 +22,35 @@ public abstract class FluidStorage extends BaseFluidStorage {
 
     @Override
     public FluidStack drain(long maxAmount, boolean simulate) {
-        FluidStack toReturn = super.drain(maxAmount, simulate);
-        if (simulate) onChange();
-        return toReturn;
+        AtomicReference<FluidStack> toReturn = new AtomicReference<>(FluidStack.empty());
+        fluidStacks.stream().filter(stack -> !stack.isEmpty()).max(Comparator.comparing(FluidStack::getAmount)).ifPresent(stack -> {
+            int i;
+            for (i = 0; i < getTanks(); i++) {
+                if (stack.isFluidStackEqual(getFluidInTank(i))) break;
+            }
+            long removedAmount = Math.min(maxAmount, stack.getAmount());
+            toReturn.set(FluidStack.create(stack.getFluid(), removedAmount));
+            stack.shrink(removedAmount);
+            onChange(i);
+        });
+        return toReturn.get();
     }
 
     @Override
     public FluidStack drain(FluidStack stack, boolean simulate) {
-        FluidStack toReturn = super.drain(stack, simulate);
-        if (simulate) onChange();
-        return toReturn;
+        long drained = 0;
+        for (int i = 0; i < getTanks(); i++) {
+            if (!isFluidValid(i, stack)) continue;
+            if (getFluidInTank(i).isEmpty()) continue;
+            if (getFluidInTank(i).getFluid()!=stack.getFluid()) continue;
+            drained = Math.min(getFluidValueInTank(i), Math.min(this.maxDrain, stack.getAmount()));
+            if (!simulate) {
+                setFluidInTank(i, FluidStack.create(getFluidInTank(i), getFluidValueInTank(i) - drained));
+                onChange(i);
+            }
+            break;
+        }
+        return FluidStack.create(stack, drained);
     }
 
     @Override

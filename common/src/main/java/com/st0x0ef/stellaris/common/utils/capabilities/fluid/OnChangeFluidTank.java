@@ -2,6 +2,7 @@ package com.st0x0ef.stellaris.common.utils.capabilities.fluid;
 
 import dev.architectury.fluid.FluidStack;
 
+@Deprecated
 public abstract class OnChangeFluidTank extends FluidTank {
 
     public OnChangeFluidTank(long maxAmount) {

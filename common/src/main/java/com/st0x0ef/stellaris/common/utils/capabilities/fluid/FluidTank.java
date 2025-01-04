@@ -7,6 +7,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 
+@Deprecated
 public class FluidTank extends BaseFluidTank {
 
     public FluidTank(long maxAmount) {
@@ -35,7 +36,6 @@ public class FluidTank extends BaseFluidTank {
 
     public boolean canGrow() {
         long toReceive = Math.clamp(this.getMaxAmount() - getFluidValue(), 0, Math.min(this.getMaxAmount(), getFluidStack().getAmount()));
-
         return this.getFluidValue() < this.getMaxAmount();
     }
 }

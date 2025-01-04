@@ -4,12 +4,19 @@ import com.fej1fun.potentials.capabilities.Capabilities;
 import com.fej1fun.potentials.energy.UniversalEnergyStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class EnergyUtil {
+    public static int moveEnergyToItem(EnergyStorage from, ItemStack stackTo, int amount) {
+        UniversalEnergyStorage to = Capabilities.Energy.ITEM.getCapability(stackTo);
+        if (to == null) return 0;
+        return moveEnergy(from, to, amount);
+    }
+
     public static int distributeEnergyNearby(Level level, BlockPos pos, int amount) {
         return distributeEnergyNearby(level, pos, amount, List.of());
     }

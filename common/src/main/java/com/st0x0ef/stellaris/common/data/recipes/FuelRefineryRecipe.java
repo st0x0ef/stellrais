@@ -58,7 +58,7 @@ public record FuelRefineryRecipe(FluidStack ingredientStack, FluidStack resultSt
                 FluidStack.CODEC.fieldOf("ingredient").forGetter(FuelRefineryRecipe::ingredientStack),
                 FluidStack.CODEC.fieldOf("result").forGetter(FuelRefineryRecipe::resultStack),
                 Codec.BOOL.optionalFieldOf("isFluidMB").forGetter(recipe -> Optional.of(recipe.isMb)),
-                Codec.INT.fieldOf("energy").forGetter(FuelRefineryRecipe::energy)
+                Codec.INT.fieldOf("energyContainer").forGetter(FuelRefineryRecipe::energy)
         ).apply(instance, (ingredientStack, resultStack, isFluidMb, energy) -> {
             boolean isMb = isFluidMb.orElse(true);
             convertFluidStack(ingredientStack, isMb);

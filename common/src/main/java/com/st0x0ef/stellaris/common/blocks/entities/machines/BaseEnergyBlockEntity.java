@@ -1,8 +1,11 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
-import com.fej1fun.potentials.energy.BaseEnergyStorage;
 import com.fej1fun.potentials.providers.EnergyProvider;
+import com.st0x0ef.stellaris.common.network.NetworkRegistry;
+import com.st0x0ef.stellaris.common.network.packets.SyncEnergyPacket;
 import com.st0x0ef.stellaris.common.utils.capabilities.energy.EnergyStorage;
+import dev.architectury.networking.NetworkManager;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -25,7 +28,6 @@ public abstract class BaseEnergyBlockEntity extends BlockEntity implements Energ
             @Override
             protected void onChange() {
                 setChanged();
-                //TODO networking
             }
         };
     }
@@ -50,7 +52,7 @@ public abstract class BaseEnergyBlockEntity extends BlockEntity implements Energ
     }
 
     @Override
-    public @NotNull BaseEnergyStorage getEnergy(@Nullable Direction direction) {
+    public @NotNull EnergyStorage getEnergy(@Nullable Direction direction) {
         return energyContainer;
     }
 }

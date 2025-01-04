@@ -1,7 +1,8 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
-import com.fej1fun.potentials.fluid.UniversalFluidTank;
+import com.fej1fun.potentials.fluid.UniversalFluidStorage;
 import com.fej1fun.potentials.providers.FluidProvider;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.OnChangeFluidTank;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import net.minecraft.core.BlockPos;
@@ -13,9 +14,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 public class PipeBlockEntity extends BlockEntity implements FluidProvider.BLOCK, TickingBlockEntity {
-    private final OnChangeFluidTank fluidTank = new OnChangeFluidTank(1024) {
+    private final FluidStorage fluidTank = new FluidStorage(1, 1024) {
         @Override
-        public void onChange() {
+        protected void onChange(int tank) {
             setChanged();
         }
     };
@@ -25,7 +26,7 @@ public class PipeBlockEntity extends BlockEntity implements FluidProvider.BLOCK,
     }
 
     @Override
-    public @Nullable UniversalFluidTank getFluidTank(@Nullable Direction direction) {
+    public @Nullable UniversalFluidStorage getFluidTank(@Nullable Direction direction) {
         return fluidTank;
     }
 

@@ -79,9 +79,9 @@ public class CoalGeneratorMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        if(!player.isLocalPlayer()) {
-            this.syncBattery((ServerPlayer) player);
-        }
+//        if(!player.isLocalPlayer()) {
+//            this.syncBattery((ServerPlayer) player);
+//        }
 
         return this.inventory.stillValid(player);
     }

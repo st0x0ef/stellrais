@@ -20,6 +20,7 @@ import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class VacuumatorBlockEntity extends BaseContainerBlockEntity implements ImplementedInventory, TickingBlockEntity {
@@ -31,7 +32,7 @@ public class VacuumatorBlockEntity extends BaseContainerBlockEntity implements I
     }
 
     @Override
-    protected AbstractContainerMenu createMenu(int i, Inventory inventory) {
+    protected @NotNull AbstractContainerMenu createMenu(int i, Inventory inventory) {
         return new VacuumatorMenu(i, inventory, this);
     }
 
@@ -49,12 +50,12 @@ public class VacuumatorBlockEntity extends BaseContainerBlockEntity implements I
     }
 
     @Override
-    protected Component getDefaultName() {
+    protected @NotNull Component getDefaultName() {
         return Component.translatable("block.stellaris.vacuumator");
     }
 
     @Override
-    public int[] getSlotsForFace(Direction direction) {
+    public int @NotNull [] getSlotsForFace(Direction direction) {
         return new int[0];
     }
 
@@ -69,7 +70,7 @@ public class VacuumatorBlockEntity extends BaseContainerBlockEntity implements I
     }
 
     @Override
-    public NonNullList<ItemStack> getItems() {
+    public @NotNull NonNullList<ItemStack> getItems() {
         return items;
     }
 

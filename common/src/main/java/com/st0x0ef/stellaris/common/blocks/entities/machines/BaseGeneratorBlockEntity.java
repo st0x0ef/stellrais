@@ -33,7 +33,7 @@ public abstract class BaseGeneratorBlockEntity extends BaseEnergyContainerBlockE
     @Override
     public void tick() {
         if (canGenerate())
-            energy.setEnergyStored(energy.getEnergy()+energyGeneratedPT);
+            energyContainer.setEnergyStored(energyContainer.getEnergy()+energyGeneratedPT);
         EnergyUtil.distributeEnergyNearby(level, worldPosition, maxCapacity);
     }
 }

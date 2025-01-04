@@ -1,7 +1,9 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
+import com.fej1fun.potentials.fluid.UniversalFluidStorage;
 import com.fej1fun.potentials.fluid.UniversalFluidTank;
 import com.fej1fun.potentials.providers.FluidProvider;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidTank;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import dev.architectury.fluid.FluidStack;
@@ -18,7 +20,12 @@ import org.jetbrains.annotations.Nullable;
 public class WaterPumpBlockEntity extends BaseEnergyBlockEntity implements FluidProvider.BLOCK {
 
     private static final int NEEDED_ENERGY = 100;
-    private final FluidTank waterTank = new FluidTank(2000);
+    private final FluidStorage waterTank = new FluidStorage(1, 2000) {
+        @Override
+        protected void onChange(int tank) {
+            setChanged();
+        }
+    };
 
     public WaterPumpBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityRegistry.WATER_PUMP.get(), pos, state, 2000);
@@ -55,21 +62,21 @@ public class WaterPumpBlockEntity extends BaseEnergyBlockEntity implements Fluid
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
-        waterTank.load(provider, tag);
+        waterTank.load(tag, provider);
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.saveAdditional(tag, provider);
-        waterTank.save(provider, tag);
+        waterTank.save(tag, provider);
     }
 
-    public FluidTank getWaterTank() {
+    public FluidStorage getWaterTank() {
         return waterTank;
     }
 
     @Override
-    public @Nullable UniversalFluidTank getFluidTank(@Nullable Direction direction) {
+    public @Nullable UniversalFluidStorage getFluidTank(@Nullable Direction direction) {
         return this.waterTank;
     }
 }

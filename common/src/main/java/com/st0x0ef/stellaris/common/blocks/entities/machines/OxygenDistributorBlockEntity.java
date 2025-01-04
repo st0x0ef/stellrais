@@ -1,5 +1,6 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
+import com.fej1fun.potentials.fluid.UniversalFluidStorage;
 import com.fej1fun.potentials.fluid.UniversalFluidTank;
 import com.fej1fun.potentials.providers.FluidProvider;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidTank;
@@ -33,10 +34,10 @@ public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity
     @Override
     public void tick() {
         if (level instanceof ServerLevel serverLevel) {
-            if (this.getItem(0).has(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()) && oxygenTank.canGrow() && this.energy.getEnergy() > 1) {
+            if (this.getItem(0).has(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()) && oxygenTank.canGrow() && this.energyContainer.getEnergy() > 1) {
                 if (OxygenUtils.removeOxygen(getItem(0), 1)) {
                     addOxygen(1);
-                    this.energy.extract(1, false);
+                    this.energyContainer.extract(1, false);
                 }
             }
 
@@ -48,17 +49,17 @@ public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity
 
     public boolean useOxygenAndEnergy() {
         if (oxygenTank.getFluidStack().isEmpty() || oxygenTank.getFluidValue() == 0) {
-            if (this.getItem(0).has(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()) && this.energy.getEnergy() > 0) {
+            if (this.getItem(0).has(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()) && this.energyContainer.getEnergy() > 0) {
                 if (OxygenUtils.removeOxygen(getItem(0), 1)) {
-                    this.energy.extract(1, false);
+                    this.energyContainer.extract(1, false);
                     return true;
                 }
             }
         }
 
-        if (oxygenTank.getFluidValue() > 0 && this.energy.getEnergy() > 0) {
+        if (oxygenTank.getFluidValue() > 0 && this.energyContainer.getEnergy() > 0) {
             oxygenTank.drainFluid(FluidStack.create(FluidRegistry.OXYGEN_ATTRIBUTES.getSourceFluid(), 1), false);
-            this.energy.extract(1, false);
+            this.energyContainer.extract(1, false);
             return true;
         }
 
@@ -98,7 +99,7 @@ public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity
 
 
     @Override
-    public @Nullable UniversalFluidTank getFluidTank(@Nullable Direction direction) {
+    public @Nullable UniversalFluidStorage getFluidTank(@Nullable Direction direction) {
         return oxygenTank;
     }
 }

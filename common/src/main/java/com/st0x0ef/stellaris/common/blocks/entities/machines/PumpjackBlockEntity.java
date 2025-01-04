@@ -1,6 +1,6 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
-import com.fej1fun.potentials.fluid.UniversalFluidTank;
+import com.fej1fun.potentials.fluid.UniversalFluidStorage;
 import com.fej1fun.potentials.providers.FluidProvider;
 import com.st0x0ef.stellaris.common.blocks.machines.CoalGeneratorBlock;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidTank;
@@ -47,14 +47,14 @@ public class PumpjackBlockEntity extends BaseEnergyContainerBlockEntity implemen
             if (actualOilToExtract == 0) return;
         }
 
-        if (energy.getEnergy() >= 2 * actualOilToExtract) {
+        if (energyContainer.getEnergy() >= 2 * actualOilToExtract) {
             if (resultTank.getFluidValue() + actualOilToExtract <= resultTank.getMaxAmount()) {
                 access.stellaris$setChunkOilLevel(access.stellaris$getChunkOilLevel() - actualOilToExtract);
                 FluidStack tankStack = resultTank.getFluidStack();
 
                 resultTank.fillFluid(FluidStack.create(FluidRegistry.OIL_ATTRIBUTES.getSourceFluid(), actualOilToExtract), false);
 
-                energy.extract(2 * actualOilToExtract, false);
+                energyContainer.extract(2 * actualOilToExtract, false);
                 isGenerating = true;
                 setChanged();
             } else {
@@ -108,7 +108,7 @@ public class PumpjackBlockEntity extends BaseEnergyContainerBlockEntity implemen
 
 
     @Override
-    public @Nullable UniversalFluidTank getFluidTank(@Nullable Direction direction) {
+    public @Nullable UniversalFluidStorage getFluidTank(@Nullable Direction direction) {
         return this.resultTank;
     }
 }

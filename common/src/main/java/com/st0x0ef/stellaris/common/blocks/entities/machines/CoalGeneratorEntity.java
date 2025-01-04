@@ -95,7 +95,7 @@ public class CoalGeneratorEntity extends BaseGeneratorBlockEntity {
         if (shouldUpdate)
             setChanged();
         if (isLit())
-            energy.setEnergyStored(energy.getEnergy()+energyGeneratedPT);
+            energyContainer.setEnergyStored(energyContainer.getEnergy()+energyGeneratedPT);
 
         EnergyUtil.distributeEnergyNearby(level, worldPosition, maxCapacity);
     }
@@ -114,7 +114,7 @@ public class CoalGeneratorEntity extends BaseGeneratorBlockEntity {
 
     @Override
     public boolean canGenerate() {
-        boolean isMaxEnergy = energy.getEnergy()==energy.getMaxEnergy();
+        boolean isMaxEnergy = energyContainer.getEnergy()== energyContainer.getMaxEnergy();
         return isLit() && !isMaxEnergy;
     }
 

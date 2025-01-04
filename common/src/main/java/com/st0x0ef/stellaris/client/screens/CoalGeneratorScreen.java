@@ -38,7 +38,7 @@ public class CoalGeneratorScreen extends AbstractContainerScreen<CoalGeneratorMe
             return;
         }
 
-        energyGauge = new GaugeWidget(leftPos + 147, topPos + 52, 13, 46, Component.translatable("stellaris.screen.energy"),
+        energyGauge = new GaugeWidget(leftPos + 147, topPos + 52, 13, 46, Component.translatable("stellaris.screen.energyContainer"),
                 GUISprites.ENERGY_FULL, GUISprites.BATTERY_OVERLAY, blockEntity.getEnergy(null).getMaxEnergy(), GaugeWidget.Direction4.DOWN_UP);
         addRenderableWidget(energyGauge);
     }

@@ -34,9 +34,19 @@ public abstract class FluidStorage extends BaseFluidStorage {
 
     @Override
     public long fill(FluidStack stack, boolean simulate) {
-        long toReturn = super.fill(stack, simulate);
-        if (simulate) onChange();
-        return toReturn;
+        long filled = 0;
+        for (int i = 0; i < getTanks(); i++) {
+            if (!isFluidValid(i, stack)) continue;
+            if (!(fluidStacks.get(i).getFluid()==stack.getFluid() || fluidStacks.get(i).isEmpty())) continue;
+            if (fluidStacks.get(i).getAmount()>=capacity) continue;
+            filled = Math.clamp(this.capacity - getFluidValueInTank(i), 0L, Math.min(this.maxFill, stack.getAmount()));
+            if (!simulate) {
+                setFluidInTank(i, FluidStack.create(getFluidInTank(i), getFluidValueInTank(i) + filled));
+                onChange(i);
+            }
+            break;
+        }
+        return filled;
     }
 
     public void save(CompoundTag compoundTag, HolderLookup.Provider provider) {
@@ -60,5 +70,5 @@ public abstract class FluidStorage extends BaseFluidStorage {
         return true;
     }
 
-    protected abstract void onChange();
+    protected abstract void onChange(int tank);
 }

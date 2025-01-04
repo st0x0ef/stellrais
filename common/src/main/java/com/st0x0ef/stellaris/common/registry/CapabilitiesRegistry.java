@@ -7,11 +7,12 @@ import java.util.function.Supplier;
 
 public class CapabilitiesRegistry {
     public static void init() {
-        registerEnergyBlocks();
+        //registerEnergyBlocks();
         registerEnergyBlockEntities();
+        registerFluidBlockEntities();
     }
 
-    static void registerEnergyBlocks() {
+//    static void registerEnergyBlocks() {
 //        Capabilities.Energy.BLOCK.registerForBlock(BlocksRegistry.CABLE);
 //        Capabilities.Energy.BLOCK.registerForBlock(BlocksRegistry.OXYGEN_DISTRIBUTOR);
 //        Capabilities.Energy.BLOCK.registerForBlock(BlocksRegistry.WATER_SEPARATOR);
@@ -19,7 +20,7 @@ public class CapabilitiesRegistry {
 //        Capabilities.Energy.BLOCK.registerForBlock(BlocksRegistry.SOLAR_PANEL);
 //        Capabilities.Energy.BLOCK.registerForBlock(BlocksRegistry.COAL_GENERATOR);
 //        Capabilities.Energy.BLOCK.registerForBlock(BlocksRegistry.RADIOACTIVE_GENERATOR);
-    }
+//    }
 
     static void registerEnergyBlockEntities() {
         Capabilities.Energy.BLOCK.registerForBlockEntity(BlockEntityRegistry.SOLAR_PANEL);
@@ -31,9 +32,9 @@ public class CapabilitiesRegistry {
         Capabilities.Energy.BLOCK.registerForBlockEntity(BlockEntityRegistry.FUEL_REFINERY);
     }
 
-    static void registerFluidBlocks() {
-
-    }
+//    static void registerFluidBlocks() {
+//
+//    }
     static void registerFluidBlockEntities() {
         Capabilities.Fluid.BLOCK.registerForBlockEntity(BlockEntityRegistry.WATER_SEPARATOR_ENTITY);
         Capabilities.Fluid.BLOCK.registerForBlockEntity(BlockEntityRegistry.WATER_PUMP);

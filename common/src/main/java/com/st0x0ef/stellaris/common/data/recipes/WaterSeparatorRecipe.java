@@ -61,7 +61,7 @@ public record WaterSeparatorRecipe(FluidStack ingredientStack, List<FluidStack> 
                 FluidStack.CODEC.fieldOf("ingredient").forGetter(WaterSeparatorRecipe::ingredientStack),
                 FluidStack.CODEC.listOf(1, 2).fieldOf("results").forGetter(WaterSeparatorRecipe::resultStacks),
                 Codec.BOOL.optionalFieldOf("isFluidMB").forGetter(recipe -> Optional.of(recipe.isMb)),
-                Codec.INT.fieldOf("energy").forGetter(WaterSeparatorRecipe::energy)
+                Codec.INT.fieldOf("energyContainer").forGetter(WaterSeparatorRecipe::energy)
         ).apply(instance, (ingredientStack, resultStacks, isFluidMb, energy) -> {
             boolean isMb = isFluidMb.orElse(true);
             convertFluidStack(ingredientStack, isMb);

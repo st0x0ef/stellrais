@@ -41,7 +41,7 @@ public class PumpjackScreen extends AbstractContainerScreen<PumpjackMenu> {
         resultTankGauge = new GaugeWidget(leftPos + 79, topPos + 32, 12, 46, Component.translatable("stellaris.screen.oil"), GUISprites.OIL_OVERLAY, GUISprites.LIQUID_TANK_OVERLAY, resultTank.getMaxAmount() -1, GaugeWidget.Direction4.DOWN_UP);
         addRenderableWidget(resultTankGauge);
 
-        energyGauge = new GaugeWidget(leftPos + 147, topPos + 31, 13, 46, Component.translatable("stellaris.screen.energy"), GUISprites.ENERGY_FULL, GUISprites.BATTERY_OVERLAY, blockEntity.getEnergy(null).getMaxEnergy(), GaugeWidget.Direction4.DOWN_UP);
+        energyGauge = new GaugeWidget(leftPos + 147, topPos + 31, 13, 46, Component.translatable("stellaris.screen.energyContainer"), GUISprites.ENERGY_FULL, GUISprites.BATTERY_OVERLAY, blockEntity.getEnergy(null).getMaxEnergy(), GaugeWidget.Direction4.DOWN_UP);
         addRenderableWidget(energyGauge);
     }
 

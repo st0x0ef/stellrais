@@ -3,7 +3,9 @@ package com.st0x0ef.stellaris.common.blocks.entities.machines;
 import com.fej1fun.potentials.energy.BaseEnergyStorage;
 import com.fej1fun.potentials.providers.EnergyProvider;
 import com.st0x0ef.stellaris.common.blocks.entities.ImplementedInventory;
+import com.st0x0ef.stellaris.common.network.packets.SyncEnergyPacket;
 import com.st0x0ef.stellaris.common.utils.capabilities.energy.EnergyStorage;
+import dev.architectury.networking.NetworkManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -21,18 +23,20 @@ import org.jetbrains.annotations.Nullable;
 
 public abstract class BaseEnergyContainerBlockEntity extends BaseContainerBlockEntity implements EnergyProvider.BLOCK, ImplementedInventory, TickingBlockEntity {
 
-    public static final String ENERGY_TAG = "stellaris.energy";
+    public static final String ENERGY_TAG = "stellaris.energyContainer";
 
-    protected @NotNull EnergyStorage energy;
+    protected @NotNull EnergyStorage energyContainer;
     private NonNullList<ItemStack> items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
 
     public BaseEnergyContainerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int initialMaxCapacity, int initialMaxInsert, int initialMaxExtract) {
         super(type, pos, state);
-        this.energy = new EnergyStorage(initialMaxCapacity, initialMaxInsert, initialMaxExtract) {
+        this.energyContainer = new EnergyStorage(initialMaxCapacity, initialMaxInsert, initialMaxExtract) {
             @Override
             protected void onChange() {
                 setChanged();
-                //TODO networking
+                if (level!=null && level.getServer()!=null)
+                    NetworkManager.sendToPlayers(level.getServer().getPlayerList().getPlayers(),
+                            new SyncEnergyPacket(energyContainer.getEnergy(), getBlockPos(), null));
             }
         };
     }
@@ -83,6 +87,6 @@ public abstract class BaseEnergyContainerBlockEntity extends BaseContainerBlockE
 
     @Override
     public @NotNull BaseEnergyStorage getEnergy(@Nullable Direction direction) {
-        return energy;
+        return energyContainer;
     }
 }

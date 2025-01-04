@@ -1,8 +1,9 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
-import com.fej1fun.potentials.fluid.UniversalFluidTank;
 import com.fej1fun.potentials.providers.FluidProvider;
-import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidTank;
+import com.st0x0ef.stellaris.common.network.packets.SyncFluidPacket;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FilteredFluidStorage;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
 import com.st0x0ef.stellaris.common.data.recipes.FuelRefineryRecipe;
 import com.st0x0ef.stellaris.common.data.recipes.input.FluidInput;
 import com.st0x0ef.stellaris.common.items.armors.JetSuit;
@@ -12,6 +13,7 @@ import com.st0x0ef.stellaris.common.registry.FluidRegistry;
 import com.st0x0ef.stellaris.common.registry.RecipesRegistry;
 import com.st0x0ef.stellaris.common.utils.FuelUtils;
 import dev.architectury.fluid.FluidStack;
+import dev.architectury.networking.NetworkManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -22,18 +24,38 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
 public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity implements FluidProvider.BLOCK {
 
-    private final FluidTank ingredientTank = new FluidTank(10000);
-    private final FluidTank resultTank = new FluidTank(10000);
+    private final FluidStorage inputTank;
+    private final FluidStorage outputTank;
+
     private final RecipeManager.CachedCheck<FluidInput, FuelRefineryRecipe> cachedCheck = RecipeManager.createCheck(RecipesRegistry.FUEL_REFINERY_TYPE.get());
 
     public FuelRefineryBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityRegistry.FUEL_REFINERY.get(), pos, state);
+        this.inputTank = new FilteredFluidStorage(1, 10000, fluidStack -> fluidStack.getFluid() == FluidRegistry.OIL_STILL.get()) {
+            @Override
+            protected void onChange(int tank) {
+                setChanged();
+                if (level!=null && level.getServer()!=null)
+                    NetworkManager.sendToPlayers(level.getServer().getPlayerList().getPlayers(),
+                            new SyncFluidPacket(this.getFluidInTank(0), 0, getBlockPos(), null));
+            }
+        };
+        this.outputTank = new FilteredFluidStorage(1, 10000, fluidStack -> fluidStack.getFluid() == FluidRegistry.FUEL_STILL.get()) {
+            @Override
+            protected void onChange(int tank) {
+                setChanged();
+                if (level!=null && level.getServer()!=null)
+                    NetworkManager.sendToPlayers(level.getServer().getPlayerList().getPlayers(),
+                            new SyncFluidPacket(this.getFluidInTank(0), 0, getBlockPos(), null));
+            }
+        };
     }
 
     @Override
@@ -65,12 +87,12 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
         if (recipeHolder.isPresent()) {
             FuelRefineryRecipe recipe = recipeHolder.get().value();
 
-            if (energy.getEnergy() >= recipe.energy()) {
+            if (energyContainer.getEnergy() >= recipe.energy()) {
                 FluidStack resultStack = recipe.resultStack();
 
                 if (resultTank.getFluidStack().isEmpty() || resultTank.getFluidStack().isFluidEqual(resultStack)) {
                     if (resultTank.getFluidValue() + resultStack.getAmount() < resultTank.getMaxAmount()) {
-                        energy.extract(recipe.energy(), false);
+                        energyContainer.extract(recipe.energy(), false);
                         ingredientTank.drainFluid(FluidStack.create(recipe.ingredientStack().getFluid(), recipe.ingredientStack().getAmount()), false);
                         FluidTankHelper.addToTank(resultTank, resultStack);
                         setChanged();
@@ -81,12 +103,12 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
     }
 
     @Override
-    protected Component getDefaultName() {
+    protected @NotNull Component getDefaultName() {
         return Component.translatable("block.stellaris.fuel_refinery");
     }
 
     @Override
-    protected AbstractContainerMenu createMenu(int containerId, Inventory inventory) {
+    protected @NotNull AbstractContainerMenu createMenu(int containerId, Inventory inventory) {
         return new FuelRefineryMenu(containerId, inventory, this, this);
     }
 
@@ -98,31 +120,30 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
-        ingredientTank.load(provider, tag);
-        resultTank.load(provider, tag);
+        inputTank.save(tag, provider);
+        outputTank.save(tag, provider);
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.saveAdditional(tag, provider);
-        ingredientTank.save(provider, tag);
-        resultTank.save(provider, tag);
+        inputTank.load(tag, provider);
+        outputTank.load(tag, provider);
     }
 
-    public FluidTank getIngredientTank() {
-        return ingredientTank;
+    public FluidStorage getIngredientTank() {
+        return inputTank;
     }
-
-    public FluidTank getResultTank() {
-        return resultTank;
+    public FluidStorage getResultTank() {
+        return outputTank;
     }
-
 
     @Override
-    public @Nullable UniversalFluidTank getFluidTank(@Nullable Direction direction) {
+    public @Nullable FluidStorage getFluidTank(@Nullable Direction direction) {
+
 
         if(direction == null) {
-            return resultTank;
+            return outputTank;
         }
 
         return switch (direction) {

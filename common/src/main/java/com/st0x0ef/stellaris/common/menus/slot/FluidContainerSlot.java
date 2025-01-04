@@ -3,7 +3,6 @@ package com.st0x0ef.stellaris.common.menus.slot;
 import com.st0x0ef.stellaris.common.items.OxygenTankItem;
 import com.st0x0ef.stellaris.common.items.armors.AbstractSpaceArmor;
 import dev.architectury.hooks.fluid.FluidBucketHooks;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.BucketItem;

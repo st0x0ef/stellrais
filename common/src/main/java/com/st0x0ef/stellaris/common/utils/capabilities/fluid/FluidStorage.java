@@ -38,8 +38,8 @@ public abstract class FluidStorage extends BaseFluidStorage {
         for (int i = 0; i < getTanks(); i++) {
             if (!isFluidValid(i, stack)) continue;
             if (!(fluidStacks.get(i).getFluid()==stack.getFluid() || fluidStacks.get(i).isEmpty())) continue;
-            if (fluidStacks.get(i).getAmount()>=capacity) continue;
-            filled = Math.clamp(this.capacity - getFluidValueInTank(i), 0L, Math.min(this.maxFill, stack.getAmount()));
+            if (fluidStacks.get(i).getAmount()>=getTankCapacity(i)) continue;
+            filled = Math.clamp(getTankCapacity(i) - getFluidValueInTank(i), 0L, Math.min(this.maxFill, stack.getAmount()));
             if (!simulate) {
                 setFluidInTank(i, FluidStack.create(getFluidInTank(i), getFluidValueInTank(i) + filled));
                 onChange(i);

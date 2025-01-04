@@ -30,7 +30,6 @@ public class ConfigScreen extends Screen {
 
     @Override
     protected void init() {
-
         GridLayout gridLayout = new GridLayout();
         gridLayout.defaultCellSetting().paddingHorizontal(5).paddingBottom(4).alignHorizontallyCenter();
         GridLayout.RowHelper rowHelper = gridLayout.createRowHelper(2);
@@ -50,8 +49,6 @@ public class ConfigScreen extends Screen {
         gridLayout.arrangeElements();
         FrameLayout.alignInRectangle(gridLayout, 0, this.height / 6 + 10, this.width, this.height , 0.5F, 0.0F);
         gridLayout.visitWidgets(this::addRenderableWidget);
-
-
     }
 
     @Override

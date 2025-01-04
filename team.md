@@ -8,7 +8,7 @@ const members = [
   {
     avatar: 'https://avatars.githubusercontent.com/u/75510490?v=4',
     name: 'st0x0ef',
-    title: 'Creator, Developer',
+    title: 'Creator, Dev',
     links: [
       { icon: 'github', link: 'https://github.com/yyx990803' }
     ]
@@ -16,7 +16,7 @@ const members = [
   {
     avatar: 'https://avatars.githubusercontent.com/u/67022946?s=400&u=4de78465366b69e735574576629f2fa0e59b8417&v=4',
     name: 'TATHAN',
-    title: 'Co-Creator, Developer',
+    title: 'Co-Creator, Dev',
     links: [
       { icon: 'github', link: 'https://github.com/yyx990803' }
     ]
@@ -24,15 +24,15 @@ const members = [
   {
     avatar: 'https://avatars.githubusercontent.com/u/101066376?v=4',
     name: 'Fej',
-    title: 'Developer',
+    title: 'Dev',
     links: [
-      { icon: 'github', link: 'https://github.com/Fej1Developer' }
+      { icon: 'github', link: 'https://github.com/Fej1Dev' }
     ]
   },
   {
     avatar: 'https://avatars.githubusercontent.com/u/156406024?v=4',
     name: 'Miyaiho',
-    title: 'Developer',
+    title: 'Dev',
     links: [
       { icon: 'github', link: 'https://github.com/miyaiho' }
     ]
@@ -41,7 +41,7 @@ const members = [
   {
     avatar: 'https://avatars.githubusercontent.com/u/163727888?v=4',
     name: 'Lukeon',
-    title: 'Developer',
+    title: 'Dev',
     links: [
       { icon: 'github', link: 'https://github.com/lukeon214' }
     ]
@@ -49,7 +49,7 @@ const members = [
   {
     avatar: 'https://avatars.githubusercontent.com/u/139490373?v=4',
     name: 'Eirmax',
-    title: 'Developer',
+    title: 'Dev',
     links: [
       { icon: 'github', link: 'https://github.com/eirmax' }
     ]
@@ -57,7 +57,7 @@ const members = [
   {
     avatar: 'https://avatars.githubusercontent.com/u/70532030?v=4',
     name: 'MincraftEinstein',
-    title: 'Developer',
+    title: 'Dev',
     links: [
       { icon: 'github', link: 'https://github.com/MincraftEinstein' }
     ]
@@ -65,7 +65,7 @@ const members = [
   {
     avatar: 'https://avatars.githubusercontent.com/u/120266450?v=4',
     name: 'Okamiz',
-    title: 'Developer, Texturer',
+    title: 'Dev, Texturer',
     links: [
       { icon: 'github', link: 'https://github.com/Okamomille' }
     ]
@@ -73,7 +73,7 @@ const members = [
   {
     avatar: 'https://avatars.githubusercontent.com/u/153344018?v=4',
     name: 'Small Chubby',
-    title: 'Developer',
+    title: 'Dev',
     links: [
       { icon: 'github', link: 'https://github.com/GityBoyy' }
     ]
@@ -112,6 +112,6 @@ const members = [
 
 # Our Team
 
-Say hello to our awesome team members who make this all possible.
+Say hello to our awesome team.
 
 <VPTeamMembers size="small" :members="members" />

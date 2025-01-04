@@ -4,7 +4,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   base: '/stellaris/',
   title: "Stellaris Wiki",
-  description: "Learn how to create your own planets!",
+  description: "Learn how to create your own planets !",
   head: [['link', { rel: 'icon', href: '/stellaris/favicon.ico' }]],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
@@ -20,8 +20,8 @@ export default defineConfig({
       {
         text: 'Documentation',
         items: [
-          { text: 'Creating a Custom Planet', link: '/docs/custom-planets' },
-          { text: 'Custom Screen Files', link: '/docs/custom-screen' },
+          { text: 'The Planet file', link: '/docs/custom-planets' },
+          { text: 'The Screen files', link: '/docs/custom-screen' },
           { text: 'Custom Sky', link: '/docs/custom-sky' },
           { text: 'Custom Module', link: '/docs/custom-modules' }
 

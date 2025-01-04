@@ -54,7 +54,7 @@ export default defineConfig({
     ],
 
     footer: {
-      message: 'Made with 💖 from the Stellaris team.'
+      message: 'Made by the Stellaris team with 💖.'
     }
 
   },

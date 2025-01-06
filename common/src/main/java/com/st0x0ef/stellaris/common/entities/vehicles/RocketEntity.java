@@ -365,12 +365,12 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
 
             if (START_TIMER == 200) {
                 for (ServerPlayer player : level.getServer().getPlayerList().getPlayers()) {
-                    level.sendParticles(player, (ParticleOptions) ParticleTypes.FLAME, true, this.getX() - vec.x, this.getY() - vec.y - 2.2, this.getZ() - vec.z, 20, 0.1, 0.1, 0.1, 0.001);
-                    level.sendParticles(player, (ParticleOptions) ParticleTypes.FLAME, true, this.getX() - vec.x, this.getY() - vec.y - 3.2, this.getZ() - vec.z, 10, 0.1, 0.1, 0.1, 0.04);
+                    level.sendParticles(ParticleTypes.FLAME, true , true, this.getX() - vec.x, this.getY() - vec.y - 2.2, this.getZ() - vec.z, 20, 0.1, 0.1, 0.1, 0.001);
+                    level.sendParticles(ParticleTypes.FLAME, true , true, this.getX() - vec.x, this.getY() - vec.y - 3.2, this.getZ() - vec.z, 10, 0.1, 0.1, 0.1, 0.04);
                 }
             } else {
                 for (ServerPlayer player : level.getServer().getPlayerList().getPlayers()) {
-                    level.sendParticles(player, ParticleTypes.CAMPFIRE_COSY_SMOKE, true, this.getX() - vec.x, this.getY() - vec.y - 0.1, this.getZ() - vec.z, 6, 0.1, 0.1, 0.1, 0.023);
+                    level.sendParticles(ParticleTypes.CAMPFIRE_COSY_SMOKE, true, true, this.getX() - vec.x, this.getY() - vec.y - 0.1, this.getZ() - vec.z, 6, 0.1, 0.1, 0.1, 0.023);
                 }
             }
         }

@@ -38,7 +38,7 @@ public class GlobeItemRenderer implements SpecialModelRenderer<ItemDisplayContex
 
     @Override
     public void render(@Nullable ItemDisplayContext patterns, ItemDisplayContext displayContext, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, boolean hasFoilType) {
-        if (patterns.getItem() instanceof GlobeItem globeItem) {
+        if (patterns instanceof GlobeItem globeItem) {
             this.texture = globeItem.getTexture();
         } else {
             this.texture = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/block/globes/earth_globe.png");

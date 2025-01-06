@@ -169,7 +169,7 @@ public class LanderEntity extends IVehicleEntity implements HasCustomInventorySc
 
             if (this.level() instanceof ServerLevel level) {
                 for (ServerPlayer player : level.getServer().getPlayerList().getPlayers()) {
-                    level.sendParticles(player, ParticleTypes.SPIT, true, this.getX(),
+                    level.sendParticles(ParticleTypes.SPIT, true, true, this.getX(),
                             this.getY() - 0.3, this.getZ(), 3, 0.1, 0.1, 0.1, 0.001);
                 }
             }

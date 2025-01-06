@@ -36,8 +36,8 @@ public class WallCoalTorchBlock extends CoalTorchBlock {
 
 	public static VoxelShape getShapeForState(BlockState state) {
 		return SHAPES.get(state.getValue(FACING));
-	}
 
+}
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader reader, BlockPos pos) {
 		Direction direction = state.getValue(FACING);

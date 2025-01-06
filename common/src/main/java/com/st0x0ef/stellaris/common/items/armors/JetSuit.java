@@ -246,7 +246,7 @@ public class JetSuit {
 
                     if (player.level() instanceof ServerLevel) {
                         for (ServerPlayer p : ((ServerLevel) player.level()).getServer().getPlayerList().getPlayers()) {
-                            ((ServerLevel) player.level()).sendParticles(p, ParticleTypes.FLASH, true, player.getX() - vec33.x, player.getY() - vec33.y, player.getZ() - vec33.z, 1, 0, 0, 0, 0.001);
+                            ((ServerLevel) player.level()).sendParticles(ParticleTypes.FLASH, true, true, player.getX() - vec33.x, player.getY() - vec33.y, player.getZ() - vec33.z, 1, 0, 0, 0, 0.001);
                         }
                     }
                 }

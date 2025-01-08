@@ -5,4 +5,6 @@
 - Improve specific slot
 
 ## Fixes
-- Water pump can now be looted with an iron pickaxe 
+- Water pump can now be looted with an iron pickaxe
+- Fix rover recipe
+- Fix fuel refinery gui texture

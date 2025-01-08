@@ -4,15 +4,9 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.common.systems.energy.impl.WrappedBlockEnergyContainer;
-import dev.architectury.fluid.FluidStack;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.CoreShaders;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.InventoryMenu;
-import net.minecraft.world.level.material.Fluid;
 import org.joml.Matrix4f;
 
 public class GuiHelper
@@ -134,89 +128,6 @@ public class GuiHelper
         return new Rectangle2d(left, top, width, height);
     }
 
-//    public static void drawFluidTank(GuiGraphics graphics, int left, int top, IFluidTank tank) {
-//        drawFluidTank(graphics, left, top, tank.getFluid(), tank.getCapacity());
-//    }
-
-//    public static void drawFluidTank(GuiGraphics graphics, int left, int top, FluidStack stack, int capacity) {
-//        if (stack != null && !stack.isEmpty() && capacity > 0) {
-//            int maxHeight = FLUID_TANK_HEIGHT;
-//            int scaledHeight = (int) Math.ceil(maxHeight * ((double) stack.getAmount() / (double) capacity));
-//            int offset = maxHeight - scaledHeight;
-//            drawFluid(graphics, left, top + offset, FLUID_TANK_WIDTH, scaledHeight, stack);
-//        }
-//
-//        drawFluidTankOverlay(graphics, left, top);
-//    }
-
-//    public static void drawFluidTankOverlay(GuiGraphics graphics, int left, int top) {
-//        drawVertical(graphics, left, top, FLUID_TANK_WIDTH, FLUID_TANK_HEIGHT, FLUID_TANK_PATH, 1.0D);
-//    }
-
-//    public static void drawFluid(GuiGraphics graphics, int left, int top, int width, int height, FluidStack stack) {
-//        Fluid fluid = FluidUtils.getFluid(stack);
-//
-//        if (fluid == Fluids.EMPTY
-//                || !(fluid.getFluidType().getRenderPropertiesInternal() instanceof IClientFluidTypeExtensions props)) {
-//            return;
-//        }
-//
-//        TextureAtlasSprite fluidStillSprite = getStillFluidSprite(stack);
-//        RenderSystem.enableBlend();
-//        RenderSystem.defaultBlendFunc();
-//        setGLColorFromInt(props.getTintColor(stack));
-//        drawTiledSprite(graphics, left, top, width, height, fluidStillSprite, 16, 16);
-//        RenderSystem.disableBlend();
-//        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-//    }
-
-//    public static void drawRocketFluidTank(GuiGraphics graphics, int left, int top, FluidStack stack, int capacity) {
-//        if (stack != null && !stack.isEmpty() && capacity > 0) {
-//            int maxHeight = 46;
-//            int scaledHeight = (int) Math.ceil(maxHeight * ((double) stack.getAmount() / (double) capacity));
-//            int offset = maxHeight - scaledHeight;
-//            GuiHelper.drawFluid(graphics, left, top + offset, 46, scaledHeight, stack);
-//        }
-//
-//    }
-//
-//    public static void drawFluidHorizontal(GuiGraphics graphics, int left, int top, int width, int height,
-//                                           FluidStack stack, int capacity) {
-//        Fluid fluid = FluidUtils.getFluid(stack);
-//
-//        if (fluid == Fluids.EMPTY) {
-//            return;
-//        }
-//
-//        double ratio = (double) stack.getAmount() / (double) capacity;
-//        drawFluid(graphics, left, top, (int) Math.ceil(width * ratio), height, stack);
-//    }
-
-//    public static void drawFluidVertical(GuiGraphics graphics, int left, int top, int width, int height,
-//                                         FluidStack stack, int capacity) {
-//        Fluid fluid = FluidUtils.getFluid(stack);
-//
-//        if (fluid == Fluids.EMPTY) {
-//            return;
-//        }
-//
-//        double ratio = (double) stack.getAmount() / (double) capacity;
-//        int scaledHeight = (int) Math.ceil(height * ratio);
-//        int offset = height - scaledHeight;
-//        drawFluid(graphics, left, top + offset, scaledHeight, height, stack);
-//    }
-
-    public static void drawTiledSprite(GuiGraphics graphics, int left, int top, int width, int height,
-                                       TextureAtlasSprite sprite, int tileWidth, int tileHeight) {
-        float uMin = sprite.getU0();
-        float uMax = sprite.getU1();
-        float vMin = sprite.getV0();
-        float vMax = sprite.getV1();
-        RenderSystem.setShader(CoreShaders.POSITION_TEX);
-        RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
-        drawTiledSprite(graphics, left, top, width, height, tileWidth, tileHeight, uMin, uMax, vMin, vMax);
-    }
-
     public static void drawTiledSprite(GuiGraphics graphics, int left, int top, int width, int height, int tileWidth,
                                        int tileHeight, float uMin, float uMax, float vMin, float vMax) {
         Matrix4f matrix = graphics.pose().last().pose();
@@ -268,16 +179,6 @@ public class GuiHelper
 
         RenderSystem.setShaderColor(red, green, blue, alpha);
 
-    }
-
-    private static final ResourceLocation MISSING_TEXTURE_LOCATION = ResourceLocation.parse("missingno");
-
-    public static TextureAtlasSprite getStillFluidSprite(FluidStack stack) {
-        Fluid fluid = stack.getFluid();
-//        if (fluid.defaultFluidState().getProperties() instanceof IClientFluidTypeExtensions props) {
-//             fluidStill = props.getStillTexture();
-//        }
-        return Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(MISSING_TEXTURE_LOCATION);
     }
 
     public static Rectangle2d getFluidTankBounds(int left, int top) {

@@ -12,7 +12,6 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
-import net.minecraft.client.renderer.special.NoDataSpecialModelRenderer;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
@@ -37,7 +36,7 @@ public class GlobeItemRenderer implements SpecialModelRenderer<ItemDisplayContex
     }
 
     @Override
-    public void render(@Nullable ItemDisplayContext patterns, ItemDisplayContext displayContext, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, boolean hasFoilType) {
+    public void render(ItemDisplayContext patterns, ItemDisplayContext displayContext, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, boolean hasFoilType) {
         if (patterns instanceof GlobeItem globeItem) {
             this.texture = globeItem.getTexture();
         } else {

@@ -32,7 +32,7 @@ public abstract class EntityEatMixin extends LivingEntity {
     }
 
 
-    @Inject(at = @At(value = "HEAD"), method = "canEat")
+    @Inject(at = @At(value = "HEAD"), method = "canEat", cancellable = true)
     private void cancelEat(boolean canAlwaysEat, CallbackInfoReturnable<Boolean> cir) {
         if(level() instanceof ServerLevel serverLevel && !PlanetUtil.hasOxygenAt(serverLevel, getOnPos()) && !stellaris$canEat(TagRegistry.SPACE_FOOD)) {
             cir.setReturnValue(canAlwaysEat);

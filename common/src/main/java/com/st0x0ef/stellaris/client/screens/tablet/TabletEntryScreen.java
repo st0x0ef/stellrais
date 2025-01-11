@@ -48,7 +48,7 @@ public class TabletEntryScreen extends Screen {
                 .tex(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/tablet/main_page.png"), ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/tablet/main_page_hover.png"));
         this.addRenderableWidget(homeButton);
 
-        TabletEntryWidget widget = new TabletEntryWidget(this.leftPos + 15, this.topPos + 50, 215, 100, Component.literal(""), this.entry);
+        TabletEntryWidget widget = new TabletEntryWidget(this.leftPos + 15, this.topPos + 50, 215, 100, Component.literal(""), this.entry, this.width);
         this.addRenderableWidget(widget);
     }
 

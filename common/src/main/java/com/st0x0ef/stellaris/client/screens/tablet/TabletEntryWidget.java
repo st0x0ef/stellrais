@@ -27,10 +27,12 @@ public class TabletEntryWidget extends AbstractScrollWidget {
 
     private AtomicInteger finalHeight = new AtomicInteger(0);
     private final TabletEntry entry;
+    private final int baseScreenWidth;
 
-    public TabletEntryWidget(int x, int y, int width, int height, Component message, TabletEntry entry) {
+    public TabletEntryWidget(int x, int y, int width, int height, Component message, TabletEntry entry, int baseScreenWidth) {
         super(x, y, width, height, message);
         this.entry = entry;
+        this.baseScreenWidth = baseScreenWidth;
     }
 
     @Override
@@ -56,7 +58,7 @@ public class TabletEntryWidget extends AbstractScrollWidget {
         for (int i = 0; i < this.entry.infos().size(); i++) {
             TabletEntry.Info info = this.entry.infos().get(i);
 
-            guiGraphics.drawCenteredString(getFont(), info.title(), getWidth(),
+            guiGraphics.drawCenteredString(getFont(), info.title(), this.baseScreenWidth / 2,
                     getY() + finalHeight.get() + 1 + (i * 20) , Utils.getColorHexCode("white"));
 
             int descriptionHeight = renderDescription(info.description(), getX() + 5, getY() + finalHeight.get() + 20 + (i * 20), getWidth() - 5, guiGraphics);
@@ -65,7 +67,7 @@ public class TabletEntryWidget extends AbstractScrollWidget {
             int finalI = i;
             info.image().ifPresent((image) -> {
                 int height = getY() + 40 + finalHeight.get() + (finalI * 20);
-                guiGraphics.blitSprite(image.location(), getWidth() - image.width()/2, height, image.width(), image.height());
+                guiGraphics.blitSprite(image.location(), this.baseScreenWidth / 2 - image.width()/2, height, image.width(), image.height());
                 finalHeight.addAndGet(height - 40);
             });
 
@@ -75,7 +77,6 @@ public class TabletEntryWidget extends AbstractScrollWidget {
 
     @Override
     protected void updateWidgetNarration(NarrationElementOutput narrationElementOutput) {
-
     }
 
 

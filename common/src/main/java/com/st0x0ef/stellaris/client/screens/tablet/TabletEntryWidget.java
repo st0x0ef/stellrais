@@ -18,6 +18,7 @@ import net.minecraft.world.entity.LivingEntity;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -67,8 +68,8 @@ public class TabletEntryWidget extends AbstractScrollWidget {
             int finalI = i;
             info.image().ifPresent((image) -> {
                 int height = getY() + 40 + finalHeight.get() + (finalI * 20);
-                guiGraphics.blitSprite(image.location(), this.baseScreenWidth / 2 - image.width()/2, height, image.width(), image.height());
-                finalHeight.addAndGet(height - 40);
+                guiGraphics.blitSprite(image.location(), this.baseScreenWidth / 2 - image.width() / 2, height, image.width(), image.height());
+                finalHeight.addAndGet(image.height() + 40 );
             });
 
         }
@@ -104,9 +105,26 @@ public class TabletEntryWidget extends AbstractScrollWidget {
         List<String> lines = new ArrayList<>();
 
         String currentLine = "";
+        AtomicInteger remainingWords = new AtomicInteger(words.length);
         for(String word : words) {
+            remainingWords.getAndDecrement();
+            if (word.contains("[br]")) {
+                lines.add(currentLine);
+                currentLine = "";
+                continue;
+            }
+
             if(Minecraft.getInstance().font.width(currentLine + word) < maxWidth) {
-                currentLine += " " + word;
+                if(remainingWords.get() == 0) {
+                    lines.add(currentLine + " " + word);
+                    break;
+                }
+
+                if(currentLine.isEmpty()) {
+                    currentLine = word;
+                } else {
+                    currentLine += " " + word;
+                }
             } else {
                 lines.add(currentLine);
                 currentLine = word;

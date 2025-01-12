@@ -20,3 +20,5 @@ accessible method net/minecraft/world/level/levelgen/feature/DripstoneClusterFea
 accessible method net/minecraft/client/MouseHandler onScroll (JDD)V
 extendable method net/minecraft/client/gui/components/AbstractScrollWidget renderScrollBar (Lnet/minecraft/client/gui/GuiGraphics;)V
 accessible method net/minecraft/client/gui/components/AbstractScrollWidget getScrollBarHeight ()I
+
+accessible field net/minecraft/client/gui/GuiGraphics pose Lcom/mojang/blaze3d/vertex/PoseStack;

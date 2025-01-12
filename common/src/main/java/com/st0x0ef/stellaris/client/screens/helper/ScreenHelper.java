@@ -3,17 +3,24 @@ package com.st0x0ef.stellaris.client.screens.helper;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+import net.minecraft.CrashReport;
+import net.minecraft.CrashReportCategory;
+import net.minecraft.ReportedException;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
@@ -221,6 +228,37 @@ public class ScreenHelper {
         entityRenderDispatcher.setRenderShadow(true);
         guiGraphics.pose().popPose();
         Lighting.setupFor3DItems();
+    }
+
+    public static void renderItemWithCustomSize(GuiGraphics graphics, Minecraft minecraft, ItemStack stack, int x, int y, float size) {
+        if (!stack.isEmpty()) {
+            BakedModel bakedModel = minecraft.getItemRenderer().getModel(stack, null, null, 0);
+            graphics.pose.pushPose();
+            graphics.pose.translate((float)(x + size / 2), (float)(y + size / 2), (float)(150));
+
+            try {
+                graphics.pose.scale(size, -size, size);
+                boolean bl = !bakedModel.usesBlockLight();
+                if (bl) {
+                    Lighting.setupForFlatItems();
+                }
+
+                minecraft.getItemRenderer().render(stack, ItemDisplayContext.GUI, false, graphics.pose, graphics.bufferSource(), 15728880, OverlayTexture.NO_OVERLAY, bakedModel);
+                graphics.flush();
+                if (bl) {
+                    Lighting.setupFor3DItems();
+                }
+            } catch (Throwable throwable) {
+                CrashReport crashReport = CrashReport.forThrowable(throwable, "Rendering item");
+                CrashReportCategory crashReportCategory = crashReport.addCategory("Item being rendered");
+                crashReportCategory.setDetail("Item Type", () -> String.valueOf(stack.getItem()));
+                crashReportCategory.setDetail("Item Components", () -> String.valueOf(stack.getComponents()));
+                crashReportCategory.setDetail("Item Foil", () -> String.valueOf(stack.hasFoil()));
+                throw new ReportedException(crashReport);
+            }
+
+            graphics.pose.popPose();
+        }
     }
 
 

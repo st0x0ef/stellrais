@@ -1,0 +1,61 @@
+{
+  "id": "rocket",
+  "description": "Learn about rockets and how to build them !",
+  "icon": "stellaris:textures/gui/tablet/rocket_page.png",
+  "hoverIcon": "stellaris:textures/gui/tablet/rocket_page_hover.png",
+  "infos": [
+    {
+      "title": "Rocket Station",
+      "description": "One of the first block you need, is the Rocket Station. This allow you to build the rocket with all the parts needed.",
+      "item": {
+        "stack": {
+          "id": "stellaris:rocket_station",
+          "count": 1
+        },
+        "size": 32
+      },
+      "image": {
+          "location": "stellaris:tablet/images/rocket_station",
+          "width": 128,
+          "height": 84
+      }
+    },
+
+
+    {
+      "title": "Rocket Model",
+      "description": "You can upgrade your rocket model with different Model. [br] [br]"
+
+    },
+    {
+      "title": "Tiny Rocket Model",
+      "description": "This is the basic rocket. [br] [br] Can transport 1 entity",
+      "item": {
+        "stack": {
+          "id": "stellaris:tiny_rocket_upgrade",
+          "count": 1
+        },
+        "size": 32
+      },
+      "entity": {
+        "id": "stellaris:tiny_rocket",
+        "scale": 10
+      }
+    },
+    {
+      "title": "Small Rocket Model",
+      "description": "This is the small rocket. [br] [br] Can transport 2 entity",
+      "item": {
+        "stack": {
+          "id": "stellaris:small_rocket_upgrade",
+          "count": 1
+        },
+        "size": 32
+      },
+      "entity": {
+        "id": "stellaris:small_rocket",
+        "scale": 10
+      }
+    }
+  ]
+}

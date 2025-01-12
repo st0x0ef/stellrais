@@ -40,10 +40,10 @@ public record TabletEntry(String id, String description, ResourceLocation icon, 
         ).apply(instance, Image::new));
     }
 
-    public record Item(ItemStack stack, boolean decoration) {
+    public record Item(ItemStack stack,  float size) {
         public static final Codec<Item> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 ItemStack.CODEC.fieldOf("stack").forGetter(Item::stack),
-                Codec.BOOL.fieldOf("decoration").forGetter(Item::decoration)
+                Codec.FLOAT.fieldOf("size").forGetter(Item::size)
         ).apply(instance, Item::new));
     }
 

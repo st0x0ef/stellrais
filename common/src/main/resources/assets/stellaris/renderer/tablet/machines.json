@@ -12,7 +12,8 @@
           "id": "stellaris:water_separator",
           "count": 1
         },
-        "decoration": true
+        "size": 32
+
       },
       "image": {
           "location": "stellaris:tablet/images/water_separator",
@@ -28,7 +29,7 @@
           "id": "stellaris:vacuumator",
           "count": 1
         },
-        "decoration": true
+        "size": 32
       },
       "image": {
         "location": "stellaris:tablet/images/vacuumator",
@@ -44,7 +45,8 @@
           "id": "stellaris:fuel_refinery",
           "count": 1
         },
-        "decoration": false
+        "size": 32
+
       },
       "image": {
         "location": "stellaris:tablet/images/fuel_refinery",

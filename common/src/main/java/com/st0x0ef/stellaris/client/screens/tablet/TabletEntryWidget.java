@@ -78,12 +78,8 @@ public class TabletEntryWidget extends AbstractScrollWidget {
 
 
             info.item().ifPresent((item) -> {
-                guiGraphics.renderItem(item.stack(), this.baseScreenWidth / 2, getY() + finalHeight.get() + 35 + (finalI * 20));
-                if (item.decoration()) {
-                    guiGraphics.renderItemDecorations(getFont(), new ItemStack(ItemsRegistry.OXYGEN_TANK), this.baseScreenWidth / 2, getY() + finalHeight.get() + 35 + (finalI * 20));
-                }
-
-                finalHeight.addAndGet(35);
+                ScreenHelper.renderItemWithCustomSize(guiGraphics, Minecraft.getInstance(), item.stack(), this.baseScreenWidth / 2 -(int) item.size() / 2, getY() + finalHeight.get() + 35 + (finalI * 20), item.size());
+                finalHeight.addAndGet(35 + (int) (item.size() / 4));
             });
 
 

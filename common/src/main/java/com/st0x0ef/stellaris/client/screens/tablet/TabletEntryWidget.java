@@ -2,6 +2,8 @@ package com.st0x0ef.stellaris.client.screens.tablet;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.st0x0ef.stellaris.Stellaris;
+import com.st0x0ef.stellaris.client.screens.helper.ScreenHelper;
+import com.st0x0ef.stellaris.common.registry.ItemsRegistry;
 import com.st0x0ef.stellaris.common.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -9,12 +11,18 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractScrollWidget;
 import net.minecraft.client.gui.components.StringWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.gui.screens.inventory.HorseInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
@@ -38,7 +46,7 @@ public class TabletEntryWidget extends AbstractScrollWidget {
 
     @Override
     protected int getInnerHeight() {
-        return finalHeight.get() * 2;
+        return finalHeight.get() + finalHeight.get() / 5;
     }
 
     @Override
@@ -62,24 +70,49 @@ public class TabletEntryWidget extends AbstractScrollWidget {
             guiGraphics.drawCenteredString(getFont(), info.title(), this.baseScreenWidth / 2,
                     getY() + finalHeight.get() + 1 + (i * 20) , Utils.getColorHexCode("white"));
 
+
             int descriptionHeight = renderDescription(info.description(), getX() + 5, getY() + finalHeight.get() + 20 + (i * 20), getWidth() - 5, guiGraphics);
             finalHeight.addAndGet(descriptionHeight);
 
             int finalI = i;
+
+
+            info.item().ifPresent((item) -> {
+                guiGraphics.renderItem(item.stack(), this.baseScreenWidth / 2, getY() + finalHeight.get() + 35 + (finalI * 20));
+                if (item.decoration()) {
+                    guiGraphics.renderItemDecorations(getFont(), new ItemStack(ItemsRegistry.OXYGEN_TANK), this.baseScreenWidth / 2, getY() + finalHeight.get() + 35 + (finalI * 20));
+                }
+
+                finalHeight.addAndGet(35);
+            });
+
+
             info.image().ifPresent((image) -> {
                 int height = getY() + 40 + finalHeight.get() + (finalI * 20);
                 guiGraphics.blitSprite(image.location(), this.baseScreenWidth / 2 - image.width() / 2, height, image.width(), image.height());
                 finalHeight.addAndGet(image.height() + 40 );
             });
 
+            info.entity().ifPresent((entity) -> {
+                int height = getY() + 40 + finalHeight.get() + (finalI * 20);
+                Entity entity1 = ScreenHelper.createEntity(Minecraft.getInstance().level, entity.entity());
+
+                ScreenHelper.renderEntityInInventory(guiGraphics, this.baseScreenWidth / 2, height + 45, entity.scale(), new Vector3f(), new Quaternionf(-1, 0, 0, 0), null, entity1);
+                finalHeight.addAndGet(80);
+
+            });
         }
 
     }
 
+    public boolean isHovered(int mouseX, int mouseY, int x, int y, int width, int height) {
+       return mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
+    }
+
+
     @Override
     protected void updateWidgetNarration(NarrationElementOutput narrationElementOutput) {
     }
-
 
     @Override
     public void renderScrollBar(GuiGraphics guiGraphics) {

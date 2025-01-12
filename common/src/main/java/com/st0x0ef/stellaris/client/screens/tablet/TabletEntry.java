@@ -4,6 +4,7 @@ package com.st0x0ef.stellaris.client.screens.tablet;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,13 +20,15 @@ public record TabletEntry(String id, String description, ResourceLocation icon, 
     ).apply(instance, TabletEntry::new));
 
 
-    public  record Info(String title, String description, Optional<Image> image, Optional<ResourceLocation> entityId) {
+    public record Info(String title, String description, Optional<Image> image, Optional<Item> item, Optional<Entity> entity) {
 
             public static final Codec<Info> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                     Codec.STRING.fieldOf("title").forGetter(Info::title),
                     Codec.STRING.fieldOf("description").forGetter(Info::description),
                     Image.CODEC.optionalFieldOf("image").forGetter(Info::image),
-                    ResourceLocation.CODEC.optionalFieldOf("entityId").forGetter(Info::entityId)
+                    Item.CODEC.optionalFieldOf("item").forGetter(Info::item),
+                    Entity.CODEC.optionalFieldOf("entity").forGetter(Info::entity)
+
             ).apply(instance, Info::new));
     }
 
@@ -35,5 +38,19 @@ public record TabletEntry(String id, String description, ResourceLocation icon, 
                 Codec.INT.fieldOf("width").forGetter(Image::width),
                 Codec.INT.fieldOf("height").forGetter(Image::height)
         ).apply(instance, Image::new));
+    }
+
+    public record Item(ItemStack stack, boolean decoration) {
+        public static final Codec<Item> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                ItemStack.CODEC.fieldOf("stack").forGetter(Item::stack),
+                Codec.BOOL.fieldOf("decoration").forGetter(Item::decoration)
+        ).apply(instance, Item::new));
+    }
+
+    public record Entity(ResourceLocation entity, int scale) {
+        public static final Codec<Entity> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                ResourceLocation.CODEC.fieldOf("id").forGetter(Entity::entity),
+                Codec.INT.fieldOf("scale").forGetter(Entity::scale)
+        ).apply(instance, Entity::new));
     }
 }

@@ -26,7 +26,7 @@ public abstract class BaseEnergyContainerBlockEntity extends BaseContainerBlockE
     public static final String ENERGY_TAG = "stellaris.energyContainer";
 
     protected @NotNull EnergyStorage energyContainer;
-    private NonNullList<ItemStack> items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
+    protected NonNullList<ItemStack> items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
 
     public BaseEnergyContainerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int initialMaxCapacity, int initialMaxInsert, int initialMaxExtract) {
         super(type, pos, state);

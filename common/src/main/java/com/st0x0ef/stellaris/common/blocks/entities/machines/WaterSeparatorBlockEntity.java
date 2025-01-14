@@ -5,11 +5,15 @@ import com.fej1fun.potentials.providers.FluidProvider;
 import com.st0x0ef.stellaris.common.data.recipes.WaterSeparatorRecipe;
 import com.st0x0ef.stellaris.common.data.recipes.input.FluidInput;
 import com.st0x0ef.stellaris.common.menus.WaterSeparatorMenu;
+import com.st0x0ef.stellaris.common.network.NetworkRegistry;
+import com.st0x0ef.stellaris.common.network.packets.SyncFluidPacket;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import com.st0x0ef.stellaris.common.registry.RecipesRegistry;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidTank;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidUtil;
 import dev.architectury.fluid.FluidStack;
+import dev.architectury.networking.NetworkManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -21,6 +25,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -29,17 +34,25 @@ import java.util.Optional;
 
 public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity implements RecipeInput, FluidProvider.BLOCK {
 
-    private static final int TANK_CAPACITY = 3;
-    public final FluidStorage ingredientTank = new FluidStorage(1,10000) {
+    private final int HYDROGEN_TANK = 0;
+    private final int OXYGEN_TANK = 1;
+
+    public final FluidStorage ingredientTank = new FluidStorage(1,3000,3000,0) {
         @Override
         protected void onChange(int tank) {
             setChanged();
+            if (level!=null && level.getServer()!=null)
+                NetworkManager.sendToPlayers(level.getServer().getPlayerList().getPlayers(),
+                        new SyncFluidPacket(this.getFluidInTank(0), 0, getBlockPos(), null));
         }
     };
-    public final FluidStorage resultTanks = new FluidStorage(2, 10000) {
+    public final FluidStorage resultTanks = new FluidStorage(2, 3000,0,3000) {
         @Override
         protected void onChange(int tank) {
             setChanged();
+            if (level!=null && level.getServer()!=null)
+                NetworkManager.sendToPlayers(level.getServer().getPlayerList().getPlayers(),
+                        new SyncFluidPacket(this.getFluidInTank(tank), tank, getBlockPos(), getBlockState().getValue(BlockStateProperties.FACING).getClockWise()));
         }
     };
     private final RecipeManager.CachedCheck<FluidInput, WaterSeparatorRecipe> cachedCheck = RecipeManager.createCheck(RecipesRegistry.WATER_SEPERATOR_TYPE.get());
@@ -65,11 +78,9 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
 
     @Override
     public void tick() {
-        for (int i = 0; i < 2; i++) {
-            int slot = i + 2;
-            FluidTank tank = resultTanks.get(i);
-            FluidTankHelper.extractFluidToItem(this, tank, slot);
-        }
+        for (int i = 0; i < 2; i++)
+            FluidUtil.moveFluidToItem(i, resultTanks, items.get(i + 2), resultTanks.getTankCapacity(i));
+
 
         if (!FluidTankHelper.addFluidFromBucket(this, ingredientTank, 1, 0)) {
             FluidTankHelper.extractFluidToItem(this, ingredientTank, 1, 0);
@@ -117,6 +128,9 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
 
     @Override
     public @Nullable UniversalFluidStorage getFluidTank(@Nullable Direction direction) {
-        return null;
+        Direction facing = getBlockState().getValue(BlockStateProperties.FACING);
+        if (facing.getCounterClockWise() == direction || facing.getClockWise() == direction)
+            return resultTanks;
+        return ingredientTank;
     }
 }

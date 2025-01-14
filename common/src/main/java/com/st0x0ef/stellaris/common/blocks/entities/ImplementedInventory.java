@@ -6,6 +6,7 @@ import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @FunctionalInterface
@@ -73,7 +74,7 @@ public interface ImplementedInventory extends WorldlyContainer {
     }
 
     @Override
-    default ItemStack getItem(int i) {
+    default @NotNull ItemStack getItem(int i) {
         return getItems().get(i);
     }
 

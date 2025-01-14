@@ -635,6 +635,11 @@
   "tag.item.stellaris.coal_generator_fuel": "Coal Generator Fuel",
 
   "spacesuit.stellaris.auto_feeder": "Auto Feeder",
+  "spacesuit.stellaris.energy_module": "Energy Module",
+  "spacesuit.stellaris.fuel_module": "Fuel Module",
+  "spacesuit.stellaris.jet": "Jet Module",
+  "spacesuit.stellaris.gravity_normalizer": "Gravity Normalizer",
+  "spacesuit.stellaris.oil_finder": "Oil Finder",
   "spacesuit.stellaris.shift_for_modules": "Hold shift for module list",
   "spacesuit.stellaris.modules": "Modules",
   "container.stellaris.upgrade": "Upgrade"

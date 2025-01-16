@@ -2,6 +2,7 @@ package com.st0x0ef.stellaris.common.menus;
 
 import com.st0x0ef.stellaris.common.entities.vehicles.RoverEntity;
 import com.st0x0ef.stellaris.common.menus.slot.ResultSlot;
+import com.st0x0ef.stellaris.common.menus.slot.VehicleFuelSlot;
 import com.st0x0ef.stellaris.common.menus.slot.upgrade.*;
 import com.st0x0ef.stellaris.common.registry.MenuTypesRegistry;
 import net.minecraft.network.FriendlyByteBuf;

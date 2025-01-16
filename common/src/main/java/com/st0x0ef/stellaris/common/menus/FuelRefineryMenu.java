@@ -3,7 +3,9 @@ package com.st0x0ef.stellaris.common.menus;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.FuelRefineryBlockEntity;
 import com.st0x0ef.stellaris.common.menus.slot.FluidContainerSlot;
 import com.st0x0ef.stellaris.common.menus.slot.ResultSlot;
+import com.st0x0ef.stellaris.common.menus.slot.SpecificFluidContainerSlot;
 import com.st0x0ef.stellaris.common.network.packets.SyncWidgetsTanksPacket;
+import com.st0x0ef.stellaris.common.registry.FluidRegistry;
 import com.st0x0ef.stellaris.common.registry.MenuTypesRegistry;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.network.FriendlyByteBuf;
@@ -30,7 +32,7 @@ public class FuelRefineryMenu extends BaseContainer {
         this.blockEntity = blockEntity;
 
         // Ingredient tank
-        addSlot(new FluidContainerSlot(container, 0, 10, 36, false, false));
+        addSlot(new SpecificFluidContainerSlot(container, FluidRegistry.FLOWING_OIL.get(), 0, 10, 36, false));
         addSlot(new ResultSlot(container, 1, 10, 66));
 
         // Result tank
@@ -54,8 +56,8 @@ public class FuelRefineryMenu extends BaseContainer {
         if (!player.level().isClientSide()) {
 
             NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(
-                    new long[] {blockEntity.getIngredientTank().getFluidValue(), blockEntity.getResultTank().getFluidValue()},
-                    new ResourceLocation[] {blockEntity.getIngredientTank().getFluidStack().getFluid().arch$registryName(), blockEntity.getResultTank().getFluidStack().getFluid().arch$registryName()}
+                    new long[] {blockEntity.getIngredientTank().getFluidValueInTank(blockEntity.getIngredientTank().getTanks()), blockEntity.getResultTank().getFluidValueInTank(blockEntity.getResultTank().getTanks())},
+                    new ResourceLocation[] {blockEntity.getIngredientTank().getFluidInTank(blockEntity.getIngredientTank().getTanks()).getFluid().arch$registryName(), blockEntity.getResultTank().getFluidInTank(blockEntity.getResultTank().getTanks()).getFluid().arch$registryName()}
             ));
 
             NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(

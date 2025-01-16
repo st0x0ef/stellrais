@@ -6,6 +6,7 @@ import com.st0x0ef.stellaris.client.screens.components.GaugeWidget;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.PumpjackBlockEntity;
 import com.st0x0ef.stellaris.common.menus.PumpjackMenu;
 import com.st0x0ef.stellaris.common.utils.Utils;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidTank;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -37,8 +38,8 @@ public class PumpjackScreen extends AbstractContainerScreen<PumpjackMenu> {
             return;
         }
 
-        FluidTank resultTank = blockEntity.getResultTank();
-        resultTankGauge = new GaugeWidget(leftPos + 79, topPos + 32, 12, 46, Component.translatable("stellaris.screen.oil"), GUISprites.OIL_OVERLAY, GUISprites.LIQUID_TANK_OVERLAY, resultTank.getMaxAmount() -1, GaugeWidget.Direction4.DOWN_UP);
+        FluidStorage resultTank = blockEntity.getResultTank();
+        resultTankGauge = new GaugeWidget(leftPos + 79, topPos + 32, 12, 46, Component.translatable("stellaris.screen.oil"), GUISprites.OIL_OVERLAY, GUISprites.LIQUID_TANK_OVERLAY, resultTank.getTankCapacity(resultTank.getTanks()), GaugeWidget.Direction4.DOWN_UP);
         addRenderableWidget(resultTankGauge);
 
         energyGauge = new GaugeWidget(leftPos + 147, topPos + 31, 13, 46, Component.translatable("stellaris.screen.energyContainer"), GUISprites.ENERGY_FULL, GUISprites.BATTERY_OVERLAY, blockEntity.getEnergy(null).getMaxEnergy(), GaugeWidget.Direction4.DOWN_UP);
@@ -70,7 +71,7 @@ public class PumpjackScreen extends AbstractContainerScreen<PumpjackMenu> {
 
 
 
-        resultTankGauge.updateAmount(blockEntity.getResultTank().getFluidValue());
+        resultTankGauge.updateAmount(blockEntity.getResultTank().getFluidValueInTank(blockEntity.getResultTank().getTanks()));
         energyGauge.updateAmount(blockEntity.getEnergy(null).getEnergy());
 
     }

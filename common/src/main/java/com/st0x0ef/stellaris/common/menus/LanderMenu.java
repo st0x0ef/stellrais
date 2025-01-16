@@ -1,8 +1,6 @@
 package com.st0x0ef.stellaris.common.menus;
 
 import com.st0x0ef.stellaris.common.menus.slot.ResultSlot;
-import com.st0x0ef.stellaris.common.menus.slot.SpecificItemsSlot;
-import com.st0x0ef.stellaris.common.registry.ItemsRegistry;
 import com.st0x0ef.stellaris.common.registry.MenuTypesRegistry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
@@ -14,8 +12,8 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 public class LanderMenu extends AbstractContainerMenu {
-
     private final Container inventory;
+
     public LanderMenu(int syncId, Inventory inventory, FriendlyByteBuf buffer) {
         this(syncId, inventory, new SimpleContainer(15));
     }
@@ -65,34 +63,31 @@ public class LanderMenu extends AbstractContainerMenu {
 
 
     private void addSlots(Container inventory) {
+        //FUEL SLOTS
+        this.addSlot(new ResultSlot(inventory, 0, 19, 58));
+        this.addSlot(new ResultSlot(inventory, 1, 48, 58));
+
+        //UPGRADE SLOTS
+        this.addSlot(new ResultSlot(inventory, 2, 73, 63));
+        this.addSlot(new ResultSlot(inventory, 3, 98, 63));
+        this.addSlot(new ResultSlot(inventory, 4, 123, 63));
+        this.addSlot(new ResultSlot(inventory, 5, 148, 63));
+
+        //INVENTORY SLOTS
+        this.addSlot(new ResultSlot(inventory, 6, 83, 19));
+        this.addSlot(new ResultSlot(inventory, 7, 83, 37));
+
+        this.addSlot(new ResultSlot(inventory, 8, 101, 19));
+        this.addSlot(new ResultSlot(inventory, 9, 101, 37));
+
+        this.addSlot(new ResultSlot(inventory, 10, 119, 19));
+        this.addSlot(new ResultSlot(inventory, 11, 119, 37));
+
+        this.addSlot(new ResultSlot(inventory, 12, 137, 19));
+        this.addSlot(new ResultSlot(inventory, 13, 137, 37));
 
         //ROCKET SLOT
         this.addSlot(new ResultSlot(inventory, 14, 34, 27));
-
-
-        //FUEL SLOTS
-        this.addSlot(new Slot(inventory, 0, 19, 58));
-        this.addSlot(new Slot(inventory, 1, 48, 58));
-
-        //INVENTORY SLOTS
-        this.addSlot(new Slot(inventory, 2, 83, 19));
-        this.addSlot(new Slot(inventory, 3, 83, 37));
-
-        this.addSlot(new Slot(inventory, 4, 101, 19));
-        this.addSlot(new Slot(inventory, 5, 101, 37));
-
-        this.addSlot(new Slot(inventory, 6, 119, 19));
-        this.addSlot(new Slot(inventory, 7, 119, 37));
-
-        this.addSlot(new Slot(inventory, 8, 137, 19));
-        this.addSlot(new Slot(inventory, 9, 137, 37));
-
-        //UPGRADE SLOTS
-        this.addSlot(new SpecificItemsSlot.Item(inventory, 10, 73, 63, ItemsRegistry.STEEL_NUGGET.get()));
-        this.addSlot(new Slot(inventory, 11, 98, 63));
-        this.addSlot(new Slot(inventory, 12, 123, 63));
-        this.addSlot(new Slot(inventory, 13, 148, 63));
-
     }
 
     private void addPlayerInventory(Inventory playerInventory) {

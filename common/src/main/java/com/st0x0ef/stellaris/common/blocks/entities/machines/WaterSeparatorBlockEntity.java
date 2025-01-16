@@ -5,7 +5,6 @@ import com.fej1fun.potentials.providers.FluidProvider;
 import com.st0x0ef.stellaris.common.data.recipes.WaterSeparatorRecipe;
 import com.st0x0ef.stellaris.common.data.recipes.input.FluidInput;
 import com.st0x0ef.stellaris.common.menus.WaterSeparatorMenu;
-import com.st0x0ef.stellaris.common.network.NetworkRegistry;
 import com.st0x0ef.stellaris.common.network.packets.SyncFluidPacket;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import com.st0x0ef.stellaris.common.registry.RecipesRegistry;
@@ -94,14 +93,14 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
                 List<FluidStack> stacks = recipe.resultStacks();
                 FluidStack stack1 = stacks.getFirst();
                 FluidStack stack2 = stacks.get(1);
-                FluidTank tank1 = resultTanks.getFirst();
-                FluidTank tank2 = resultTanks.get(1);
+                FluidStorage tank1 = resultTanks.getFirst();
+                FluidStorage tank2 = resultTanks.get(1);
 
                 if ((tank1.getFluidStack().isEmpty() || tank1.getFluidStack().isFluidEqual(stack1)) && (tank2.getFluidStack().isEmpty() || tank2.getFluidStack().isFluidEqual(stack2))) {
 
                     if (tank1.getFluidValue() + stack1.getAmount() <= tank1.getMaxAmount() && tank2.getFluidValue() + stack2.getAmount() <= tank2.getMaxAmount()) {
                         energyContainer.extract(recipe.energy(), false);
-                        ingredientTank.drainFluid(FluidStack.create(recipe.ingredientStack().getFluid(), recipe.ingredientStack().getAmount()), false);
+                        ingredientTank.drain(FluidStack.create(recipe.ingredientStack().getFluid(), recipe.ingredientStack().getAmount()), false);
                         FluidTankHelper.addToTank(tank1, stack1);
                         FluidTankHelper.addToTank(tank2, stack2);
                     }
@@ -132,5 +131,13 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
         if (facing.getCounterClockWise() == direction || facing.getClockWise() == direction)
             return resultTanks;
         return ingredientTank;
+    }
+
+    public FluidStorage getIngredientTank() {
+        return this.ingredientTank;
+    }
+
+    public FluidStorage getResultTanks() {
+        return this.resultTanks;
     }
 }

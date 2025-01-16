@@ -22,7 +22,7 @@ public class MenuTypesRegistry {
 
     public static final RegistrySupplier<MenuType<VacuumatorMenu>> VACUMATOR_MENU = MENU_TYPE.register("vacuumator", () -> MenuRegistry.ofExtended(VacuumatorMenu::new));
     public static final RegistrySupplier<MenuType<WaterSeparatorMenu>> WATER_SEPARATOR_MENU = MENU_TYPE.register("water_separator", () -> MenuRegistry.ofExtended(WaterSeparatorMenu::create));
-    public static final RegistrySupplier<MenuType<OxygenGeneratorMenu>> OXYGEN_DISTRIBUTOR = MENU_TYPE.register("oxygen_distributor", () -> MenuRegistry.ofExtended(OxygenGeneratorMenu::create));
+    public static final RegistrySupplier<MenuType<OxygenDistributorMenu>> OXYGEN_DISTRIBUTOR = MENU_TYPE.register("oxygen_distributor", () -> MenuRegistry.ofExtended(OxygenDistributorMenu::create));
     public static final RegistrySupplier<MenuType<FuelRefineryMenu>> FUEL_REFINERY = MENU_TYPE.register("fuel_refinery", () -> MenuRegistry.ofExtended(FuelRefineryMenu::create));
     public static final RegistrySupplier<MenuType<WaterPumpMenu>> WATER_PUMP_MENU = MENU_TYPE.register("water_pump", () -> MenuRegistry.ofExtended(WaterPumpMenu::create));
     public static final RegistrySupplier<MenuType<PumpjackMenu>> PUMPJACK_MENU = MENU_TYPE.register("pumpjack_menu", () -> MenuRegistry.ofExtended(PumpjackMenu::create));

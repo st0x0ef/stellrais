@@ -7,6 +7,7 @@ import com.st0x0ef.stellaris.common.blocks.entities.machines.FluidTankHelper;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.WaterSeparatorBlockEntity;
 import com.st0x0ef.stellaris.common.data.recipes.input.FluidInput;
 import com.st0x0ef.stellaris.common.registry.RecipesRegistry;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
 import dev.architectury.fluid.FluidStack;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -26,7 +27,8 @@ public record WaterSeparatorRecipe(FluidStack ingredientStack, List<FluidStack> 
 
     @Override
     public boolean matches(FluidInput container, Level level) {
-        FluidStack stack = ((WaterSeparatorBlockEntity) container.entity()).getIngredientTank().getFluidStack();
+        FluidStorage tank = ((WaterSeparatorBlockEntity) container.entity()).getIngredientTank();
+        FluidStack stack = tank.getFluidInTank(tank.getTanks());
         return stack.isFluidEqual(ingredientStack) && stack.getAmount() >= ingredientStack.getAmount();
     }
 

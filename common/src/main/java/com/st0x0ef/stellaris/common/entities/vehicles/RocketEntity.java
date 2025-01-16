@@ -53,7 +53,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Set;
 
-public class RocketEntity extends IVehicleEntity implements HasCustomInventoryScreen, ContainerListener {
+public class RocketEntity extends IVehicleEntity implements HasCustomInventoryScreen {
     public int START_TIMER;
 
     public boolean needsModelChange = false;
@@ -383,7 +383,7 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
             if (this.FUEL > 0 || player.isCreative()) {
                 if (!this.entityData.get(ROCKET_START)) {
                     this.entityData.set(ROCKET_START, true);
-                    this.level().playSound(null, this, SoundRegistry.ROCKET_SOUND.get(), SoundSource.NEUTRAL, 1, 1);
+                    this.level().playSound(player, this, SoundRegistry.ROCKET_SOUND.get(), SoundSource.NEUTRAL, 1, 1);
                 }
             } else {
                 player.displayClientMessage(Component.translatable("text.stellaris.rocket.fuel", this.MOTOR_UPGRADE.getFuelType().getSerializedName()), true);
@@ -449,11 +449,6 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
         rocket.set(DataComponentsRegistry.ROCKET_COMPONENT.get(), rocketComponent);
 
         return rocket;
-    }
-
-    @Override
-    public void containerChanged(Container container) {
-
     }
 
     protected void doPlayerRide(Entity player) {
@@ -537,7 +532,7 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
                 FUEL = TANK_UPGRADE.getTankCapacity();
             }
 
-            if (inventory.removeItem(0, 1).is(ItemsRegistry.FUEL_BUCKET.get())) {
+            if (inventory.removeItem(0, 1).is(ItemsRegistry.FUEL_BUCKET.get()) || inventory.removeItem(0, 1).is(ItemsRegistry.HYDROGEN_BUCKET.get())) {
                 inventory.setItem(1, new ItemStack(Items.BUCKET, inventory.getItem(1).getCount()+1));
             }
 
@@ -618,7 +613,7 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
         return ResourceLocation.parse(texture);
     }
 
-    public boolean canGoTo (Planet actual, Planet destination) {
+    public boolean canGoTo(Planet actual, Planet destination) {
         return Mth.abs(actual.distanceFromEarth() - destination.distanceFromEarth()) <= FuelType.getMegametersTraveled(this.rocketComponent.fuel(), FuelType.getItemBasedOnLoacation(ResourceLocation.parse(this.rocketComponent.fuelType())));
     }
 

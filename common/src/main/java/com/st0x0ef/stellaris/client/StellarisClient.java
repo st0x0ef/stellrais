@@ -1,6 +1,7 @@
 package com.st0x0ef.stellaris.client;
 
 import com.st0x0ef.stellaris.Stellaris;
+import com.st0x0ef.stellaris.client.event.ClientEvents;
 import com.st0x0ef.stellaris.client.overlays.*;
 import com.st0x0ef.stellaris.client.particles.*;
 import com.st0x0ef.stellaris.client.renderers.armors.JetSuitModel;
@@ -39,6 +40,7 @@ public class StellarisClient {
         registerOverlays();
         registerArmors();
         Platform.getMod(Stellaris.MODID).registerConfigurationScreen(ConfigScreen::new);
+        ClientEvents.registerEvents();
     }
 
     private static void registerArmors() {

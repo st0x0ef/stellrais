@@ -6,6 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.FuelRefineryBlockEntity;
 import com.st0x0ef.stellaris.common.data.recipes.input.FluidInput;
 import com.st0x0ef.stellaris.common.registry.RecipesRegistry;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
 import dev.architectury.fluid.FluidStack;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -23,7 +24,8 @@ import static com.st0x0ef.stellaris.common.data.recipes.WaterSeparatorRecipe.Ser
 public record FuelRefineryRecipe(FluidStack ingredientStack, FluidStack resultStack, boolean isMb, int energy) implements Recipe<FluidInput> {
     @Override
     public boolean matches(FluidInput input, Level level) {
-        FluidStack stack = ((FuelRefineryBlockEntity) input.entity()).getIngredientTank().getFluidStack();
+        FluidStorage storage = ((FuelRefineryBlockEntity) input.entity()).getIngredientTank();
+        FluidStack stack = storage.getFluidInTank(storage.getTanks());
         return stack.isFluidEqual(ingredientStack) && stack.getAmount() >= ingredientStack.getAmount();
     }
 

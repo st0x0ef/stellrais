@@ -4,6 +4,7 @@ import com.st0x0ef.stellaris.common.blocks.entities.machines.WaterPumpBlockEntit
 import com.st0x0ef.stellaris.common.network.packets.SyncWidgetsTanksPacket;
 import com.st0x0ef.stellaris.common.registry.BlocksRegistry;
 import com.st0x0ef.stellaris.common.registry.MenuTypesRegistry;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidTank;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.core.BlockPos;
@@ -49,10 +50,10 @@ public class WaterPumpMenu extends BaseContainer {
 
     public void syncWidgets(ServerPlayer player) {
         if (!player.level().isClientSide()) {
-            FluidTank tank = blockEntity.getWaterTank();
+            FluidStorage tank = blockEntity.getWaterTank();
 
-            NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(new long[] {tank.getFluidValue()},
-                    new ResourceLocation[] {tank.getFluidStack().getFluid().arch$registryName()}));
+            NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(new long[] {tank.getFluidValueInTank(tank.getTanks())},
+                    new ResourceLocation[] {tank.getFluidInTank(tank.getTanks()).getFluid().arch$registryName()}));
 
             NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(
                     new long[] {blockEntity.getEnergy(null).getEnergy(), 0}));

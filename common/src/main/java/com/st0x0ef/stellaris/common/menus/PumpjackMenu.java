@@ -51,8 +51,8 @@ public class PumpjackMenu extends BaseContainer {
         if (!player.level().isClientSide()) {
 
             NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(
-                    new long[] {blockEntity.getResultTank().getFluidValue(), blockEntity.chunkOilLevel()},
-                    new ResourceLocation[] {blockEntity.getResultTank().getFluidStack().getFluid().arch$registryName()}
+                    new long[] {blockEntity.getResultTank().getFluidValueInTank(blockEntity.getResultTank().getTanks()), blockEntity.chunkOilLevel()},
+                    new ResourceLocation[] {blockEntity.getResultTank().getFluidInTank(blockEntity.getResultTank().getTanks()).getFluid().arch$registryName()}
             ));
 
             NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(

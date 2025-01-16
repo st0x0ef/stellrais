@@ -18,7 +18,6 @@ public abstract class BaseContainer extends AbstractContainerMenu {
     private static final int VANILLA_FIRST_SLOT_INDEX = 0;
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 
-    // THIS YOU HAVE TO DEFINE!
     private final int TE_INVENTORY_SLOT_COUNT;
 
     protected BaseContainer(@Nullable MenuType<?> menuType, int containerId, int size, Inventory inventory, int inventoryYOffset) {
@@ -82,9 +81,4 @@ public abstract class BaseContainer extends AbstractContainerMenu {
             }
         }
     }
-
-    public int getVanillaSlotCount() {
-        return VANILLA_SLOT_COUNT;
-    }
-
 }

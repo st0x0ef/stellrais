@@ -2,9 +2,8 @@ package com.st0x0ef.stellaris.common.menus;
 
 import com.st0x0ef.stellaris.common.entities.vehicles.RoverEntity;
 import com.st0x0ef.stellaris.common.menus.slot.ResultSlot;
-import com.st0x0ef.stellaris.common.menus.slot.upgrade.MotorUpgradeSlot;
-import com.st0x0ef.stellaris.common.menus.slot.upgrade.SpeedUpgradeSlot;
-import com.st0x0ef.stellaris.common.menus.slot.upgrade.TankUpgradeSlot;
+import com.st0x0ef.stellaris.common.menus.slot.VehicleFuelSlot;
+import com.st0x0ef.stellaris.common.menus.slot.upgrade.*;
 import com.st0x0ef.stellaris.common.registry.MenuTypesRegistry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -76,26 +75,26 @@ public class RoverMenu extends AbstractContainerMenu implements IVehicleMenu
 
     private void addSlots(Container inventory) {
         //FUEL SLOTS
-        this.addSlot(new Slot(inventory, 0, 20, 27));
+        this.addSlot(new VehicleFuelSlot(inventory, 0, 20, 27));
         this.addSlot(new ResultSlot(inventory, 1, 20, 57));
 
-        //INVENTORY SLOTS
-        this.addSlot(new Slot(inventory, 2, 86, 20));
-        this.addSlot(new Slot(inventory, 3, 86, 38));
-
-        this.addSlot(new Slot(inventory, 4, 104, 20));
-        this.addSlot(new Slot(inventory, 5, 104, 38));
-
-        this.addSlot(new Slot(inventory, 6, 122, 20));
-        this.addSlot(new Slot(inventory, 7, 122, 38));
-
-        this.addSlot(new Slot(inventory, 8, 140, 20));
-        this.addSlot(new Slot(inventory, 9, 140, 38));
-
         //UPGRADE SLOTS
-        this.addSlot(new MotorUpgradeSlot(inventory, 10, 88, 66, this.rover));
-        this.addSlot(new SpeedUpgradeSlot(inventory,11,114,66));
-        this.addSlot(new TankUpgradeSlot(inventory, 12, 140, 66));
+        this.addSlot(new MotorUpgradeSlot(inventory, 2, 88, 66, this.rover));
+        this.addSlot(new SpeedUpgradeSlot(inventory,3,114,66));
+        this.addSlot(new TankUpgradeSlot(inventory, 4, 140, 66));
+
+        //INVENTORY SLOTS
+        this.addSlot(new Slot(inventory, 5, 86, 20));
+        this.addSlot(new Slot(inventory, 6, 86, 38));
+
+        this.addSlot(new Slot(inventory, 7, 104, 20));
+        this.addSlot(new Slot(inventory, 8, 104, 38));
+
+        this.addSlot(new Slot(inventory, 9, 122, 20));
+        this.addSlot(new Slot(inventory, 10, 122, 38));
+
+        this.addSlot(new Slot(inventory, 11, 140, 20));
+        this.addSlot(new Slot(inventory, 12, 140, 38));
     }
 
     private void addPlayerInventory(Inventory playerInventory) {

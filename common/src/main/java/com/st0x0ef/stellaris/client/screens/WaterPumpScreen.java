@@ -5,7 +5,7 @@ import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.client.screens.components.GaugeWidget;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.WaterPumpBlockEntity;
 import com.st0x0ef.stellaris.common.menus.WaterPumpMenu;
-import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidTank;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -34,8 +34,8 @@ public class WaterPumpScreen extends AbstractContainerScreen<WaterPumpMenu> {
             return;
         }
 
-        FluidTank waterTank = blockEntity.getWaterTank();
-        waterTankGauge = new GaugeWidget(leftPos + 25, topPos + 20, 12, 42, Component.translatable("stellaris.screen.water"), GUISprites.WATER_OVERLAY, GUISprites.LIQUID_TANK_OVERLAY, waterTank.getMaxAmount() - 1, GaugeWidget.Direction4.DOWN_UP);
+        FluidStorage waterTank = blockEntity.getWaterTank();
+        waterTankGauge = new GaugeWidget(leftPos + 25, topPos + 20, 12, 42, Component.translatable("stellaris.screen.water"), GUISprites.WATER_OVERLAY, GUISprites.LIQUID_TANK_OVERLAY, waterTank.getTankCapacity(waterTank.getTanks()) - 1, GaugeWidget.Direction4.DOWN_UP);
         addRenderableWidget(waterTankGauge);
 
         energyGauge = new GaugeWidget(leftPos + 150, topPos + 20, 13, 46, Component.translatable("stellaris.screen.energyContainer"), GUISprites.ENERGY_FULL, GUISprites.BATTERY_OVERLAY, blockEntity.getEnergy(null).getMaxEnergy(), GaugeWidget.Direction4.DOWN_UP);
@@ -52,8 +52,8 @@ public class WaterPumpScreen extends AbstractContainerScreen<WaterPumpMenu> {
             return;
         }
 
-        waterTankGauge.updateAmount((int) blockEntity.getWaterTank().getFluidValue());
-        energyGauge.updateAmount((int) blockEntity.getEnergy(null).getEnergy());
+        waterTankGauge.updateAmount((int) blockEntity.getWaterTank().getFluidValueInTank(blockEntity.getWaterTank().getTanks()));
+        energyGauge.updateAmount(blockEntity.getEnergy(null).getEnergy());
     }
 
     @Override

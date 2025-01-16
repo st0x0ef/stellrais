@@ -5,7 +5,6 @@ import com.fej1fun.potentials.providers.FluidProvider;
 import com.st0x0ef.stellaris.common.data.recipes.WaterSeparatorRecipe;
 import com.st0x0ef.stellaris.common.data.recipes.input.FluidInput;
 import com.st0x0ef.stellaris.common.menus.WaterSeparatorMenu;
-import com.st0x0ef.stellaris.common.network.NetworkRegistry;
 import com.st0x0ef.stellaris.common.network.packets.SyncFluidPacket;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import com.st0x0ef.stellaris.common.registry.RecipesRegistry;
@@ -132,5 +131,9 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
         if (facing.getCounterClockWise() == direction || facing.getClockWise() == direction)
             return resultTanks;
         return ingredientTank;
+    }
+
+    public FluidStorage getIngredientTank() {
+        return this.ingredientTank;
     }
 }

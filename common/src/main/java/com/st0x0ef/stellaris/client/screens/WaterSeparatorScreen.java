@@ -5,7 +5,7 @@ import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.client.screens.components.GaugeWidget;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.WaterSeparatorBlockEntity;
 import com.st0x0ef.stellaris.common.menus.WaterSeparatorMenu;
-import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidTank;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.GuiGraphics;
@@ -41,15 +41,15 @@ public class WaterSeparatorScreen extends AbstractContainerScreen<WaterSeparator
             return;
         }
 
-        FluidTank ingredientTank = blockEntity.getIngredientTank();
+        FluidStorage ingredientTank = blockEntity.getIngredientTank();
         ingredientTankGauge = new GaugeWidget(leftPos + 50, topPos + 58, 76, 40, Component.translatable("stellaris.screen.water"), GUISprites.WATER_OVERLAY, GUISprites.WATER_SEPARATOR_OVERLAY, ingredientTank.getMaxAmount()-1, GaugeWidget.Direction4.DOWN_UP);
         addRenderableWidget(ingredientTankGauge);
 
-        FluidTank resultTank1 = blockEntity.getResultTanks().getFirst();
+        FluidStorage resultTank1 = blockEntity.getResultTanks().getFirst();
         resultTank1Gauge = new GaugeWidget(leftPos + 22, topPos + 52, 12, 46, Component.translatable("stellaris.screen.hydrogen"), GUISprites.HYDROGEN_OVERLAY, GUISprites.LIQUID_TANK_OVERLAY, resultTank1.getMaxAmount()-1, GaugeWidget.Direction4.DOWN_UP);
         addRenderableWidget(resultTank1Gauge);
 
-        FluidTank resultTank2 = blockEntity.getResultTanks().get(1);
+        FluidStorage resultTank2 = blockEntity.getResultTanks().get(1);
         resultTank2Gauge = new GaugeWidget(leftPos + 142, topPos + 52, 12, 46, Component.translatable("stellaris.screen.oxygen"), GUISprites.OXYGEN_OVERLAY, GUISprites.LIQUID_TANK_OVERLAY, resultTank2.getMaxAmount()-1, GaugeWidget.Direction4.DOWN_UP);
         addRenderableWidget(resultTank2Gauge);
 

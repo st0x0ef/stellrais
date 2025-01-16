@@ -21,7 +21,6 @@ public class Events {
     private static final int RADIATION_CHECK_INTERVAL = 100;
     private static int tickBeforeNextRadioactiveCheck = RADIATION_CHECK_INTERVAL;
 
-
     public static void registerEvents() {
         TickEvent.PLAYER_POST.register(player -> {
             if (tickBeforeNextRadioactiveCheck <= 0 && !Utils.isLivingInJetSuit(player)) {
@@ -65,16 +64,11 @@ public class Events {
                 } else if (state.is(Blocks.CAMPFIRE)) {
                     serverLevel.setBlock(pos, state.setValue(CampfireBlock.LIT, false), 3);
                     return EventResult.interruptFalse();
-                } else if (state.is(Blocks.CANDLE)) {
-                    serverLevel.setBlock(pos, state.setValue(CandleBlock.LIT, true), 3);
-                    return EventResult.interruptFalse();
-
                 }
             }
 
             return EventResult.pass();
         });
-
 
     }
 
@@ -82,4 +76,3 @@ public class Events {
         GlobalOxygenManager.getInstance().getOrCreateDimensionManager(level).removeOxygenRoom(pos);
     }
 }
-

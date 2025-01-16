@@ -16,7 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 @Environment(EnvType.CLIENT)
-public class OxygenGeneratorScreen extends AbstractContainerScreen<OxygenGeneratorMenu> {
+public class OxygenGeneratorScreen extends AbstractContainerScreen<OxygenDistributorMenu> {
 
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/oxygen_distributor.png");
 
@@ -24,7 +24,7 @@ public class OxygenGeneratorScreen extends AbstractContainerScreen<OxygenGenerat
     private GaugeWidget energyGauge;
     private GaugeWidget oxygenGauge;
 
-    public OxygenGeneratorScreen(OxygenGeneratorMenu menu, Inventory playerInventory, Component title) {
+    public OxygenGeneratorScreen(OxygenDistributorMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
         imageWidth = 177;
         imageHeight = 174;

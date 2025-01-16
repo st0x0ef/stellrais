@@ -8,7 +8,6 @@ import net.minecraft.world.item.ItemStack;
 
 public class WaitMenu extends AbstractContainerMenu {
     private final Player player;
-    public boolean freeze_gui = false;
     public final String firstPlayerName;
 
     public static WaitMenu create(int syncId, Inventory inventory, FriendlyByteBuf data) {
@@ -31,10 +30,6 @@ public class WaitMenu extends AbstractContainerMenu {
 
     public Player getPlayer() {
         return player;
-    }
-
-    public void switchFreezeGui() {
-        freeze_gui = !freeze_gui;
     }
 
     public String getFirstPlayerName() {

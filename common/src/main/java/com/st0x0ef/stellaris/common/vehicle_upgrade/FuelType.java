@@ -1,8 +1,10 @@
 package com.st0x0ef.stellaris.common.vehicle_upgrade;
 
 import com.mojang.serialization.Codec;
+import com.st0x0ef.stellaris.common.data.planets.Planet;
 import com.st0x0ef.stellaris.common.registry.ItemsRegistry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.Item;
 
@@ -28,6 +30,32 @@ public class FuelType {
                 case URANIUM -> 23.74f * fuelQuantity; // Need 16mb to go on Moon, 1728mb to go on Venus, 2349mb to go on Mars and 3876mb to go on Mercury (approx)
                 case NEPTUNIUM -> 26.38f * fuelQuantity; // Need 15mb to go on Moon, 1555mb to go on Venus, 2114mb to go on Mars and 3488mb to go on Mercury (approx)
                 case PLUTONIUM -> 29.3f * fuelQuantity; // Need 14mb to go on Moon, 1400mb to go on Venus, 1903mb to go on Mars and 3140mb to go on Mercury (approx)
+            };
+        }
+
+        return 0.0f;
+    }
+
+    public static float getFuelNeededToGoOnPlanet(Planet actual, Planet destination, Item fuelItem) {
+        float distance = Mth.abs(actual.distanceFromEarth() - destination.distanceFromEarth());
+
+        Type type = Type.getTypeBasedOnItem(fuelItem);
+
+        if (type != null && type != Type.RADIOACTIVE) {
+            return switch (type) {
+                case FUEL -> distance / 19.22f; // Need 20mb to go on Moon, 2133mb to go on Venus, 2900mb to go on Mars and 4786mb to go on Mercury (approx)
+                case HYDROGEN -> distance / 21.36f; // Need 18mb to go on Moon, 1920mb to go on Venus, 2610mb to go on Mars and 4307mb to go on Mercury (approx)
+                default -> throw new IllegalStateException("Unexpected value: " + type);
+            };
+        }
+
+        Type.Radioactive radioactiveElement = Type.Radioactive.getTypeBasedOnItem(fuelItem);
+
+        if (radioactiveElement != null && type == Type.RADIOACTIVE) {
+            return switch (radioactiveElement) {
+                case URANIUM -> distance / 23.74f; // Need 16mb to go on Moon, 1728mb to go on Venus, 2349mb to go on Mars and 3876mb to go on Mercury (approx)
+                case NEPTUNIUM -> distance / 26.38f; // Need 15mb to go on Moon, 1555mb to go on Venus, 2114mb to go on Mars and 3488mb to go on Mercury (approx)
+                case PLUTONIUM -> distance / 29.3f; // Need 14mb to go on Moon, 1400mb to go on Venus, 1903mb to go on Mars and 3140mb to go on Mercury (approx)
             };
         }
 

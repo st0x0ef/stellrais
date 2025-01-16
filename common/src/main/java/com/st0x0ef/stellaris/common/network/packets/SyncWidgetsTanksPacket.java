@@ -106,8 +106,8 @@ public class SyncWidgetsTanksPacket implements CustomPacketPayload {
                     menu.getBlockEntity().getEnergy(null).setEnergyStored((int) syncWidgetsTanks.component[0]);
             case RadioactiveGeneratorMenu menu ->
                     menu.getBlockEntity().getEnergy(null).setEnergyStored((int) syncWidgetsTanks.component[0]);
-            case OxygenGeneratorMenu menu -> {
-                    menu.getBlockEntity().getEnergy(null).setEnergyStored((int) syncWidgetsTanks.component[0]);
+            case OxygenDistributorMenu menu -> {
+                menu.getBlockEntity().getEnergy(null).setEnergyStored((int) syncWidgetsTanks.component[0]);
                 menu.getBlockEntity().oxygenTank.setFluidStack(FluidStack.create(FluidRegistry.FLOWING_OXYGEN.get(), syncWidgetsTanks.component[1]));
             }
             case PumpjackMenu menu -> {

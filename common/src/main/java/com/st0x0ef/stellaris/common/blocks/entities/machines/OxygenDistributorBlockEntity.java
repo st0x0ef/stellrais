@@ -76,7 +76,7 @@ public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity
 
     @Override
     protected AbstractContainerMenu createMenu(int containerId, Inventory inventory) {
-        return new OxygenGeneratorMenu(containerId, inventory, this, this);
+        return new OxygenDistributorMenu(containerId, inventory, this, this);
     }
 
     @Override

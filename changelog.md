@@ -1,10 +1,5 @@
-# 1.2.3 changelog
-
-## Changes
-- Improve quick move stack
-- Improve specific slot
+# 1.2.4 changelog
 
 ## Fixes
-- Water pump can now be looted with an iron pickaxe
-- Fix rover recipe
-- Fix fuel refinery gui texture
+- Fix fabric key press event ([#61](https://github.com/st0x0ef/stellaris/issues/61))
+- Fix rocket sound

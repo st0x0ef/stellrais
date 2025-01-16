@@ -5,6 +5,7 @@ import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.client.screens.components.GaugeWidget;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.OxygenDistributorBlockEntity;
 import com.st0x0ef.stellaris.common.menus.OxygenDistributorMenu;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidTank;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -40,8 +41,8 @@ public class OxygenGeneratorScreen extends AbstractContainerScreen<OxygenDistrib
         energyGauge = new GaugeWidget(leftPos + 147, topPos + 27, 13, 46, Component.translatable("stellaris.screen.energyContainer"), GUISprites.ENERGY_FULL, GUISprites.BATTERY_OVERLAY, blockEntity.getEnergy(null).getMaxEnergy(), GaugeWidget.Direction4.DOWN_UP);
         addRenderableWidget(energyGauge);
 
-        FluidTank oxygenTank = blockEntity.oxygenTank;
-        oxygenGauge = new GaugeWidget(leftPos + 80 , topPos + 59 , 16, 14, Component.translatable("stellaris.screen.oxygen"), GUISprites.NO_OVERLAY, GUISprites.NO_OVERLAY, oxygenTank.getMaxAmount(), GaugeWidget.Direction4.DOWN_UP);
+        FluidStorage oxygenTank = blockEntity.oxygenTank;
+        oxygenGauge = new GaugeWidget(leftPos + 80 , topPos + 59 , 16, 14, Component.translatable("stellaris.screen.oxygen"), GUISprites.NO_OVERLAY, GUISprites.NO_OVERLAY, oxygenTank.getTankCapacity(oxygenTank.getTanks()), GaugeWidget.Direction4.DOWN_UP);
         addRenderableWidget(oxygenGauge);
 
     }
@@ -57,7 +58,7 @@ public class OxygenGeneratorScreen extends AbstractContainerScreen<OxygenDistrib
         }
 
         energyGauge.updateAmount(blockEntity.getEnergy(null).getEnergy());
-        oxygenGauge.updateAmount(blockEntity.oxygenTank.getFluidValue());
+        oxygenGauge.updateAmount(blockEntity.oxygenTank.getFluidValueInTank(blockEntity.oxygenTank.getTanks()));
     }
 
     @Override

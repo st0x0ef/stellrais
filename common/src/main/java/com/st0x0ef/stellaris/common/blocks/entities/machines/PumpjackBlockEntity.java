@@ -6,6 +6,7 @@ import com.st0x0ef.stellaris.common.blocks.machines.CoalGeneratorBlock;
 import com.st0x0ef.stellaris.common.menus.PumpjackMenu;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import com.st0x0ef.stellaris.common.registry.FluidRegistry;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidTank;
 import dev.architectury.fluid.FluidStack;
 import net.minecraft.core.BlockPos;
@@ -23,7 +24,12 @@ public class PumpjackBlockEntity extends BaseEnergyContainerBlockEntity implemen
 
     private boolean isGenerating = false;
     private final long oilToExtract = FluidTankHelper.convertFromNeoMb(10);
-    public final FluidTank resultTank = new FluidTank(10_000);
+    public final FluidStorage resultTank = new FluidStorage(1, 10_000) {
+        @Override
+        protected void onChange(int tank) {
+            setChanged();
+        }
+    };
     public int chunkOilLevel = 0;
     public PumpjackBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityRegistry.PUMPJACK.get(), pos, state);
@@ -48,11 +54,9 @@ public class PumpjackBlockEntity extends BaseEnergyContainerBlockEntity implemen
         }
 
         if (energyContainer.getEnergy() >= 2 * actualOilToExtract) {
-            if (resultTank.getFluidValue() + actualOilToExtract <= resultTank.getMaxAmount()) {
+            if (resultTank.getFluidValueInTank(resultTank.getTanks()) + actualOilToExtract <= resultTank.getTankCapacity(resultTank.getTanks())) {
                 access.stellaris$setChunkOilLevel(access.stellaris$getChunkOilLevel() - actualOilToExtract);
-                FluidStack tankStack = resultTank.getFluidStack();
-
-                resultTank.fillFluid(FluidStack.create(FluidRegistry.OIL_ATTRIBUTES.getSourceFluid(), actualOilToExtract), false);
+                resultTank.fill(FluidStack.create(FluidRegistry.OIL_ATTRIBUTES.getSourceFluid(), actualOilToExtract), false);
 
                 energyContainer.extract(2 * actualOilToExtract, false);
                 isGenerating = true;
@@ -89,16 +93,16 @@ public class PumpjackBlockEntity extends BaseEnergyContainerBlockEntity implemen
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
-        resultTank.load(provider, tag);
+        resultTank.load(tag, provider);
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.saveAdditional(tag, provider);
-        resultTank.save(provider, tag);
+        resultTank.save(tag, provider);
     }
 
-    public FluidTank getResultTank() {
+    public FluidStorage getResultTank() {
         return resultTank;
     }
 

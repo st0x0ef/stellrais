@@ -91,5 +91,9 @@ public abstract class FluidStorage extends BaseFluidStorage {
         return true;
     }
 
+    public boolean canGrow() {
+        return this.getFluidValueInTank(this.getTanks()) < this.getTankCapacity(this.getTanks());
+    }
+
     protected abstract void onChange(int tank);
 }

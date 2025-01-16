@@ -8,6 +8,7 @@ import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
 import com.st0x0ef.stellaris.common.registry.FluidRegistry;
 import com.st0x0ef.stellaris.common.utils.OxygenUtils;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidTank;
 import dev.architectury.fluid.FluidStack;
 import net.minecraft.core.BlockPos;
@@ -23,7 +24,12 @@ import org.jetbrains.annotations.Nullable;
 
 public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity implements FluidProvider.BLOCK {
 
-    public final FluidTank oxygenTank = new FluidTank(10);
+    public final FluidStorage oxygenTank = new FluidStorage(1, 10) {
+        @Override
+        protected void onChange(int tank) {
+            setChanged();
+        }
+    };;
 
 
     public OxygenDistributorBlockEntity(BlockPos pos, BlockState state) {
@@ -40,14 +46,14 @@ public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity
                 }
             }
 
-            if (oxygenTank.getFluidValue() > 0) {
+            if (oxygenTank.getFluidValueInTank(oxygenTank.getTanks()) > 0) {
                 GlobalOxygenManager.getInstance().getOrCreateDimensionManager(serverLevel).addOxygenRoomIfMissing(getBlockPos());
             }
         }
     }
 
     public boolean useOxygenAndEnergy() {
-        if (oxygenTank.getFluidStack().isEmpty() || oxygenTank.getFluidValue() == 0) {
+        if (oxygenTank.getFluidInTank(oxygenTank.getTanks()).isEmpty() || oxygenTank.getFluidValueInTank(oxygenTank.getTanks()) == 0) {
             if (this.getItem(0).has(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()) && this.energyContainer.getEnergy() > 0) {
                 if (OxygenUtils.removeOxygen(getItem(0), 1)) {
                     this.energyContainer.extract(1, false);
@@ -56,8 +62,8 @@ public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity
             }
         }
 
-        if (oxygenTank.getFluidValue() > 0 && this.energyContainer.getEnergy() > 0) {
-            oxygenTank.drainFluid(FluidStack.create(FluidRegistry.OXYGEN_ATTRIBUTES.getSourceFluid(), 1), false);
+        if (oxygenTank.getFluidValueInTank(oxygenTank.getTanks()) > 0 && this.energyContainer.getEnergy() > 0) {
+            oxygenTank.drain(FluidStack.create(FluidRegistry.OXYGEN_ATTRIBUTES.getSourceFluid(), 1), false);
             this.energyContainer.extract(1, false);
             return true;
         }
@@ -66,7 +72,7 @@ public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity
     }
 
     public void addOxygen(long amount) {
-        oxygenTank.fillFluid(FluidStack.create(FluidRegistry.OXYGEN_ATTRIBUTES.getSourceFluid(), amount), false);
+        oxygenTank.fill(FluidStack.create(FluidRegistry.OXYGEN_ATTRIBUTES.getSourceFluid(), amount), false);
     }
 
     @Override

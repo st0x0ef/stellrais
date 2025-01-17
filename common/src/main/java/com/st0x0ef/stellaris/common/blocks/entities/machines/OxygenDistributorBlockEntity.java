@@ -92,13 +92,13 @@ public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
-        oxygenTank.load(tag, provider);
+        oxygenTank.load(tag, provider, "oxygen");
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.saveAdditional(tag, provider);
-        oxygenTank.save(tag, provider);
+        oxygenTank.save(tag, provider, "oxygen");
     }
 
 

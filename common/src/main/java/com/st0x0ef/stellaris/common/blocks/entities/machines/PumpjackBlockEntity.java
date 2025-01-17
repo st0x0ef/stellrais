@@ -92,13 +92,13 @@ public class PumpjackBlockEntity extends BaseEnergyContainerBlockEntity implemen
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
-        resultTank.load(tag, provider);
+        resultTank.load(tag, provider, "oil");
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.saveAdditional(tag, provider);
-        resultTank.save(tag, provider);
+        resultTank.save(tag, provider, "oil");
     }
 
     public FluidStorage getResultTank() {

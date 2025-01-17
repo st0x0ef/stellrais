@@ -5,6 +5,7 @@ import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
 import com.st0x0ef.stellaris.common.registry.FluidRegistry;
 import com.st0x0ef.stellaris.common.utils.FuelUtils;
 import com.st0x0ef.stellaris.common.utils.OxygenUtils;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
 import dev.architectury.fluid.FluidStack;
 import dev.architectury.hooks.fluid.FluidBucketHooks;
 import dev.architectury.platform.Platform;
@@ -24,58 +25,11 @@ public class FluidTankHelper {
     //Handled by Potentials
     public static final long BUCKET_AMOUNT = 1000;
 
-    public static <T extends BlockEntity & Container> void extractFluidToItem(T blockEntity, FluidTank tank, int slot) {
-        ItemStack inputStack = blockEntity.getItem(slot);
-        if (!inputStack.isEmpty()) {
-            if (!tank.getFluidStack().isEmpty()) {
-                boolean isTank = inputStack.has(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get());
-
-                if (tank.getFluidValue() >= BUCKET_AMOUNT || (isTank && !tank.getFluidStack().isEmpty())) {
-                    ItemStack resultStack = ItemStack.EMPTY;
-
-                    if (isTank && tank.getFluidStack().getFluid().isSame(FluidRegistry.OXYGEN_STILL.get())) {
-                        resultStack = inputStack.copy();
-                        long storedOxygen = OxygenUtils.getOxygen(inputStack);
-
-                        if (storedOxygen + 1 >= OxygenUtils.getOxygenCapacity(inputStack)) {
-                            return;
-                        }
-
-                        else if (OxygenUtils.getOxygenCapacity(inputStack) - storedOxygen > convertFromNeoMb(10) && tank.getFluidValue() > convertFromNeoMb(10)) {
-                            OxygenUtils.addOxygen(resultStack, convertFromNeoMb(10));
-                        } else if (tank.getFluidValue() < convertFromNeoMb(10) && storedOxygen + tank.getFluidValue() <= OxygenUtils.getOxygenCapacity(inputStack)) {
-                            OxygenUtils.addOxygen(resultStack, tank.getFluidValue());
-
-                            tank.drainFluid(FluidStack.create(tank.getBaseFluid(), tank.getFluidValue()), false);
-                        }
-                        else if (tank.getFluidValue() > OxygenUtils.getOxygenCapacity(inputStack) - storedOxygen){
-                            OxygenUtils.addOxygen(resultStack, OxygenUtils.getOxygenCapacity(inputStack) - storedOxygen);
-                            tank.drainFluid(FluidStack.create(tank.getBaseFluid(), OxygenUtils.getOxygenCapacity(inputStack)), false);
-
-                        }
-                    }
-                    else if (!isTank && isEmptyBucket(inputStack.getItem())) {
-                        ItemStack stack = new ItemStack(tank.getFluidStack().getFluid().getBucket());
-                        if (!stack.isEmpty() && !isEmptyBucket(stack.getItem())) {
-                            resultStack = stack;
-                            tank.drainFluid(FluidStack.create(tank.getBaseFluid(), BUCKET_AMOUNT), false);
-                        }
-                    }
-
-                    if (!resultStack.isEmpty()) {
-                        blockEntity.setItem(slot, resultStack);
-                        blockEntity.setChanged();
-                    }
-                }
-            }
-        }
-    }
-
     public static boolean isEmptyBucket(Item item) {
         return item instanceof BucketItem bucketItem && FluidBucketHooks.getFluid(bucketItem).isSame(Fluids.EMPTY);
     }
 
-    public static <T extends BlockEntity & Container> void extractFluidToItem(T blockEntity, FluidTank tank, int inputSlot, int outputSlot) {
+    public static <T extends BlockEntity & Container> void extractFluidToItem(T blockEntity, FluidStorage tank, int inputSlot, int outputSlot) {
         ItemStack outputStack = blockEntity.getItem(outputSlot);
         ItemStack inputStack = blockEntity.getItem(inputSlot);
         boolean hasSpace = outputStack.getCount() < outputStack.getMaxStackSize();
@@ -123,12 +77,7 @@ public class FluidTankHelper {
         }
     }
 
-    public static void addToTank(FluidTank tank, FluidStack stack) {
-        tank.fillFluid(stack, false);
-
-    }
-
-    public static <T extends BlockEntity & Container> boolean addFluidFromBucket(T blockEntity, FluidTank tank, int inputSlot, int outputSlot) {
+    public static <T extends BlockEntity & Container> boolean addFluidFromBucket(T blockEntity, FluidStorage tank, int inputSlot, int outputSlot) {
         if (tank.getFluidValue() + BUCKET_AMOUNT < tank.getMaxAmount()) {
             ItemStack inputStack = blockEntity.getItem(inputSlot);
             ItemStack outputStack = blockEntity.getItem(outputSlot);
@@ -150,7 +99,7 @@ public class FluidTankHelper {
                         }
 
                         blockEntity.setItem(inputSlot, ItemStack.EMPTY);
-                        addToTank(tank, FluidStack.create(fluid, BUCKET_AMOUNT));
+                        tank.fill(FluidStack.create(fluid, BUCKET_AMOUNT), false);
                         blockEntity.setChanged();
                         return true;
                     }

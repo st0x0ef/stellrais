@@ -60,13 +60,13 @@ public class WaterPumpBlockEntity extends BaseEnergyBlockEntity implements Fluid
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
-        waterTank.load(tag, provider);
+        waterTank.load(tag, provider, "water");
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.saveAdditional(tag, provider);
-        waterTank.save(tag, provider);
+        waterTank.save(tag, provider, "water");
     }
 
     public FluidStorage getWaterTank() {

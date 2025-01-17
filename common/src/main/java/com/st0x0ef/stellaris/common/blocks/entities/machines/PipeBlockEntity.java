@@ -32,13 +32,13 @@ public class PipeBlockEntity extends BlockEntity implements FluidProvider.BLOCK,
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
-        fluidTank.save(tag, registries);
+        fluidTank.save(tag, registries, "fluid");
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        fluidTank.load(tag, registries);
+        fluidTank.load(tag, registries, "fluid");
     }
 
     @Override

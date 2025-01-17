@@ -34,7 +34,7 @@ public class JetModule extends Item implements SpaceSuitModule {
 
     @Override
     public MutableComponent displayName() {
-        return Component.translatable("spacesuit.stellaris.jet");
+        return Component.translatable("spacesuit.stellaris.jet_module");
     }
 
     @Override
@@ -201,9 +201,9 @@ public class JetModule extends Item implements SpaceSuitModule {
     }
 
     public void calculateSpacePressTime(Player player, ItemStack itemStack) {
-        int mode = this.getMode(itemStack);
 
         if (Utils.isLivingInJetSuit(player)) {
+            int mode = this.getMode(itemStack);
 
             /** NORMAL MODE */
             if (mode == JetSuit.ModeType.NORMAL.getMode()) {
@@ -218,7 +218,7 @@ public class JetModule extends Item implements SpaceSuitModule {
             }
 
             /** HOVER MODE */
-            if (mode == JetSuit.ModeType.HOVER.getMode()) {
+            else if (mode == JetSuit.ModeType.HOVER.getMode()) {
                 if (!player.onGround() && this.spacePressTime < 0.6F) {
                     this.spacePressTime = this.spacePressTime + 0.2F;
                 }
@@ -235,7 +235,7 @@ public class JetModule extends Item implements SpaceSuitModule {
             }
 
             /** ELYTRA MODE */
-            if (mode == JetSuit.ModeType.ELYTRA.getMode()) {
+            else if (mode == JetSuit.ModeType.ELYTRA.getMode()) {
                 if (KeyVariables.isHoldingUp(player) && player.isFallFlying()) {
                     if (player.isSprinting()) {
                         if (this.spacePressTime < 2.8F) {

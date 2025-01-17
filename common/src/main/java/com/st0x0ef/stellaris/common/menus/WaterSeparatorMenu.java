@@ -7,7 +7,6 @@ import com.st0x0ef.stellaris.common.menus.slot.SpecificFluidContainerSlot;
 import com.st0x0ef.stellaris.common.network.packets.SyncWidgetsTanksPacket;
 import com.st0x0ef.stellaris.common.registry.FluidRegistry;
 import com.st0x0ef.stellaris.common.registry.MenuTypesRegistry;
-import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidTank;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;

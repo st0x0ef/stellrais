@@ -5,7 +5,6 @@ import com.st0x0ef.stellaris.common.network.packets.SyncWidgetsTanksPacket;
 import com.st0x0ef.stellaris.common.registry.BlocksRegistry;
 import com.st0x0ef.stellaris.common.registry.MenuTypesRegistry;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
-import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidTank;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;

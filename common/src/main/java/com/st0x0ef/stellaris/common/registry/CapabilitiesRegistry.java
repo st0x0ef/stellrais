@@ -4,7 +4,6 @@ import com.fej1fun.potentials.capabilities.Capabilities;
 
 public class CapabilitiesRegistry {
     public static void init() {
-        //registerEnergyBlocks();
         registerEnergyBlockEntities();
         registerFluidBlockEntities();
     }

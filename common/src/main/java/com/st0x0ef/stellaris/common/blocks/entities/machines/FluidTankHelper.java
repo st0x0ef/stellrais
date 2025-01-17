@@ -5,7 +5,6 @@ import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
 import com.st0x0ef.stellaris.common.registry.FluidRegistry;
 import com.st0x0ef.stellaris.common.utils.FuelUtils;
 import com.st0x0ef.stellaris.common.utils.OxygenUtils;
-import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidTank;
 import dev.architectury.fluid.FluidStack;
 import dev.architectury.hooks.fluid.FluidBucketHooks;
 import dev.architectury.platform.Platform;

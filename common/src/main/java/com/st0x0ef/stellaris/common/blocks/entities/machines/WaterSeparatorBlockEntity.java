@@ -9,7 +9,6 @@ import com.st0x0ef.stellaris.common.network.packets.SyncFluidPacket;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import com.st0x0ef.stellaris.common.registry.RecipesRegistry;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
-import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidTank;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidUtil;
 import dev.architectury.fluid.FluidStack;
 import dev.architectury.networking.NetworkManager;
@@ -21,7 +20,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -31,7 +29,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Optional;
 
-public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity implements RecipeInput, FluidProvider.BLOCK {
+public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity implements FluidProvider.BLOCK {
 
     private final int HYDROGEN_TANK = 0;
     private final int OXYGEN_TANK = 1;
@@ -81,9 +79,9 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
             FluidUtil.moveFluidToItem(i, resultTanks, items.get(i + 2), resultTanks.getTankCapacity(i));
 
 
-        if (!FluidTankHelper.addFluidFromBucket(this, ingredientTank, 1, 0)) {
-            FluidTankHelper.extractFluidToItem(this, ingredientTank, 1, 0);
-        }
+//        if (!FluidTankHelper.addFluidFromBucket(this, ingredientTank, 1, 0)) {
+//            FluidTankHelper.extractFluidToItem(this, ingredientTank, 1, 0);
+//        }
 
         Optional<RecipeHolder<WaterSeparatorRecipe>> recipeHolder = cachedCheck.getRecipeFor(new FluidInput(getLevel().getBlockEntity(getBlockPos()), getItems()), level);
         if (recipeHolder.isPresent()) {
@@ -118,11 +116,6 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
-    }
-
-    @Override
-    public int size() {
-        return this.getContainerSize();
     }
 
     @Override

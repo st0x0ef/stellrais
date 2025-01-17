@@ -7,7 +7,6 @@ import com.st0x0ef.stellaris.common.blocks.entities.machines.PumpjackBlockEntity
 import com.st0x0ef.stellaris.common.menus.PumpjackMenu;
 import com.st0x0ef.stellaris.common.utils.Utils;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
-import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidTank;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;

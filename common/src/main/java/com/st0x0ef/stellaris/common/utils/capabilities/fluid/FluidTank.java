@@ -8,7 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 
 @Deprecated
-public class FluidTank extends BaseFluidTank {
+public class FluidTank extends BaseFluidTank{
 
     public FluidTank(long maxAmount) {
         super(maxAmount, maxAmount, maxAmount);

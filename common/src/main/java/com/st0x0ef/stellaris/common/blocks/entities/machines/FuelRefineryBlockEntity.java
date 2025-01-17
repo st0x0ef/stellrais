@@ -12,6 +12,7 @@ import com.st0x0ef.stellaris.common.registry.RecipesRegistry;
 import com.st0x0ef.stellaris.common.utils.FuelUtils;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FilteredFluidStorage;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidTank;
 import dev.architectury.fluid.FluidStack;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.core.BlockPos;
@@ -33,14 +34,16 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
 
     private final FluidStorage inputTank;
     private final FluidStorage outputTank;
+    private final FluidTank fluidTank;
 
     private final RecipeManager.CachedCheck<FluidInput, FuelRefineryRecipe> cachedCheck = RecipeManager.createCheck(RecipesRegistry.FUEL_REFINERY_TYPE.get());
 
-    public FuelRefineryBlockEntity(BlockPos pos, BlockState state) {
+    public FuelRefineryBlockEntity(BlockPos pos, BlockState state, FluidTank fluidTank) {
         super(BlockEntityRegistry.FUEL_REFINERY.get(), pos, state);
+        this.fluidTank = fluidTank;
         this.inputTank = new FilteredFluidStorage(1, 10000, fluidStack -> fluidStack.getFluid() == FluidRegistry.OIL_STILL.get()) {
             @Override
-            protected void onChange(int tank) {
+            protected void onChange(int i) {
                 setChanged();
                 if (level!=null && level.getServer()!=null)
                     NetworkManager.sendToPlayers(level.getServer().getPlayerList().getPlayers(),
@@ -49,7 +52,7 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
         };
         this.outputTank = new FilteredFluidStorage(1, 10000, fluidStack -> fluidStack.getFluid() == FluidRegistry.FUEL_STILL.get()) {
             @Override
-            protected void onChange(int tank) {
+            protected void onChange(int i) {
                 setChanged();
                 if (level!=null && level.getServer()!=null)
                     NetworkManager.sendToPlayers(level.getServer().getPlayerList().getPlayers(),
@@ -76,11 +79,11 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
                 this.setChanged();
             }
         } else {
-            FluidTankHelper.extractFluidToItem(this, outputTank, 2, 3);
+            FluidTankHelper.extractFluidToItem(this, fluidTank, 2, 3);
         }
 
-        if (!FluidTankHelper.addFluidFromBucket(this, inputTank, 0, 1)) {
-            FluidTankHelper.extractFluidToItem(this, inputTank, 0, 1);
+        if (!FluidTankHelper.addFluidFromBucket(this, fluidTank, 0, 1)) {
+            FluidTankHelper.extractFluidToItem(this, fluidTank, 0, 1);
         }
 
         Optional<RecipeHolder<FuelRefineryRecipe>> recipeHolder = cachedCheck.getRecipeFor(new FluidInput(getLevel().getBlockEntity(getBlockPos()), getItems()), level);
@@ -94,7 +97,7 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
                     if (outputTank.getFluidValueInTank(outputTank.getTanks()) + resultStack.getAmount() < outputTank.getTankCapacity(outputTank.getTanks())) {
                         energyContainer.extract(recipe.energy(), false);
                         inputTank.drain(FluidStack.create(recipe.ingredientStack().getFluid(), recipe.ingredientStack().getAmount()), false);
-                        FluidTankHelper.addToTank(outputTank, resultStack);
+                        FluidTankHelper.addToTank(fluidTank, resultStack);
                         setChanged();
                     }
                 }

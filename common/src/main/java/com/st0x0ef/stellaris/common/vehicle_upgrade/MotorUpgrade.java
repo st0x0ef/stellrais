@@ -13,6 +13,9 @@ public class MotorUpgrade extends VehicleUpgrade {
     }
 
     public FuelType.Type getFuelType() {
+        if (this.type == null) {
+            return getBasic().getFuelType();
+        }
         return this.type;
     }
     public ResourceLocation getFluidTexture() {

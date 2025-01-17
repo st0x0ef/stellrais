@@ -4,5 +4,6 @@
 - Structures rarity
 
 ## Fixes
-- Fix fabric key press event ([#61](https://github.com/st0x0ef/stellaris/issues/61))
+- Fix fabric key press event
 - Fix rocket sound
+- Fix crash when opening inventory in an unfueled rocket ([#61](https://github.com/st0x0ef/stellaris/issues/61))

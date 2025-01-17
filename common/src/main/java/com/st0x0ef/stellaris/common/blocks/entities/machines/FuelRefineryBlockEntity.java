@@ -33,14 +33,12 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
 
     private final FluidStorage inputTank;
     private final FluidStorage outputTank;
-    private final FluidTank fluidTank;
 
     private final RecipeManager.CachedCheck<FluidInput, FuelRefineryRecipe> cachedCheck = RecipeManager.createCheck(RecipesRegistry.FUEL_REFINERY_TYPE.get());
 
-    public FuelRefineryBlockEntity(BlockPos pos, BlockState state, FluidTank fluidTank) {
+    public FuelRefineryBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityRegistry.FUEL_REFINERY.get(), pos, state);
-        this.fluidTank = fluidTank;
-        this.inputTank = new FilteredFluidStorage(1, 10000, fluidStack -> fluidStack.getFluid() == FluidRegistry.OIL_STILL.get()) {
+        this.inputTank = new FilteredFluidStorage(1, 10000, 10000, 0, (n,fluidStack) -> fluidStack.getFluid() == FluidRegistry.OIL_STILL.get()) {
             @Override
             protected void onChange(int i) {
                 setChanged();
@@ -49,7 +47,7 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
                             new SyncFluidPacket(this.getFluidInTank(0), 0, getBlockPos(), null));
             }
         };
-        this.outputTank = new FilteredFluidStorage(1, 10000, fluidStack -> fluidStack.getFluid() == FluidRegistry.FUEL_STILL.get()) {
+        this.outputTank = new FilteredFluidStorage(1, 10000, 0, 10000, (n,fluidStack) -> fluidStack.getFluid() == FluidRegistry.FUEL_STILL.get()) {
             @Override
             protected void onChange(int i) {
                 setChanged();
@@ -142,6 +140,7 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
 
     @Override
     public @Nullable FluidStorage getFluidTank(@Nullable Direction direction) {
+        //TODO better directions
         if(direction == null) {
             return outputTank;
         }

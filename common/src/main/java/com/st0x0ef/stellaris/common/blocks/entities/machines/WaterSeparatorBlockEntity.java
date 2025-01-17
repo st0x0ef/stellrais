@@ -7,7 +7,9 @@ import com.st0x0ef.stellaris.common.data.recipes.input.FluidInput;
 import com.st0x0ef.stellaris.common.menus.WaterSeparatorMenu;
 import com.st0x0ef.stellaris.common.network.packets.SyncFluidPacket;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
+import com.st0x0ef.stellaris.common.registry.FluidRegistry;
 import com.st0x0ef.stellaris.common.registry.RecipesRegistry;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FilteredFluidStorage;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidUtil;
 import dev.architectury.fluid.FluidStack;
@@ -23,6 +25,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.material.Fluids;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -34,7 +37,8 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
     private final int HYDROGEN_TANK = 0;
     private final int OXYGEN_TANK = 1;
 
-    public final FluidStorage ingredientTank = new FluidStorage(1,3000,3000,0) {
+    public final FluidStorage ingredientTank = new FilteredFluidStorage(1,3000,3000,0,
+            (n, fluidStack) -> fluidStack.getFluid() == Fluids.WATER) {
         @Override
         protected void onChange(int tank) {
             setChanged();
@@ -43,7 +47,9 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
                         new SyncFluidPacket(this.getFluidInTank(0), 0, getBlockPos(), null));
         }
     };
-    public final FluidStorage resultTanks = new FluidStorage(2, 3000,0,3000) {
+    public final FluidStorage resultTanks = new FilteredFluidStorage(2, 3000,0,3000, (tank, fluidStack) ->
+            tank == HYDROGEN_TANK ? fluidStack.getFluid()== FluidRegistry.HYDROGEN_STILL.get() : fluidStack.getFluid()== FluidRegistry.OXYGEN_STILL.get()
+    ) {
         @Override
         protected void onChange(int tank) {
             setChanged();
@@ -83,26 +89,18 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
 //            FluidTankHelper.extractFluidToItem(this, ingredientTank, 1, 0);
 //        }
 
-        Optional<RecipeHolder<WaterSeparatorRecipe>> recipeHolder = cachedCheck.getRecipeFor(new FluidInput(getLevel().getBlockEntity(getBlockPos()), getItems()), level);
+        assert level != null;
+        Optional<RecipeHolder<WaterSeparatorRecipe>> recipeHolder = cachedCheck.getRecipeFor(new FluidInput(level.getBlockEntity(getBlockPos()), getItems()), level);
         if (recipeHolder.isPresent()) {
             WaterSeparatorRecipe recipe = recipeHolder.get().value();
 
             if (energyContainer.getEnergy() >= recipe.energy()) {
-                List<FluidStack> stacks = recipe.resultStacks();
-                FluidStack stack1 = stacks.getFirst();
-                FluidStack stack2 = stacks.get(1);
-                FluidStorage tank1 = resultTanks.getFirst();
-                FluidStorage tank2 = resultTanks.get(1);
 
-                if ((tank1.getFluidStack().isEmpty() || tank1.getFluidStack().isFluidEqual(stack1)) && (tank2.getFluidStack().isEmpty() || tank2.getFluidStack().isFluidEqual(stack2))) {
+                ingredientTank.drain(recipe.ingredientStack(), false);
+                resultTanks.fillWithoutLimits(recipe.resultStacks().getFirst(), false);
+                resultTanks.fillWithoutLimits(recipe.resultStacks().getLast(), false);
 
-                    if (tank1.getFluidValue() + stack1.getAmount() <= tank1.getMaxAmount() && tank2.getFluidValue() + stack2.getAmount() <= tank2.getMaxAmount()) {
-                        energyContainer.extract(recipe.energy(), false);
-                        ingredientTank.drain(FluidStack.create(recipe.ingredientStack().getFluid(), recipe.ingredientStack().getAmount()), false);
-                        FluidTankHelper.addToTank(tank1, stack1);
-                        FluidTankHelper.addToTank(tank2, stack2);
-                    }
-                }
+                energyContainer.extract(recipe.energy(), false);
             }
         }
 
@@ -111,11 +109,15 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.saveAdditional(tag, provider);
+        ingredientTank.save(tag, provider, "ingredient");
+        resultTanks.save(tag, provider, "result");
     }
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
+        ingredientTank.load(tag, provider, "ingredient");
+        resultTanks.load(tag, provider, "result");
     }
 
     @Override

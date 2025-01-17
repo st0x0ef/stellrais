@@ -18,6 +18,7 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +81,7 @@ public record WaterSeparatorRecipe(FluidStack ingredientStack, List<FluidStack> 
             buf.writeLong(recipe.energy);
         }, buf -> new WaterSeparatorRecipe(FluidStack.read(buf), FLUID_STACK_LIST_STREAM_CODEC.decode(buf), buf.readBoolean(), buf.readInt()));
 
+        @ApiStatus.ScheduledForRemoval
         public static void convertFluidStack(FluidStack stack, boolean isMb) {
             if (isMb) {
                 stack.setAmount(FluidTankHelper.convertFromNeoMb(stack.getAmount()));

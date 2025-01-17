@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 
-@Deprecated
+@Deprecated(forRemoval = true)
 public class FluidTankHelper {
 
     //Handled by Potentials

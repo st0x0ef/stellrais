@@ -13,6 +13,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class FluidStorage extends BaseFluidStorage {
 
+    
     public FluidStorage(int tanks, long capacity, long maxFill, long maxDrain) {
         super(tanks, capacity, maxFill, maxDrain);
     }
@@ -60,6 +61,7 @@ public abstract class FluidStorage extends BaseFluidStorage {
             if (!isFluidValid(i, stack)) continue;
             if (!(fluidStacks.get(i).getFluid()==stack.getFluid() || fluidStacks.get(i).isEmpty())) continue;
             if (fluidStacks.get(i).getAmount()>=getTankCapacity(i)) continue;
+
             filled = Math.clamp(getTankCapacity(i) - getFluidValueInTank(i), 0L, Math.min(this.maxFill, stack.getAmount()));
             if (!simulate) {
                 setFluidInTank(i, FluidStack.create(getFluidInTank(i), getFluidValueInTank(i) + filled));

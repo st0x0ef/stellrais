@@ -103,7 +103,6 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
                 energyContainer.extract(recipe.energy(), false);
             }
         }
-
     }
 
     @Override

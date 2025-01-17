@@ -7,6 +7,7 @@ import com.st0x0ef.stellaris.common.menus.slot.SpecificFluidContainerSlot;
 import com.st0x0ef.stellaris.common.network.packets.SyncWidgetsTanksPacket;
 import com.st0x0ef.stellaris.common.registry.FluidRegistry;
 import com.st0x0ef.stellaris.common.registry.MenuTypesRegistry;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -53,8 +54,8 @@ public class WaterSeparatorMenu extends BaseContainer {
 
     public void syncWidgets(ServerPlayer player) {
         if (!player.level().isClientSide()) {
-            FluidTank resultTank1 = blockEntity.getResultTanks().getFirst();
-            FluidTank resultTank2 = blockEntity.getResultTanks().get(1);
+            FluidStorage resultTank1 = blockEntity.getResultTanks().getFirst();
+            FluidStorage resultTank2 = blockEntity.getResultTanks().get(1);
 
 
             NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(new long[] {resultTank1.getFluidValue(), resultTank2.getFluidValue()},

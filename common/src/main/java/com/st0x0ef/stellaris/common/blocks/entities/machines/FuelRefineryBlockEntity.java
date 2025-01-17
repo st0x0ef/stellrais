@@ -76,11 +76,11 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
                 this.setChanged();
             }
         } else {
-            FluidTankHelper.extractFluidToItem(this, fluidTank, 2, 3);
+            FluidTankHelper.extractFluidToItem(this, outputTank, 2, 3);
         }
 
-        if (!FluidTankHelper.addFluidFromBucket(this, fluidTank, 0, 1)) {
-            FluidTankHelper.extractFluidToItem(this, fluidTank, 0, 1);
+        if (!FluidTankHelper.addFluidFromBucket(this, inputTank, 0, 1)) {
+            FluidTankHelper.extractFluidToItem(this, inputTank, 0, 1);
         }
 
         Optional<RecipeHolder<FuelRefineryRecipe>> recipeHolder = cachedCheck.getRecipeFor(new FluidInput(getLevel().getBlockEntity(getBlockPos()), getItems()), level);
@@ -94,7 +94,7 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
                     if (outputTank.getFluidValueInTank(outputTank.getTanks()) + resultStack.getAmount() < outputTank.getTankCapacity(outputTank.getTanks())) {
                         energyContainer.extract(recipe.energy(), false);
                         inputTank.drain(FluidStack.create(recipe.ingredientStack().getFluid(), recipe.ingredientStack().getAmount()), false);
-                        FluidTankHelper.addToTank(fluidTank, resultStack);
+                        outputTank.fill(resultStack, false);
                         setChanged();
                     }
                 }

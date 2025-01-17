@@ -46,7 +46,7 @@ public class OxygenRoom {
             if (isAirBlock(currentPos)) {
                 // Check if the distributor has oxygen and energy
                 OxygenDistributorBlockEntity distributor = getDistributorBlockEntity();
-                if (distributor != null && distributor.oxygenTank.getFluidValueInTank(distributor.oxygenTank.getTanks()) > 0 && distributor.getWrappedEnergyContainer().getStoredEnergy() > 0) {
+                if (distributor != null && distributor.oxygenTank.getFluidValueInTank(distributor.oxygenTank.getTanks()) > 0 && distributor.getEnergy(null).getEnergy() > 0) {
                     // Add hardcoded positions within a 32x32x32 area
                     for (int x = -HALF_ROOM_SIZE; x <= HALF_ROOM_SIZE; x++) {
                         for (int y = -HALF_ROOM_SIZE; y <= HALF_ROOM_SIZE; y++) {
@@ -54,7 +54,7 @@ public class OxygenRoom {
                                 BlockPos pos = distributorPos.offset(x, y, z);
                                 oxygenatedPositions.add(pos);
                                 // Consume energy for each position
-                                distributor.getWrappedEnergyContainer().extractEnergy(3, false);
+                                distributor.getEnergy(null).extract(3, false);
                             }
                         }
                     }

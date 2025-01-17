@@ -380,6 +380,10 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
         Player player = this.getFirstPlayerPassenger();
 
         if (player != null) {
+            if (player instanceof ServerPlayer serverPlayer) {
+                this.syncRocketData(serverPlayer);
+            }
+
             if (this.FUEL > 0 || player.isCreative()) {
                 if (!this.entityData.get(ROCKET_START)) {
                     this.entityData.set(ROCKET_START, true);

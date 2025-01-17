@@ -106,6 +106,7 @@ subprojects {
                 projectSlug = "stellaris" // Required for discord webhook
                 accessToken = providers.environmentVariable("CURSEFORGE_API_KEY")
                 minecraftVersions.add("${minecraft_version}")
+                minecraftVersions.add("${supported_minecraft_version}")
                 javaVersions.add(JavaVersion.VERSION_21)
                 requires("architectury-api")
                 embeds("sky-aesthetics")
@@ -115,6 +116,7 @@ subprojects {
                 projectId = "ItTQpuBn"
                 accessToken = providers.environmentVariable("MODRINTH_TOKEN")
                 minecraftVersions.add("${minecraft_version}")
+                minecraftVersions.add("${supported_minecraft_version}")
                 requires("architectury-api")
                 embeds("sky-aesthetics")
 

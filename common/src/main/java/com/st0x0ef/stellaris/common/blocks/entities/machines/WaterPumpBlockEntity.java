@@ -4,6 +4,7 @@ import com.fej1fun.potentials.fluid.UniversalFluidStorage;
 import com.fej1fun.potentials.providers.FluidProvider;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidUtil;
 import dev.architectury.fluid.FluidStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -46,10 +47,10 @@ public class WaterPumpBlockEntity extends BaseEnergyBlockEntity implements Fluid
                 setChanged();
             }
         }
-        else if (waterTank.getFluidValueInTank(waterTank.getTanks()) + FluidTankHelper.BUCKET_AMOUNT <= waterTank.getTankCapacity(waterTank.getTanks())) {
+        else if (waterTank.getFluidValueInTank(waterTank.getTanks()) + FluidUtil.convertFromNeoMb(1000) <= waterTank.getTankCapacity(waterTank.getTanks())) {
             if (belowState.getBlock() instanceof BucketPickup bucketPickup) {
                 if (!bucketPickup.pickupBlock(null, level, belowPos, belowState).isEmpty()) {
-                    waterTank.fill(FluidStack.create(Fluids.WATER, FluidTankHelper.BUCKET_AMOUNT), false);
+                    waterTank.fill(FluidStack.create(Fluids.WATER, FluidUtil.convertFromNeoMb(1000)), false);
                     energyContainer.extract(NEEDED_ENERGY, false);
                     setChanged();
                 }

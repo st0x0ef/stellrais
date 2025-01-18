@@ -7,6 +7,7 @@ import com.st0x0ef.stellaris.common.menus.PumpjackMenu;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import com.st0x0ef.stellaris.common.registry.FluidRegistry;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidUtil;
 import dev.architectury.fluid.FluidStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -22,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 public class PumpjackBlockEntity extends BaseEnergyContainerBlockEntity implements FluidProvider.BLOCK {
 
     private boolean isGenerating = false;
-    private final long oilToExtract = FluidTankHelper.convertFromNeoMb(10);
+    private final long oilToExtract = FluidUtil.convertFromNeoMb(10);
     public final FluidStorage resultTank = new FluidStorage(1, 10_000) {
         @Override
         protected void onChange(int tank) {
@@ -37,7 +38,7 @@ public class PumpjackBlockEntity extends BaseEnergyContainerBlockEntity implemen
 
     @Override
     public void tick() {
-        FluidTankHelper.extractFluidToItem(this, resultTank, 0, 1);
+        FluidUtil.moveFluidToItem(resultTank.getTanks(), resultTank, getItem(1), FluidUtil.convertFromNeoMb(1000));
 
         ChunkAccess access = this.level.getChunk(this.worldPosition);
 

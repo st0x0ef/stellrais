@@ -3,12 +3,12 @@ package com.st0x0ef.stellaris.common.registry;
 import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.client.renderers.entities.vehicle.rocket.RocketModel;
 import com.st0x0ef.stellaris.client.screens.GUISprites;
-import com.st0x0ef.stellaris.common.blocks.entities.machines.FluidTankHelper;
 import com.st0x0ef.stellaris.common.data_components.*;
 import com.st0x0ef.stellaris.common.items.*;
 import com.st0x0ef.stellaris.common.items.armors.JetSuit;
 import com.st0x0ef.stellaris.common.items.armors.SpaceSuit;
 import com.st0x0ef.stellaris.common.items.module.*;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidUtil;
 import com.st0x0ef.stellaris.common.vehicle_upgrade.*;
 import dev.architectury.core.item.ArchitecturyBucketItem;
 import dev.architectury.core.item.ArchitecturySpawnEggItem;
@@ -361,20 +361,20 @@ public class ItemsRegistry {
      * Oxygen
      */
 
-    public static final RegistrySupplier<Item> OXYGEN_TANK = ITEMS.register("oxygen_tank", () -> new OxygenTankItem(new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB).component(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get(), new CappedLongComponent(0L, FluidTankHelper.convertFromNeoMb(3600)))));
-    public static final RegistrySupplier<Item> BIG_OXYGEN_TANK = ITEMS.register("big_oxygen_tank", () -> new OxygenTankItem(new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB).component(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get(), new CappedLongComponent(0L, FluidTankHelper.convertFromNeoMb(10800)))));
+    public static final RegistrySupplier<Item> OXYGEN_TANK = ITEMS.register("oxygen_tank", () -> new OxygenTankItem(new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB).component(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get(), new CappedLongComponent(0L, FluidUtil.convertFromNeoMb(3600)))));
+    public static final RegistrySupplier<Item> BIG_OXYGEN_TANK = ITEMS.register("big_oxygen_tank", () -> new OxygenTankItem(new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB).component(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get(), new CappedLongComponent(0L, FluidUtil.convertFromNeoMb(10800)))));
 
     /**
      * Suit
      */
 
     public static final RegistrySupplier<Item> JETSUIT_HELMET = ITEMS.register("jet_suit_helmet", () -> new CustomArmorItem(ArmorMaterialsRegistry.JET_SUIT, ArmorItem.Type.HELMET, new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB)));
-    public static final RegistrySupplier<Item> JETSUIT_SUIT = ITEMS.register("jet_suit_chestplate", () -> new com.st0x0ef.stellaris.common.items.armors.JetSuit.Suit(ArmorMaterialsRegistry.JET_SUIT, new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB).component(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get(), new CappedLongComponent(0L, FluidTankHelper.convertFromNeoMb(10800))).component(DataComponentsRegistry.STORED_FUEL_COMPONENT.get(), new CappedLongComponent(0L, FluidTankHelper.convertFromNeoMb(1000))).component(DataComponentsRegistry.JET_SUIT_COMPONENT.get(), new JetSuitComponent(com.st0x0ef.stellaris.common.items.armors.JetSuit.ModeType.DISABLED))));
+    public static final RegistrySupplier<Item> JETSUIT_SUIT = ITEMS.register("jet_suit_chestplate", () -> new com.st0x0ef.stellaris.common.items.armors.JetSuit.Suit(ArmorMaterialsRegistry.JET_SUIT, new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB).component(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get(), new CappedLongComponent(0L, FluidUtil.convertFromNeoMb(10800))).component(DataComponentsRegistry.STORED_FUEL_COMPONENT.get(), new CappedLongComponent(0L, FluidUtil.convertFromNeoMb(1000))).component(DataComponentsRegistry.JET_SUIT_COMPONENT.get(), new JetSuitComponent(com.st0x0ef.stellaris.common.items.armors.JetSuit.ModeType.DISABLED))));
     public static final RegistrySupplier<Item> JETSUIT_LEGGINGS = ITEMS.register("jet_suit_leggings", () -> new CustomArmorItem(ArmorMaterialsRegistry.JET_SUIT, ArmorItem.Type.LEGGINGS, new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB)));
     public static final RegistrySupplier<Item> JETSUIT_BOOTS = ITEMS.register("jet_suit_boots", () -> new CustomArmorItem(ArmorMaterialsRegistry.JET_SUIT, ArmorItem.Type.BOOTS, new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB)));
 
     public static final RegistrySupplier<Item> SPACESUIT_HELMET = ITEMS.register("space_suit_helmet", () -> new CustomArmorItem(ArmorMaterialsRegistry.SPACE_SUIT, ArmorItem.Type.HELMET, new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB).component(DataComponents.DYED_COLOR, new DyedItemColor(16777215, true))));
-    public static final RegistrySupplier<Item> SPACESUIT_SUIT = ITEMS.register("space_suit_chestplate", () -> new SpaceSuit(ArmorMaterialsRegistry.SPACE_SUIT, ArmorItem.Type.CHESTPLATE, new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB).component(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get(), new CappedLongComponent(0L, FluidTankHelper.convertFromNeoMb(10800))).component(DataComponents.DYED_COLOR, new DyedItemColor(16777215, true))));
+    public static final RegistrySupplier<Item> SPACESUIT_SUIT = ITEMS.register("space_suit_chestplate", () -> new SpaceSuit(ArmorMaterialsRegistry.SPACE_SUIT, ArmorItem.Type.CHESTPLATE, new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB).component(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get(), new CappedLongComponent(0L, FluidUtil.convertFromNeoMb(10800))).component(DataComponents.DYED_COLOR, new DyedItemColor(16777215, true))));
     public static final RegistrySupplier<Item> SPACESUIT_LEGGINGS = ITEMS.register("space_suit_leggings", () -> new CustomArmorItem(ArmorMaterialsRegistry.SPACE_SUIT, ArmorItem.Type.LEGGINGS, new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB).component(DataComponents.DYED_COLOR, new DyedItemColor(16777215, true))));
     public static final RegistrySupplier<Item> SPACESUIT_BOOTS = ITEMS.register("space_suit_boots", () -> new CustomArmorItem(ArmorMaterialsRegistry.SPACE_SUIT, ArmorItem.Type.BOOTS, new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB)));
 
@@ -412,19 +412,19 @@ public class ItemsRegistry {
 
         ItemStack JET_SUIT_FULL = new ItemStack(ItemsRegistry.JETSUIT_SUIT);
         JET_SUIT_FULL.set(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get(),
-                new CappedLongComponent(FluidTankHelper.convertFromNeoMb(10800), FluidTankHelper.convertFromNeoMb(10800)));
+                new CappedLongComponent(FluidUtil.convertFromNeoMb(10800), FluidUtil.convertFromNeoMb(10800)));
         JET_SUIT_FULL.set(DataComponentsRegistry.STORED_FUEL_COMPONENT.get(),
-                new CappedLongComponent(FluidTankHelper.convertFromNeoMb(1000), FluidTankHelper.convertFromNeoMb(1000)));
+                new CappedLongComponent(FluidUtil.convertFromNeoMb(1000), FluidUtil.convertFromNeoMb(1000)));
         JET_SUIT_FULL.set(DataComponentsRegistry.JET_SUIT_COMPONENT.get(),
                 new JetSuitComponent(JetSuit.ModeType.DISABLED));
         list.add(JET_SUIT_FULL);
 
         ItemStack OXYGEN_TANK_FULL = new ItemStack(ItemsRegistry.OXYGEN_TANK);
-        OXYGEN_TANK_FULL.set(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get(), new CappedLongComponent(FluidTankHelper.convertFromNeoMb(3600), FluidTankHelper.convertFromNeoMb(3600)));
+        OXYGEN_TANK_FULL.set(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get(), new CappedLongComponent(FluidUtil.convertFromNeoMb(3600), FluidUtil.convertFromNeoMb(3600)));
         list.add(OXYGEN_TANK_FULL);
 
         ItemStack BIG_OXYGEN_TANK_FULL = new ItemStack(ItemsRegistry.BIG_OXYGEN_TANK);
-        BIG_OXYGEN_TANK_FULL.set(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get(), new CappedLongComponent(FluidTankHelper.convertFromNeoMb(10800), FluidTankHelper.convertFromNeoMb(10800)));
+        BIG_OXYGEN_TANK_FULL.set(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get(), new CappedLongComponent(FluidUtil.convertFromNeoMb(10800), FluidUtil.convertFromNeoMb(10800)));
         list.add(BIG_OXYGEN_TANK_FULL);
 
         ItemStack ROCKET_FULL = new ItemStack(ItemsRegistry.ROCKET);

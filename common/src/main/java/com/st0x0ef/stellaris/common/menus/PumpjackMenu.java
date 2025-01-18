@@ -4,10 +4,7 @@ import com.st0x0ef.stellaris.common.blocks.entities.machines.PumpjackBlockEntity
 import com.st0x0ef.stellaris.common.menus.slot.FluidContainerSlot;
 import com.st0x0ef.stellaris.common.menus.slot.ResultSlot;
 import com.st0x0ef.stellaris.common.registry.MenuTypesRegistry;
-import dev.architectury.networking.NetworkManager;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;

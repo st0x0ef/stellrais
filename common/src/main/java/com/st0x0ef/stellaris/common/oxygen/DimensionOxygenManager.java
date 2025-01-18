@@ -1,10 +1,10 @@
 package com.st0x0ef.stellaris.common.oxygen;
 
-import com.st0x0ef.stellaris.common.blocks.entities.machines.FluidTankHelper;
 import com.st0x0ef.stellaris.common.registry.TagRegistry;
 import com.st0x0ef.stellaris.common.utils.OxygenUtils;
 import com.st0x0ef.stellaris.common.utils.PlanetUtil;
 import com.st0x0ef.stellaris.common.utils.Utils;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -79,7 +79,7 @@ public class DimensionOxygenManager {
         }
 
         if (Utils.isLivingInJetSuit(entity) || Utils.isLivingInSpaceSuit(entity)) {
-            return OxygenUtils.removeOxygen(entity.getItemBySlot(EquipmentSlot.CHEST), FluidTankHelper.convertFromNeoMb(1L));
+            return OxygenUtils.removeOxygen(entity.getItemBySlot(EquipmentSlot.CHEST), FluidUtil.convertFromNeoMb(1L));
         }
 
         return false;

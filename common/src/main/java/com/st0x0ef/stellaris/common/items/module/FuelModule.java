@@ -1,10 +1,10 @@
 package com.st0x0ef.stellaris.common.items.module;
 
 import com.st0x0ef.stellaris.client.screens.GUISprites;
-import com.st0x0ef.stellaris.common.blocks.entities.machines.FluidTankHelper;
 import com.st0x0ef.stellaris.common.data_components.CappedLongComponent;
 import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
 import com.st0x0ef.stellaris.common.utils.FuelUtils;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidUtil;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -40,7 +40,7 @@ public class FuelModule extends Item implements SpaceSuitModule {
     @Override
     public void addToTooltips(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         if (!stack.has(DataComponentsRegistry.STORED_FUEL_COMPONENT.get()))
-            stack.set(DataComponentsRegistry.STORED_FUEL_COMPONENT.get(), new CappedLongComponent(0, FluidTankHelper.BUCKET_AMOUNT*10));
+            stack.set(DataComponentsRegistry.STORED_FUEL_COMPONENT.get(), new CappedLongComponent(0, FluidUtil.convertFromNeoMb(10000)));
 
         tooltipComponents.add(Component.translatable("jetsuit.stellaris.fuel", FuelUtils.getFuel(stack)).append(" §r/§8 " + FuelUtils.getFuelCapacity(stack)));
     }

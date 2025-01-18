@@ -3,11 +3,10 @@ package com.st0x0ef.stellaris.common.data.recipes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.st0x0ef.stellaris.common.blocks.entities.machines.FluidTankHelper;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.WaterSeparatorBlockEntity;
 import com.st0x0ef.stellaris.common.data.recipes.input.FluidInput;
 import com.st0x0ef.stellaris.common.registry.RecipesRegistry;
-import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidUtil;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.SingleFluidStorage;
 import dev.architectury.fluid.FluidStack;
 import net.minecraft.core.HolderLookup;
@@ -19,7 +18,6 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,10 +80,9 @@ public record WaterSeparatorRecipe(FluidStack ingredientStack, List<FluidStack> 
             buf.writeLong(recipe.energy);
         }, buf -> new WaterSeparatorRecipe(FluidStack.read(buf), FLUID_STACK_LIST_STREAM_CODEC.decode(buf), buf.readBoolean(), buf.readInt()));
 
-        @ApiStatus.ScheduledForRemoval
         public static void convertFluidStack(FluidStack stack, boolean isMb) {
             if (isMb) {
-                stack.setAmount(FluidTankHelper.convertFromNeoMb(stack.getAmount()));
+                stack.setAmount(FluidUtil.convertFromNeoMb(stack.getAmount()));
             }
         }
 

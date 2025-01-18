@@ -12,6 +12,7 @@ import com.st0x0ef.stellaris.common.registry.RecipesRegistry;
 import com.st0x0ef.stellaris.common.utils.FuelUtils;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FilteredFluidStorage;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidUtil;
 import dev.architectury.fluid.FluidStack;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.core.BlockPos;
@@ -61,7 +62,7 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
     @Override
     public void tick() {
         if (getItem(2).getItem() instanceof JetSuit.Suit) {
-            int fuel = FluidTankHelper.convertFromNeoMb(10);
+            int fuel = FluidUtil.convertFromNeoMb(10);
 
             if (outputTank.getFluidValueInTank(outputTank.getTanks()) < fuel) {
                 fuel = (int) outputTank.getFluidValueInTank(outputTank.getTanks());
@@ -76,11 +77,11 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
                 this.setChanged();
             }
         } else {
-            FluidTankHelper.extractFluidToItem(this, outputTank, 2, 3);
+            FluidUtil.moveFluidToItem(outputTank.getTanks(), outputTank, getItem(3), FluidUtil.convertFromNeoMb(1000));
         }
 
-        if (!FluidTankHelper.addFluidFromBucket(this, inputTank, 0, 1)) {
-            FluidTankHelper.extractFluidToItem(this, inputTank, 0, 1);
+        if (!FluidUtil.moveFluidFromItem(inputTank.getTanks(),getItem(0), inputTank, FluidUtil.convertFromNeoMb(1000)).isEmpty()) {
+            FluidUtil.moveFluidToItem(inputTank.getTanks(), inputTank, getItem(1), FluidUtil.convertFromNeoMb(1000));
         }
 
         Optional<RecipeHolder<FuelRefineryRecipe>> recipeHolder = cachedCheck.getRecipeFor(new FluidInput(getLevel().getBlockEntity(getBlockPos()), getItems()), level);

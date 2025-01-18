@@ -4,6 +4,7 @@ import com.fej1fun.potentials.capabilities.Capabilities;
 import com.fej1fun.potentials.fluid.BaseFluidStorage;
 import com.fej1fun.potentials.fluid.UniversalFluidStorage;
 import dev.architectury.fluid.FluidStack;
+import dev.architectury.platform.Platform;
 import net.minecraft.world.item.ItemStack;
 
 public class FluidUtil {
@@ -38,5 +39,17 @@ public class FluidUtil {
         from.drainWithoutLimits(inserted, false);
         to.fillWithoutLimits(inserted, false);
         return inserted;
+    }
+
+    public static long convertFromNeoMb(long amount) {
+        return Platform.isFabric() ? amount * 81L : amount;
+    }
+
+    public static int convertFromNeoMb(int amount) {
+        return Platform.isFabric() ? amount * 81 : amount;
+    }
+
+    public static int convertToNeoMb(int amount) {
+        return Platform.isFabric() ? amount / 81 : amount;
     }
 }

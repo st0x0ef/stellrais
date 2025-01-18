@@ -2,12 +2,12 @@ package com.st0x0ef.stellaris.common.items.armors;
 
 import com.mojang.serialization.Codec;
 import com.st0x0ef.stellaris.Stellaris;
-import com.st0x0ef.stellaris.common.blocks.entities.machines.FluidTankHelper;
 import com.st0x0ef.stellaris.common.data_components.JetSuitComponent;
 import com.st0x0ef.stellaris.common.keybinds.KeyVariables;
 import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
 import com.st0x0ef.stellaris.common.utils.FuelUtils;
 import com.st0x0ef.stellaris.common.utils.Utils;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
@@ -24,7 +24,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 public class JetSuit {
-    public static final long MAX_FUEL_CAPACITY = FluidTankHelper.convertFromNeoMb(1000);
+    public static final long MAX_FUEL_CAPACITY = FluidUtil.convertFromNeoMb(1000);
 
     public static class Suit extends AbstractSpaceArmor.Chestplate {
         public float spacePressTime = 0.0f;

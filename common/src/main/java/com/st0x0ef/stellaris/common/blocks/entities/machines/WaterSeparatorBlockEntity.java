@@ -89,8 +89,8 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
             FluidUtil.moveFluidToItem(i, resultTanks, items.get(i + 2), resultTanks.getTankCapacity(i));
 
 
-//        if (!FluidTankHelper.addFluidFromBucket(this, ingredientTank, 1, 0)) {
-//            FluidTankHelper.extractFluidToItem(this, ingredientTank, 1, 0);
+//        if (!FluidUtil.addFluidFromBucket(this, ingredientTank, 1, 0)) {
+//            FluidUtil.extractFluidToItem(this, ingredientTank, 1, 0);
 //        }
 
         assert level != null;

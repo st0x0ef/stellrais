@@ -276,7 +276,8 @@ public class ItemsRegistry {
      * Cables & Pipes
      */
 
-    public static final RegistrySupplier<Item> T1_CABLE = ITEMS.register("t1_cable", () -> new BlockItem(BlocksRegistry.T1_CABLE.get(), new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB)));
+    ///ID is 'cable' to not delete people's blocks
+    public static final RegistrySupplier<Item> T1_CABLE = ITEMS.register("cable", () -> new BlockItem(BlocksRegistry.T1_CABLE.get(), new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB)));
     public static final RegistrySupplier<Item> T2_CABLE = ITEMS.register("t2_cable", () -> new BlockItem(BlocksRegistry.T2_CABLE.get(), new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB)));
     public static final RegistrySupplier<Item> T3_CABLE = ITEMS.register("t3_cable", () -> new BlockItem(BlocksRegistry.T3_CABLE.get(), new Item.Properties().arch$tab(CreativeTabsRegistry.STELLARIS_TAB)));
 

@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "stellaris:t1_cable"
+          "name": "stellaris:cable"
         }
       ],
       "rolls": 1.0

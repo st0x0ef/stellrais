@@ -159,10 +159,11 @@ public class BlocksRegistry {
     public static final RegistrySupplier<Block> T2_TANK = BLOCKS.register("t2_tank", () -> new FluidTankBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK), 25000));
     public static final RegistrySupplier<Block> T3_TANK = BLOCKS.register("t3_tank", () -> new FluidTankBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK), 100000));
     public static final RegistrySupplier<Block> T4_TANK = BLOCKS.register("t4_tank", () -> new FluidTankBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK), 10000000));
-    public static final RegistrySupplier<Block> T1_CABLE = BLOCKS.register("cable", ()-> new CableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CHAIN), 1000, 250 ,250)); ///ID is 'cable' to not delete people's blocks
+    ///ID is 'cable' to not delete people's blocks
+    public static final RegistrySupplier<Block> T1_CABLE = BLOCKS.register("cable", ()-> new CableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CHAIN), 1000, 250 ,250));
     public static final RegistrySupplier<Block> T2_CABLE = BLOCKS.register("t2_cable", ()-> new CableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CHAIN), 25000, 6250 ,6250));
     public static final RegistrySupplier<Block> T3_CABLE = BLOCKS.register("t3_cable", ()-> new CableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CHAIN), 625000, 156250 ,156250));
-    public static final RegistrySupplier<Block> T1_PIPE = BLOCKS.register("t1_pipe", ()-> new PipeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CHAIN), 1000, 250 ,250)); ///ID is 'c
+    public static final RegistrySupplier<Block> T1_PIPE = BLOCKS.register("t1_pipe", ()-> new PipeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CHAIN), 1000, 250 ,250));
     public static final RegistrySupplier<Block> T2_PIPE = BLOCKS.register("t2_pipe", ()-> new PipeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CHAIN), 25000, 6250 ,6250));
     public static final RegistrySupplier<Block> T3_PIPE = BLOCKS.register("t3_pipe", ()-> new PipeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CHAIN), 625000, 156250 ,156250));
 

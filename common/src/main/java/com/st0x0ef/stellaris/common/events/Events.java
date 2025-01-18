@@ -14,7 +14,10 @@ import dev.architectury.event.events.common.TickEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CampfireBlock;
+import net.minecraft.world.level.block.LanternBlock;
+import net.minecraft.world.level.block.WallTorchBlock;
 import net.minecraft.world.phys.AABB;
 
 public class Events {

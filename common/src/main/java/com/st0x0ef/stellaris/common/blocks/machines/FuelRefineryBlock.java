@@ -5,6 +5,7 @@ import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import org.jetbrains.annotations.NotNull;
 
 public class FuelRefineryBlock extends BaseLitMachineBlock {
 
@@ -23,7 +24,7 @@ public class FuelRefineryBlock extends BaseLitMachineBlock {
     }
 
     @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
+    protected @NotNull MapCodec<? extends BaseEntityBlock> codec() {
         return simpleCodec(FuelRefineryBlock::new);
     }
 }

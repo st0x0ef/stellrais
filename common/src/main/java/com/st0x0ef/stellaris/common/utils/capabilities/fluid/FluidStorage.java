@@ -29,7 +29,7 @@ public abstract class FluidStorage extends BaseFluidStorage {
             for (i = 0; i < getTanks(); i++) {
                 if (stack.isFluidStackEqual(getFluidInTank(i))) break;
             }
-            long removedAmount = Math.min(maxAmount, stack.getAmount());
+            long removedAmount = Math.min(this.maxDrain, Math.min(maxAmount, stack.getAmount()));
             toReturn.set(FluidStack.create(stack.getFluid(), removedAmount));
             stack.shrink(removedAmount);
             onChange(i);
@@ -73,10 +73,10 @@ public abstract class FluidStorage extends BaseFluidStorage {
     }
 
     public void save(CompoundTag compoundTag, HolderLookup.Provider provider, String name) {
+        Tag tag;
         for (int i = 0; i < getTanks(); i++)
             if(!getFluidInTank(i).isEmpty()) {
-                Tag tag = new CompoundTag();
-                tag = FluidStackHooks.write(provider, getFluidInTank(i), tag);
+                tag = FluidStackHooks.write(provider, getFluidInTank(i), new CompoundTag());
                 compoundTag.put(name+"-fluid-"+i, tag);
             }
     }

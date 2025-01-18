@@ -33,6 +33,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class RocketStationBlock extends BaseEntityBlock {
@@ -49,7 +50,7 @@ public class RocketStationBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected MapCodec<? extends RocketStationBlock> codec() {
+    protected @NotNull MapCodec<? extends RocketStationBlock> codec() {
         return CODEC;
     }
 

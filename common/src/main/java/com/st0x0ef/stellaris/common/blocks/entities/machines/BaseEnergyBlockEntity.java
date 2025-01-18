@@ -12,20 +12,22 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static com.st0x0ef.stellaris.common.blocks.entities.machines.BaseEnergyContainerBlockEntity.ENERGY_TAG;
-
 public abstract class BaseEnergyBlockEntity extends BlockEntity implements EnergyProvider.BLOCK, TickingBlockEntity {
 
     protected @NotNull EnergyStorage energyContainer;
 
-    public BaseEnergyBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int maxCapacity) {
+    public BaseEnergyBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int maxCapacity, int maxInput, int maxOutput) {
         super(type, pos, state);
-        this.energyContainer = new EnergyStorage(maxCapacity) {
+        this.energyContainer = new EnergyStorage(maxCapacity , maxInput, maxOutput) {
             @Override
             protected void onChange() {
                 setChanged();
             }
         };
+    }
+
+    public BaseEnergyBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int maxCapacity) {
+        this(type, pos, state, maxCapacity, maxCapacity, maxCapacity);
     }
 
     @Override
@@ -38,17 +40,17 @@ public abstract class BaseEnergyBlockEntity extends BlockEntity implements Energ
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
-        getEnergy(null).setEnergyStored(tag.getInt(ENERGY_TAG));
+        energyContainer.save(tag, provider, "");
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.saveAdditional(tag, provider);
-        tag.putLong(ENERGY_TAG, getEnergy(null).getEnergy());
+        energyContainer.load(tag, provider, "");
     }
 
     @Override
-    public @NotNull EnergyStorage getEnergy(@Nullable Direction direction) {
+    public @Nullable EnergyStorage getEnergy(@Nullable Direction direction) {
         return energyContainer;
     }
 }

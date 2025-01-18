@@ -6,6 +6,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.PipeBlock;
 import net.minecraft.world.level.block.RenderShape;
@@ -22,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
-public abstract class BaseCableBlock extends BaseTickingEntityBlock {
+public abstract class BaseCableBlock extends BaseEntityBlock {
     private static final Direction[] DIRECTIONS = Direction.values();
     public static final BooleanProperty NORTH = PipeBlock.NORTH;
     public static final BooleanProperty EAST = PipeBlock.EAST;
@@ -43,11 +44,6 @@ public abstract class BaseCableBlock extends BaseTickingEntityBlock {
                 .setValue(UP, false)
                 .setValue(DOWN, false));
         this.shapeByIndex = this.makeShapes(0.125f);
-    }
-
-    @Override
-    public boolean hasTicker(Level level) {
-        return !level.isClientSide;
     }
 
     @Override

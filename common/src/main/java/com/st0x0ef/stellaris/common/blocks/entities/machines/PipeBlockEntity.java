@@ -4,6 +4,7 @@ import com.fej1fun.potentials.fluid.UniversalFluidStorage;
 import com.fej1fun.potentials.providers.FluidProvider;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.SingleFluidStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -13,15 +14,19 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 public class PipeBlockEntity extends BlockEntity implements FluidProvider.BLOCK, TickingBlockEntity {
-    private final FluidStorage fluidTank = new FluidStorage(1, 1024) {
-        @Override
-        protected void onChange(int tank) {
-            setChanged();
-        }
-    };
+    private final SingleFluidStorage fluidTank;
 
     public PipeBlockEntity(BlockPos pos, BlockState blockState) {
+        this(pos, blockState, 0, 0, 0);
+    }
+    public PipeBlockEntity(BlockPos pos, BlockState blockState, long capacity, long maxIn, long maxOut) {
         super(BlockEntityRegistry.PIPE_ENTITY.get(), pos, blockState);
+        this.fluidTank = new SingleFluidStorage(capacity, maxIn, maxOut) {
+            @Override
+            protected void onChange() {
+                setChanged();
+            }
+        };
     }
 
     @Override

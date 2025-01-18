@@ -15,7 +15,6 @@ public class FluidTankBlockEntity extends BlockEntity implements FluidProvider.B
 
     private final SingleFluidStorage fluidTank;
 
-
     public FluidTankBlockEntity(BlockPos pos, BlockState state) {
         this(pos, state, 0);
     }

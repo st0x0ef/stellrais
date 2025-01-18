@@ -1,6 +1,8 @@
 package com.st0x0ef.stellaris.common.utils.capabilities.energy;
 
 import com.fej1fun.potentials.energy.BaseEnergyStorage;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 
 public abstract class EnergyStorage extends BaseEnergyStorage {
 
@@ -23,6 +25,14 @@ public abstract class EnergyStorage extends BaseEnergyStorage {
         int extracted = super.extract(amount, simulate);
         if (!simulate) onChange();
         return extracted;
+    }
+
+    public void save(CompoundTag tag, HolderLookup.Provider registries, String name) {
+        tag.putInt("energy-"+name, energy);
+    }
+
+    public void load(CompoundTag tag, HolderLookup.Provider registries, String name) {
+        this.energy = tag.getInt("energy-"+name);
     }
 
     protected abstract void onChange();

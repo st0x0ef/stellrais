@@ -12,7 +12,6 @@ import com.st0x0ef.stellaris.common.registry.RecipesRegistry;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FilteredFluidStorage;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidUtil;
-import dev.architectury.fluid.FluidStack;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -29,13 +28,12 @@ import net.minecraft.world.level.material.Fluids;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.Optional;
 
 public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity implements FluidProvider.BLOCK {
 
-    private final int HYDROGEN_TANK = 0;
-    private final int OXYGEN_TANK = 1;
+    public static final int HYDROGEN_TANK = 0;
+    public static final int OXYGEN_TANK = 1;
 
     public final FluidStorage ingredientTank = new FilteredFluidStorage(1,3000,3000,0,
             (n, fluidStack) -> fluidStack.getFluid() == Fluids.WATER) {

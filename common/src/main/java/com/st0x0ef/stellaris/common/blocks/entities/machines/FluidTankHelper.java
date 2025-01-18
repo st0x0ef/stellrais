@@ -2,9 +2,7 @@ package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
 import com.st0x0ef.stellaris.common.data_components.CappedLongComponent;
 import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
-import com.st0x0ef.stellaris.common.registry.FluidRegistry;
 import com.st0x0ef.stellaris.common.utils.FuelUtils;
-import com.st0x0ef.stellaris.common.utils.OxygenUtils;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
 import dev.architectury.fluid.FluidStack;
 import dev.architectury.hooks.fluid.FluidBucketHooks;
@@ -37,11 +35,11 @@ public class FluidTankHelper {
         if (!inputStack.isEmpty() && (outputStack.isEmpty() || hasSpace)) {
             boolean canFuel = inputStack.has(DataComponentsRegistry.STORED_FUEL_COMPONENT.get());
 
-            if (!tank.getFluidStack().isEmpty() && (tank.getFluidValue() >= BUCKET_AMOUNT || canFuel)) {
+            if (!tank.isEmpty() && (tank.getTanks() >= BUCKET_AMOUNT || canFuel)) {
                 ItemStack resultStack = ItemStack.EMPTY;
 
                 if (isEmptyBucket(inputStack.getItem())) {
-                    resultStack = new ItemStack(tank.getFluidStack().getFluid().getBucket());
+                    resultStack = new ItemStack(tank.getFluidInTank(inputSlot).getFluid().getBucket());
                 }
                 else if (canFuel) {
                     resultStack = inputStack.copy();
@@ -63,13 +61,13 @@ public class FluidTankHelper {
                     if (success) {
                         if (canFuel) {
                             long fuel = FuelUtils.getFuel(inputStack);
-                            amount = Math.min(FuelUtils.getFuelCapacity(inputStack) - fuel, tank.getFluidValue());
+                            amount = Math.min(FuelUtils.getFuelCapacity(inputStack) - fuel, tank.getTanks());
                             resultStack.set(DataComponentsRegistry.STORED_FUEL_COMPONENT.get(), new CappedLongComponent(
                                     Mth.clamp(fuel + amount, 0, FuelUtils.getFuelCapacity(inputStack)), FuelUtils.getFuelCapacity(inputStack)));
                         }
 
                         inputStack.shrink(1);
-                        tank.drainFluid(FluidStack.create(tank.getBaseFluid(), amount), false);
+                        tank.fill(FluidStack.create(tank.getFluidInTank(inputSlot), amount), false);
                         blockEntity.setChanged();
                     }
                 }
@@ -78,7 +76,7 @@ public class FluidTankHelper {
     }
 
     public static <T extends BlockEntity & Container> boolean addFluidFromBucket(T blockEntity, FluidStorage tank, int inputSlot, int outputSlot) {
-        if (tank.getFluidValue() + BUCKET_AMOUNT < tank.getMaxAmount()) {
+        if (tank.getFluidValueInTank(inputSlot) + BUCKET_AMOUNT < tank.getTanks()) {
             ItemStack inputStack = blockEntity.getItem(inputSlot);
             ItemStack outputStack = blockEntity.getItem(outputSlot);
             boolean hasSpace = outputStack.getCount() < outputStack.getMaxStackSize();
@@ -87,7 +85,7 @@ public class FluidTankHelper {
                 if (inputStack.getItem() instanceof BucketItem item) {
                     Fluid fluid = FluidBucketHooks.getFluid(item);
 
-                    if (tank.getFluidStack().getFluid() == fluid) {
+                    if (tank.getFluidInTank(inputSlot).getFluid() == fluid) {
                         if (outputStack.isEmpty()) {
                             blockEntity.setItem(outputSlot, new ItemStack(Items.BUCKET));
                         }

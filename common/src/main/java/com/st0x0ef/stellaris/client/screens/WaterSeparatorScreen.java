@@ -6,6 +6,7 @@ import com.st0x0ef.stellaris.client.screens.components.GaugeWidget;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.WaterSeparatorBlockEntity;
 import com.st0x0ef.stellaris.common.menus.WaterSeparatorMenu;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.SingleFluidStorage;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.GuiGraphics;
@@ -39,7 +40,7 @@ public class WaterSeparatorScreen extends AbstractContainerScreen<WaterSeparator
 
         if (blockEntity == null) return;
 
-        FluidStorage ingredientTank = blockEntity.getIngredientTank();
+        SingleFluidStorage ingredientTank = blockEntity.getIngredientTank();
         ingredientTankGauge = new GaugeWidget(leftPos + 50, topPos + 58, 76, 40, Component.translatable("stellaris.screen.water"), GUISprites.WATER_OVERLAY, GUISprites.WATER_SEPARATOR_OVERLAY, ingredientTank.getTankCapacity(ingredientTank.getTanks()), GaugeWidget.Direction4.DOWN_UP);
         addRenderableWidget(ingredientTankGauge);
 
@@ -62,7 +63,7 @@ public class WaterSeparatorScreen extends AbstractContainerScreen<WaterSeparator
 
         if (blockEntity == null) return;
 
-        ingredientTankGauge.updateAmount((int)blockEntity.getIngredientTank().getFluidValueInTank(blockEntity.getIngredientTank().getTanks()));
+        ingredientTankGauge.updateAmount((int)blockEntity.getIngredientTank().getFluidValueInTank());
         hydrogenTankGauge.updateAmount((int)blockEntity.getResultTanks().getFluidValueInTank(WaterSeparatorBlockEntity.HYDROGEN_TANK));
         oxygenTankGauge.updateAmount((int)blockEntity.getResultTanks().getFluidValueInTank(WaterSeparatorBlockEntity.OXYGEN_TANK));
         energyGauge.updateAmount(blockEntity.getEnergy(null).getEnergy());

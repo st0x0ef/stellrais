@@ -12,6 +12,8 @@ import com.st0x0ef.stellaris.common.registry.RecipesRegistry;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FilteredFluidStorage;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidUtil;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.SingleFluidStorage;
+import dev.architectury.fluid.FluidStack;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -35,14 +37,18 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
     public static final int HYDROGEN_TANK = 0;
     public static final int OXYGEN_TANK = 1;
 
-    public final FluidStorage ingredientTank = new FilteredFluidStorage(1,3000,3000,0,
-            (n, fluidStack) -> fluidStack.getFluid() == Fluids.WATER) {
+    public final SingleFluidStorage ingredientTank = new SingleFluidStorage(3000,3000,0) {
         @Override
-        protected void onChange(int tank) {
+        protected void onChange() {
             setChanged();
             if (level!=null && level.getServer()!=null)
                 NetworkManager.sendToPlayers(level.getServer().getPlayerList().getPlayers(),
                         new SyncFluidPacket(this.getFluidInTank(0), 0, getBlockPos(), null));
+        }
+
+        @Override
+        public boolean isFluidValid(int tank, FluidStack stack) {
+            return stack.getFluid() == Fluids.WATER;
         }
     };
     public final FluidStorage resultTanks = new FilteredFluidStorage(2, 3000,0,3000, (tank, fluidStack) ->
@@ -125,7 +131,7 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
         return ingredientTank;
     }
 
-    public FluidStorage getIngredientTank() {
+    public SingleFluidStorage getIngredientTank() {
         return this.ingredientTank;
     }
 

@@ -3,7 +3,6 @@ package com.st0x0ef.stellaris.common.menus;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.PumpjackBlockEntity;
 import com.st0x0ef.stellaris.common.menus.slot.FluidContainerSlot;
 import com.st0x0ef.stellaris.common.menus.slot.ResultSlot;
-import com.st0x0ef.stellaris.common.network.packets.SyncWidgetsTanksPacket;
 import com.st0x0ef.stellaris.common.registry.MenuTypesRegistry;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.network.FriendlyByteBuf;
@@ -37,28 +36,10 @@ public class PumpjackMenu extends BaseContainer {
 
     @Override
     public boolean stillValid(Player player) {
-        if (!player.isLocalPlayer()) {
-            syncWidgets((ServerPlayer) player);
-        }
         return container.stillValid(player);
     }
 
     public PumpjackBlockEntity getBlockEntity() {
         return blockEntity;
-    }
-
-    public void syncWidgets(ServerPlayer player) {
-        if (!player.level().isClientSide()) {
-
-            NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(
-                    new long[] {blockEntity.getResultTank().getFluidValueInTank(blockEntity.getResultTank().getTanks()), blockEntity.chunkOilLevel()},
-                    new ResourceLocation[] {blockEntity.getResultTank().getFluidInTank(blockEntity.getResultTank().getTanks()).getFluid().arch$registryName()}
-            ));
-
-            NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(
-                    new long[]{blockEntity.getEnergy(null).getEnergy()}
-            ));
-
-        }
     }
 }

@@ -4,7 +4,6 @@ import com.st0x0ef.stellaris.common.blocks.entities.machines.FuelRefineryBlockEn
 import com.st0x0ef.stellaris.common.menus.slot.FluidContainerSlot;
 import com.st0x0ef.stellaris.common.menus.slot.ResultSlot;
 import com.st0x0ef.stellaris.common.menus.slot.SpecificFluidContainerSlot;
-import com.st0x0ef.stellaris.common.network.packets.SyncWidgetsTanksPacket;
 import com.st0x0ef.stellaris.common.registry.FluidRegistry;
 import com.st0x0ef.stellaris.common.registry.MenuTypesRegistry;
 import dev.architectury.networking.NetworkManager;
@@ -42,28 +41,10 @@ public class FuelRefineryMenu extends BaseContainer {
 
     @Override
     public boolean stillValid(Player player) {
-        if (!player.isLocalPlayer()) {
-            syncWidgets((ServerPlayer) player);
-        }
         return container.stillValid(player);
     }
 
     public FuelRefineryBlockEntity getBlockEntity() {
         return blockEntity;
-    }
-
-    public void syncWidgets(ServerPlayer player) {
-        if (!player.level().isClientSide()) {
-
-            NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(
-                    new long[] {blockEntity.getIngredientTank().getFluidValueInTank(blockEntity.getIngredientTank().getTanks()), blockEntity.getResultTank().getFluidValueInTank(blockEntity.getResultTank().getTanks())},
-                    new ResourceLocation[] {blockEntity.getIngredientTank().getFluidInTank(blockEntity.getIngredientTank().getTanks()).getFluid().arch$registryName(), blockEntity.getResultTank().getFluidInTank(blockEntity.getResultTank().getTanks()).getFluid().arch$registryName()}
-            ));
-
-            NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(
-                    new long[] {blockEntity.getEnergy(null).getEnergy()}
-            ));
-
-        }
     }
 }

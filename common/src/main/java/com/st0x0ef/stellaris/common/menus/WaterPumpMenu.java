@@ -1,7 +1,6 @@
 package com.st0x0ef.stellaris.common.menus;
 
 import com.st0x0ef.stellaris.common.blocks.entities.machines.WaterPumpBlockEntity;
-import com.st0x0ef.stellaris.common.network.packets.SyncWidgetsTanksPacket;
 import com.st0x0ef.stellaris.common.registry.BlocksRegistry;
 import com.st0x0ef.stellaris.common.registry.MenuTypesRegistry;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
@@ -33,10 +32,6 @@ public class WaterPumpMenu extends BaseContainer {
 
     @Override
     public boolean stillValid(Player player) {
-        if (!player.isLocalPlayer()) {
-            syncWidgets((ServerPlayer) player);
-        }
-
         return access.evaluate((level, pos) ->
                         level.getBlockState(pos).is(BlocksRegistry.WATER_PUMP.get()) && player.canInteractWithBlock(pos, 4),
                 true
@@ -45,17 +40,5 @@ public class WaterPumpMenu extends BaseContainer {
 
     public WaterPumpBlockEntity getBlockEntity() {
         return blockEntity;
-    }
-
-    public void syncWidgets(ServerPlayer player) {
-        if (!player.level().isClientSide()) {
-            FluidStorage tank = blockEntity.getWaterTank();
-
-            NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(new long[] {tank.getFluidValueInTank(tank.getTanks())},
-                    new ResourceLocation[] {tank.getFluidInTank(tank.getTanks()).getFluid().arch$registryName()}));
-
-            NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(
-                    new long[] {blockEntity.getEnergy(null).getEnergy(), 0}));
-        }
     }
 }

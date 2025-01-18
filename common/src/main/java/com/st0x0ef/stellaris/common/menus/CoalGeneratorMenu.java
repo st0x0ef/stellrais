@@ -2,7 +2,6 @@ package com.st0x0ef.stellaris.common.menus;
 
 import com.st0x0ef.stellaris.common.blocks.entities.machines.CoalGeneratorEntity;
 import com.st0x0ef.stellaris.common.menus.slot.CoalGeneratorSlot;
-import com.st0x0ef.stellaris.common.network.packets.SyncWidgetsTanksPacket;
 import com.st0x0ef.stellaris.common.registry.MenuTypesRegistry;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.network.FriendlyByteBuf;
@@ -111,15 +110,5 @@ public class CoalGeneratorMenu extends AbstractContainerMenu {
 
     public boolean isLit() {
         return this.data.get(0) > 0;
-    }
-
-    public void syncBattery(ServerPlayer player) {
-        if (!player.level().isClientSide()) {
-
-            NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(
-                    new long[]{this.getBlockEntity().getEnergy(null).getEnergy()}
-            ));
-
-        }
     }
 }

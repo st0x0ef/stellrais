@@ -4,7 +4,6 @@ import com.st0x0ef.stellaris.common.blocks.entities.machines.WaterSeparatorBlock
 import com.st0x0ef.stellaris.common.menus.slot.FluidContainerSlot;
 import com.st0x0ef.stellaris.common.menus.slot.ResultSlot;
 import com.st0x0ef.stellaris.common.menus.slot.SpecificFluidContainerSlot;
-import com.st0x0ef.stellaris.common.network.packets.SyncWidgetsTanksPacket;
 import com.st0x0ef.stellaris.common.registry.FluidRegistry;
 import com.st0x0ef.stellaris.common.registry.MenuTypesRegistry;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
@@ -41,35 +40,10 @@ public class WaterSeparatorMenu extends BaseContainer {
 
     @Override
     public boolean stillValid(Player player) {
-        if (!player.isLocalPlayer()) {
-            this.syncWidgets((ServerPlayer) player);
-        }
-
         return container.stillValid(player);
     }
 
     public WaterSeparatorBlockEntity getBlockEntity() {
         return blockEntity;
-    }
-
-    public void syncWidgets(ServerPlayer player) {
-        if (!player.level().isClientSide()) {
-            FluidStorage resultTank1 = blockEntity.getResultTanks();
-            FluidStorage resultTank2 = blockEntity.getResultTanks();
-
-
-            NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(new long[] {resultTank1.getFluidValueInTank(resultTank1.getTanks()), resultTank2.getFluidValueInTank(resultTank2.getTanks())},
-                    new ResourceLocation[] {resultTank1.getFluidInTank(resultTank2.getTanks()).getFluid().arch$registryName(), resultTank2.getFluidInTank(resultTank2.getTanks()).getFluid().arch$registryName()}
-            ));
-
-            NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(
-                    new long[] {blockEntity.ingredientTank.getFluidValueInTank(blockEntity.ingredientTank.getTanks())},
-                    new ResourceLocation[] {blockEntity.ingredientTank.getFluidInTank(blockEntity.ingredientTank.getTanks()).getFluid().arch$registryName()}
-            ));
-
-            NetworkManager.sendToPlayer(player, new SyncWidgetsTanksPacket(
-                    new long[] {blockEntity.getEnergy(null).getEnergy(), 0, 0}
-            ));
-        }
     }
 }

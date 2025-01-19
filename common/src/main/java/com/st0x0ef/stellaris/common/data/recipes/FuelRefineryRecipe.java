@@ -61,7 +61,7 @@ public record FuelRefineryRecipe(FluidStack ingredientStack, FluidStack resultSt
         private static final StreamCodec<RegistryFriendlyByteBuf, FuelRefineryRecipe> STREAM_CODEC = StreamCodec.of((buf, recipe) -> {
             recipe.ingredientStack().write(buf);
             recipe.resultStack().write(buf);
-            buf.writeLong(recipe.energy());
+            buf.writeInt(recipe.energy());
         }, buf -> new FuelRefineryRecipe(FluidStack.read(buf), FluidStack.read(buf), buf.readInt()));
 
         @Override

@@ -70,7 +70,7 @@ public record WaterSeparatorRecipe(FluidStack ingredientStack, List<FluidStack> 
         private static final StreamCodec<RegistryFriendlyByteBuf, WaterSeparatorRecipe> STREAM_CODEC = StreamCodec.of((buf, recipe) -> {
             recipe.ingredientStack().write(buf);
             FLUID_STACK_LIST_STREAM_CODEC.encode(buf, recipe.resultStacks);
-            buf.writeLong(recipe.energy);
+            buf.writeInt(recipe.energy);
         }, buf -> new WaterSeparatorRecipe(FluidStack.read(buf), FLUID_STACK_LIST_STREAM_CODEC.decode(buf), buf.readInt()));
 
         @Override

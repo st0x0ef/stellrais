@@ -34,9 +34,10 @@ public abstract class BaseEnergyContainerBlockEntity extends BaseContainerBlockE
             @Override
             protected void onChange() {
                 setChanged();
-                if (level!=null && level.getServer()!=null)
+                if (level != null && level.getServer() != null) {
                     NetworkManager.sendToPlayers(level.getServer().getPlayerList().getPlayers(),
                             new SyncEnergyPacket(energyContainer.getEnergy(), getBlockPos(), null));
+                }
             }
         };
     }

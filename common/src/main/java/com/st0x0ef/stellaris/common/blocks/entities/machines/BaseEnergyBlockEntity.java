@@ -1,7 +1,9 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
 import com.fej1fun.potentials.providers.EnergyProvider;
+import com.st0x0ef.stellaris.common.network.packets.SyncEnergyPacket;
 import com.st0x0ef.stellaris.common.utils.capabilities.energy.EnergyStorage;
+import dev.architectury.networking.NetworkManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -22,6 +24,10 @@ public abstract class BaseEnergyBlockEntity extends BlockEntity implements Energ
             @Override
             protected void onChange() {
                 setChanged();
+                if (level != null && level.getServer() != null) {
+                    NetworkManager.sendToPlayers(level.getServer().getPlayerList().getPlayers(),
+                            new SyncEnergyPacket(energyContainer.getEnergy(), getBlockPos(), null));
+                }
             }
         };
     }
@@ -40,13 +46,13 @@ public abstract class BaseEnergyBlockEntity extends BlockEntity implements Energ
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
-        energyContainer.save(tag, provider, "");
+        energyContainer.save(tag, "base");
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.saveAdditional(tag, provider);
-        energyContainer.load(tag, provider, "");
+        energyContainer.load(tag, "base");
     }
 
     @Override

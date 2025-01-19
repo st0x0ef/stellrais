@@ -1,12 +1,9 @@
 {
   "replace": false,
   "values": [
-    "stellaris:raw_steel_ingot",
-    "stellaris:raw_desh_ingot",
-    "stellaris:raw_steel_block",
-    "stellaris:raw_uranium_block",
-    "stellaris:raw_uranium",
-    "stellaris:raw_neptunium",
-    "stellaris:raw_desh_block"
+    "#c:raw_materials/steel",
+    "#c:raw_materials/desh",
+    "#c:raw_materials/neptunium",
+    "#c:raw_materials/uranium"
   ]
 }

@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "#c:storage_blocks/desh",
+    "#c:storage_blocks/heavy_metal",
+    "#c:storage_blocks/raw_desh",
+    "#c:storage_blocks/raw_steel",
+    "#c:storage_blocks/raw_uranium",
+    "#c:storage_blocks/steel",
+    "#c:storage_blocks/uranium"
+  ]
+}

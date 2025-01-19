@@ -2,11 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "tag": "c:ingots/heavy_metal"
+      "tag": "c:storage_blocks/raw_desh"
     }
   ],
   "result": {
-    "id": "stellaris:heavy_metal_nugget",
+    "id": "stellaris:raw_desh_ingot",
     "count": 9
   }
 }

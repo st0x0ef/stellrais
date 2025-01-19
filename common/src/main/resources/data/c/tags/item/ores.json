@@ -1,21 +1,12 @@
 {
   "replace": false,
   "values": [
-    "stellaris:steel_ore",
-    "stellaris:deepslate_steel_ore",
-    "stellaris:mercury_uranium_ore",
-    "stellaris:mars_iron_ore",
-    "stellaris:mars_ostrum_ore",
-    "stellaris:mars_plutonium_ore",
-    "stellaris:mars_ice_shard_ore",
-    "stellaris:mars_diamond_ore",
-
-    "stellaris:venus_coal_ore",
-    "stellaris:venus_neptunium_ore",
-    "stellaris:venus_gold_ore",
-    "stellaris:venus_diamond_ore",
-    "stellaris:moon_desh_ore",
-    "stellaris:moon_ice_shard_ore",
-    "stellaris:mercury_iron_ore"
+    "#c:ores/desh",
+    "#c:ores/ice_shard",
+    "#c:ores/neptunium",
+    "#c:ores/ostrum",
+    "#c:ores/plutonium",
+    "#c:ores/steel",
+    "#c:ores/uranium"
   ]
 }

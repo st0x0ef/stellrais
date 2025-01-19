@@ -6,8 +6,8 @@
     "###"
   ],
   "key": {
-    "#": {"tag": "c:ore_blocks/steel"},
-    "X": {"item": "stellaris:uranium_block"}
+    "#": {"tag": "c:storage_blocks/steel"},
+    "X": {"tag": "c:storage_blocks/uranium"}
   },
   "result": {
     "id": "stellaris:radioactive_generator"

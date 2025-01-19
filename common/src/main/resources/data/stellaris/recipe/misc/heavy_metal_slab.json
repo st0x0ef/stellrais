@@ -6,7 +6,7 @@
     "###"
   ],
   "key": {
-    "#": {"item": "stellaris:heavy_metal_plate"}
+    "#": {"tag": "c:storage_blocks/heavy_metal"}
   },
   "result": {
     "id": "stellaris:heavy_metal_slab",

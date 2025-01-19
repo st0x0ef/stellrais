@@ -6,7 +6,7 @@
     "###"
   ],
   "key": {
-    "#": {"item": "stellaris:raw_steel_ingot"}
+    "#": {"tag": "c:raw_materials/steel"}
   },
   "result": {
     "id": "stellaris:raw_steel_block"

@@ -11,6 +11,9 @@ public class ClientEvents {
     public static void registerEvents() {
         ClientRawInputEvent.KEY_PRESSED.register(((client, keyCode, scanCode, action, modifiers) -> {
             KeyVariables.getKey(client).forEach((key, name) -> {
+
+                if(client.player == null) return;
+
                 if (key.getDefaultKey().getValue() == keyCode && action == GLFW.GLFW_RELEASE) {
                     KeyVariables.setKeyVariable(name, client.player.getUUID(), false);
                     NetworkManager.sendToServer(new KeyHandlerPacket(name, false));

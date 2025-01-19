@@ -6,7 +6,7 @@
     "###"
   ],
   "key": {
-    "#": {"item": "stellaris:plutonium_nugget"}
+    "#": {"tag": "c:nuggets/plutonium"}
   },
   "result": {
     "id": "stellaris:plutonium_ingot",

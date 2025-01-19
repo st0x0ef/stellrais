@@ -7,7 +7,7 @@
   ],
   "key": {
     "c": {
-      "item": "stellaris:uranium_ingot"
+      "tag": "c:ingots/uranium"
     },
     "b": {
       "item": "stellaris:rocket_engine"

@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "stellaris:raw_steel_block"
+      "tag": "c:storage_blocks/raw_steel"
     }
   ],
   "result": {

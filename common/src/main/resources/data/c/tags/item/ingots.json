@@ -6,7 +6,7 @@
     "#c:ingots/heavy_metal",
     "#c:ingots/neptunium",
     "#c:ingots/uranium",
-    "#c:ingots/plutonium"
-
+    "#c:ingots/plutonium",
+    "#c:ingots/heavy_metal"
   ]
 }

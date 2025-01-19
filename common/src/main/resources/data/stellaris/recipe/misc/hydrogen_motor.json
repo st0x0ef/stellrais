@@ -13,7 +13,7 @@
       "item": "minecraft:diamond"
     },
     "e": {
-      "item": "stellaris:desh_block"
+      "tag": "c:storage_blocks/desh"
     }
   },
   "result": {

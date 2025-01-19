@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "stellaris:raw_steel_block"
+    "stellaris:uranium_block"
+
   ]
 }

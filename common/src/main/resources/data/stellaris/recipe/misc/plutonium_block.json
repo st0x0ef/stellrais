@@ -6,7 +6,7 @@
     "###"
   ],
   "key": {
-    "#": {"item": "stellaris:plutonium_ingot"}
+    "#": {"tag": "c:ingots/plutonium"}
   },
   "result": {
     "id": "stellaris:plutonium_block"

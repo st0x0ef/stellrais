@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "stellaris:mars_iron_ore",
+    "stellaris:mercury_iron_ore",
+    "stellaris:moon_iron_ore"
+  ]
+}

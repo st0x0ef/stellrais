@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public record WaterSeparatorRecipe(FluidStack ingredientStack, List<FluidStack> resultStacks, boolean isMb, int energy) implements Recipe<FluidInput> {
+public record WaterSeparatorRecipe(FluidStack ingredientStack, List<FluidStack> resultStacks, int energy) implements Recipe<FluidInput> {
 
     @Override
     public boolean matches(FluidInput container, Level level) {
@@ -62,29 +62,16 @@ public record WaterSeparatorRecipe(FluidStack ingredientStack, List<FluidStack> 
         private static final MapCodec<WaterSeparatorRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 FluidStack.CODEC.fieldOf("ingredient").forGetter(WaterSeparatorRecipe::ingredientStack),
                 FluidStack.CODEC.listOf(1, 2).fieldOf("results").forGetter(WaterSeparatorRecipe::resultStacks),
-                Codec.BOOL.optionalFieldOf("isFluidMB").forGetter(recipe -> Optional.of(recipe.isMb)),
                 Codec.INT.fieldOf("energyContainer").forGetter(WaterSeparatorRecipe::energy)
-        ).apply(instance, (ingredientStack, resultStacks, isFluidMb, energy) -> {
-            boolean isMb = isFluidMb.orElse(true);
-            convertFluidStack(ingredientStack, isMb);
-            resultStacks.forEach(stack -> convertFluidStack(stack, isMb));
-            return new WaterSeparatorRecipe(ingredientStack, resultStacks, isMb, energy);
-        }));
+        ).apply(instance, WaterSeparatorRecipe::new));
 
         public static final StreamCodec<RegistryFriendlyByteBuf, List<FluidStack>> FLUID_STACK_LIST_STREAM_CODEC =
                 ByteBufCodecs.collection(ArrayList::new, FluidStack.STREAM_CODEC, 2);
         private static final StreamCodec<RegistryFriendlyByteBuf, WaterSeparatorRecipe> STREAM_CODEC = StreamCodec.of((buf, recipe) -> {
             recipe.ingredientStack().write(buf);
             FLUID_STACK_LIST_STREAM_CODEC.encode(buf, recipe.resultStacks);
-            buf.writeBoolean(recipe.isMb);
             buf.writeLong(recipe.energy);
-        }, buf -> new WaterSeparatorRecipe(FluidStack.read(buf), FLUID_STACK_LIST_STREAM_CODEC.decode(buf), buf.readBoolean(), buf.readInt()));
-
-        public static void convertFluidStack(FluidStack stack, boolean isMb) {
-            if (isMb) {
-                stack.setAmount(FluidUtil.convertFromNeoMb(stack.getAmount()));
-            }
-        }
+        }, buf -> new WaterSeparatorRecipe(FluidStack.read(buf), FLUID_STACK_LIST_STREAM_CODEC.decode(buf), buf.readInt()));
 
         @Override
         public MapCodec<WaterSeparatorRecipe> codec() {

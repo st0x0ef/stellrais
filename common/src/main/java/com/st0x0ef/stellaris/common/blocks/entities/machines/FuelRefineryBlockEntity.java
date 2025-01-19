@@ -62,7 +62,7 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
     @Override
     public void tick() {
         if (getItem(2).getItem() instanceof JetSuit.Suit) {
-            int fuel = FluidUtil.convertFromNeoMb(10);
+            int fuel = 10;
 
             if (outputTank.getFluidValueInTank(outputTank.getTanks()) < fuel) {
                 fuel = (int) outputTank.getFluidValueInTank(outputTank.getTanks());
@@ -77,11 +77,11 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
                 this.setChanged();
             }
         } else {
-            FluidUtil.moveFluidToItem(outputTank.getTanks(), outputTank, getItem(3), FluidUtil.convertFromNeoMb(1000));
+            FluidUtil.moveFluidToItem(outputTank.getTanks(), outputTank, getItem(3), 1000);
         }
 
-        if (!FluidUtil.moveFluidFromItem(inputTank.getTanks(),getItem(0), inputTank, FluidUtil.convertFromNeoMb(1000)).isEmpty()) {
-            FluidUtil.moveFluidToItem(inputTank.getTanks(), inputTank, getItem(1), FluidUtil.convertFromNeoMb(1000));
+        if (!FluidUtil.moveFluidFromItem(inputTank.getTanks(),getItem(0), inputTank, 1000).isEmpty()) {
+            FluidUtil.moveFluidToItem(inputTank.getTanks(), inputTank, getItem(1), 1000);
         }
 
         Optional<RecipeHolder<FuelRefineryRecipe>> recipeHolder = cachedCheck.getRecipeFor(new FluidInput(getLevel().getBlockEntity(getBlockPos()), getItems()), level);

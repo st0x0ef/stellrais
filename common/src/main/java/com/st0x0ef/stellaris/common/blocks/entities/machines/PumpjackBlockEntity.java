@@ -23,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 public class PumpjackBlockEntity extends BaseEnergyContainerBlockEntity implements FluidProvider.BLOCK {
 
     private boolean isGenerating = false;
-    private final long oilToExtract = FluidUtil.convertFromNeoMb(10);
+    private final long oilToExtract = 10;
     public final FluidStorage resultTank = new FluidStorage(1, 10_000) {
         @Override
         protected void onChange(int tank) {
@@ -38,7 +38,7 @@ public class PumpjackBlockEntity extends BaseEnergyContainerBlockEntity implemen
 
     @Override
     public void tick() {
-        FluidUtil.moveFluidToItem(resultTank.getTanks(), resultTank, getItem(1), FluidUtil.convertFromNeoMb(1000));
+        FluidUtil.moveFluidToItem(resultTank.getTanks(), resultTank, getItem(1), 1000);
 
         ChunkAccess access = this.level.getChunk(this.worldPosition);
 

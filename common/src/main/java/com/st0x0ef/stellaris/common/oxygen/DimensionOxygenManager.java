@@ -79,7 +79,7 @@ public class DimensionOxygenManager {
         }
 
         if (Utils.isLivingInJetSuit(entity) || Utils.isLivingInSpaceSuit(entity)) {
-            return OxygenUtils.removeOxygen(entity.getItemBySlot(EquipmentSlot.CHEST), FluidUtil.convertFromNeoMb(1L));
+            return OxygenUtils.removeOxygen(entity.getItemBySlot(EquipmentSlot.CHEST), 1L);
         }
 
         return false;

@@ -47,10 +47,10 @@ public class WaterPumpBlockEntity extends BaseEnergyBlockEntity implements Fluid
                 setChanged();
             }
         }
-        else if (waterTank.getFluidValueInTank(waterTank.getTanks()) + FluidUtil.convertFromNeoMb(1000) <= waterTank.getTankCapacity(waterTank.getTanks())) {
+        else if (waterTank.getFluidValueInTank(waterTank.getTanks()) + 1000 <= waterTank.getTankCapacity(waterTank.getTanks())) {
             if (belowState.getBlock() instanceof BucketPickup bucketPickup) {
                 if (!bucketPickup.pickupBlock(null, level, belowPos, belowState).isEmpty()) {
-                    waterTank.fill(FluidStack.create(Fluids.WATER, FluidUtil.convertFromNeoMb(1000)), false);
+                    waterTank.fill(FluidStack.create(Fluids.WATER, 1000), false);
                     energyContainer.extract(NEEDED_ENERGY, false);
                     setChanged();
                 }

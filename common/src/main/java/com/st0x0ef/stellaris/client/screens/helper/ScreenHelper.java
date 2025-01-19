@@ -223,18 +223,19 @@ public class ScreenHelper {
         }
 
         entityRenderDispatcher.setRenderShadow(false);
-        RenderSystem.runAsFancy(() -> entityRenderDispatcher.render(entity, (double)0.0F, (double)0.0F, (double)0.0F, 0.0F, 1.0F, guiGraphics.pose(), guiGraphics.bufferSource(), 15728880));
+        RenderSystem.runAsFancy(() -> entityRenderDispatcher.render(entity, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F, guiGraphics.pose(), guiGraphics.bufferSource(), 15728880));
         guiGraphics.flush();
         entityRenderDispatcher.setRenderShadow(true);
         guiGraphics.pose().popPose();
         Lighting.setupFor3DItems();
     }
 
+
     public static void renderItemWithCustomSize(GuiGraphics graphics, Minecraft minecraft, ItemStack stack, int x, int y, float size) {
         if (!stack.isEmpty()) {
             BakedModel bakedModel = minecraft.getItemRenderer().getModel(stack, null, null, 0);
             graphics.pose.pushPose();
-            graphics.pose.translate((float)(x + size / 2), (float)(y + size / 2), (float)(150));
+            graphics.pose.translate((x + size / 2), (y + size / 2), (float)(150));
 
             try {
                 graphics.pose.scale(size, -size, size);

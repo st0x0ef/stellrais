@@ -5,6 +5,9 @@
   "hoverIcon": "stellaris:textures/gui/tablet/rocket_page_hover.png",
   "infos": [
     {
+      "type": "item",
+      "id": "water",
+
       "title": "Water Separator",
       "description": "The water separator transform water into Oxygen and Hydrogen [br] [br] Need Energy ⚡ [br] [br] The machine works by putting water in the second slot and it will generate Hydrogen and Oxygen that you can gather by placing buckets under the tanks.",
       "item": {
@@ -22,6 +25,9 @@
       }
     },
     {
+      "type": "item",
+      "id": "vacuumator",
+
       "title": "Vacuumator",
       "description": "The Vacuumator allow you to put food inside Cans that you can eat in space. [br] [br] For this machine to work you need to put a can in the first slot, food in the second and an empty glass bottle in the third. The machine will give you a can with food inside and a water bottle. [br] [br]",
       "item": {
@@ -38,6 +44,9 @@
       }
     },
     {
+      "type": "item",
+      "id": "fuel",
+
       "title": "Fuel Refinery",
       "description": "The Fuel Rafinery is very important. It allow you to create fuel [br] [br] Need Energy ⚡ [br] [br] To create Fuel, you need to input oil in the first slot and it will generate fuel that you can get by putting a bucket in the last slot",
       "item": {

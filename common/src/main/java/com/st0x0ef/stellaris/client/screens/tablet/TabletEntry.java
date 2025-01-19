@@ -20,9 +20,12 @@ public record TabletEntry(String id, String description, ResourceLocation icon, 
     ).apply(instance, TabletEntry::new));
 
 
-    public record Info(String title, String description, Optional<Image> image, Optional<Item> item, Optional<Entity> entity) {
+    public record Info(String type, String id, String title, String description, Optional<Image> image, Optional<Item> item, Optional<Entity> entity) {
 
             public static final Codec<Info> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                    Codec.STRING.fieldOf("type").forGetter(Info::type),
+                    Codec.STRING.fieldOf("id").forGetter(Info::id),
+
                     Codec.STRING.fieldOf("title").forGetter(Info::title),
                     Codec.STRING.fieldOf("description").forGetter(Info::description),
                     Image.CODEC.optionalFieldOf("image").forGetter(Info::image),

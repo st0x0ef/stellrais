@@ -5,6 +5,7 @@ import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.client.screens.components.TexturedButton;
 import com.st0x0ef.stellaris.common.menus.TabletMenu;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -13,13 +14,18 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class TabletMainScreen extends AbstractContainerScreen<TabletMenu> {
 
     public static final ResourceLocation BACKGROUND = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/tablet/tablet_background.png");
-    public static ArrayList<TabletEntry> ENTRIES = new ArrayList<>();
+    public static Map<String, TabletEntry> ENTRIES = new HashMap<>();
+    public static Map<ResourceLocation, TabletEntry.Info> INFOS = new HashMap<>();
+
     public ArrayList<TexturedButton> BUTTONS = new ArrayList<>();
+
 
     public TabletMainScreen(TabletMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, Component.literal("Tablet"));
@@ -29,7 +35,6 @@ public class TabletMainScreen extends AbstractContainerScreen<TabletMenu> {
 
     @Override
     protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        //We don't want to render any labels
     }
 
     @Override
@@ -47,7 +52,7 @@ public class TabletMainScreen extends AbstractContainerScreen<TabletMenu> {
         AtomicInteger row = new AtomicInteger(0);
         AtomicInteger column = new AtomicInteger(0);
 
-        ENTRIES.forEach((entry) -> {
+        ENTRIES.forEach((id, entry) -> {
 
             TexturedButton button = new TexturedButton(this.leftPos + 68 + (column.get() * 30), this.topPos + 60 + (row.get() * 30), 20, 20, Component.translatable(entry.id()), (button1) -> {
                 this.minecraft.setScreen(new TabletEntryScreen(Component.translatable(entry.id()), this, this.leftPos, this.topPos, entry));

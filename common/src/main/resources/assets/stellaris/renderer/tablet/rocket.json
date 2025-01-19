@@ -5,6 +5,8 @@
   "hoverIcon": "stellaris:textures/gui/tablet/rocket_page_hover.png",
   "infos": [
     {
+      "type": "item",
+      "id": "rocket_station",
       "title": "Rocket Station",
       "description": "One of the first block you need, is the Rocket Station. This allow you to build the rocket with all the parts needed.",
       "item": {
@@ -21,13 +23,10 @@
       }
     },
 
-
     {
-      "title": "Rocket Model",
-      "description": "You can upgrade your rocket model with different Model. [br] [br]"
+      "type": "item",
+      "id": "tiny_rocket",
 
-    },
-    {
       "title": "Tiny Rocket Model",
       "description": "This is the basic rocket. [br] [br] Can transport 1 entity",
       "item": {
@@ -43,6 +42,8 @@
       }
     },
     {
+      "type": "item",
+      "id": "small_rocket",
       "title": "Small Rocket Model",
       "description": "This is the small rocket. [br] [br] Can transport 2 entity",
       "item": {

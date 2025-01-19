@@ -5,6 +5,8 @@
   "hoverIcon": "stellaris:textures/gui/tablet/rocket_page_hover.png",
   "infos": [
     {
+      "type": "entity",
+      "id": "alien",
       "title": "Alien",
       "description": "This is an Alien. This passive mob can be found on the moon",
       "entity": {
@@ -14,6 +16,9 @@
       }
     },
     {
+      "type": "entity",
+      "id": "alien2",
+
       "title": "Alien Zombie",
       "description": "This is an Alien Zombie. A ancient force corrupt this alien and now it's a zombie. This aggressive mob can be found on the moon",
       "entity": {
@@ -23,6 +28,9 @@
       }
     },
     {
+      "type": "entity",
+      "id": "alien3",
+
       "title": "Star Crawler",
       "description": "This is a Star Crawler. This monster mob can be found on the moon",
       "entity": {
@@ -32,6 +40,9 @@
       }
     },
     {
+      "type": "entity",
+      "id": "alien4",
+
       "title": "Martian Raptor",
       "description": "This is a Martian Raptor. This passive creature live on Mars",
       "entity": {
@@ -41,8 +52,11 @@
       }
     },
     {
+      "type": "entity",
+      "id": "alien5",
+
       "title": "Pygro",
-      "description": "This is a Pygro. This passive creature live on ????",
+      "description": "This is a [color=yellow]Pygro. This passive creature live on ????",
       "entity": {
         "id": "stellaris:pygro",
         "scale": 25
@@ -50,6 +64,9 @@
       }
     },
     {
+      "type": "entity",
+      "id": "alien7",
+
       "title": "Pygro Brute",
       "description": "This is a Pygro Brute. This aggressive creature live on ????",
       "entity": {
@@ -59,6 +76,9 @@
       }
     },
     {
+      "type": "entity",
+      "id": "alien9",
+
       "title": "Mogler",
       "description": "This is a Mogler. This aggressive creature live on venus.",
       "entity": {

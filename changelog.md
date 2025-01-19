@@ -1,11 +1,4 @@
-# 1.2.4 changelog
-
-## Changes
-- Structures rarity
+# 1.2.5 changelog
 
 ## Fixes
-- Fix fabric key press event
-- Fix rocket sound
-- Fix crash when opening inventory in an unfueled rocket ([#61](https://github.com/st0x0ef/stellaris/issues/61))
-- Sync rocket data before launch
-- Fix upgrade slot check
+- Fix searching Stellaris in mod list result to a crash ([#63](https://github.com/st0x0ef/stellaris/issues/63))

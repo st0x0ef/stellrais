@@ -70,6 +70,7 @@ public class TabletEntryWidget extends AbstractScrollWidget {
         info.image().ifPresent((image) -> {
             int height = getY() + 40 + finalHeight.get() + 20;
             guiGraphics.blitSprite(image.location(), this.baseScreenWidth / 2 - image.width() / 2, height, image.width(), image.height());
+
             finalHeight.addAndGet(image.height() + 40 );
         });
 
@@ -127,9 +128,10 @@ public class TabletEntryWidget extends AbstractScrollWidget {
 
 
     public List<ArrayList<String>> createLines(String message, int maxWidth) {
+
         String[] words = message.split("\\s+");
 
-        List<ArrayList<String>> lines2 = new ArrayList<>();
+        List<ArrayList<String>> lines = new ArrayList<>();
 
         ArrayList<String> wordsInLine = new ArrayList<>();
 
@@ -142,34 +144,38 @@ public class TabletEntryWidget extends AbstractScrollWidget {
             int wordWidth = Minecraft.getInstance().font.width(word + " ");
 
             if (word.contains("[br]")) {
-                lines2.add(wordsInLine);
-                wordsInLine.clear();
-
-                word = word.replace("[br]", "");
-            } else if (word.contains("[color=")) {
-                String wordWithoutColor = word.replace("[color=" + word.substring(7, word.indexOf("]")) + "]", "");
-                wordWidth = Minecraft.getInstance().font.width(wordWithoutColor + " ");
-            }
-
-
-            if(wordWidth + width.get() < maxWidth) {
-                if(remainingWords.get() == 0) {
-                    wordsInLine.add(word);
-                    lines2.add(wordsInLine);
-                    break;
+                lines.add(wordsInLine);
+                wordsInLine = new ArrayList<>();
+                width.set(0);
+            } else {
+                if (word.contains("[color=")) {
+                    String wordWithoutColor = word.replace("[color=" + word.substring(7, word.indexOf("]")) + "]", "");
+                    wordWidth = Minecraft.getInstance().font.width(wordWithoutColor + " ");
                 }
 
-                wordsInLine.add(word);
-                width.addAndGet(wordWidth);
-            } else {
-                width.set(0);
-                lines2.add(wordsInLine);
-                wordsInLine = new ArrayList<>();
-                wordsInLine.add(word);
+
+                if(wordWidth + width.get() < maxWidth) {
+                    if(remainingWords.get() == 0) {
+                        wordsInLine.add(word);
+                        lines.add(wordsInLine);
+                        break;
+                    }
+
+                    wordsInLine.add(word);
+                    width.addAndGet(wordWidth);
+                } else {
+                    width.set(0);
+                    lines.add(wordsInLine);
+                    wordsInLine = new ArrayList<>();
+                    wordsInLine.add(word);
+                }
             }
 
+
+
         }
-        return lines2;
+
+        return lines;
     }
 
 

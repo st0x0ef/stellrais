@@ -18,6 +18,8 @@ import org.joml.Vector3f;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TabletEntryWidget extends AbstractScrollWidget {
 
@@ -25,12 +27,15 @@ public class TabletEntryWidget extends AbstractScrollWidget {
 
     private final AtomicInteger finalHeight = new AtomicInteger(0);
     private TabletEntry.Info info;
-    private final int baseScreenWidth;
+    private int baseScreenWidth;
+    private final TabletEntryScreen screen;
+    public ArrayList<ClickBox> clickBoxes = new ArrayList<>();
 
-    public TabletEntryWidget(int x, int y, int width, int height, Component message, TabletEntry.Info info, int baseScreenWidth) {
+    public TabletEntryWidget(int x, int y, int width, int height, Component message, TabletEntry.Info info, TabletEntryScreen screen) {
         super(x, y, width, height, message);
         this.info = info;
-        this.baseScreenWidth = baseScreenWidth;
+        this.baseScreenWidth = screen.width;
+        this.screen = screen;
     }
 
     @Override
@@ -51,7 +56,6 @@ public class TabletEntryWidget extends AbstractScrollWidget {
 
     @Override
     protected void renderContents(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-
         if (this.info == null) return;
 
         finalHeight.set(0);
@@ -72,6 +76,10 @@ public class TabletEntryWidget extends AbstractScrollWidget {
             guiGraphics.blitSprite(image.location(), this.baseScreenWidth / 2 - image.width() / 2, height, image.width(), image.height());
 
             finalHeight.addAndGet(image.height() + 40 );
+            ClickBox clickBox = new ClickBox(this.baseScreenWidth / 2 - image.width() / 2, height, image.width(), image.height(), "image");
+            if (!clickBoxes.contains(clickBox)) {
+                clickBoxes.add(clickBox);
+            }
         });
 
         info.entity().ifPresent((entity) -> {
@@ -89,6 +97,12 @@ public class TabletEntryWidget extends AbstractScrollWidget {
     }
 
 
+    public void resize(TabletEntryScreen screen) {
+        this.baseScreenWidth = screen.width;
+
+        this.setInfo(ResourceLocation.parse(screen.currentPage));
+    }
+
     @Override
     protected void updateWidgetNarration(NarrationElementOutput narrationElementOutput) {
     }
@@ -104,6 +118,35 @@ public class TabletEntryWidget extends AbstractScrollWidget {
         RenderSystem.disableBlend();
     }
 
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+
+        for (ClickBox clickBox : clickBoxes) {
+            if (clickBox.isHovered((int) mouseX, (int) mouseY, (int) scrollAmount()) ) {
+                clickBox.changePage(screen);
+            }
+        }
+
+        return super.mouseClicked(mouseX, mouseY, button);
+    }
+
+    public void addClickBox(double x, double y, double width, double height, String brutText) {
+        Pattern pattern = Pattern.compile("\\[ref=.*?\\]");
+        Matcher matcher = pattern.matcher(brutText);
+        while (matcher.find()) {
+            String ref = matcher.group().replace("[ref=", "").replace("]", "");
+            ClickBox clickBox = new ClickBox((int) x, (int) y, (int) width, (int) height, ref);
+            if (!clickBoxes.contains(clickBox)) {
+                clickBoxes.add(clickBox);
+            }
+        }
+    }
+
+    public String removeRef(String text) {
+        String regex = "\\[ref=.*?\\]";
+        return text.replaceAll(regex, "");
+    }
+
     public int renderDescriptionWithEveryWords(String description, int x, int y, int maxWidth, GuiGraphics guiGraphics) {
         List<ArrayList<String>> lines = createLines(description, maxWidth);
         for(int i = 0; i < lines.size(); i++) {
@@ -116,6 +159,10 @@ public class TabletEntryWidget extends AbstractScrollWidget {
                 if (word.contains("[color=")) {
                     color = word.substring(7, word.indexOf("]"));
                     word = word.replace("[color=" + color + "]", "");
+                } else if (word.contains("[ref=")) {
+                    addClickBox(x + width.get(), y + (i * getFont().lineHeight), getFont().width(removeRef(word)), getFont().lineHeight, word);
+                    word = removeRef(word);
+                    color = "blue";
                 }
 
                 guiGraphics.drawString(getFont(), word, x + width.get(), y + (i * getFont().lineHeight), Utils.getColorHexCode(color));
@@ -151,6 +198,8 @@ public class TabletEntryWidget extends AbstractScrollWidget {
                 if (word.contains("[color=")) {
                     String wordWithoutColor = word.replace("[color=" + word.substring(7, word.indexOf("]")) + "]", "");
                     wordWidth = Minecraft.getInstance().font.width(wordWithoutColor + " ");
+                } else if (word.contains("[ref=")) {
+                    wordWidth = Minecraft.getInstance().font.width(removeRef(word) + " ");
                 }
 
 
@@ -190,6 +239,37 @@ public class TabletEntryWidget extends AbstractScrollWidget {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    private static class ClickBox {
+        private final int x;
+        private final int y;
+        private final int width;
+        private final int height;
+        private final String action;
+
+        public ClickBox(int x, int y, int width, int height, String action) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.action = action;
+        }
+
+        public boolean isHovered(int mouseX, int mouseY, int finalHeight) {
+            mouseY += finalHeight;
+            return mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
+        }
+
+        public void changePage(TabletEntryScreen entryScreen) {
+            ResourceLocation location = ResourceLocation.parse(action);
+            entryScreen.widget.setInfo(location);
+        }
+
+        public String getAction() {
+            return action;
+        }
+
     }
     
 }

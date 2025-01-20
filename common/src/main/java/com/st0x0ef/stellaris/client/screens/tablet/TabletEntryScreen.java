@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.client.screens.components.TabletButton;
 import com.st0x0ef.stellaris.client.screens.components.TexturedButton;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
@@ -59,17 +60,18 @@ public class TabletEntryScreen extends Screen {
         }
     }
 
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        return super.mouseClicked(mouseX, mouseY, button);
+    }
 
     @Override
     protected void init() {
         /** Back Button **/
-        TexturedButton homeButton = new TexturedButton(this.leftPos + 15, this.topPos + 20, 20, 20, (button1 -> {
-            Stellaris.LOG.info("{}", currentPage);
-
+        TexturedButton homeButton = new TexturedButton(this.leftPos + 18, this.topPos + 22, 16, 16, (button1 -> {
             if (Objects.equals(currentPage, "main")) {
                 this.minecraft.setScreen(screen);
             } else {
-                Stellaris.LOG.info("Setting screen to main");
                 currentPage = "main";
                 widget.visible = false;
             }
@@ -82,10 +84,10 @@ public class TabletEntryScreen extends Screen {
 
         entry.infos().forEach((infos) -> {
 
-            TabletButton tabletButton = new TabletButton(this.leftPos + 68 + (column.get() * 30), this.topPos + 60 + (row.get() * 30), 20, 20, Component.translatable(entry.id()), (button -> {
+            TabletButton tabletButton = new TabletButton(this.leftPos + 68 + (column.get() * 30), this.topPos + 60 + (row.get() * 30), 20, 20, Component.translatable(infos.id()), (button -> {
                 changeInfo(infos);
             }), infos)
-                    .tex(ResourceLocation.parse("stellaris:textures/gui/tablet/button.png"), ResourceLocation.parse("stellaris:textures/gui/tablet/button_click.png")).tooltip(Tooltip.create(Component.translatable(entry.id())));
+                    .tex(ResourceLocation.parse("stellaris:textures/gui/tablet/button.png"), ResourceLocation.parse("stellaris:textures/gui/tablet/button_click.png")).tooltip(Tooltip.create(Component.translatable(infos.id())));
 
             if(column.get() == 3) {
                 column.set(0);
@@ -97,7 +99,7 @@ public class TabletEntryScreen extends Screen {
             this.addRenderableWidget(tabletButton);
         });
 
-        this.widget = new TabletEntryWidget(this.leftPos + 15, this.topPos + 50, 215, 100, Component.literal(""), null, this.width);
+        this.widget = new TabletEntryWidget(this.leftPos + 15, this.topPos + 50, 215, 100, Component.literal(""), null, this);
         this.widget.visible = false;
         this.addRenderableWidget(this.widget);
     }
@@ -107,6 +109,13 @@ public class TabletEntryScreen extends Screen {
         if (widget.setInfo(location)) {
             currentPage = location.toString();
         }
+    }
+
+    @Override
+    public void resize(Minecraft minecraft, int width, int height) {
+        super.resize(minecraft, width, height);
+
+        this.widget.resize(this);
     }
 
     @Override

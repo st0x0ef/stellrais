@@ -48,7 +48,7 @@
       "id": "fuel",
 
       "title": "Fuel Refinery",
-      "description": "The Fuel Rafinery is very important. It allow you to create fuel [br] [br] Need Energy ⚡ [br] [br] To create Fuel, you need to input oil in the first slot and it will generate fuel that you can get by putting a bucket in the last slot",
+      "description": "The Fuel [ref=mobs:alien2]Refinery is very important. It allow you to [ref=mobs:alien]create fuel [br] [br] Need Energy ⚡ [br] [br] To create Fuel, you need to input oil in the first slot and it will generate fuel that you can get by putting a bucket in the last slot",
       "item": {
         "stack": {
           "id": "stellaris:fuel_refinery",

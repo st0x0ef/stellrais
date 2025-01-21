@@ -101,6 +101,9 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
     private boolean isWheelButtonDown = false;
     public boolean isPlanetScreenOpened;
 
+    public static CelestialBody focusedBody = null;
+    public static CelestialBody hoveredBody = null;
+
     private double zoomLevel = 1.0;
     private GLFWScrollCallback prevScrollCallback;
 
@@ -167,8 +170,10 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
         if (focusedBody != null) {
             updateHighlighterPosition(graphics, focusedBody);
         }
-        renderPlanetList(currentPage);
+
         renderLargeMenu(graphics);
+
+        renderPlanetList(currentPage);
         renderSpaceStation(graphics);
 
 
@@ -256,8 +261,6 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
         launchButton.visible = false;
     }
 
-    public static CelestialBody focusedBody = null;
-    public static CelestialBody hoveredBody = null;
 
     private void onPlanetButtonClick(PlanetInfo planet) {
         if (!showLargeMenu && !showSpaceStationMenu) {
@@ -437,7 +440,7 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
 
 
     private void renderLargeMenu(GuiGraphics graphics) {
-        if (showLargeMenu) {
+        if (showLargeMenu && !showSpaceStationMenu) {
             getMenu().freeze_gui = false;
             ResourceLocation CELESTIAL_BODY_TEXTURE = focusedBody.texture;
 
@@ -593,86 +596,6 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
             RenderSystem.disableBlend();
         } else {
             launchButton.visible = false;
-        }
-    }
-
-    private void initSpaceStationButtons() {
-        spaceStationButtons.clear();
-        AtomicInteger height = new AtomicInteger(1);
-        for (SpaceStationRecipesManager.SpaceStationRecipeState spaceStationRecipeState : spaceStationRecipeStates) {
-            SpaceStationRecipe recipe = spaceStationRecipeState.recipe;
-            int buttonWidth = 130;
-            int buttonHeight = 20;
-
-            int centerX = (this.width - 215) / 2;
-            int centerY = (this.height - 177) / 2;
-
-            int buttonX = centerX + buttonWidth / 2 - buttonWidth / 3 - buttonWidth / 15;
-            int buttonY = centerY + buttonHeight / 2 + 12;
-
-            TexturedButton button = new TexturedButton(
-                    buttonX, buttonY, buttonWidth, buttonHeight,
-                    Component.translatable(String.valueOf(recipe.location())),
-                    (btn) -> onSpaceStationButtonClick(spaceStationRecipeState)
-            );
-
-            if (spaceStationRecipeState.isUnlocked) {
-                button.tex(
-                        ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/launch_button.png"),
-                        ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/launch_button_hovered.png")
-                );
-            } else {
-                button.tex(
-                        ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/button.png"),
-                        ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/button.png")
-                );
-            }
-
-            button.setPosition(buttonX, buttonY + height.getAndAdd(1) * 25);
-
-            button.setTooltip(Tooltip.create(recipe.getTooltip(this.getPlayer())));
-            button.visible = false;
-            spaceStationButtons.add(button);
-            this.addRenderableWidget(button);
-
-        }
-    }
-
-    private void renderSpaceStation(GuiGraphics graphics) {
-        if(!showSpaceStationMenu) {
-            for (TexturedButton button : spaceStationButtons) {
-                button.visible = false;
-            }
-            return;
-        }
-        int menuWidth = 215;
-        int menuHeight = 177;
-
-        int centerX = (this.width - menuWidth) / 2;
-        int centerY = (this.height - menuHeight) / 2;
-
-        launchButton.visible = true;
-        launchButton.setTooltip(Tooltip.create(Component.translatable("text.stellaris.planetscreen.space_station_launch")));
-
-        RenderSystem.enableBlend();
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 0.5f);
-
-        RenderSystem.setShaderTexture(0, LARGE_MENU_TEXTURE);
-        graphics.blit(LARGE_MENU_TEXTURE, centerX, centerY, 0, 0, menuWidth, menuHeight, menuWidth, menuHeight);
-
-        for (TexturedButton button : spaceStationButtons) {
-            button.visible = true;
-        }
-
-    }
-
-    public void onSpaceStationButtonClick(SpaceStationRecipesManager.SpaceStationRecipeState stationRecipeState) {
-        if(stationRecipeState.isUnlocked && focusedBody != null) {
-
-            tpToFocusedPlanet();
-            NetworkManager.sendToServer(new PlaceStationPacket(focusedBody.dimension, stationRecipeState.recipe));
         }
     }
 
@@ -1243,16 +1166,94 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
         }
     }
 
+    private void initSpaceStationButtons() {
+        spaceStationButtons.clear();
+        AtomicInteger height = new AtomicInteger(1);
+        for (SpaceStationRecipesManager.SpaceStationRecipeState spaceStationRecipeState : spaceStationRecipeStates) {
+            SpaceStationRecipe recipe = spaceStationRecipeState.recipe;
+            int buttonWidth = 90;
+            int buttonHeight = 20;
+
+            int centerX = (this.width - 215) / 2;
+            int centerY = (this.height - 177) / 2;
+
+            int buttonX = centerX + buttonWidth / 2 - buttonWidth / 3 - buttonWidth / 15;
+            int buttonY = centerY + buttonHeight / 2 + 12;
+
+            if (spaceStationButtons.size() == 5) {
+                buttonX += buttonWidth + 10;
+                height.set(1);
+            }
+
+            TexturedButton button = new TexturedButton(
+                    buttonX, buttonY, buttonWidth, buttonHeight,
+                    Component.translatable(String.valueOf(recipe.location())),
+                    (btn) -> onSpaceStationButtonClick(spaceStationRecipeState)
+            );
+
+            if (spaceStationRecipeState.isUnlocked) {
+                button.tex(
+                        ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/launch_button.png"),
+                        ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/launch_button_hovered.png")
+                );
+            } else {
+                button.tex(
+                        ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/button.png"),
+                        ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/button.png")
+                );
+            }
+
+            button.setPosition(buttonX, buttonY + height.getAndAdd(1) * 25);
+
+            button.setTooltip(Tooltip.create(recipe.getTooltip(this.getPlayer())));
+            button.visible = false;
+            spaceStationButtons.add(button);
+            this.addRenderableWidget(button);
+
+        }
+    }
+
+    private void renderSpaceStation(GuiGraphics graphics) {
+        if(!showSpaceStationMenu) {
+            for (TexturedButton button : spaceStationButtons) {
+                button.visible = false;
+            }
+            return;
+        }
+        int menuWidth = 215;
+        int menuHeight = 177;
+
+        int centerX = (this.width - menuWidth) / 2;
+        int centerY = (this.height - menuHeight) / 2;
+
+        RenderSystem.enableBlend();
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 0.5f);
+        RenderSystem.setShaderTexture(0, LARGE_MENU_TEXTURE);
+        graphics.blit(LARGE_MENU_TEXTURE, centerX, centerY, 0, 0, menuWidth, menuHeight, menuWidth, menuHeight);
+        RenderSystem.disableBlend();
+
+        launchButton.visible = true;
+        launchButton.setTooltip(Tooltip.create(Component.translatable("text.stellaris.planetscreen.space_station_launch")));
+
+
+        for (TexturedButton button : spaceStationButtons) {
+            button.visible = true;
+        }
+
+    }
+
+    public void onSpaceStationButtonClick(SpaceStationRecipesManager.SpaceStationRecipeState stationRecipeState) {
+        if(stationRecipeState.isUnlocked && focusedBody != null) {
+
+            tpToFocusedPlanet();
+            NetworkManager.sendToServer(new PlaceStationPacket(focusedBody.dimension, stationRecipeState.recipe));
+        }
+    }
 
     public Player getPlayer() {
         return menu.getPlayer();
     }
 
-    public ModifiedButton addButton(int x, int y, int row, int width, int height, boolean rocketCondition,
-                                    ModifiedButton.ButtonTypes type, List<String> list, ResourceLocation buttonTexture,
-                                    ModifiedButton.ColorTypes colorType, Component title, Button.OnPress onPress) {
-        return this.addRenderableWidget(new ModifiedButton(x, y, row, width, height, 0, 0, 0,
-                rocketCondition, type, list, buttonTexture, colorType, width, height, onPress, title));
-    }
 
 }

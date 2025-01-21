@@ -67,7 +67,10 @@ public record SpaceStationRecipe (List<ItemStack> items, ResourceLocation locati
     }
 
     public void removeMaterials(Player player) {
+
+
         for (ItemStack item : items) {
+
             player.getInventory().removeItem(item);
 
         }

@@ -1,0 +1,21 @@
+{
+  "items": [
+    {
+      "count": 1,
+      "id": "minecraft:diamond_sword"
+    },
+    {
+      "count": 6,
+      "id": "minecraft:birch_planks"
+    },
+    {
+      "count": 12,
+      "id": "minecraft:cobblestone"
+    },
+    {
+      "count": 258,
+      "id": "minecraft:stone"
+    }
+  ],
+  "location": "stellaris:space_station"
+}

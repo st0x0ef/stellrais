@@ -637,5 +637,8 @@
   "spacesuit.stellaris.auto_feeder": "Auto Feeder",
   "spacesuit.stellaris.shift_for_modules": "Hold shift for module list",
   "spacesuit.stellaris.modules": "Modules",
-  "container.stellaris.upgrade": "Upgrade"
+  "container.stellaris.upgrade": "Upgrade",
+
+  "stat.minecraft.space_traveled": "Space Traveled",
+  "stat.minecraft.rocket_launched": "Rocket Launched"
 }

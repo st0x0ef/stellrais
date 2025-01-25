@@ -594,7 +594,9 @@
   "tooltip.item.stellaris.rocket.model": "Model: %s",
   "tooltip.item.stellaris.oil_finder": "Right click on a block to check if there is oil",
 
-  "screens.stellaris.config": "Stellaris Config Screen",
+  "stellaris.screen.tablet.rocket_launched": "Rocket Launched : %s",
+  "stellaris.screen.tablet.space_traveled": "Kilometers Traveled : %s",
+  "stellaris.screen.tablet.boss_killed": "Boss Killed : %s",
 
   "translatable.stellaris.registry.holdshift": "Hold [↑ Shift] to view more info.",
   "translatable.stellaris.registry.player": "Player",

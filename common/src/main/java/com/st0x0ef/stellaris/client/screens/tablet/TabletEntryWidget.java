@@ -40,7 +40,7 @@ public class TabletEntryWidget extends AbstractScrollWidget {
 
     @Override
     protected int getInnerHeight() {
-        return finalHeight.get() + finalHeight.get() / 5;
+        return finalHeight.get() + finalHeight.get() / 2;
     }
 
     @Override
@@ -76,10 +76,7 @@ public class TabletEntryWidget extends AbstractScrollWidget {
             guiGraphics.blitSprite(image.location(), this.baseScreenWidth / 2 - image.width() / 2, height, image.width(), image.height());
 
             finalHeight.addAndGet(image.height() + 40 );
-            ClickBox clickBox = new ClickBox(this.baseScreenWidth / 2 - image.width() / 2, height, image.width(), image.height(), "image");
-            if (!clickBoxes.contains(clickBox)) {
-                clickBoxes.add(clickBox);
-            }
+
         });
 
         info.entity().ifPresent((entity) -> {
@@ -89,13 +86,7 @@ public class TabletEntryWidget extends AbstractScrollWidget {
             finalHeight.addAndGet(80);
 
         });
-
     }
-
-    public boolean isHovered(int mouseX, int mouseY, int x, int y, int width, int height) {
-       return mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
-    }
-
 
     public void resize(TabletEntryScreen screen) {
         this.baseScreenWidth = screen.width;
@@ -219,8 +210,6 @@ public class TabletEntryWidget extends AbstractScrollWidget {
                     wordsInLine.add(word);
                 }
             }
-
-
 
         }
 

@@ -6,7 +6,7 @@
   "infos": [
     {
       "type": "item",
-      "id": "water",
+      "id": "water_separator",
 
       "title": "Water Separator",
       "description": "The water separator transform water into Oxygen and Hydrogen [br] [br] Need Energy ⚡ [br] [br] The machine works by putting water in the second slot and it will generate Hydrogen and Oxygen that you can gather by placing buckets under the tanks.",
@@ -45,7 +45,7 @@
     },
     {
       "type": "item",
-      "id": "fuel",
+      "id": "fuel_refinery",
 
       "title": "Fuel Refinery",
       "description": "The Fuel [ref=mobs:alien2]Refinery is very important. It allow you to [ref=mobs:alien]create fuel [br] [br] Need Energy ⚡ [br] [br] To create Fuel, you need to input oil in the first slot and it will generate fuel that you can get by putting a bucket in the last slot",
@@ -61,6 +61,71 @@
         "location": "stellaris:tablet/images/fuel_refinery",
         "width": 128,
         "height": 64
+      }
+    },
+    {
+      "type": "item",
+      "id": "solar_panel",
+      "title": "Solar Panel",
+      "description": "The Solar Panel can generate energy by being under the sun during the day. [br] [br] Max Generation : [color=green]1Fe/Tick.",
+      "item": {
+        "stack": {
+          "id": "stellaris:solar_panel",
+          "count": 1
+        },
+        "size": 32
+      }
+    },
+    {
+      "type": "item",
+      "id": "coal_generator",
+      "title": "Coal Generator",
+      "description": "The Coal Generator can generate energy by burning coal. [br] [br] Max Generation : [color=orange]3Fe/Tick.",
+      "item": {
+        "stack": {
+          "id": "stellaris:coal_generator",
+          "count": 1
+        },
+        "size": 32
+      }
+    },
+    {
+      "type": "item",
+      "id": "radioactive_generator",
+      "title": "Radioactive Generator",
+      "description": "The Coal Generator can generate energy by burning radioactive items like [ref=items:uranium_ingot]uranium [ref=items:uranium_ingot]ingot or [ref=items:uranium_block]radioactive [ref=items:uranium_block]block. [br] [br] Max Generation : [color=red]500Fe/Tick.",
+      "item": {
+        "stack": {
+          "id": "stellaris:radioactive_generator",
+          "count": 1
+        },
+        "size": 32
+      }
+    },
+    {
+      "type": "item",
+      "id": "oxygen_distributor",
+      "title": "Oxygen Distributor",
+      "description": "The Oxygen Distributor allow you to fill a room with oxygen. [br] For this, place a full an [ref=items:oxygen_tank]oxygen [ref=items:oxygen_tank]tank with oxygen with the [ref=machines:water_separator]Water [ref=machines:water_separator]Separator. [br] [br] Need Energy [color=yellow]⚡ .",
+      "item": {
+        "stack": {
+          "id": "stellaris:oxygen_distributor",
+          "count": 1
+        },
+        "size": 32
+      }
+    },
+    {
+      "type": "item",
+      "id": "pumpjack",
+      "title": "Pumpjack",
+      "description": "The Pumpjack allow you to get the oil that is in the chunk. [br] First, check with the [ref=items:oil_finder]Oil [ref=items:oil_finder]Finder if oil is in the chunk. Then place the Pumpjack and start pumping oil. [br] [br] Need Energy [color=yellow]⚡ .",
+      "item": {
+        "stack": {
+          "id": "stellaris:oxygen_distributor",
+          "count": 1
+        },
+        "size": 32
       }
     }
   ]

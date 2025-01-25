@@ -22,17 +22,17 @@ public record TabletEntry(String id, String description, ResourceLocation icon, 
 
     public record Info(String type, String id, String title, String description, Optional<Image> image, Optional<Item> item, Optional<Entity> entity) {
 
-            public static final Codec<Info> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                    Codec.STRING.fieldOf("type").forGetter(Info::type),
-                    Codec.STRING.fieldOf("id").forGetter(Info::id),
+        public static final Codec<Info> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                Codec.STRING.fieldOf("type").forGetter(Info::type),
+                Codec.STRING.fieldOf("id").forGetter(Info::id),
 
-                    Codec.STRING.fieldOf("title").forGetter(Info::title),
-                    Codec.STRING.fieldOf("description").forGetter(Info::description),
-                    Image.CODEC.optionalFieldOf("image").forGetter(Info::image),
-                    Item.CODEC.optionalFieldOf("item").forGetter(Info::item),
-                    Entity.CODEC.optionalFieldOf("entity").forGetter(Info::entity)
+                Codec.STRING.fieldOf("title").forGetter(Info::title),
+                Codec.STRING.fieldOf("description").forGetter(Info::description),
+                Image.CODEC.optionalFieldOf("image").forGetter(Info::image),
+                Item.CODEC.optionalFieldOf("item").forGetter(Info::item),
+                Entity.CODEC.optionalFieldOf("entity").forGetter(Info::entity)
 
-            ).apply(instance, Info::new));
+        ).apply(instance, Info::new));
     }
 
     public record Image(ResourceLocation location, int width, int height) {

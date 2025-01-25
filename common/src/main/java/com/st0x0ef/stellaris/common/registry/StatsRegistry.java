@@ -17,6 +17,7 @@ public class StatsRegistry {
     };
 
     public static RegistrySupplier<ResourceLocation> SPACE_TRAVEL = STATS.register("space_travel", () -> Stats.makeCustomStat("space_travel", KILOMETERS));
+    public static RegistrySupplier<ResourceLocation> ROCKET_LAUNCHED = STATS.register("rocket_launched", () -> Stats.makeCustomStat("rocket_launched", StatFormatter.DEFAULT));
 
     public static void init() {
         STATS.register();

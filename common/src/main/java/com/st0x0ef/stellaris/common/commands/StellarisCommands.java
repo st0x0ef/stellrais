@@ -4,6 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.st0x0ef.stellaris.client.screens.tablet.TabletMainScreen;
+import com.st0x0ef.stellaris.common.registry.StatsRegistry;
 import com.st0x0ef.stellaris.common.utils.PlanetUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
@@ -56,6 +57,13 @@ public class StellarisCommands {
                                     return 0;
                                 }))
                 )
+                .then(Commands.literal("test")
+                        .executes((CommandContext<CommandSourceStack> context) -> {
+                            context.getSource().getPlayer().awardStat(StatsRegistry.SPACE_TRAVEL.get(), 1);
+                            return 0;
+                        })
+                )
+
 
 
         );

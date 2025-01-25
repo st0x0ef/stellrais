@@ -57,6 +57,7 @@ public class Stellaris {
         RecipesRegistry.register();
         EntityRegistry.registerSpawnPlacements();
         EffectsRegistry.register();
+        StatsRegistry.init();
 
         ReloadListenerRegistry.register(PackType.SERVER_DATA, new StellarisData());
     }

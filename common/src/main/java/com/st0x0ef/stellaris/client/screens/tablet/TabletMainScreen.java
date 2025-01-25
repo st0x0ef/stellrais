@@ -4,13 +4,22 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.client.screens.components.TexturedButton;
 import com.st0x0ef.stellaris.common.menus.TabletMenu;
+import com.st0x0ef.stellaris.common.registry.EntityRegistry;
+import com.st0x0ef.stellaris.common.registry.TagRegistry;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.gui.screens.PauseScreen;
+import net.minecraft.client.gui.screens.achievement.StatsScreen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.stats.Stats;
+import net.minecraft.stats.StatsCounter;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Inventory;
 
 import java.util.ArrayList;
@@ -74,8 +83,23 @@ public class TabletMainScreen extends AbstractContainerScreen<TabletMenu> {
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         super.render(guiGraphics, mouseX, mouseY, partialTick);
 
-        //StatsScreen
+        this.minecraft.player.getStats();
         InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics,  this.leftPos + 50, this.topPos + 45, this.leftPos + 80, this.topPos + 115, 30, 0.0625F, mouseX, mouseY, this.minecraft.player);
+
+    }
+
+    public void getStats() {
+        StatsCounter statsCounter = this.minecraft.player.getStats();
+
+
+        AtomicInteger bossKilled = new AtomicInteger(0);
+        for(EntityType<?> entityType : BuiltInRegistries.ENTITY_TYPE) {
+            if (entityType.is(TagRegistry.ENTITY_BOSS) && statsCounter.getValue(Stats.ENTITY_KILLED.get(entityType)) > 0 || statsCounter.getValue(Stats.ENTITY_KILLED_BY.get(entityType)) > 0) {
+                bossKilled.incrementAndGet();
+            }
+        }
+
+        statsCounter.getValue(Stats.ENTITY_KILLED.get(EntityRegistry.ALIEN.get()));
 
     }
 }

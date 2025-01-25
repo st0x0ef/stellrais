@@ -13,6 +13,7 @@ import com.st0x0ef.stellaris.common.data.screen.StarPack;
 import com.st0x0ef.stellaris.common.handlers.GlobalExceptionHandler;
 import com.st0x0ef.stellaris.common.registry.ItemsRegistry;
 import com.st0x0ef.stellaris.common.registry.ParticleRegistry;
+import com.st0x0ef.stellaris.common.registry.StatsRegistry;
 import com.st0x0ef.stellaris.platform.ClientUtilsPlatform;
 import dev.architectury.event.events.client.ClientGuiEvent;
 import dev.architectury.platform.Platform;
@@ -35,7 +36,6 @@ public class StellarisClient {
             setupOpenGLDebugMessageCallback();
             Thread.setDefaultUncaughtExceptionHandler(new GlobalExceptionHandler());
         });
-
         registerParticle();
         registerOverlays();
         registerArmors();

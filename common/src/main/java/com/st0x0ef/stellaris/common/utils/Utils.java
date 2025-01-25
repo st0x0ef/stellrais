@@ -1,11 +1,14 @@
 package com.st0x0ef.stellaris.common.utils;
 
 import com.mojang.serialization.Codec;
+import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.common.data.planets.Planet;
 import com.st0x0ef.stellaris.common.entities.vehicles.LanderEntity;
 import com.st0x0ef.stellaris.common.entities.vehicles.RocketEntity;
 import com.st0x0ef.stellaris.common.registry.EntityData;
 import com.st0x0ef.stellaris.common.registry.ItemsRegistry;
+import com.st0x0ef.stellaris.common.registry.StatsRegistry;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
@@ -14,6 +17,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.stats.Stats;
+import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -85,9 +90,16 @@ public class Utils {
             player.level().addFreshEntity(lander);
             player.startRiding(lander);
             player.sendSystemMessage(Component.translatable("message.stellaris.lander"));
+
+            player.awardStat(StatsRegistry.SPACE_TRAVEL.get(), Utils.distanceToPlanet(PlanetUtil.getPlanet(player.level().dimension().location()), destination));
+
+
         } else {
             player.closeContainer();
+            player.awardStat(StatsRegistry.SPACE_TRAVEL.get(), Utils.distanceToPlanet(PlanetUtil.getPlanet(player.level().dimension().location()), destination));
+
             teleportEntity(player, destination);
+
         }
     }
 
@@ -105,6 +117,9 @@ public class Utils {
                 teleportEntity(entity, destination);
 
                 if(entity instanceof Player player) {
+
+                    player.awardStat(StatsRegistry.SPACE_TRAVEL.get(), Utils.distanceToPlanet(PlanetUtil.getPlanet(player.level().dimension().location()), destination));
+
                     player.closeContainer();
                     player.getEntityData().set(EntityData.DATA_PLANET_MENU_OPEN, false);
                 }
@@ -120,6 +135,9 @@ public class Utils {
         }
     }
 
+    public static int distanceToPlanet(Planet actual, Planet destination) {
+        return Mth.abs(actual.distanceFromEarth() - destination.distanceFromEarth());
+    }
 
     public static double changeLastDigitToEven(double number) {
         String numberStr = Double.toString(number);

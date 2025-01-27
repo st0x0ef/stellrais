@@ -93,7 +93,7 @@
       "type": "item",
       "id": "radioactive_generator",
       "title": "Radioactive Generator",
-      "description": "The Coal Generator can generate energy by burning radioactive items like [ref=items:uranium_ingot]uranium [ref=items:uranium_ingot]ingot or [ref=items:uranium_block]radioactive [ref=items:uranium_block]block. [br] [br] Max Generation : [color=red]500Fe/Tick.",
+      "description": "The Coal Generator can generate energy by burning [ref=items:radioactive]radioactive items like uranium ingot or radioactive block. [br] [br] Max Generation : [color=red]500Fe/Tick.",
       "item": {
         "stack": {
           "id": "stellaris:radioactive_generator",
@@ -122,7 +122,7 @@
       "description": "The Pumpjack allow you to get the oil that is in the chunk. [br] First, check with the [ref=items:oil_finder]Oil [ref=items:oil_finder]Finder if oil is in the chunk. Then place the Pumpjack and start pumping oil. [br] [br] Need Energy [color=yellow]⚡ .",
       "item": {
         "stack": {
-          "id": "stellaris:oxygen_distributor",
+          "id": "stellaris:pumpjack",
           "count": 1
         },
         "size": 32

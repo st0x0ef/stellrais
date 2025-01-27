@@ -199,7 +199,7 @@ public class ScreenHelper {
         poseStack.popPose();
     }
 
-    public static @Nullable Entity createEntity(Level level, ResourceLocation location) {
+    public static Entity createEntity(Level level, ResourceLocation location) {
 
         Optional<EntityType<?>> maybeType = BuiltInRegistries.ENTITY_TYPE.getOptional(location);
         if (maybeType.isEmpty()) {

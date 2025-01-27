@@ -52,12 +52,29 @@ public class TabletButton extends Button {
         this.buttonTexture = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/button.png");
         this.hoverButtonTexture = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/button.png");
         this.info = info;
+        setTooltip();
+    }
+
+    public void setTooltip() {
+        switch (info.type()) {
+            case "item":
+                info.item().ifPresent((item) -> {
+                    this.tooltip(Tooltip.create(item.stack().getDisplayName()));
+                });
+                break;
+            case "entity":
+                info.entity().ifPresent((entity) -> {
+                    Entity entity1 = ScreenHelper.createEntity(Minecraft.getInstance().level, entity.entity());
+                    this.tooltip(Tooltip.create(entity1.getDisplayName()));
+                });
+        }
     }
 
     public <T extends TabletButton> T  tooltip(@Nullable Tooltip tooltip) {
         this.setTooltip(tooltip);
         return cast();
     }
+
     @SuppressWarnings("unchecked")
     private <T extends TabletButton> T cast() {
         return (T) this;
@@ -120,8 +137,6 @@ public class TabletButton extends Button {
                     Entity entity1 = ScreenHelper.createEntity(Minecraft.getInstance().level, entity.entity());
                     ScreenHelper.renderEntityInInventory(graphics, this.getX(), this.getY(), 7, new Vector3f(1.5f, 2.5f, 0), new Quaternionf(-1, 0, 0, 0), null, entity1);
                 });
-
-
         }
 
 

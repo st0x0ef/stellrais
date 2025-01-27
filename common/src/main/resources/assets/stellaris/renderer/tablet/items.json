@@ -1,0 +1,35 @@
+{
+  "id": "items",
+  "description": "Items",
+  "icon": "stellaris:textures/gui/tablet/rocket_page.png",
+  "hoverIcon": "stellaris:textures/gui/tablet/rocket_page_hover.png",
+  "infos": [
+    {
+      "type": "item",
+      "id": "oil_finder",
+
+      "title": "Oil Finder",
+      "description": "Right Click on the ground to find oil.",
+      "item": {
+        "stack": {
+          "id": "stellaris:oil_finder",
+          "count": 1
+        },
+        "size": 32
+      }
+    },
+    {
+      "type": "item",
+      "id": "radioactive",
+      "title": "Radioactive Block/Item",
+      "description": "Some Blocks/Items are radioactive. When having them in the inventory, you will have the radioactive effect. [br] [br] Radiation Level 1: [br] - Uranium Ore [br] - Uranium Block [br] - Uranium Ingot . [br] [br] Radiation Level 2: [br] - Neptunium Ore [br] - Neptunium Block [br] - Neptunium Ingot [br] [br] Radiation Level 3: [br] - Plutonium Ore [br] - Plutonium Block [br] - Plutonium Ingot",
+      "item": {
+        "stack": {
+          "id": "stellaris:uranium_block",
+          "count": 1
+        },
+        "size": 32
+      }
+    }
+  ]
+}

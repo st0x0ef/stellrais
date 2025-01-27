@@ -6,7 +6,6 @@ import com.st0x0ef.stellaris.client.screens.components.TabletButton;
 import com.st0x0ef.stellaris.client.screens.components.TexturedButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
@@ -87,7 +86,7 @@ public class TabletEntryScreen extends Screen {
             TabletButton tabletButton = new TabletButton(this.leftPos + 68 + (column.get() * 30), this.topPos + 60 + (row.get() * 30), 20, 20, Component.translatable(infos.id()), (button -> {
                 changeInfo(infos);
             }), infos)
-                    .tex(ResourceLocation.parse("stellaris:textures/gui/tablet/button.png"), ResourceLocation.parse("stellaris:textures/gui/tablet/button_click.png")).tooltip(Tooltip.create(Component.translatable(infos.id())));
+                    .tex(ResourceLocation.parse("stellaris:textures/gui/tablet/button.png"), ResourceLocation.parse("stellaris:textures/gui/tablet/button_click.png"));
 
             if(column.get() == 3) {
                 column.set(0);

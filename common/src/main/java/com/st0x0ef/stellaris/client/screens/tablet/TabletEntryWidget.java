@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.client.screens.helper.ScreenHelper;
 import com.st0x0ef.stellaris.common.utils.Utils;
+import dev.architectury.platform.Platform;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -111,7 +112,6 @@ public class TabletEntryWidget extends AbstractScrollWidget {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-
         for (ClickBox clickBox : clickBoxes) {
             if (clickBox.isHovered((int) mouseX, (int) mouseY, (int) scrollAmount()) ) {
                 clickBox.changePage(screen);
@@ -230,35 +230,19 @@ public class TabletEntryWidget extends AbstractScrollWidget {
         }
     }
 
-    private static class ClickBox {
-        private final int x;
-        private final int y;
-        private final int width;
-        private final int height;
-        private final String action;
-
-        public ClickBox(int x, int y, int width, int height, String action) {
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
-            this.action = action;
-        }
+    private record ClickBox(int x, int y, int width, int height, String action) {
 
         public boolean isHovered(int mouseX, int mouseY, int finalHeight) {
-            mouseY += finalHeight;
-            return mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
-        }
+                mouseY += finalHeight;
+                return mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
+            }
 
-        public void changePage(TabletEntryScreen entryScreen) {
-            ResourceLocation location = ResourceLocation.parse(action);
-            entryScreen.widget.setInfo(location);
-        }
+            public void changePage(TabletEntryScreen entryScreen) {
+                ResourceLocation location = ResourceLocation.parse(action);
+                entryScreen.widget.setInfo(location);
 
-        public String getAction() {
-            return action;
-        }
+            }
 
-    }
+        }
     
 }

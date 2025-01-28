@@ -42,26 +42,24 @@ public class TestModule extends Item implements SpaceSuitModule {
 
 ## Methods
 
-
 ::: details **MutableComponent displayName()**
-Need to return the name of the Module.
+Needed to return the name of the Module.
 :::
 
 ::: details **void renderToGui()**
-Allow you to render things on the player screen when the module is on the armor.
+Allows you to render things on the players screen while the module is on the player.
 :::
 
 ::: details **void addToTooltips()**
-Allow you to add tooltip to the Space Suit Chestplate.
+Allows you to add tooltips to the Space Suit Chestplate.
 :::
-
 
 ::: details **int renderStackedGui()**
-Allow you to render things on the player screen. The height will change depending if others modules render things too. That is why you need to return the height of the thing you render
+Allows you to render things on the player screen. The height will change depending on whether other modules render things too, hence, the requirement to return the height of what you're rendering.
 :::
 
-::: details **List< Item > requires()**
-Return a list of Modules that are needed for the module to be used.
+::: details **List \<Item\> requires()**
+Returns a list of Modules that are needed for the module to be used.
 :::
 
 

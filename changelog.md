@@ -1,4 +1,4 @@
-# 1.3.0 changelog
+# 1.3.0 beta 1 changelog
 
 ## Additions
 - Mars storm

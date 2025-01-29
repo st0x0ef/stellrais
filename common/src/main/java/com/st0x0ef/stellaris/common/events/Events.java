@@ -64,6 +64,10 @@ public class Events {
                 } else if (state.is(Blocks.CAMPFIRE)) {
                     serverLevel.setBlock(pos, state.setValue(CampfireBlock.LIT, false), 3);
                     return EventResult.interruptFalse();
+                } else if (state.is(Blocks.CANDLE)) {
+                    serverLevel.setBlock(pos, state.setValue(CandleBlock.LIT, true), 3);
+                    return EventResult.interruptFalse();
+
                 }
             }
 

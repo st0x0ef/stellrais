@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "stellaris:plutonium_nugget"
+      "tag": "c:nuggets/plutonium"
     }
   ],
 

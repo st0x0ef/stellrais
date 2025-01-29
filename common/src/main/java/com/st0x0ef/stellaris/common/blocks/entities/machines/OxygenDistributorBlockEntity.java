@@ -1,6 +1,6 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
-import com.st0x0ef.stellaris.common.menus.OxygenGeneratorMenu;
+import com.st0x0ef.stellaris.common.menus.OxygenDistributorMenu;
 import com.st0x0ef.stellaris.common.oxygen.GlobalOxygenManager;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
@@ -54,7 +54,6 @@ public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity
             getWrappedEnergyContainer().extractEnergy(1, false);
             return true;
         }
-
         return false;
     }
 
@@ -73,7 +72,7 @@ public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity
 
     @Override
     protected AbstractContainerMenu createMenu(int containerId, Inventory inventory) {
-        return new OxygenGeneratorMenu(containerId, inventory, this, this);
+        return new OxygenDistributorMenu(containerId, inventory, this, this);
     }
 
     @Override

@@ -380,10 +380,14 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
         Player player = this.getFirstPlayerPassenger();
 
         if (player != null) {
+            if (player instanceof ServerPlayer serverPlayer) {
+                this.syncRocketData(serverPlayer);
+            }
+
             if (this.FUEL > 0 || player.isCreative()) {
                 if (!this.entityData.get(ROCKET_START)) {
                     this.entityData.set(ROCKET_START, true);
-                    this.level().playSound(null, this, SoundRegistry.ROCKET_SOUND.get(), SoundSource.NEUTRAL, 1, 1);
+                    this.level().playSound(player, this, SoundRegistry.ROCKET_SOUND.get(), SoundSource.NEUTRAL, 1, 1);
                 }
             } else {
                 player.displayClientMessage(Component.translatable("text.stellaris.rocket.fuel", this.MOTOR_UPGRADE.getFuelType().getSerializedName()), true);
@@ -462,33 +466,33 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
     private void checkContainer() {
         if (this.level().isClientSide) return;
 
-        if (this.getInventory().getItem(10).getItem() instanceof VehicleUpgradeItem item) {
+        if (this.getInventory().getItem(2).getItem() instanceof VehicleUpgradeItem item) {
             if (item.getUpgrade() instanceof MotorUpgrade upgrade) {
                 this.MOTOR_UPGRADE = upgrade;
             }
-        } else if (this.getInventory().getItem(10).isEmpty()) {
+        } else if (this.getInventory().getItem(2).isEmpty()) {
             this.MOTOR_UPGRADE = MotorUpgrade.getBasic();
         }
 
-        if (this.getInventory().getItem(11).getItem() instanceof VehicleUpgradeItem item) {
+        if (this.getInventory().getItem(3).getItem() instanceof VehicleUpgradeItem item) {
             if (item.getUpgrade() instanceof TankUpgrade upgrade) {
                 this.TANK_UPGRADE = upgrade;
             }
-        } else if (this.getInventory().getItem(11).isEmpty()) {
+        } else if (this.getInventory().getItem(3).isEmpty()) {
             this.TANK_UPGRADE = TankUpgrade.getBasic();
         }
 
-        if (this.getInventory().getItem(12).getItem() instanceof VehicleUpgradeItem item) {
+        if (this.getInventory().getItem(4).getItem() instanceof VehicleUpgradeItem item) {
             if (item.getUpgrade() instanceof SkinUpgrade upgrade) {
                 this.SKIN_UPGRADE = upgrade;
                 setSkinData();
             }
-        } else if (this.getInventory().getItem(12).isEmpty()) {
+        } else if (this.getInventory().getItem(4).isEmpty()) {
             this.SKIN_UPGRADE = SkinUpgrade.getBasic();
             setSkinData();
         }
 
-        if (this.getInventory().getItem(13).getItem() instanceof VehicleUpgradeItem item) {
+        if (this.getInventory().getItem(5).getItem() instanceof VehicleUpgradeItem item) {
             if (item.getUpgrade() instanceof ModelUpgrade upgrade) {
                 if (this.MODEL_UPGRADE.getModel() != upgrade.getModel()){
                     this.MODEL_UPGRADE = upgrade;
@@ -497,7 +501,7 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
                     changeRocketModel();
                 }
             }
-        } else if (this.getInventory().getItem(13).isEmpty()) {
+        } else if (this.getInventory().getItem(5).isEmpty()) {
             this.MODEL_UPGRADE = ModelUpgrade.getBasic();
             setModelData();
             if (needsModelChange) {

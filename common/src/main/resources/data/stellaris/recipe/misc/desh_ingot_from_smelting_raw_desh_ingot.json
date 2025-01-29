@@ -4,7 +4,7 @@
   "cookingtime": 100,
   "experience": 0.7,
   "ingredient": {
-    "item": "stellaris:raw_desh_ingot"
+    "tag": "c:raw_materials/desh"
   },
   "result": {
     "id": "stellaris:desh_ingot"

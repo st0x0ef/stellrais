@@ -7,7 +7,7 @@
   ],
   "key": {
     "#": {"tag": "c:ingots/steel"},
-    "R": {"item": "stellaris:heavy_metal_plate"},
+    "R": {"tag": "c:storage_blocks/heavy_metal"},
     "X": {"item": "minecraft:redstone"}
   },
   "result": {

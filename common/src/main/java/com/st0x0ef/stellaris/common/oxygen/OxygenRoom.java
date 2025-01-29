@@ -43,16 +43,23 @@ public class OxygenRoom {
         while (!positionsToCheck.isEmpty()) {
             BlockPos currentPos = positionsToCheck.poll();
             visited.add(currentPos);
-            if (isAirBlock(currentPos) && addOxygenatedPosition(currentPos)) {
-                if (isOnBorderBox(currentPos)) {
-                    oxygenManager.addRoomToCheckIfOpen(currentPos, this);
-                } else {
-                    for (Direction direction : Direction.values()) {
-                        BlockPos nextPos = currentPos.relative(direction);
-                        if (!visited.contains(nextPos)) {
-                            positionsToCheck.offer(nextPos);
+            if (isAirBlock(currentPos)) {
+                // Check if the distributor has oxygen and energy
+                OxygenDistributorBlockEntity distributor = getDistributorBlockEntity();
+                if (distributor != null && distributor.oxygenTank.getAmount() > 0 && distributor.getWrappedEnergyContainer().getStoredEnergy() > 0) {
+                    // Add hardcoded positions within a 32x32x32 area
+                    for (int x = -HALF_ROOM_SIZE; x <= HALF_ROOM_SIZE; x++) {
+                        for (int y = -HALF_ROOM_SIZE; y <= HALF_ROOM_SIZE; y++) {
+                            for (int z = -HALF_ROOM_SIZE; z <= HALF_ROOM_SIZE; z++) {
+                                BlockPos pos = distributorPos.offset(x, y, z);
+                                oxygenatedPositions.add(pos);
+                                // Consume energy for each position
+                                distributor.getWrappedEnergyContainer().extractEnergy(3, false);
+                            }
                         }
                     }
+                    distributor.setChanged(); // Mark the block entity as changed
+                    break; // Exit after adding hardcoded positions
                 }
             }
         }
@@ -60,13 +67,6 @@ public class OxygenRoom {
 
     public void removeOxygenInRoom() {
         oxygenatedPositions.clear();
-    }
-
-    private boolean isOnBorderBox(BlockPos pos) {
-        int dx = Math.abs(pos.getX() - distributorPos.getX());
-        int dy = Math.abs(pos.getY() - distributorPos.getY());
-        int dz = Math.abs(pos.getZ() - distributorPos.getZ());
-        return dx == HALF_ROOM_SIZE || dy == HALF_ROOM_SIZE || dz == HALF_ROOM_SIZE;
     }
 
     public boolean hasOxygenAt(BlockPos pos) {
@@ -77,19 +77,12 @@ public class OxygenRoom {
         return level.getBlockState(pos).isAir();
     }
 
-    private boolean addOxygenatedPosition(BlockPos pos) {
-        OxygenDistributorBlockEntity distributor = getDistributorBlockEntity();
-        if (distributor != null && distributor.useOxygenAndEnergy()) {
-            oxygenatedPositions.add(pos);
-            return true;
-        }
-        return false;
-    }
 
     public boolean breathOxygenAt(BlockPos pos) {
         if (hasOxygenAt(pos)) {
             OxygenDistributorBlockEntity distributor = getDistributorBlockEntity();
             if (distributor != null && distributor.useOxygenAndEnergy()) {
+                distributor.setChanged(); // Mark the block entity as changed to trigger updates
                 return true;
             }
             oxygenatedPositions.remove(pos);

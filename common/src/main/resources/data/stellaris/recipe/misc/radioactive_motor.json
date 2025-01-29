@@ -10,10 +10,10 @@
       "item": "stellaris:ice_shard"
     },
     "s": {
-      "item": "stellaris:uranium_ingot"
+      "tag": "c:ingots/uranium"
     },
     "e": {
-      "item": "stellaris:desh_block"
+      "tag": "c:storage_blocks/desh"
     }
   },
   "result": {

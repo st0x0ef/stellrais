@@ -18,6 +18,4 @@ public class SoundRegistry {
 
     public static final RegistrySupplier<SoundEvent> RADIOACTIVE = SOUNDS.register("radioactive", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "radioactive")));
     public static final RegistrySupplier<SoundEvent> SONIC_BOOM_SOUND = SOUNDS.register("sonic_boom",() -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "sonic_boom")));
-    public static final RegistrySupplier<SoundEvent> WIND_SOUND = SOUNDS.register("wind",() -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "wind")));
-
 }

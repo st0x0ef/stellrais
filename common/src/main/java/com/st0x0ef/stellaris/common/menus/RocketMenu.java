@@ -2,6 +2,7 @@ package com.st0x0ef.stellaris.common.menus;
 
 import com.st0x0ef.stellaris.common.entities.vehicles.RocketEntity;
 import com.st0x0ef.stellaris.common.menus.slot.ResultSlot;
+import com.st0x0ef.stellaris.common.menus.slot.VehicleFuelSlot;
 import com.st0x0ef.stellaris.common.menus.slot.upgrade.MotorUpgradeSlot;
 import com.st0x0ef.stellaris.common.menus.slot.upgrade.RocketModelSlot;
 import com.st0x0ef.stellaris.common.menus.slot.upgrade.RocketSkinSlot;
@@ -76,30 +77,30 @@ public class RocketMenu extends AbstractContainerMenu implements IVehicleMenu {
 
     private void addSlots(Container inventory) {
         //FUEL SLOTS
-        this.addSlot(new Slot(inventory, 0, 20, 27));
+        this.addSlot(new VehicleFuelSlot(inventory, 0, 20, 27));
         this.addSlot(new ResultSlot(inventory, 1, 20, 57));
 
-        //INVENTORY SLOTS
-        this.addSlot(new Slot(inventory, 2, 86, 20));
-        this.addSlot(new Slot(inventory, 3, 86, 37));
-
-        this.addSlot(new Slot(inventory, 4, 104, 20));
-        this.addSlot(new Slot(inventory, 5, 104, 37));
-
-        this.addSlot(new Slot(inventory, 6, 122, 20));
-        this.addSlot(new Slot(inventory, 7, 122, 37));
-
-        this.addSlot(new Slot(inventory, 8, 140, 20));
-        this.addSlot(new Slot(inventory, 9, 140, 37));
-
         //UPGRADE SLOTS
-        this.addSlot(new MotorUpgradeSlot(inventory, 10, 76, 66, getRocket()));
-        this.addSlot(new TankUpgradeSlot(inventory, 11, 101, 66));
+        this.addSlot(new MotorUpgradeSlot(inventory, 2, 76, 66, getRocket()));
+        this.addSlot(new TankUpgradeSlot(inventory, 3, 101, 66));
 
         //SKIN SLOTS
-        this.addSlot(new RocketSkinSlot(inventory, 12, 126, 66));
+        this.addSlot(new RocketSkinSlot(inventory, 4, 126, 66));
         //MODEL SLOTS
-        this.addSlot(new RocketModelSlot(inventory, 13, 151, 66));
+        this.addSlot(new RocketModelSlot(inventory, 5, 151, 66));
+
+        //INVENTORY SLOTS
+        this.addSlot(new Slot(inventory, 6, 86, 20));
+        this.addSlot(new Slot(inventory, 7, 86, 37));
+
+        this.addSlot(new Slot(inventory, 8, 104, 20));
+        this.addSlot(new Slot(inventory, 9, 104, 37));
+
+        this.addSlot(new Slot(inventory, 10, 122, 20));
+        this.addSlot(new Slot(inventory, 11, 122, 37));
+
+        this.addSlot(new Slot(inventory, 12, 140, 20));
+        this.addSlot(new Slot(inventory, 13, 140, 37));
 
     }
 

@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "stellaris:heavy_metal_ingot"
+      "tag": "c:ingots/heavy_metal"
     }
   ],
   "result": {

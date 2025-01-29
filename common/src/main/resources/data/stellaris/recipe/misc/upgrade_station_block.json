@@ -6,7 +6,7 @@
     "###"
   ],
   "key": {
-    "X": {"item": "stellaris:heavy_metal_ingot"},
+    "X": {"tag": "c:ingots/heavy_metal"},
     "#": {"item": "stellaris:iron_plating_block"},
     "R": {"item": "stellaris:base_module_tier_1"}
   },

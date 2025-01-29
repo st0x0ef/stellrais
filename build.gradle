@@ -2,7 +2,7 @@ plugins {
     id "dev.architectury.loom" version "1.7-SNAPSHOT" apply false
     id "architectury-plugin" version "3.4.160"
     id 'com.github.johnrengelman.shadow' version '8.1.1' apply false
-    id "me.modmuss50.mod-publish-plugin" version "0.7.4"
+    id "me.modmuss50.mod-publish-plugin" version "0.8.4"
 
 }
 
@@ -106,6 +106,7 @@ subprojects {
                 projectSlug = "stellaris" // Required for discord webhook
                 accessToken = providers.environmentVariable("CURSEFORGE_API_KEY")
                 minecraftVersions.add("${minecraft_version}")
+                minecraftVersions.add("${supported_minecraft_version}")
                 javaVersions.add(JavaVersion.VERSION_21)
                 requires("architectury-api")
                 embeds("sky-aesthetics")
@@ -115,6 +116,7 @@ subprojects {
                 projectId = "ItTQpuBn"
                 accessToken = providers.environmentVariable("MODRINTH_TOKEN")
                 minecraftVersions.add("${minecraft_version}")
+                minecraftVersions.add("${supported_minecraft_version}")
                 requires("architectury-api")
                 embeds("sky-aesthetics")
 

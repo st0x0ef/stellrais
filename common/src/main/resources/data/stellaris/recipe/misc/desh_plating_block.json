@@ -6,7 +6,7 @@
     "###"
   ],
   "key": {
-    "#": {"item": "stellaris:desh_block"}
+    "#": {"tag": "c:storage_blocks/desh"}
   },
   "result": {
     "id": "stellaris:desh_plating_block",

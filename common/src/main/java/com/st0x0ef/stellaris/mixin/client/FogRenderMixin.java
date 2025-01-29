@@ -23,7 +23,7 @@ public class FogRenderMixin {
         list.add(new SandStormEffect.SandStormFogFunction());
 
         if (entity instanceof LivingEntity livingEntity) {
-            return (FogRenderer.MobEffectFogFunction)list.stream().filter((mobEffectFogFunction) -> mobEffectFogFunction.isEnabled(livingEntity, partialTick)).findFirst().orElse(null);
+            return list.stream().filter((mobEffectFogFunction) -> mobEffectFogFunction.isEnabled(livingEntity, partialTick)).findFirst().orElse(null);
         } else {
             return null;
         }

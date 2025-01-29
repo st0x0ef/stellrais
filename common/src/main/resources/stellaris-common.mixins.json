@@ -11,14 +11,14 @@
     "ItemEntityGravityMixin",
     "MixinChunkAccess",
     "MixinChunkSerializer",
-    "StormyPlanetMixin",
-    "client.FogRenderMixin"
+    "StormyPlanetMixin"
   ],
   "client": [
     "client.PlayerRiddingVehicleMixin",
     "client.RenderPlayerMixin",
     "client.RenderPlayerMixin",
-    "client.SandStormMixin"
+    "client.SandStormMixin",
+    "client.FogRenderMixin"
   ],
   "injectors": {
     "defaultRequire": 1

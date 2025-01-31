@@ -6,6 +6,7 @@ import com.st0x0ef.stellaris.common.data.recipes.input.FluidInput;
 import com.st0x0ef.stellaris.common.items.armors.JetSuit;
 import com.st0x0ef.stellaris.common.menus.FuelRefineryMenu;
 import com.st0x0ef.stellaris.common.network.packets.SyncFluidPacket;
+import com.st0x0ef.stellaris.common.network.packets.SyncFluidPacketWithoutDirection;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import com.st0x0ef.stellaris.common.registry.FluidRegistry;
 import com.st0x0ef.stellaris.common.registry.RecipesRegistry;
@@ -43,9 +44,9 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
             @Override
             protected void onChange(int i) {
                 setChanged();
-                if (level!=null && level.getServer()!=null)
+                if (level != null && level.getServer() != null && !level.getServer().getPlayerList().getPlayers().isEmpty())
                     NetworkManager.sendToPlayers(level.getServer().getPlayerList().getPlayers(),
-                            new SyncFluidPacket(this.getFluidInTank(0), 0, getBlockPos(), null));
+                            new SyncFluidPacketWithoutDirection(this.getFluidInTank(0), 0, getBlockPos()));
             }
         };
         this.outputTank = new FilteredFluidStorage(1, 10000, 0, 10000, (n,fluidStack) -> fluidStack.getFluid() == FluidRegistry.FUEL_STILL.get()) {

@@ -6,6 +6,7 @@ import com.st0x0ef.stellaris.common.data.recipes.WaterSeparatorRecipe;
 import com.st0x0ef.stellaris.common.data.recipes.input.FluidInput;
 import com.st0x0ef.stellaris.common.menus.WaterSeparatorMenu;
 import com.st0x0ef.stellaris.common.network.packets.SyncFluidPacket;
+import com.st0x0ef.stellaris.common.network.packets.SyncFluidPacketWithoutDirection;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import com.st0x0ef.stellaris.common.registry.FluidRegistry;
 import com.st0x0ef.stellaris.common.registry.RecipesRegistry;
@@ -41,9 +42,9 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
         @Override
         protected void onChange() {
             setChanged();
-            if (level!=null && level.getServer()!=null)
+            if (level != null && level.getServer() != null && !level.getServer().getPlayerList().getPlayers().isEmpty())
                 NetworkManager.sendToPlayers(level.getServer().getPlayerList().getPlayers(),
-                        new SyncFluidPacket(this.getFluidInTank(0), 0, getBlockPos(), null));
+                        new SyncFluidPacketWithoutDirection(this.getFluidInTank(0), 0, getBlockPos()));
         }
 
         @Override
@@ -99,7 +100,6 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
             WaterSeparatorRecipe recipe = recipeHolder.get().value();
 
             if (energyContainer.getEnergy() >= recipe.energy()) {
-
                 ingredientTank.drain(recipe.ingredientStack(), false);
                 resultTanks.fillWithoutLimits(recipe.resultStacks().getFirst(), false);
                 resultTanks.fillWithoutLimits(recipe.resultStacks().getLast(), false);

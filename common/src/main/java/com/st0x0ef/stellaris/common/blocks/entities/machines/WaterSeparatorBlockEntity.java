@@ -53,7 +53,7 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
         }
     };
     public final FluidStorage resultTanks = new FilteredFluidStorage(2, 3000,0,3000, (tank, fluidStack) ->
-            tank == HYDROGEN_TANK ? fluidStack.getFluid()== FluidRegistry.HYDROGEN_STILL.get() : fluidStack.getFluid()== FluidRegistry.OXYGEN_STILL.get()
+            tank == HYDROGEN_TANK ? fluidStack.getFluid() == FluidRegistry.HYDROGEN_STILL.get() : fluidStack.getFluid() == FluidRegistry.OXYGEN_STILL.get()
     ) {
         @Override
         protected void onChange(int tank) {

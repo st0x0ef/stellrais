@@ -2,8 +2,10 @@ package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
 import com.fej1fun.potentials.energy.BaseEnergyStorage;
 import com.fej1fun.potentials.providers.EnergyProvider;
+import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.common.blocks.entities.ImplementedInventory;
 import com.st0x0ef.stellaris.common.network.packets.SyncEnergyPacket;
+import com.st0x0ef.stellaris.common.network.packets.SyncEnergyPacketWithoutDirection;
 import com.st0x0ef.stellaris.common.utils.capabilities.energy.EnergyStorage;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.core.BlockPos;
@@ -34,9 +36,9 @@ public abstract class BaseEnergyContainerBlockEntity extends BaseContainerBlockE
             @Override
             protected void onChange() {
                 setChanged();
-                if (level != null && level.getServer() != null) {
+                if (level != null && level.getServer() != null && !level.getServer().getPlayerList().getPlayers().isEmpty()) {
                     NetworkManager.sendToPlayers(level.getServer().getPlayerList().getPlayers(),
-                            new SyncEnergyPacket(energyContainer.getEnergy(), getBlockPos(), null));
+                            new SyncEnergyPacketWithoutDirection(energyContainer.getEnergy(), getBlockPos()));
                 }
             }
         };

@@ -1,7 +1,6 @@
 package com.st0x0ef.stellaris.common.utils.capabilities.energy;
 
 import com.fej1fun.potentials.energy.BaseEnergyStorage;
-import com.st0x0ef.stellaris.Stellaris;
 import net.minecraft.nbt.CompoundTag;
 
 public abstract class EnergyStorage extends BaseEnergyStorage {

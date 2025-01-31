@@ -1,7 +1,6 @@
 package com.st0x0ef.stellaris.common.items;
 
 import com.st0x0ef.stellaris.common.utils.Utils;
-import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;

@@ -57,7 +57,7 @@ public class OxygenGeneratorScreen extends AbstractContainerScreen<OxygenDistrib
         }
 
         energyGauge.updateAmount(blockEntity.getEnergy(null).getEnergy());
-        oxygenGauge.updateAmount(blockEntity.oxygenTank.getFluidValueInTank(blockEntity.oxygenTank.getTanks()));
+        oxygenGauge.updateAmount(blockEntity.oxygenTank.getFluidValueInTank(0));
     }
 
     @Override

@@ -62,8 +62,8 @@ public class FuelRefineryScreen extends AbstractContainerScreen<FuelRefineryMenu
             return;
         }
 
-        ingredientTankGauge.updateAmount(blockEntity.getIngredientTank().getFluidValueInTank(blockEntity.getIngredientTank().getTanks() - 1));
-        resultTankGauge.updateAmount(blockEntity.getResultTank().getFluidValueInTank(blockEntity.getIngredientTank().getTanks() - 1));
+        ingredientTankGauge.updateAmount(blockEntity.getIngredientTank().getFluidValueInTank(0));
+        resultTankGauge.updateAmount(blockEntity.getResultTank().getFluidValueInTank(0));
         energyGauge.updateAmount(blockEntity.getEnergy(null).getEnergy());
     }
 

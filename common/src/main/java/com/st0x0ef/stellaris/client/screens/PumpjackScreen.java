@@ -70,7 +70,7 @@ public class PumpjackScreen extends AbstractContainerScreen<PumpjackMenu> {
 
 
 
-        resultTankGauge.updateAmount(blockEntity.getResultTank().getFluidValueInTank(blockEntity.getResultTank().getTanks()));
+        resultTankGauge.updateAmount(blockEntity.getResultTank().getFluidValueInTank(0));
         energyGauge.updateAmount(blockEntity.getEnergy(null).getEnergy());
 
     }

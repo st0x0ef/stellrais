@@ -52,7 +52,7 @@ public class WaterPumpScreen extends AbstractContainerScreen<WaterPumpMenu> {
             return;
         }
 
-        waterTankGauge.updateAmount((int) blockEntity.getWaterTank().getFluidValueInTank(blockEntity.getWaterTank().getTanks()));
+        waterTankGauge.updateAmount((int) blockEntity.getWaterTank().getFluidValueInTank(0));
         energyGauge.updateAmount(blockEntity.getEnergy(null).getEnergy());
     }
 

@@ -67,8 +67,10 @@ public class TabletEntryWidget extends AbstractScrollWidget {
         finalHeight.addAndGet(descriptionHeight);
 
         info.item().ifPresent((item) -> {
-            ScreenHelper.renderItemWithCustomSize(guiGraphics, Minecraft.getInstance(), item.stack(), this.baseScreenWidth / 2 -(int) item.size() / 2, getY() + finalHeight.get() + 35 + 20, item.size());
-            finalHeight.addAndGet(35 + (int) (item.size() / 4));
+            if (item.onlyIcon().isEmpty()) {
+                ScreenHelper.renderItemWithCustomSize(guiGraphics, Minecraft.getInstance(), item.stack(), this.baseScreenWidth / 2 -(int) item.size() / 2, getY() + finalHeight.get() + 35 + 20, item.size());
+                finalHeight.addAndGet(35 + (int) (item.size() / 4));
+            }
         });
 
 
@@ -224,6 +226,7 @@ public class TabletEntryWidget extends AbstractScrollWidget {
     public boolean setInfo(ResourceLocation location) {
         try {
             this.info = TabletMainScreen.INFOS.get(location);
+            this.setScrollAmount(0);
             return true;
         } catch (Exception e) {
             return false;

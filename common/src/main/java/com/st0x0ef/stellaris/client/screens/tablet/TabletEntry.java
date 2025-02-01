@@ -43,10 +43,11 @@ public record TabletEntry(String id, String description, ResourceLocation icon, 
         ).apply(instance, Image::new));
     }
 
-    public record Item(ItemStack stack,  float size) {
+    public record Item(ItemStack stack, float size, Optional<Boolean> onlyIcon) {
         public static final Codec<Item> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 ItemStack.CODEC.fieldOf("stack").forGetter(Item::stack),
-                Codec.FLOAT.fieldOf("size").forGetter(Item::size)
+                Codec.FLOAT.fieldOf("size").forGetter(Item::size),
+                Codec.BOOL.optionalFieldOf("onlyIcon").forGetter(Item::onlyIcon)
         ).apply(instance, Item::new));
     }
 

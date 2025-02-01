@@ -17,7 +17,7 @@
     },
     {
       "type": "entity",
-      "id": "alien2",
+      "id": "alien_zombie",
 
       "title": "Alien Zombie",
       "description": "This is an Alien Zombie. A ancient force corrupt this alien and now it's a zombie. This aggressive mob can be found on the moon",
@@ -29,7 +29,7 @@
     },
     {
       "type": "entity",
-      "id": "alien3",
+      "id": "star_crawler",
 
       "title": "Star Crawler",
       "description": "This is a Star Crawler. This monster mob can be found on the moon",
@@ -41,7 +41,7 @@
     },
     {
       "type": "entity",
-      "id": "alien4",
+      "id": "martian_raptor",
 
       "title": "Martian Raptor",
       "description": "This is a Martian Raptor. This passive creature live on Mars",
@@ -53,7 +53,7 @@
     },
     {
       "type": "entity",
-      "id": "alien5",
+      "id": "pygro",
 
       "title": "Pygro",
       "description": "This is a [color=yellow]Pygro. This passive creature live on ????",
@@ -65,7 +65,7 @@
     },
     {
       "type": "entity",
-      "id": "alien7",
+      "id": "pygro_brute",
 
       "title": "Pygro Brute",
       "description": "This is a Pygro Brute. This aggressive creature live on ????",
@@ -77,7 +77,7 @@
     },
     {
       "type": "entity",
-      "id": "alien9",
+      "id": "mogler",
 
       "title": "Mogler",
       "description": "This is a Mogler. This aggressive creature live on venus.",

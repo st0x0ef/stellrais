@@ -30,6 +30,19 @@
         },
         "size": 32
       }
+    },
+    {
+      "type": "item",
+      "id": "oxygen_tank",
+      "title": "Oxygen Tank",
+      "description": "Oxygen Tank allow you to keep oxygen with you. [br] [br] How to use: [br] - Filling a tank : When Having a space suit that is running out of oxygen, click the oxygen tank. The oxygen contained in the tank will be transfered to the suit. [br] - Oxygenate a room : place the full tank in the slot in the [ref=machines:oxygen_distributor]Oxygen [ref=machines:oxygen_distributor]Distributor. [br] [br] How to fill: [br] - Insert the tank in the [ref=machines:water_separator]Water [ref=machines:water_separator]Separator under the oxygen tank. [br]",
+      "item": {
+        "stack": {
+          "id": "stellaris:oxygen_tank",
+          "count": 1
+        },
+        "size": 32
+      }
     }
   ]
 }

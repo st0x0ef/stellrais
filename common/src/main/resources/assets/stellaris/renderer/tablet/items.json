@@ -7,7 +7,6 @@
     {
       "type": "item",
       "id": "oil_finder",
-
       "title": "Oil Finder",
       "description": "Right Click on the ground to find oil.",
       "item": {
@@ -42,6 +41,24 @@
           "count": 1
         },
         "size": 32
+      }
+    },
+    {
+      "type": "item",
+      "id": "cans",
+      "title": "Cans",
+      "description": "Cans are items that can store food. There are two differents types of cans: [br] - Small: can contain maximum 10 nutrition [br] - Regular: can contain maximum 20 nutrition [br] [br] How to fill them: [br] In the [ref=machines:vacuumator]Vacuumator, in the three slots at the top place a can, food, and an empty glass bottle. You will gain a can filled with your food and a water bottle.",
+      "item": {
+        "stack": {
+          "id": "stellaris:big_blue_can",
+          "count": 1
+        },
+        "size": 32
+      },
+      "image": {
+        "location": "stellaris:tablet/images/vacuumator_recipe",
+        "width": 128,
+        "height": 64
       }
     }
   ]

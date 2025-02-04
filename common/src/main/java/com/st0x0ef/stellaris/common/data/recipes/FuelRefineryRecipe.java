@@ -21,7 +21,7 @@ public record FuelRefineryRecipe(FluidStack ingredientStack, FluidStack resultSt
     @Override
     public boolean matches(FluidInput input, Level level) {
         FluidStorage storage = ((FuelRefineryBlockEntity) input.entity()).getIngredientTank();
-        FluidStack stack = storage.getFluidInTank(storage.getTanks());
+        FluidStack stack = storage.getFluidInTank(storage.getTanks() - 1);
         return stack.isFluidEqual(ingredientStack) && stack.getAmount() >= ingredientStack.getAmount();
     }
 

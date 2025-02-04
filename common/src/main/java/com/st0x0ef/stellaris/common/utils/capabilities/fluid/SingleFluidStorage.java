@@ -109,6 +109,7 @@ public abstract class SingleFluidStorage implements UniversalFluidStorage {
     }
 
     public void load(CompoundTag compoundTag, HolderLookup.Provider provider, String name) {
+        if (!compoundTag.contains(name+"-singleFluid")) return;
         FluidStack.read(provider, compoundTag.get(name+"-singleFluid")).ifPresent(this::setFluidInTank);
     }
 

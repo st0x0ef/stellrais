@@ -75,7 +75,7 @@ public abstract class FluidStorage extends BaseFluidStorage {
     public void save(CompoundTag compoundTag, HolderLookup.Provider provider, String name) {
         Tag tag;
         for (int i = 0; i < getTanks(); i++)
-            if(!getFluidInTank(i).isEmpty()) {
+            if (!getFluidInTank(i).isEmpty()) {
                 tag = FluidStackHooks.write(provider, getFluidInTank(i), new CompoundTag());
                 compoundTag.put(name+"-fluid-"+i, tag);
             }

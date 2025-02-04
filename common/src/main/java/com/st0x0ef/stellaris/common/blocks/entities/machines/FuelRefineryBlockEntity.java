@@ -1,6 +1,7 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
 import com.fej1fun.potentials.providers.FluidProvider;
+import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.common.data.recipes.FuelRefineryRecipe;
 import com.st0x0ef.stellaris.common.data.recipes.input.FluidInput;
 import com.st0x0ef.stellaris.common.items.armors.JetSuit;
@@ -40,22 +41,22 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
 
     public FuelRefineryBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityRegistry.FUEL_REFINERY.get(), pos, state);
-        this.inputTank = new FilteredFluidStorage(1, 10000, 10000, 0, (n,fluidStack) -> fluidStack.getFluid() == FluidRegistry.OIL_STILL.get()) {
+        this.inputTank = new FilteredFluidStorage(1, 10000, 10000, 0, (n,fluidStack) -> fluidStack.getFluid().isSame(FluidRegistry.FLOWING_OIL.get())) {
             @Override
             protected void onChange(int i) {
                 setChanged();
-                if (level != null && level.getServer() != null && !level.getServer().getPlayerList().getPlayers().isEmpty())
+                if (level != null && level.getServer() != null && !level.getServer().getPlayerList().getPlayers().isEmpty() && this.getFluidInTank(0) != null)
                     NetworkManager.sendToPlayers(level.getServer().getPlayerList().getPlayers(),
                             new SyncFluidPacketWithoutDirection(this.getFluidInTank(0), 0, getBlockPos()));
             }
         };
-        this.outputTank = new FilteredFluidStorage(1, 10000, 0, 10000, (n,fluidStack) -> fluidStack.getFluid() == FluidRegistry.FUEL_STILL.get()) {
+        this.outputTank = new FilteredFluidStorage(1, 10000, 0, 10000, (n,fluidStack) -> fluidStack.getFluid().isSame(FluidRegistry.FLOWING_FUEL.get())) {
             @Override
             protected void onChange(int i) {
                 setChanged();
-                if (level!=null && level.getServer()!=null)
+                if (level != null && level.getServer() != null && !level.getServer().getPlayerList().getPlayers().isEmpty() && this.getFluidInTank(0) != null)
                     NetworkManager.sendToPlayers(level.getServer().getPlayerList().getPlayers(),
-                            new SyncFluidPacket(this.getFluidInTank(0), 0, getBlockPos(), null));
+                            new SyncFluidPacketWithoutDirection(this.getFluidInTank(0), 0, getBlockPos()));
             }
         };
     }
@@ -65,8 +66,8 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
         if (getItem(2).getItem() instanceof JetSuit.Suit) {
             int fuel = 10;
 
-            if (outputTank.getFluidValueInTank(outputTank.getTanks()) < fuel) {
-                fuel = (int) outputTank.getFluidValueInTank(outputTank.getTanks());
+            if (outputTank.getFluidValueInTank(0) < fuel) {
+                fuel = (int) outputTank.getFluidValueInTank(0);
             }
 
             else if (FuelUtils.getFuel(getItem(2)) + fuel > JetSuit.MAX_FUEL_CAPACITY) {
@@ -78,11 +79,11 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
                 this.setChanged();
             }
         } else {
-            FluidUtil.moveFluidToItem(outputTank.getTanks(), outputTank, getItem(3), 1000);
+            FluidUtil.moveFluidToItem(0, outputTank, getItem(3), 1000);
         }
 
-        if (!FluidUtil.moveFluidFromItem(inputTank.getTanks(),getItem(0), inputTank, 1000).isEmpty()) {
-            FluidUtil.moveFluidToItem(inputTank.getTanks(), inputTank, getItem(1), 1000);
+        if (!FluidUtil.moveFluidFromItem(0, getItem(0), inputTank, 1000).isEmpty()) {
+            FluidUtil.moveFluidToItem(0, inputTank, getItem(1), 1000);
         }
 
         Optional<RecipeHolder<FuelRefineryRecipe>> recipeHolder = cachedCheck.getRecipeFor(new FluidInput(getLevel().getBlockEntity(getBlockPos()), getItems()), level);
@@ -92,8 +93,8 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
             if (energyContainer.getEnergy() >= recipe.energy()) {
                 FluidStack resultStack = recipe.resultStack();
 
-                if (outputTank.getFluidInTank(outputTank.getTanks()).isEmpty() || outputTank.getFluidInTank(outputTank.getTanks()).isFluidEqual(resultStack)) {
-                    if (outputTank.getFluidValueInTank(outputTank.getTanks()) + resultStack.getAmount() < outputTank.getTankCapacity(outputTank.getTanks())) {
+                if (outputTank.getFluidInTank(0).isEmpty() || outputTank.getFluidInTank(0).isFluidEqual(resultStack)) {
+                    if (outputTank.getFluidValueInTank(0) + resultStack.getAmount() < outputTank.getTankCapacity(0)) {
                         energyContainer.extract(recipe.energy(), false);
                         inputTank.drain(FluidStack.create(recipe.ingredientStack().getFluid(), recipe.ingredientStack().getAmount()), false);
                         outputTank.fill(resultStack, false);
@@ -122,15 +123,15 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
-        inputTank.save(tag, provider, "input");
-        outputTank.save(tag, provider, "output");
+        //inputTank.save(tag, provider, "input");
+        //outputTank.save(tag, provider, "output");
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.saveAdditional(tag, provider);
-        inputTank.load(tag, provider, "input");
-        outputTank.load(tag, provider, "output");
+        //inputTank.load(tag, provider, "input");
+        //outputTank.load(tag, provider, "output");
     }
 
     public FluidStorage getIngredientTank() {
@@ -143,7 +144,7 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
     @Override
     public @Nullable FluidStorage getFluidTank(@Nullable Direction direction) {
         //TODO better directions
-        if(direction == null) {
+        if (direction == null) {
             return outputTank;
         }
 

@@ -42,9 +42,6 @@ public class PumpjackBlockEntity extends BaseEnergyContainerBlockEntity implemen
 
         ChunkAccess access = this.level.getChunk(this.worldPosition);
 
-        chunkOilLevel = access.stellaris$getChunkOilLevel();
-
-
         int actualOilToExtract = (int) oilToExtract;
 
         if (access.stellaris$getChunkOilLevel() < oilToExtract) {
@@ -66,13 +63,13 @@ public class PumpjackBlockEntity extends BaseEnergyContainerBlockEntity implemen
             }
         }
 
+        BlockState state;
         if (isGenerating) {
-            BlockState state = getBlockState().setValue(CoalGeneratorBlock.LIT, true);
-            level.setBlock(getBlockPos(), state, 3);
+            state = getBlockState().setValue(CoalGeneratorBlock.LIT, true);
         } else {
-            BlockState state = getBlockState().setValue(CoalGeneratorBlock.LIT, false);
-            level.setBlock(getBlockPos(), state, 3);
+            state = getBlockState().setValue(CoalGeneratorBlock.LIT, false);
         }
+        level.setBlock(getBlockPos(), state, 3);
     }
 
     @Override

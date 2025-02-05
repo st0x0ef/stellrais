@@ -1,5 +1,7 @@
 package com.st0x0ef.stellaris.common.oil;
 
+import com.st0x0ef.stellaris.common.utils.Utils;
+
 import java.util.Random;
 
 public class OilUtils {
@@ -10,5 +12,15 @@ public class OilUtils {
         }
 
         return 0;
+    }
+
+    public static int getOilLevelColor(int oilLevel) {
+        if (oilLevel > 40000) {
+            return Utils.getColorHexCode("green");
+        } else if (oilLevel > 0) {
+            return Utils.getColorHexCode("orange");
+        } else {
+            return Utils.getColorHexCode("red");
+        }
     }
 }

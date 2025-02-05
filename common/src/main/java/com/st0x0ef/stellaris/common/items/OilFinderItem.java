@@ -1,6 +1,6 @@
 package com.st0x0ef.stellaris.common.items;
 
-import com.st0x0ef.stellaris.common.utils.Utils;
+import com.st0x0ef.stellaris.common.oil.OilUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -29,14 +29,8 @@ public class OilFinderItem extends Item {
         int oilLevel = level.getChunk(player.getOnPos()).stellaris$getChunkOilLevel();
 
         MutableComponent component = Component.literal("Found Oil " + level.getChunk(player.getOnPos()).stellaris$getChunkOilLevel() + "mb");
-        if (oilLevel > 40000) {
-            component.withColor(Utils.getColorHexCode("green"));
-        } else if (oilLevel > 0) {
-            component.withColor(Utils.getColorHexCode("orange"));
-        } else {
-            component = Component.literal("No oil found");
-            component.withColor(Utils.getColorHexCode("red"));
-        }
+        if (oilLevel == 0) component = Component.literal("No oil found");
+        component.withColor(OilUtils.getOilLevelColor(oilLevel));
 
         player.getItemInHand(usedHand).hurtAndBreak(2, player, EquipmentSlot.MAINHAND);
         player.displayClientMessage(component, true);

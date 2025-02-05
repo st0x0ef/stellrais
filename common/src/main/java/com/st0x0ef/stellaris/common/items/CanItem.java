@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Optional;
 
-public class CanItem extends Item {
+public class CanItem extends Item implements CustomTabletEntry {
 
     private final int maxNutrition;
 
@@ -89,5 +89,10 @@ public class CanItem extends Item {
             }
         }
         return stack;
+    }
+
+    @Override
+    public String getEntryName() {
+        return "items:cans";
     }
 }

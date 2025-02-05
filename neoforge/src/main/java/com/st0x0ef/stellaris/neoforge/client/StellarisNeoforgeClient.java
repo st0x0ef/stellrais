@@ -138,6 +138,7 @@ public class StellarisNeoforgeClient {
     public static void registerKeyBindings(RegisterKeyMappingsEvent event) {
         event.register(KeyMappingsRegistry.CHANGE_JETSUIT_MODE);
         event.register(KeyMappingsRegistry.FREEZE_PLANET_MENU);
+        event.register(KeyMappingsRegistry.OPEN_TABLET_INFO);
 
         NeoForge.EVENT_BUS.addListener(StellarisNeoforgeClient::clientTick);
     }

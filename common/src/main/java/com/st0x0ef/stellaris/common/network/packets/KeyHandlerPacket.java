@@ -85,6 +85,9 @@ public class KeyHandlerPacket implements CustomPacketPayload {
                 case "key_jump":
                     KeyVariables.KEY_JUMP.put(player.getUUID(), packet.condition);
                     break;
+                case "key_tablet":
+                    KeyVariables.KEY_TABLET.put(player.getUUID(), packet.condition);
+                    break;
                 case "freeze_planet_menu":
                     if (player.containerMenu instanceof PlanetSelectionMenu menu) menu.switchFreezeGui();
                     break;

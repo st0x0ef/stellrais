@@ -43,7 +43,7 @@ dependencies {
 
     modImplementation "curse.maven:energized-power-782147:5510660"
 
-    include modApi("com.fej1fun.potentials:potentials-fabric:${rootProject.potentials_version}")
+    modApi("com.fej1fun.potentials:potentials-fabric:${rootProject.potentials_version}")
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }

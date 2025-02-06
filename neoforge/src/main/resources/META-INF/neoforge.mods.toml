@@ -34,6 +34,13 @@ versionRange = "[13.0.6,)"
 ordering = "AFTER"
 side = "BOTH"
 
+[[dependencies.stellaris]]
+modId = "potentials"
+type = "required"
+versionRange = "[0.2.5,)"
+ordering = "AFTER"
+side = "BOTH"
+
 [[mixins]]
 config = "stellaris.mixins.json"
 [[mixins]]

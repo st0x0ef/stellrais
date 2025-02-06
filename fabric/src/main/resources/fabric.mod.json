@@ -30,6 +30,7 @@
     "fabricloader": ">=0.15.11",
     "minecraft": ">=1.21",
     "architectury": ">=13.0.6",
-    "fabric-api": ">=0.100.8"
+    "fabric-api": ">=0.100.8",
+    "potentials": ">=0.2.5"
   }
 }

@@ -5,6 +5,7 @@ import com.st0x0ef.stellaris.common.data.recipes.FuelRefineryRecipe;
 import com.st0x0ef.stellaris.common.data.recipes.input.FluidInput;
 import com.st0x0ef.stellaris.common.items.armors.JetSuit;
 import com.st0x0ef.stellaris.common.menus.FuelRefineryMenu;
+import com.st0x0ef.stellaris.common.network.packets.SyncFluidPacket;
 import com.st0x0ef.stellaris.common.network.packets.SyncFluidPacketWithoutDirection;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import com.st0x0ef.stellaris.common.registry.FluidRegistry;
@@ -80,9 +81,7 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
             FluidUtil.moveFluidToItem(0, outputTank, getItem(3), 1000);
         }
 
-        if (!FluidUtil.moveFluidFromItem(0, getItem(0), inputTank, 1000).isEmpty()) {
-            FluidUtil.moveFluidToItem(0, inputTank, getItem(1), 1000);
-        }
+        FluidUtil.moveFluidToItem(inputTank.getTanks(), inputTank, getItem(1), 1000);
 
         Optional<RecipeHolder<FuelRefineryRecipe>> recipeHolder = cachedCheck.getRecipeFor(new FluidInput(getLevel().getBlockEntity(getBlockPos()), getItems()), level);
         if (recipeHolder.isPresent()) {
@@ -121,15 +120,15 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
-        //inputTank.save(tag, provider, "input");
-        //outputTank.save(tag, provider, "output");
+        inputTank.save(tag, provider, "input");
+        outputTank.save(tag, provider, "output");
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.saveAdditional(tag, provider);
-        //inputTank.load(tag, provider, "input");
-        //outputTank.load(tag, provider, "output");
+        inputTank.load(tag, provider, "input");
+        outputTank.load(tag, provider, "output");
     }
 
     public FluidStorage getIngredientTank() {

@@ -103,14 +103,52 @@ public abstract class SingleFluidStorage implements UniversalFluidStorage {
         return filled;
     }
 
+    public FluidStack drainWithoutLimits(long maxAmount, boolean simulate) {
+        long removedAmount = Math.min(maxAmount, stack.getAmount());
+        stack.shrink(removedAmount);
+        onChange();
+        return FluidStack.create(stack.getFluid(), removedAmount);
+    }
+
+    public FluidStack drainWithoutLimits(FluidStack stack, boolean simulate) {
+
+        if (!isFluidValid(0, stack)) return FluidStack.empty();
+        if (getFluidInTank(0).isEmpty()) return FluidStack.empty();
+        if (getFluidInTank(0).getFluid()!=stack.getFluid()) return FluidStack.empty();
+
+        long drained = Math.min(stack.getAmount(), stack.getAmount());
+        if (!simulate) {
+            this.stack.shrink(drained);
+            onChange();
+        }
+
+        return FluidStack.create(stack, drained);
+    }
+
+    public long fillWithoutLimits(FluidStack stack, boolean simulate) {
+
+        if (!isFluidValid(0, stack)) return 0L;
+        if (!(this.stack.getFluid()==stack.getFluid() || this.stack.isEmpty())) return 0L;
+        if (this.stack.getAmount()>=getTankCapacity(0)) return 0L;
+
+        long filled = Math.clamp(getTankCapacity(0) - getFluidValueInTank(), 0L, stack.getAmount());
+        if (!simulate) {
+            this.stack = FluidStack.create(getFluidInTank(0), getFluidValueInTank() + filled);
+            onChange();
+        }
+
+        return filled;
+    }
+
     public void save(CompoundTag compoundTag, HolderLookup.Provider provider, String name) {
         if (isEmpty()) return;
-        compoundTag.put(name+"-singleFluid", FluidStackHooks.write(provider, getFluidInTank(0), new CompoundTag()));
+        if (!getFluidInTank(0).isEmpty())
+            compoundTag.put(name+"-singleFluid", FluidStackHooks.write(provider, getFluidInTank(0), new CompoundTag()));
     }
 
     public void load(CompoundTag compoundTag, HolderLookup.Provider provider, String name) {
         if (!compoundTag.contains(name+"-singleFluid")) return;
-        FluidStack.read(provider, compoundTag.get(name+"-singleFluid")).ifPresent(this::setFluidInTank);
+        setFluidInTank(FluidStackHooks.readOptional(provider, (CompoundTag) compoundTag.get(name+"-singleFluid")));
     }
 
     public boolean isEmpty() {

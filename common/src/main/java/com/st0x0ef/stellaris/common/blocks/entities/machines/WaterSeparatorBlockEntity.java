@@ -86,13 +86,11 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
 
     @Override
     public void tick() {
-        for (int i = 0; i < 2; i++)
-            FluidUtil.moveFluidToItem(i, resultTanks, items.get(i + 2), resultTanks.getTankCapacity(i));
+        for (int i = 2; i < 4; i++)
+            FluidUtil.moveFluidToItem(i, resultTanks, items.get(i), resultTanks.getTankCapacity(i));
 
 
-//        if (!FluidUtil.addFluidFromBucket(this, ingredientTank, 1, 0)) {
-//            FluidUtil.extractFluidToItem(this, ingredientTank, 1, 0);
-//        }
+        FluidUtil.moveFluidFromItem(0, items.get(1), ingredientTank, 1000);
 
         assert level != null;
         Optional<RecipeHolder<WaterSeparatorRecipe>> recipeHolder = cachedCheck.getRecipeFor(new FluidInput(level.getBlockEntity(getBlockPos()), getItems()), level);
@@ -100,7 +98,7 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
             WaterSeparatorRecipe recipe = recipeHolder.get().value();
 
             if (energyContainer.getEnergy() >= recipe.energy()) {
-                ingredientTank.drain(recipe.ingredientStack(), false);
+                ingredientTank.drainWithoutLimits(recipe.ingredientStack(), false);
                 resultTanks.fillWithoutLimits(recipe.resultStacks().getFirst(), false);
                 resultTanks.fillWithoutLimits(recipe.resultStacks().getLast(), false);
 

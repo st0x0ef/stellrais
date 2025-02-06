@@ -7,18 +7,18 @@ import dev.architectury.fluid.FluidStack;
 import net.minecraft.world.item.ItemStack;
 
 public class FluidUtil {
-    public static FluidStack moveFluidToItem(int tank, UniversalFluidStorage from, ItemStack stackTo, long amount) {
-        if (stackTo.isEmpty()) return FluidStack.empty();
+    public static void moveFluidToItem(int tank, UniversalFluidStorage from, ItemStack stackTo, long amount) {
+        if (stackTo.isEmpty()) return;
         UniversalFluidStorage to = Capabilities.Fluid.ITEM.getCapability(stackTo);
-        if (to==null) return FluidStack.empty();
-        return moveFluid(from, to, FluidStack.create(from.getFluidInTank(tank), amount));
+        if (to==null) return;
+        moveFluid(from, to, FluidStack.create(from.getFluidInTank(tank), amount));
     }
 
-    public static FluidStack moveFluidFromItem(int tank,ItemStack stackFrom, UniversalFluidStorage to, long amount) {
-        if (stackFrom.isEmpty()) return FluidStack.empty();
+    public static void moveFluidFromItem(int tank, ItemStack stackFrom, UniversalFluidStorage to, long amount) {
+        if (stackFrom.isEmpty()) return;
         UniversalFluidStorage from = Capabilities.Fluid.ITEM.getCapability(stackFrom);
-        if (from==null) return FluidStack.empty();
-        return moveFluid(from, to, FluidStack.create(from.getFluidInTank(tank), amount));
+        if (from==null) return;
+        moveFluid(from, to, FluidStack.create(from.getFluidInTank(tank), amount));
     }
 
     public static FluidStack moveFluid(UniversalFluidStorage from, UniversalFluidStorage to, FluidStack stack) {

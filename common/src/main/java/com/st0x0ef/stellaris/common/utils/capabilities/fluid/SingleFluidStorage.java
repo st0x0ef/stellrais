@@ -65,10 +65,12 @@ public abstract class SingleFluidStorage implements UniversalFluidStorage {
 
     @Override
     public FluidStack drain(long maxAmount, boolean simulate) {
-        long removedAmount = Math.min(Math.min(maxDrain, maxAmount), stack.getAmount());
-        stack.shrink(removedAmount);
-        onChange();
-        return FluidStack.create(stack.getFluid(), removedAmount);
+        long drained = Math.min(Math.min(maxDrain, maxAmount), stack.getAmount());
+        if (!simulate) {
+            this.stack.shrink(drained);
+            onChange();
+        }
+        return FluidStack.create(stack.getFluid(), drained);
     }
 
     @Override
@@ -96,7 +98,7 @@ public abstract class SingleFluidStorage implements UniversalFluidStorage {
 
         long filled = Math.clamp(getTankCapacity(0) - getFluidValueInTank(), 0L, Math.min(this.maxFill, stack.getAmount()));
         if (!simulate) {
-            this.stack = FluidStack.create(getFluidInTank(0), getFluidValueInTank() + filled);
+            this.stack = stack.copyWithAmount(this.stack.getAmount() + filled);
             onChange();
         }
 
@@ -105,8 +107,10 @@ public abstract class SingleFluidStorage implements UniversalFluidStorage {
 
     public FluidStack drainWithoutLimits(long maxAmount, boolean simulate) {
         long removedAmount = Math.min(maxAmount, stack.getAmount());
-        stack.shrink(removedAmount);
-        onChange();
+        if (!simulate) {
+            stack.shrink(removedAmount);
+            onChange();
+        }
         return FluidStack.create(stack.getFluid(), removedAmount);
     }
 
@@ -133,7 +137,7 @@ public abstract class SingleFluidStorage implements UniversalFluidStorage {
 
         long filled = Math.clamp(getTankCapacity(0) - getFluidValueInTank(), 0L, stack.getAmount());
         if (!simulate) {
-            this.stack = FluidStack.create(getFluidInTank(0), getFluidValueInTank() + filled);
+            this.stack = stack.copyWithAmount(getFluidValueInTank() + filled);
             onChange();
         }
 

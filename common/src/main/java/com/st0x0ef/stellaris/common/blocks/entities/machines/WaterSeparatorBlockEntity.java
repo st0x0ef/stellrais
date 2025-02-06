@@ -42,7 +42,7 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
         @Override
         protected void onChange() {
             setChanged();
-            if (level != null && level.getServer() != null && !level.getServer().getPlayerList().getPlayers().isEmpty())
+            if (level != null && level.getServer() != null && !level.getServer().getPlayerList().getPlayers().isEmpty() && !this.isEmpty())
                 NetworkManager.sendToPlayers(level.getServer().getPlayerList().getPlayers(),
                         new SyncFluidPacketWithoutDirection(this.getFluidInTank(0), 0, getBlockPos()));
         }
@@ -58,11 +58,12 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
         @Override
         protected void onChange(int tank) {
             setChanged();
-            if (level!=null && level.getServer()!=null)
+            if (level!=null && level.getServer()!=null && !level.getServer().getPlayerList().getPlayers().isEmpty() && !this.getFluidInTank(tank).isEmpty())
                 NetworkManager.sendToPlayers(level.getServer().getPlayerList().getPlayers(),
                         new SyncFluidPacket(this.getFluidInTank(tank), tank, getBlockPos(), getBlockState().getValue(BlockStateProperties.FACING).getClockWise()));
         }
     };
+
     private final RecipeManager.CachedCheck<FluidInput, WaterSeparatorRecipe> cachedCheck = RecipeManager.createCheck(RecipesRegistry.WATER_SEPERATOR_TYPE.get());
 
     public WaterSeparatorBlockEntity(BlockPos pos, BlockState state) {
@@ -80,7 +81,7 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
     }
 
     @Override
-    protected AbstractContainerMenu createMenu(int containerId, Inventory inventory) {
+    protected @NotNull AbstractContainerMenu createMenu(int containerId, Inventory inventory) {
         return new WaterSeparatorMenu(containerId, inventory, this, this);
     }
 
@@ -88,7 +89,6 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
     public void tick() {
         for (int i = 2; i < 4; i++)
             FluidUtil.moveFluidToItem(i, resultTanks, items.get(i), resultTanks.getTankCapacity(i));
-
 
         FluidUtil.moveFluidFromItem(0, items.get(1), ingredientTank, 1000);
 

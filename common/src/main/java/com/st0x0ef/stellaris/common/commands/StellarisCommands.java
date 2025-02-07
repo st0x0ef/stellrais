@@ -46,7 +46,7 @@ public class StellarisCommands {
                                 }))
                         .then(Commands.literal("tablet")
                                 .executes((CommandContext<CommandSourceStack> context) -> {
-                                    PlanetUtil.openTabletMenu(context.getSource().getPlayer());
+                                    PlanetUtil.openTabletMenu(context.getSource().getPlayer(), null);
                                     return 0;
                                 }))
                         .then(Commands.literal("waitScreen")

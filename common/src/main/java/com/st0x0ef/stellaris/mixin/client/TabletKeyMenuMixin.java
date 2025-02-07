@@ -22,14 +22,13 @@ public class TabletKeyMenuMixin {
         if (player == null) {
             return;
         }
-        Stellaris.LOG.info("{} {}", keyCode, KeyMappingsRegistry.OPEN_TABLET_INFO.key.getValue());
-
         if (KeyMappingsRegistry.OPEN_TABLET_INFO.matches(KeyMappingsRegistry.OPEN_TABLET_INFO.key.getValue(), keyCode)) {
-            if(!KeyVariables.isHoldingTabletKey(player)) {
+            Stellaris.LOG.info("Tablet key is pressed {}", KeyVariables.getHoldingTabletPress(player));
+
+            if(!KeyVariables.getHoldingTabletPress(player)) {
                 NetworkManager.sendToServer(new KeyHandlerPacket("key_tablet", true));
             } else {
                 NetworkManager.sendToServer(new KeyHandlerPacket("key_tablet", false));
-
             }
         }
     }

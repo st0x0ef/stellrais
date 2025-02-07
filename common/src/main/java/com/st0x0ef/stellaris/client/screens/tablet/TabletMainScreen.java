@@ -31,14 +31,18 @@ public class TabletMainScreen extends AbstractContainerScreen<TabletMenu> {
     public static Map<String, TabletEntry> ENTRIES = new HashMap<>();
     public static Map<ResourceLocation, TabletEntry.Info> INFOS = new HashMap<>();
     public List<Component> STATS = new ArrayList<>();
+    private ResourceLocation directEntry = null;
 
     public ArrayList<TexturedButton> BUTTONS = new ArrayList<>();
-
-
+    
     public TabletMainScreen(TabletMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, Component.literal("Tablet"));
         this.imageHeight = 162;
         this.imageWidth = 250;
+
+        if(menu.getEntry() != null) {
+            directEntry = menu.getEntry();
+        }
     }
 
     @Override
@@ -77,6 +81,9 @@ public class TabletMainScreen extends AbstractContainerScreen<TabletMenu> {
             this.addRenderableWidget(button);
         });
 
+        if (directEntry != null) {
+            openEntry(directEntry);
+        }
     }
 
     @Override
@@ -111,4 +118,19 @@ public class TabletMainScreen extends AbstractContainerScreen<TabletMenu> {
         }
         return stats;
     }
+
+    public void openEntry(ResourceLocation location) {
+        if(INFOS.containsKey(location) && this.minecraft != null) {
+            Stellaris.LOG.info("NOT NULL");
+
+            TabletEntry entry = ENTRIES.get(location.getNamespace());
+            TabletEntry.Info info = INFOS.get(location);
+            this.minecraft.setScreen(new TabletEntryScreen(Component.translatable(entry.id()), this, this.leftPos, this.topPos, entry));
+            if (this.minecraft != null && this.minecraft.screen instanceof TabletEntryScreen screen) {
+                screen.changeInfo(info);
+            }
+        }
+    }
+    
+
 }

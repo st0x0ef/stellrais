@@ -125,10 +125,16 @@ public class PlanetUtil {
         return 0;
     }
 
-    public static int openTabletMenu(Player player) {
+    public static int openTabletMenu(Player player, ResourceLocation entry) {
         ExtendedMenuProvider provider = new ExtendedMenuProvider() {
             @Override
-            public void saveExtraData(FriendlyByteBuf buffer) {}
+            public void saveExtraData(FriendlyByteBuf buffer) {
+                if(entry != null) {
+                    buffer.writeResourceLocation(entry);
+                } else {
+                    buffer.writeResourceLocation(null);
+                }
+            }
 
             @Override
             public Component getDisplayName() {
@@ -138,6 +144,11 @@ public class PlanetUtil {
             @Override
             public @NotNull AbstractContainerMenu createMenu(int syncId, Inventory inv, Player player) {
                 FriendlyByteBuf buffer = new FriendlyByteBuf(Unpooled.buffer());
+                if(entry != null) {
+                    buffer.writeResourceLocation(entry);
+                } else {
+                    buffer.writeResourceLocation(null);
+                }
                 return TabletMenu.create(syncId, inv, buffer);
             }
         };

@@ -36,7 +36,9 @@ public class KeyVariables {
         return player != null && KEY_JUMP.getOrDefault(player.getUUID(), false);
     }
 
-    public static boolean isHoldingTabletKey(Player player) {
+    public static boolean getHoldingTabletPress(Player player) {
         return player != null && KEY_TABLET.getOrDefault(player.getUUID(), false);
     }
+
+
 }

@@ -3,6 +3,7 @@ package com.st0x0ef.stellaris.common.network.packets;
 import com.fej1fun.potentials.fluid.BaseFluidStorage;
 import com.fej1fun.potentials.providers.FluidProvider;
 import com.st0x0ef.stellaris.Stellaris;
+import com.st0x0ef.stellaris.common.utils.capabilities.fluid.SingleFluidStorage;
 import dev.architectury.fluid.FluidStack;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.client.Minecraft;
@@ -38,6 +39,8 @@ public record SyncFluidPacket(FluidStack fluidStack, int tank, BlockPos pos, Dir
             if (level != null && level.getBlockEntity(data.pos) instanceof FluidProvider.BLOCK fluidProvider)
                 if (fluidProvider.getFluidTank(data.direction) instanceof BaseFluidStorage fluidStorage)
                     fluidStorage.setFluidInTank(data.tank, data.fluidStack);
+                else if (fluidProvider.getFluidTank(data.direction) instanceof SingleFluidStorage fluidStorage)
+                    fluidStorage.setFluidInTank(data.fluidStack);
         });
     }
 }

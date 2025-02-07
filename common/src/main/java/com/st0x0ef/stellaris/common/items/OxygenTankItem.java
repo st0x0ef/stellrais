@@ -41,7 +41,6 @@ public class OxygenTankItem extends Item {
         if (player.isShiftKeyDown()) {
             if (player.getItemBySlot(EquipmentSlot.CHEST).has(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get())) {
                 ItemStack armor = player.getItemBySlot(EquipmentSlot.CHEST);
-                Stellaris.LOG.info("ee");
 
                 ItemStack tank = player.getItemInHand(usedHand);
                 CappedLongComponent oxygenComponent = tank.get(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get());

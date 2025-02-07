@@ -40,7 +40,6 @@ public class OpenTabletEntryPacket implements CustomPacketPayload {
         Player player = context.getPlayer();
         context.queue(() -> {
             PlanetUtil.openTabletMenu(player, packet.entry);
-            NetworkManager.sendToServer(new KeyHandlerPacket("key_tablet", false));
 
         });
     }

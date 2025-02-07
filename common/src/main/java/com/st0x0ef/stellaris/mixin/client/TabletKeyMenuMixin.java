@@ -1,9 +1,11 @@
 package com.st0x0ef.stellaris.mixin.client;
 
 import com.st0x0ef.stellaris.Stellaris;
+import com.st0x0ef.stellaris.client.events.ClientEvents;
 import com.st0x0ef.stellaris.client.registries.KeyMappingsRegistry;
 import com.st0x0ef.stellaris.common.keybinds.KeyVariables;
 import com.st0x0ef.stellaris.common.network.packets.KeyHandlerPacket;
+import com.st0x0ef.stellaris.common.network.packets.OpenTabletEntryPacket;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -23,12 +25,9 @@ public class TabletKeyMenuMixin {
             return;
         }
         if (KeyMappingsRegistry.OPEN_TABLET_INFO.matches(KeyMappingsRegistry.OPEN_TABLET_INFO.key.getValue(), keyCode)) {
-            Stellaris.LOG.info("Tablet key is pressed {}", KeyVariables.getHoldingTabletPress(player));
-
-            if(!KeyVariables.getHoldingTabletPress(player)) {
-                NetworkManager.sendToServer(new KeyHandlerPacket("key_tablet", true));
-            } else {
-                NetworkManager.sendToServer(new KeyHandlerPacket("key_tablet", false));
+            if(ClientEvents.entryHovered != null) {
+                NetworkManager.sendToServer(new OpenTabletEntryPacket(ClientEvents.entryHovered));
+                ClientEvents.entryHovered = null;
             }
         }
     }

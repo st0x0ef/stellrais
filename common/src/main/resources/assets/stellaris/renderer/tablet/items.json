@@ -57,8 +57,8 @@
       },
       "image": {
         "location": "stellaris:tablet/images/vacuumator_recipe",
-        "width": 128,
-        "height": 64
+        "width": 140,
+        "height": 80
       }
     }
   ]

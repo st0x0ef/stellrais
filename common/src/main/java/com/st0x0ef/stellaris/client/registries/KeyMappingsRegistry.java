@@ -2,8 +2,10 @@ package com.st0x0ef.stellaris.client.registries;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import com.st0x0ef.stellaris.Stellaris;
+import com.st0x0ef.stellaris.client.events.ClientEvents;
 import com.st0x0ef.stellaris.common.keybinds.KeyVariables;
 import com.st0x0ef.stellaris.common.network.packets.KeyHandlerPacket;
+import com.st0x0ef.stellaris.common.network.packets.OpenTabletEntryPacket;
 import com.st0x0ef.stellaris.common.registry.MenuTypesRegistry;
 import com.st0x0ef.stellaris.common.utils.Utils;
 import dev.architectury.networking.NetworkManager;
@@ -24,13 +26,11 @@ public class KeyMappingsRegistry {
         if (player == null) {
             return;
         }
-
         else if (player.containerMenu == MenuTypesRegistry.PLANET_SELECTION_MENU) {
             while (FREEZE_PLANET_MENU.consumeClick()) {
                 NetworkManager.sendToServer(new KeyHandlerPacket("freeze_planet_menu", true));
             }
         }
-
         else if (Utils.isLivingInJetSuit(player) || Utils.isLivingInSpaceSuit(player)) {
             while (CHANGE_JETSUIT_MODE.consumeClick()) {
                 NetworkManager.sendToServer(new KeyHandlerPacket("switch_jet_suit_mode", true));

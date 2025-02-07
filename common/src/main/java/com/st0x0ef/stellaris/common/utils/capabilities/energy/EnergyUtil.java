@@ -17,13 +17,13 @@ public class EnergyUtil {
         return moveEnergy(from, to, amount);
     }
 
-    public static int distributeEnergyNearby(Level level, BlockPos pos, int amount) {
-        return distributeEnergyNearby(level, pos, amount, List.of());
+    public static void distributeEnergyNearby(Level level, BlockPos pos, int amount) {
+        distributeEnergyNearby(level, pos, amount, null);
     }
 
-    public static int distributeEnergyNearby(Level level, BlockPos pos, int amount, List<Direction> outputDirections) {
-        if (outputDirections==null || outputDirections.isEmpty()) return distributeInAllDirections(level, pos, amount);
-        else return distributeInDirections(level, pos, amount, outputDirections);
+    public static void distributeEnergyNearby(Level level, BlockPos pos, int amount, List<Direction> outputDirections) {
+        if (outputDirections==null || outputDirections.isEmpty()) distributeInAllDirections(level, pos, amount);
+        else distributeInDirections(level, pos, amount, outputDirections);
     }
 
     private static int distributeInDirections(Level level, BlockPos pos, int amount, List<Direction> outputDirections) {
@@ -51,11 +51,10 @@ public class EnergyUtil {
         return amount - toDistribute.get();
     }
 
-    private static int distributeInAllDirections(Level level, BlockPos pos, int amount) {
+    private static void distributeInAllDirections(Level level, BlockPos pos, int amount) {
         UniversalEnergyStorage from = Capabilities.Energy.BLOCK.getCapability(level, pos, null);
-        if (from==null) return 0;
-        if (!from.canExtractEnergy()) return 0;
-        if (!(from.extract(amount, true) > 0)) return 0;
+        if (from==null) return;
+        if (from.extract(amount, true) == 0) return;
 
         List<UniversalEnergyStorage> toSend = Direction.stream()
                 .map(direction -> Capabilities.Energy.BLOCK.getCapability(level, pos.relative(direction), direction.getOpposite()))
@@ -63,7 +62,7 @@ public class EnergyUtil {
                 .sorted(Comparator.comparing(energyStorage -> energyStorage.insert(amount, true)))
                 .filter(UniversalEnergyStorage::canInsertEnergy)
                 .toList();
-        if (toSend.isEmpty()) return 0;
+        if (toSend.isEmpty()) return;
 
         int receivers = toSend.size();
         int toDistribute = amount;
@@ -71,7 +70,6 @@ public class EnergyUtil {
             toDistribute -= moveEnergy(from, to, toDistribute/receivers);
             receivers--;
         }
-        return amount - toDistribute;
     }
 
 

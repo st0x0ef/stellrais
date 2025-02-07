@@ -3,16 +3,10 @@ package com.st0x0ef.stellaris.common.utils.capabilities.fluid;
 import com.fej1fun.potentials.fluid.BaseFluidStorage;
 import dev.architectury.fluid.FluidStack;
 import dev.architectury.hooks.fluid.FluidStackHooks;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
-import net.minecraft.network.RegistryFriendlyByteBuf;
 
-import java.util.Arrays;
 import java.util.Comparator;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class FluidStorage extends BaseFluidStorage {

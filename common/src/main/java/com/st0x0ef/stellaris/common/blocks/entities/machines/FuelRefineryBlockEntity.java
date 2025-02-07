@@ -6,7 +6,6 @@ import com.st0x0ef.stellaris.common.data.recipes.input.FluidInput;
 import com.st0x0ef.stellaris.common.items.armors.JetSuit;
 import com.st0x0ef.stellaris.common.menus.FuelRefineryMenu;
 import com.st0x0ef.stellaris.common.network.packets.SyncFluidPacket;
-import com.st0x0ef.stellaris.common.network.packets.SyncFluidPacketWithoutDirection;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import com.st0x0ef.stellaris.common.registry.FluidRegistry;
 import com.st0x0ef.stellaris.common.registry.RecipesRegistry;
@@ -46,7 +45,7 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
                 setChanged();
                 if (level != null && level.getServer() != null && !level.getServer().getPlayerList().getPlayers().isEmpty() && !this.getFluidInTank(0).isEmpty())
                     NetworkManager.sendToPlayers(level.getServer().getPlayerList().getPlayers(),
-                            new SyncFluidPacketWithoutDirection(this.getFluidInTank(0), 0, getBlockPos()));
+                            new SyncFluidPacket(this.getFluidInTank(0), 0, getBlockPos(), Direction.UP));
             }
         };
         this.outputTank = new FilteredFluidStorage(1, 10000, 0, 10000, (n,fluidStack) -> fluidStack.getFluid().isSame(FluidRegistry.FLOWING_FUEL.get())) {
@@ -55,7 +54,7 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
                 setChanged();
                 if (level != null && level.getServer() != null && !level.getServer().getPlayerList().getPlayers().isEmpty() && !this.getFluidInTank(0).isEmpty())
                     NetworkManager.sendToPlayers(level.getServer().getPlayerList().getPlayers(),
-                            new SyncFluidPacketWithoutDirection(this.getFluidInTank(0), 0, getBlockPos()));
+                            new SyncFluidPacket(this.getFluidInTank(0), 0, getBlockPos(), Direction.DOWN));
             }
         };
     }
@@ -81,9 +80,13 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
             FluidUtil.moveFluidToItem(0, outputTank, getItem(3), 1000);
         }
 
-        FluidUtil.moveFluidToItem(inputTank.getTanks(), inputTank, getItem(1), 1000);
+        if (FluidUtil.moveFluidFromItem(0, getItem(0), inputTank, 1000)) {
+            getItem(0).setCount(getItem(0).getCount() - 1);
+        } else {
+            FluidUtil.moveFluidToItem(0, inputTank, getItem(1), 1000);
+        }
 
-        Optional<RecipeHolder<FuelRefineryRecipe>> recipeHolder = cachedCheck.getRecipeFor(new FluidInput(getLevel().getBlockEntity(getBlockPos()), getItems()), level);
+        Optional<RecipeHolder<FuelRefineryRecipe>> recipeHolder = cachedCheck.getRecipeFor(new FluidInput(level.getBlockEntity(getBlockPos()), getItems()), level);
         if (recipeHolder.isPresent()) {
             FuelRefineryRecipe recipe = recipeHolder.get().value();
 

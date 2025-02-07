@@ -14,11 +14,11 @@ public class FluidUtil {
         moveFluid(from, to, FluidStack.create(from.getFluidInTank(tank), amount));
     }
 
-    public static void moveFluidFromItem(int tank, ItemStack stackFrom, UniversalFluidStorage to, long amount) {
-        if (stackFrom.isEmpty()) return;
+    public static boolean moveFluidFromItem(int tank, ItemStack stackFrom, UniversalFluidStorage to, long amount) {
+        if (stackFrom.isEmpty()) return false;
         UniversalFluidStorage from = Capabilities.Fluid.ITEM.getCapability(stackFrom);
-        if (from==null) return;
-        moveFluid(from, to, FluidStack.create(from.getFluidInTank(tank), amount));
+        if (from==null) return false;
+        return !moveFluid(from, to, FluidStack.create(from.getFluidInTank(tank), amount)).isEmpty();
     }
 
     public static FluidStack moveFluid(UniversalFluidStorage from, UniversalFluidStorage to, FluidStack stack) {

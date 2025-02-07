@@ -90,7 +90,10 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
         for (int i = 2; i < 4; i++)
             FluidUtil.moveFluidToItem(i, resultTanks, items.get(i), resultTanks.getTankCapacity(i));
 
-        FluidUtil.moveFluidFromItem(0, items.get(1), ingredientTank, 1000);
+        if (FluidUtil.moveFluidFromItem(0, items.get(1), ingredientTank, 1000)) {
+            items.get(1).setCount(items.get(1).getCount() - 1);
+        }
+
 
         assert level != null;
         Optional<RecipeHolder<WaterSeparatorRecipe>> recipeHolder = cachedCheck.getRecipeFor(new FluidInput(level.getBlockEntity(getBlockPos()), getItems()), level);

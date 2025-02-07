@@ -10,14 +10,14 @@ public class FluidUtil {
     public static void moveFluidToItem(int tank, UniversalFluidStorage from, ItemStack stackTo, long amount) {
         if (stackTo.isEmpty()) return;
         UniversalFluidStorage to = Capabilities.Fluid.ITEM.getCapability(stackTo);
-        if (to==null) return;
+        if (to == null) return;
         moveFluid(from, to, FluidStack.create(from.getFluidInTank(tank), amount));
     }
 
     public static boolean moveFluidFromItem(int tank, ItemStack stackFrom, UniversalFluidStorage to, long amount) {
         if (stackFrom.isEmpty()) return false;
         UniversalFluidStorage from = Capabilities.Fluid.ITEM.getCapability(stackFrom);
-        if (from==null) return false;
+        if (from == null) return false;
         return !moveFluid(from, to, FluidStack.create(from.getFluidInTank(tank), amount)).isEmpty();
     }
 

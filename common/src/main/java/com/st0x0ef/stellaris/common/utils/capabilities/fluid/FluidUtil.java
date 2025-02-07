@@ -11,6 +11,7 @@ public class FluidUtil {
         if (stackTo.isEmpty()) return;
         UniversalFluidStorage to = Capabilities.Fluid.ITEM.getCapability(stackTo);
         if (to == null) return;
+        amount = Math.min(amount, to.getTankCapacity(0));
         moveFluid(from, to, FluidStack.create(from.getFluidInTank(tank), amount));
     }
 
@@ -18,6 +19,7 @@ public class FluidUtil {
         if (stackFrom.isEmpty()) return false;
         UniversalFluidStorage from = Capabilities.Fluid.ITEM.getCapability(stackFrom);
         if (from == null) return false;
+        amount = Math.min(amount, to.getTankCapacity(0));
         return !moveFluid(from, to, FluidStack.create(from.getFluidInTank(tank), amount)).isEmpty();
     }
 

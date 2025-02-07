@@ -22,6 +22,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.block.state.BlockState;
@@ -82,6 +83,11 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
 
         if (FluidUtil.moveFluidFromItem(0, getItem(0), inputTank, 1000)) {
             getItem(0).setCount(getItem(0).getCount() - 1);
+            if (items.get(1).isEmpty()) {
+                items.set(1, Items.BUCKET.getDefaultInstance());
+            } else {
+                items.get(1).grow(1);
+            }
         } else {
             FluidUtil.moveFluidToItem(0, inputTank, getItem(1), 1000);
         }

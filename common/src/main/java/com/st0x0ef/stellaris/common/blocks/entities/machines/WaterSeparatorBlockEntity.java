@@ -23,6 +23,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.block.state.BlockState;
@@ -87,11 +88,16 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
 
     @Override
     public void tick() {
-        for (int i = 0; i < 2; i++)
-            FluidUtil.moveFluidToItem(i, resultTanks, items.get(i), resultTanks.getTankCapacity(i));
+        FluidUtil.moveFluidToItem(HYDROGEN_TANK, resultTanks, items.get(0), resultTanks.getTankCapacity(OXYGEN_TANK));
+        FluidUtil.moveFluidToItem(OXYGEN_TANK, resultTanks, items.get(3), resultTanks.getTankCapacity(HYDROGEN_TANK));
 
         if (FluidUtil.moveFluidFromItem(0, items.get(1), ingredientTank, 1000)) {
             items.get(1).setCount(items.get(1).getCount() - 1);
+            if (items.get(2).isEmpty()) {
+                items.set(2, Items.BUCKET.getDefaultInstance());
+            } else {
+                items.get(2).grow(1);
+            }
         }
 
         if (level == null) return;

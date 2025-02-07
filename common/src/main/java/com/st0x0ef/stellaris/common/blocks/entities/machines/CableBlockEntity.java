@@ -17,6 +17,6 @@ public class CableBlockEntity extends BaseEnergyBlockEntity {
 
     @Override
     public void tick() {
-        EnergyUtil.distributeEnergyNearby(level, worldPosition, 1000);
+        EnergyUtil.distributeEnergyNearby(level, worldPosition, energyContainer.getMaxEnergy() / 8);
     }
 }

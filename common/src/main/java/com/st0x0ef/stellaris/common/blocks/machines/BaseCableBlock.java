@@ -86,10 +86,17 @@ public abstract class BaseCableBlock extends BaseEntityBlock {
     }
 
     @Override
+    protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
+        state.updateNeighbourShapes(level, pos, UPDATE_NEIGHBORS);
+        state.updateNeighbourShapes(level, pos, UPDATE_CLIENTS);
+    }
+
+    @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (state.is(newState.getBlock())) {
+        if (!state.is(newState.getBlock())) {
             //if (blockEntity instanceof CableBlockEntity) not sure this if statement is necessary
             state.updateNeighbourShapes(level, pos, UPDATE_NEIGHBORS);
+            state.updateNeighbourShapes(level, pos, UPDATE_CLIENTS);
 
             super.onRemove(state, level, pos, newState, movedByPiston);
         }

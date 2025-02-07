@@ -94,9 +94,9 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
             items.get(1).setCount(items.get(1).getCount() - 1);
         }
 
+        if (level == null) return;
 
-        assert level != null;
-        Optional<RecipeHolder<WaterSeparatorRecipe>> recipeHolder = cachedCheck.getRecipeFor(new FluidInput(level.getBlockEntity(getBlockPos()), getItems()), level);
+        Optional<RecipeHolder<WaterSeparatorRecipe>> recipeHolder = cachedCheck.getRecipeFor(new FluidInput(level.getBlockEntity(getBlockPos())), level);
         if (recipeHolder.isPresent()) {
             WaterSeparatorRecipe recipe = recipeHolder.get().value();
 

@@ -86,7 +86,9 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
             FluidUtil.moveFluidToItem(0, inputTank, getItem(1), 1000);
         }
 
-        Optional<RecipeHolder<FuelRefineryRecipe>> recipeHolder = cachedCheck.getRecipeFor(new FluidInput(level.getBlockEntity(getBlockPos()), getItems()), level);
+        if (level == null) return;
+
+        Optional<RecipeHolder<FuelRefineryRecipe>> recipeHolder = cachedCheck.getRecipeFor(new FluidInput(level.getBlockEntity(getBlockPos())), level);
         if (recipeHolder.isPresent()) {
             FuelRefineryRecipe recipe = recipeHolder.get().value();
 

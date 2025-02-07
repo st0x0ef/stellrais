@@ -1,15 +1,15 @@
 package com.st0x0ef.stellaris.common.data.recipes.input;
 
-import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-public record FluidInput(BlockEntity entity, NonNullList<ItemStack> stack) implements RecipeInput {
+public record FluidInput(BlockEntity entity) implements RecipeInput {
     @Override
     public ItemStack getItem(int slot) {
-        if (slot > stack.size()) throw new IllegalArgumentException("No item for index " + slot);
-        return this.stack().get(slot);
+        // We need to return something... I know it's not the best solution but it's just a placeholder
+        return Items.BUCKET.getDefaultInstance();
     }
 
     @Override

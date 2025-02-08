@@ -31,7 +31,7 @@ public class WaterSeparatorMenu extends BaseContainer {
         addSlot(new ResultSlot(container, 0, 104, 114)); // Water tank output
         addSlot(new SpecificFluidContainerSlot(container, Fluids.WATER, 1, 56, 114, false)); // Water tank input
         addSlot(new SpecificFluidContainerSlot(container, FluidRegistry.FLOWING_HYDROGEN.get(), 2, 20, 114, true)); // Hydrogen tank output
-        addSlot(new FluidContainerSlot(container, 3, 140, 114, true, true)); // Oxygen tank output
+        addSlot(new SpecificFluidContainerSlot(container, FluidRegistry.FLOWING_OXYGEN.get(), 3, 140, 114, true)); // Oxygen tank output
     }
 
     @Override

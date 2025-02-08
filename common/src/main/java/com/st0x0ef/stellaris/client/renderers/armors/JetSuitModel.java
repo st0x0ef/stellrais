@@ -55,8 +55,8 @@ public class JetSuitModel extends HumanoidModel<LivingEntity> {
 		this.right_leg = root.getChild("right_leg");
 		this.left_shoe = root.getChild("left_shoe");
 		this.right_shoe = root.getChild("right_shoe");
-		this.antenna_r1 = root.getChild("antenna_r1");
-		this.lamp_r1 = root.getChild("lamp_r1");
+		this.antenna_r1 = head.getChild("antenna_r1");
+		this.lamp_r1 = head.getChild("lamp_r1");
 
 
 		this.slot = slot;
@@ -68,7 +68,9 @@ public class JetSuitModel extends HumanoidModel<LivingEntity> {
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
 		PartDefinition Armure = partdefinition.addOrReplaceChild("Armure", CubeListBuilder.create(), PartPose.offset(2.0F, 12.0F, 0.0F));
-		PartDefinition head = Armure.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.75F))
+		PartDefinition hat = partdefinition.addOrReplaceChild("hat", CubeListBuilder.create().texOffs(0, 0), PartPose.ZERO);
+
+		PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.75F))
 				.texOffs(16, 34).addBox(4.7F, -5.8F, 1.2F, 1.0F, 3.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(-2.0F, -12.0F, 0.0F));
 
 		PartDefinition lamp_r1 = head.addOrReplaceChild("lamp_r1", CubeListBuilder.create().texOffs(48, 48).addBox(-2.0F, -1.0F, -2.5F, 4.0F, 2.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -8.7F, -0.5F, -0.2618F, 0.0F, 0.0F));

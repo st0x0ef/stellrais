@@ -5,7 +5,6 @@ import com.fej1fun.potentials.providers.FluidProvider;
 import com.st0x0ef.stellaris.common.menus.OxygenDistributorMenu;
 import com.st0x0ef.stellaris.common.oxygen.GlobalOxygenManager;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
-import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
 import com.st0x0ef.stellaris.common.registry.FluidRegistry;
 import com.st0x0ef.stellaris.common.utils.OxygenUtils;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;

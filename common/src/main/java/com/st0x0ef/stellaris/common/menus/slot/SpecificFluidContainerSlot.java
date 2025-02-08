@@ -5,7 +5,6 @@ import com.fej1fun.potentials.fluid.UniversalFluidStorage;
 import dev.architectury.fluid.FluidStack;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
 

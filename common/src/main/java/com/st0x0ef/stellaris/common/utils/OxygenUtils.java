@@ -22,7 +22,16 @@ public class OxygenUtils {
     }
 
     public static boolean removeOxygen(ItemStack stack, long amount) {
-        return addOxygen(stack, -amount);
+        if (stack.getItem() instanceof FluidProvider.ITEM item && item.getFluidTank(stack) instanceof ItemFluidStorage storage) {
+            if (storage.getFluidInTank(0).isEmpty()) {
+                return false;
+            }
+            if (storage.getFluidValueInTank(0) - amount < 0) return false;
+
+            storage.drain(storage.getFluidInTank(0).copyWithAmount(amount), false);
+            return true;
+        }
+        return false;
     }
 
     public static void removeAllOxyygen(ItemStack stack) {

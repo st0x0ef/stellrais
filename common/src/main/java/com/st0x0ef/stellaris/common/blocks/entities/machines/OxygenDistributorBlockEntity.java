@@ -38,7 +38,7 @@ public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity
     @Override
     public void tick() {
         if (level instanceof ServerLevel serverLevel) {
-            if (this.getItem(0).has(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()) && oxygenTank.canGrow() && this.energyContainer.getEnergy() > 1) {
+            if (oxygenTank.canGrow() && this.energyContainer.getEnergy() > 1) {
                 if (OxygenUtils.removeOxygen(getItem(0), 1)) {
                     addOxygen(1);
                     this.energyContainer.extract(1, false);
@@ -53,7 +53,7 @@ public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity
 
     public boolean useOxygenAndEnergy() {
         if (oxygenTank.getFluidInTank(oxygenTank.getTanks()).isEmpty() || oxygenTank.getFluidValueInTank(oxygenTank.getTanks()) == 0) {
-            if (this.getItem(0).has(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()) && this.energyContainer.getEnergy() > 0) {
+            if (this.energyContainer.getEnergy() > 0) {
                 if (OxygenUtils.removeOxygen(getItem(0), 1)) {
                     this.energyContainer.extract(1, false);
                     return true;
@@ -70,8 +70,8 @@ public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity
         return false;
     }
 
-    public void addOxygen(long amount) {
-        oxygenTank.fill(FluidStack.create(FluidRegistry.OXYGEN_ATTRIBUTES.getSourceFluid(), amount), false);
+    public long addOxygen(long amount) {
+        return oxygenTank.fill(FluidStack.create(FluidRegistry.OXYGEN_ATTRIBUTES.getSourceFluid(), amount), false);
     }
 
     @Override

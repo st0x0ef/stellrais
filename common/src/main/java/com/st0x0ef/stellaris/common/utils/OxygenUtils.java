@@ -1,37 +1,46 @@
 package com.st0x0ef.stellaris.common.utils;
 
-import com.st0x0ef.stellaris.common.data_components.CappedLongComponent;
-import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
+import com.fej1fun.potentials.fluid.ItemFluidStorage;
+import com.fej1fun.potentials.providers.FluidProvider;
+import com.st0x0ef.stellaris.common.registry.FluidRegistry;
+import dev.architectury.fluid.FluidStack;
 import net.minecraft.world.item.ItemStack;
 
 public class OxygenUtils {
     public static boolean addOxygen(ItemStack stack, long amount) {
-        if (stack.get(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()).amount() + amount > stack.get(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()).capacity()) return false;
-        setOxygen(stack, stack.get(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()).amount() + amount);
-        return true;
+        if (stack.getItem() instanceof FluidProvider.ITEM item && item.getFluidTank(stack) instanceof ItemFluidStorage storage) {
+            if (storage.getFluidInTank(0).isEmpty()) {
+                storage.fill(FluidStack.create(FluidRegistry.FLOWING_OXYGEN.get(), 0), false);
+                return true;
+            }
+            if (storage.getFluidValueInTank(0) + amount > storage.getTankCapacity(0)) return false;
+
+            storage.fill(storage.getFluidInTank(0).copyWithAmount(storage.getFluidValueInTank(0) + amount), false);
+            return true;
+        }
+        return false;
     }
 
     public static boolean removeOxygen(ItemStack stack, long amount) {
-        if (stack.get(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()).amount() < amount) return false;
-        setOxygen(stack, stack.get(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()).amount() - amount);
-        return true;
+        return addOxygen(stack, -amount);
     }
 
-    public static void setOxygen(ItemStack stack, long amount) {
-        stack.set(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get(), new CappedLongComponent(amount, stack.get(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()).capacity()));
+    public static void removeAllOxyygen(ItemStack stack) {
+        if (stack.getItem() instanceof FluidProvider.ITEM item && item.getFluidTank(stack) instanceof ItemFluidStorage storage) {
+            storage.drain(storage.getFluidInTank(0).copyWithAmount(0), false);
+        }
     }
 
     public static long getOxygen(ItemStack stack) {
-        if (stack.has(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get())) {
-            return stack.get(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()).amount();
+        if (stack.getItem() instanceof FluidProvider.ITEM item && item.getFluidTank(stack) instanceof ItemFluidStorage storage) {
+            return storage.getFluidValueInTank(0);
         }
-
         return 0L;
     }
 
     public static long getOxygenCapacity(ItemStack stack) {
-        if (stack.has(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get())) {
-            return stack.get(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()).capacity();
+        if (stack.getItem() instanceof FluidProvider.ITEM item && item.getFluidTank(stack) instanceof ItemFluidStorage storage) {
+            return storage.getTankCapacity(0);
         }
 
         return 0L;

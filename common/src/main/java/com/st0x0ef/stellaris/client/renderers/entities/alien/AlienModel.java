@@ -80,5 +80,5 @@ public class AlienModel<T extends Alien> extends EntityModel<T> {
 		leg1.render(poseStack, buffer, packedLight, packedOverlay, color);
 		arms.render(poseStack, buffer, packedLight, packedOverlay, color);
 		head2.render(poseStack, buffer, packedLight, packedOverlay, color);
-	}
+    }
 }

@@ -22,11 +22,9 @@
           "height": 84
       }
     },
-
     {
       "type": "item",
       "id": "tiny_rocket",
-
       "title": "Tiny Rocket Model",
       "description": "This is the basic rocket. [br] [br] Can transport 1 entity",
       "item": {

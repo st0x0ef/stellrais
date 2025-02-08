@@ -23,6 +23,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -92,12 +93,14 @@ public class WaterSeparatorBlockEntity extends BaseEnergyContainerBlockEntity im
         FluidUtil.moveFluidToItem(HYDROGEN_TANK, resultTanks, items.get(2), resultTanks.getTankCapacity(HYDROGEN_TANK));
 
         if (FluidUtil.moveFluidFromItem(0, items.get(1), ingredientTank, 1000)) {
-            items.get(1).setCount(items.get(1).getCount() - 1);
-            if (items.get(0).isEmpty()) {
-                items.set(0, Items.BUCKET.getDefaultInstance());
-            } else {
-                items.get(0).grow(1);
+            if (items.get(1).getItem() instanceof BucketItem) {
+                if (items.getFirst().isEmpty()) {
+                    items.set(0, Items.BUCKET.getDefaultInstance());
+                } else {
+                    items.getFirst().grow(1);
+                }
             }
+            items.get(1).shrink(1);
         }
 
         if (level == null) return;

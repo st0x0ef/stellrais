@@ -3,6 +3,7 @@ package com.st0x0ef.stellaris.common.utils.capabilities.fluid;
 import com.fej1fun.potentials.capabilities.Capabilities;
 import com.fej1fun.potentials.fluid.BaseFluidStorage;
 import com.fej1fun.potentials.fluid.UniversalFluidStorage;
+import com.st0x0ef.stellaris.Stellaris;
 import dev.architectury.fluid.FluidStack;
 import net.minecraft.world.item.ItemStack;
 

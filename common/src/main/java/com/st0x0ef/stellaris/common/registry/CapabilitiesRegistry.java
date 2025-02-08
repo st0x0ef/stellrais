@@ -21,6 +21,7 @@ public class CapabilitiesRegistry {
 
     static void registerFluidItems() {
         Capabilities.Fluid.ITEM.registerForItem(ItemsRegistry.OXYGEN_TANK);
+        Capabilities.Fluid.ITEM.registerForItem(ItemsRegistry.BIG_OXYGEN_TANK);
     }
 
     static void registerEnergyBlockEntities() {

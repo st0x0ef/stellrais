@@ -37,6 +37,7 @@ dependencies {
     modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${rootProject.rei_version}"
     modCompileOnlyApi("mezz.jei:jei-${minecraft_version}-fabric-api:${jei_version}")
     modRuntimeOnly("mezz.jei:jei-${minecraft_version}-fabric:${jei_version}")
+    include modImplementation("net.darkhax.pricklemc:prickle-fabric-${rootProject.minecraft_version}:${rootProject.pricklemc_version}")
 
     modRuntimeOnly "maven.modrinth:sky-aesthetics:${sky_version}-fabric"
 

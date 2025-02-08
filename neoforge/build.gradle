@@ -37,6 +37,7 @@ dependencies {
     runtimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
 
     runtimeOnly "maven.modrinth:sky-aesthetics:${sky_version}-neoforge"
+    include modImplementation("net.darkhax.pricklemc:prickle-neoforge-${rootProject.minecraft_version}:${rootProject.pricklemc_version}")
 
     include("maven.modrinth:sky-aesthetics:${sky_version}-neoforge")
 

@@ -3,7 +3,7 @@ package com.st0x0ef.stellaris;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.ToNumberPolicy;
-import com.st0x0ef.stellaris.common.config.CustomConfig;
+import com.st0x0ef.stellaris.common.config.CommonConfig;
 import com.st0x0ef.stellaris.common.data.planets.StellarisData;
 import com.st0x0ef.stellaris.common.data.screen.MoonPack;
 import com.st0x0ef.stellaris.common.data.screen.PlanetPack;
@@ -14,6 +14,7 @@ import com.st0x0ef.stellaris.common.network.packets.SyncPlanetsDatapackPacket;
 import com.st0x0ef.stellaris.common.registry.*;
 import dev.architectury.networking.NetworkManager;
 import dev.architectury.registry.ReloadListenerRegistry;
+import net.darkhax.pricklemc.common.api.config.ConfigManager;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.PackType;
@@ -30,12 +31,13 @@ public class Stellaris {
             .setPrettyPrinting()
             .setObjectToNumberStrategy(ToNumberPolicy.LONG_OR_DOUBLE)
             .create();
+    public static CommonConfig CONFIG;
 
     public static void init() {
-        CustomConfig.init();
+        CONFIG = ConfigManager.load("stellaris-common", new CommonConfig());
+
         EntityData.register();
         NetworkRegistry.init();
-
         ProcessorsRegistry.STRUCTURE_PROCESSORS.register();
         SoundRegistry.SOUNDS.register();
         DataComponentsRegistry.DATA_COMPONENT_TYPE.register();
@@ -58,6 +60,7 @@ public class Stellaris {
         EffectsRegistry.register();
 
         ReloadListenerRegistry.register(PackType.SERVER_DATA, new StellarisData());
+        Stellaris.LOG.info("{} ", CONFIG.oilConfig.chunkOilChance);
     }
 
     public static void onDatapackSyncEvent(ServerPlayer player, boolean joined) {

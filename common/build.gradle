@@ -8,6 +8,8 @@ loom {
 
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
+    include modImplementation("net.darkhax.pricklemc:prickle-common-${rootProject.minecraft_version}:${rootProject.pricklemc_version}")
+
     modApi "dev.architectury:architectury:${rootProject.architectury_version}"
 }
 

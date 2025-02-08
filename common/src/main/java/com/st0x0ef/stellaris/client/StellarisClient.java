@@ -6,7 +6,6 @@ import com.st0x0ef.stellaris.client.overlays.*;
 import com.st0x0ef.stellaris.client.particles.*;
 import com.st0x0ef.stellaris.client.renderers.armors.JetSuitModel;
 import com.st0x0ef.stellaris.client.renderers.armors.SpaceSuitModel;
-import com.st0x0ef.stellaris.client.screens.ConfigScreen;
 import com.st0x0ef.stellaris.common.data.screen.MoonPack;
 import com.st0x0ef.stellaris.common.data.screen.PlanetPack;
 import com.st0x0ef.stellaris.common.data.screen.StarPack;
@@ -39,7 +38,6 @@ public class StellarisClient {
         registerParticle();
         registerOverlays();
         registerArmors();
-        Platform.getMod(Stellaris.MODID).registerConfigurationScreen(ConfigScreen::new);
         ClientEvents.registerEvents();
     }
 

@@ -37,7 +37,7 @@ side = "BOTH"
 [[dependencies.stellaris]]
 modId = "potentials"
 type = "required"
-versionRange = "[0.2.7,)"
+versionRange = "[0.2.8,)"
 ordering = "AFTER"
 side = "BOTH"
 

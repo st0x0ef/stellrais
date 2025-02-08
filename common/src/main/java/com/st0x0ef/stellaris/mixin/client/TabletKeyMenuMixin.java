@@ -1,10 +1,7 @@
 package com.st0x0ef.stellaris.mixin.client;
 
-import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.client.events.ClientEvents;
 import com.st0x0ef.stellaris.client.registries.KeyMappingsRegistry;
-import com.st0x0ef.stellaris.common.keybinds.KeyVariables;
-import com.st0x0ef.stellaris.common.network.packets.KeyHandlerPacket;
 import com.st0x0ef.stellaris.common.network.packets.OpenTabletEntryPacket;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.client.Minecraft;
@@ -34,7 +31,7 @@ public class TabletKeyMenuMixin {
                 }
             }
         } else {
-            ClientEvents.timeClicked--;
+            if (ClientEvents.timeClicked > 0) ClientEvents.timeClicked--;
         }
     }
 }

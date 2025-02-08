@@ -33,11 +33,11 @@ public class ClientEvents {
     }
 
     public static void addTooltip(List<Component> lines) {
-        lines.add(Component.literal("For more infos, press [" + KeyMappingsRegistry.OPEN_TABLET_INFO.key.getName() +"] "));
+        lines.add(Component.literal("For more infos, press [" + KeyMappingsRegistry.OPEN_TABLET_INFO.getTranslatedKeyMessage().getString() +"] "));
         if(timeClicked != 0) {
-            StringBuilder message = new StringBuilder("|");
+            StringBuilder message = new StringBuilder("");
             for (int i = 0; i < timeClicked; i++) {
-                message.append("|");
+                message.append("||");
             }
             lines.add(Component.literal(message.toString()));
         }

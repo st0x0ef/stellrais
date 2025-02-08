@@ -40,7 +40,7 @@ public class TabletMainScreen extends AbstractContainerScreen<TabletMenu> {
         this.imageHeight = 162;
         this.imageWidth = 250;
 
-        if(menu.getEntry() != null) {
+        if(menu.getEntry() != null && !menu.getEntry().getNamespace().equals("null")) {
             directEntry = menu.getEntry();
         }
     }

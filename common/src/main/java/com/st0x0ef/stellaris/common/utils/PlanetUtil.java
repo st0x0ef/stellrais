@@ -129,11 +129,8 @@ public class PlanetUtil {
         ExtendedMenuProvider provider = new ExtendedMenuProvider() {
             @Override
             public void saveExtraData(FriendlyByteBuf buffer) {
-                if(entry != null) {
-                    buffer.writeResourceLocation(entry);
-                } else {
-                    buffer.writeResourceLocation(null);
-                }
+                buffer.writeResourceLocation(entry);
+
             }
 
             @Override
@@ -144,11 +141,8 @@ public class PlanetUtil {
             @Override
             public @NotNull AbstractContainerMenu createMenu(int syncId, Inventory inv, Player player) {
                 FriendlyByteBuf buffer = new FriendlyByteBuf(Unpooled.buffer());
-                if(entry != null) {
-                    buffer.writeResourceLocation(entry);
-                } else {
-                    buffer.writeResourceLocation(null);
-                }
+                buffer.writeResourceLocation(entry);
+
                 return TabletMenu.create(syncId, inv, buffer);
             }
         };

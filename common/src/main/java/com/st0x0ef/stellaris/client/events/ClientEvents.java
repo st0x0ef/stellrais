@@ -1,10 +1,10 @@
 package com.st0x0ef.stellaris.client.events;
 
-import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.client.registries.KeyMappingsRegistry;
 import com.st0x0ef.stellaris.client.screens.tablet.TabletMainScreen;
 import com.st0x0ef.stellaris.common.items.CustomTabletEntry;
 import dev.architectury.event.events.client.ClientTooltipEvent;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
@@ -33,13 +33,13 @@ public class ClientEvents {
     }
 
     public static void addTooltip(List<Component> lines) {
-        lines.add(Component.literal("For more infos, press [" + KeyMappingsRegistry.OPEN_TABLET_INFO.getTranslatedKeyMessage().getString() +"] "));
+        lines.add(Component.translatable("tooltip.item.stellaris.open_tablet",KeyMappingsRegistry.OPEN_TABLET_INFO.getTranslatedKeyMessage().getString()));
         if(timeClicked != 0) {
-            StringBuilder message = new StringBuilder("");
+            StringBuilder message = new StringBuilder();
             for (int i = 0; i < timeClicked; i++) {
                 message.append("||");
             }
-            lines.add(Component.literal(message.toString()));
+            lines.add(Component.literal(message.toString()).withStyle(ChatFormatting.GRAY));
         }
     }
 

@@ -13,6 +13,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.chunk.ChunkAccess;
 
 public class StellarisCommands {
@@ -46,7 +47,7 @@ public class StellarisCommands {
                                 }))
                         .then(Commands.literal("tablet")
                                 .executes((CommandContext<CommandSourceStack> context) -> {
-                                    PlanetUtil.openTabletMenu(context.getSource().getPlayer(), null);
+                                    PlanetUtil.openTabletMenu(context.getSource().getPlayer(), ResourceLocation.parse("null:null"));
                                     return 0;
                                 }))
                         .then(Commands.literal("waitScreen")

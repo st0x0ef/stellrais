@@ -2,7 +2,6 @@ package com.st0x0ef.stellaris.client.overlays;
 
 import com.st0x0ef.stellaris.client.screens.GUISprites;
 import com.st0x0ef.stellaris.common.items.armors.SpaceSuit;
-import com.st0x0ef.stellaris.common.utils.OxygenUtils;
 import com.st0x0ef.stellaris.common.utils.Utils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -32,7 +31,7 @@ public class SpaceSuitOverlay {
                     //We can add default gui stuff for the space suit here
                     graphics.blit(GUISprites.SPACESUIT_OXYGEN_BAR, 5, 5, 0, 0, 37, 10, 37, 10);
 
-                    int i = Mth.ceil(Mth.clamp((float) OxygenUtils.getOxygen(itemStack) / (float) OxygenUtils.getOxygenCapacity(itemStack),
+                    int i = Mth.ceil(Mth.clamp((float) spaceSuit.oxygenTank.getFluidValueInTank(0) / spaceSuit.oxygenTank.getTankCapacity(0),
                             0.0F, 1.0F) * (24 - 1));
                     graphics.blitSprite(GUISprites.SPACESUIT_FULL_BAR_SPRITE, 24, 4, 0, 0, 15, 8, i, 4);
 

@@ -4,6 +4,7 @@ import com.fej1fun.potentials.capabilities.Capabilities;
 
 public class CapabilitiesRegistry {
     public static void init() {
+        registerFluidItems();
         registerEnergyBlockEntities();
         registerFluidBlockEntities();
     }
@@ -17,6 +18,10 @@ public class CapabilitiesRegistry {
 //        Capabilities.Energy.BLOCK.registerForBlock(BlocksRegistry.COAL_GENERATOR);
 //        Capabilities.Energy.BLOCK.registerForBlock(BlocksRegistry.RADIOACTIVE_GENERATOR);
 //    }
+
+    static void registerFluidItems() {
+        Capabilities.Fluid.ITEM.registerForItem(ItemsRegistry.OXYGEN_TANK);
+    }
 
     static void registerEnergyBlockEntities() {
         Capabilities.Energy.BLOCK.registerForBlockEntity(BlockEntityRegistry.SOLAR_PANEL);

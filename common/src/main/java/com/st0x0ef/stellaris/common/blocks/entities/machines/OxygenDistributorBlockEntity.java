@@ -2,17 +2,14 @@ package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
 import com.fej1fun.potentials.fluid.UniversalFluidStorage;
 import com.fej1fun.potentials.providers.FluidProvider;
-import com.st0x0ef.stellaris.common.items.IOxygenStorageItem;
 import com.st0x0ef.stellaris.common.menus.OxygenDistributorMenu;
-import com.st0x0ef.stellaris.common.network.packets.SyncFluidPacket;
-import com.st0x0ef.stellaris.common.network.packets.SyncFluidPacketWithoutDirection;
 import com.st0x0ef.stellaris.common.oxygen.GlobalOxygenManager;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
 import com.st0x0ef.stellaris.common.registry.FluidRegistry;
+import com.st0x0ef.stellaris.common.utils.OxygenUtils;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
 import dev.architectury.fluid.FluidStack;
-import dev.architectury.networking.NetworkManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -26,13 +23,10 @@ import org.jetbrains.annotations.Nullable;
 
 public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity implements FluidProvider.BLOCK {
 
-    public final FluidStorage oxygenTank = new FluidStorage(1, 3000) {
+    public final FluidStorage oxygenTank = new FluidStorage(1, 10) {
         @Override
         protected void onChange(int tank) {
             setChanged();
-            if (level != null && level.getServer() != null && !level.getServer().getPlayerList().getPlayers().isEmpty() && !this.getFluidInTank(0).isEmpty())
-                NetworkManager.sendToPlayers(level.getServer().getPlayerList().getPlayers(),
-                        new SyncFluidPacketWithoutDirection(this.getFluidInTank(0), 0, getBlockPos()));
         }
     };;
 
@@ -44,8 +38,8 @@ public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity
     @Override
     public void tick() {
         if (level instanceof ServerLevel serverLevel) {
-            if (this.getItem(0).getItem() instanceof IOxygenStorageItem oxygenStorage && oxygenTank.canGrow() && this.energyContainer.getEnergy() > 1) {
-                if (oxygenStorage.getOxygenTank().drain(oxygenStorage.getOxygenTank().getFluidInTank(0).copyWithAmount(1), false).getAmount() > 0) {
+            if (this.getItem(0).has(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()) && oxygenTank.canGrow() && this.energyContainer.getEnergy() > 1) {
+                if (OxygenUtils.removeOxygen(getItem(0), 1)) {
                     addOxygen(1);
                     this.energyContainer.extract(1, false);
                 }
@@ -59,8 +53,8 @@ public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity
 
     public boolean useOxygenAndEnergy() {
         if (oxygenTank.getFluidInTank(oxygenTank.getTanks()).isEmpty() || oxygenTank.getFluidValueInTank(oxygenTank.getTanks()) == 0) {
-            if (this.getItem(0).getItem() instanceof IOxygenStorageItem oxygenStorage && this.energyContainer.getEnergy() > 0) {
-                if (oxygenStorage.getOxygenTank().drain(oxygenStorage.getOxygenTank().getFluidInTank(0).copyWithAmount(1), false).getAmount() > 0) {
+            if (this.getItem(0).has(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get()) && this.energyContainer.getEnergy() > 0) {
+                if (OxygenUtils.removeOxygen(getItem(0), 1)) {
                     this.energyContainer.extract(1, false);
                     return true;
                 }

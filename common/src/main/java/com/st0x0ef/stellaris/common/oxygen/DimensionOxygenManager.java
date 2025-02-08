@@ -1,7 +1,7 @@
 package com.st0x0ef.stellaris.common.oxygen;
 
-import com.st0x0ef.stellaris.common.items.IOxygenStorageItem;
 import com.st0x0ef.stellaris.common.registry.TagRegistry;
+import com.st0x0ef.stellaris.common.utils.OxygenUtils;
 import com.st0x0ef.stellaris.common.utils.PlanetUtil;
 import com.st0x0ef.stellaris.common.utils.Utils;
 import net.minecraft.core.BlockPos;
@@ -78,11 +78,7 @@ public class DimensionOxygenManager {
         }
 
         if (Utils.isLivingInJetSuit(entity) || Utils.isLivingInSpaceSuit(entity)) {
-            if (entity.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof IOxygenStorageItem oxygenStorage) {
-                if (oxygenStorage.getOxygenTank().getFluidValueInTank(0) > 0) {
-                    return oxygenStorage.getOxygenTank().drain(oxygenStorage.getOxygenTank().getFluidInTank(0).copyWithAmount(1), false).getAmount() > 0;
-                }
-            }
+            return OxygenUtils.removeOxygen(entity.getItemBySlot(EquipmentSlot.CHEST), 1L);
         }
 
         return false;

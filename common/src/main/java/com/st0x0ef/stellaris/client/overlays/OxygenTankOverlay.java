@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.client.screens.helper.ScreenHelper;
 import com.st0x0ef.stellaris.common.items.armors.AbstractSpaceArmor;
+import com.st0x0ef.stellaris.common.utils.OxygenUtils;
 import com.st0x0ef.stellaris.common.utils.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -28,9 +29,9 @@ public class OxygenTankOverlay {
             ItemStack chest = player.getItemBySlot(EquipmentSlot.CHEST);
             Minecraft mc = Minecraft.getInstance();
 
-            if(chest.getItem() instanceof AbstractSpaceArmor.Chestplate chestplate) {
-                long oxygen = chestplate.oxygenTank.getFluidValueInTank(0);
-                long maxOxygen = chestplate.oxygenTank.getTankCapacity(0);
+            if(chest.getItem() instanceof AbstractSpaceArmor.Chestplate) {
+                long oxygen = OxygenUtils.getOxygen(chest);
+                long maxOxygen = OxygenUtils.getOxygenCapacity(chest);
 
                 int x = 5;
                 int y = 5;

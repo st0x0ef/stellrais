@@ -25,9 +25,9 @@ public class ClientEvents {
 
         ClientTooltipEvent.ITEM.register((stack, lines, context, flag) -> {
             if (stack.getItem() instanceof CustomTabletEntry customTabletEntry) {
-                if (TabletMainScreen.INFOS.containsKey(customTabletEntry.getEntryName())) {
+                if (TabletMainScreen.INFOS.containsKey(customTabletEntry.getEntryName(stack))) {
                     addTooltip(lines);
-                    entryHovered = customTabletEntry.getEntryName();
+                    entryHovered = customTabletEntry.getEntryName(stack);
                 }
             } else {
                 if (TabletMainScreen.INFOS.containsKey(ResourceLocation.fromNamespaceAndPath("items", stack.getItem().arch$registryName().getPath()))) {

@@ -93,7 +93,7 @@ public class CanItem extends Item implements CustomTabletEntry {
     }
 
     @Override
-    public ResourceLocation getEntryName() {
+    public ResourceLocation getEntryName(ItemStack stack) {
         return ResourceLocation.parse("items:cans");
     }
 }

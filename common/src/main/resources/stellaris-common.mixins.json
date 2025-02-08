@@ -10,18 +10,16 @@
     "LivingEntityMixin",
     "MixinChunkAccess",
     "MixinChunkSerializer",
+    "MobSpawnEggMixin",
     "PlayerDataMixin"
   ],
   "client": [
+    "StormyPlanetMixin",
+    "client.FogRenderMixin",
     "client.PlayerRiddingVehicleMixin",
-    "client.RenderPlayerMixin",
-    "client.PlayerRiddingVehicleMixin",
-    "client.RenderPlayerMixin",
     "client.RenderPlayerMixin",
     "client.SandStormMixin",
-    "client.FogRenderMixin",
-    "client.TabletKeyMenuMixin",
-    "StormyPlanetMixin"
+    "client.TabletKeyMenuMixin"
   ],
   "injectors": {
     "defaultRequire": 1

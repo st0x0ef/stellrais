@@ -6,12 +6,10 @@ import com.st0x0ef.stellaris.common.menus.LanderMenu;
 import com.st0x0ef.stellaris.common.registry.EntityRegistry;
 import dev.architectury.registry.menu.ExtendedMenuProvider;
 import dev.architectury.registry.menu.MenuRegistry;
-import io.netty.buffer.Unpooled;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -89,8 +87,7 @@ public class LanderEntity extends IVehicleEntity implements HasCustomInventorySc
 
     @Override
     public boolean causeFallDamage(float p_150347_, float p_150348_, DamageSource p_150349_) {
-        if (p_150347_ >= 3.0F) {
-
+        if (p_150347_ > 5.0F) {
             if (!this.level().isClientSide) {
                 this.level().explode(null, this.getX(), this.getY(), this.getZ(), 10, true,
                         Level.ExplosionInteraction.TNT);
@@ -121,7 +118,6 @@ public class LanderEntity extends IVehicleEntity implements HasCustomInventorySc
     public void readAdditionalSaveData(CompoundTag compound) {
         ListTag inventoryCustom = compound.getList("InventoryCustom", 15);
         this.inventory.fromTag(inventoryCustom, registryAccess());
-
     }
 
     @Override
@@ -195,8 +191,6 @@ public class LanderEntity extends IVehicleEntity implements HasCustomInventorySc
 
             @Override
             public AbstractContainerMenu createMenu(int id, Inventory playerInv, Player player) {
-                RegistryFriendlyByteBuf packetBuffer = new RegistryFriendlyByteBuf(Unpooled.buffer(), player.registryAccess());
-                packetBuffer.writeVarInt(LanderEntity.this.getId());
                 return new LanderMenu(id, playerInv, inventory);
             }
         });

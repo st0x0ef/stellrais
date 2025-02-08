@@ -20,7 +20,6 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
@@ -36,7 +35,7 @@ public class MoonVine extends GrowingPlantHeadBlock implements BonemealableBlock
 
     public MoonVine(BlockBehaviour.Properties properties) {
         super(properties, Direction.DOWN, SHAPE, false, 0.1);
-        this.registerDefaultState((BlockState)((BlockState)((BlockState)this.stateDefinition.any()).setValue(AGE, 0)).setValue(BERRIES, false));
+        this.registerDefaultState(this.stateDefinition.any().setValue(AGE, 0).setValue(BERRIES, false));
     }
 
     @Override
@@ -73,7 +72,7 @@ public class MoonVine extends GrowingPlantHeadBlock implements BonemealableBlock
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
-        builder.add(new Property[]{BERRIES});
+        builder.add(BERRIES);
     }
 
     public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
@@ -90,11 +89,11 @@ public class MoonVine extends GrowingPlantHeadBlock implements BonemealableBlock
 
 
     public static InteractionResult use(@Nullable Entity entity, BlockState state, Level level, BlockPos pos) {
-        if ((Boolean)state.getValue(BERRIES)) {
+        if (state.getValue(BERRIES)) {
             Block.popResource(level, pos, new ItemStack(ItemsRegistry.MOON_BERRIES.get(), 1));
             float f = Mth.randomBetween(level.random, 0.8F, 1.2F);
-            level.playSound((Player)null, pos, SoundEvents.CAVE_VINES_PICK_BERRIES, SoundSource.BLOCKS, 1.0F, f);
-            BlockState blockState = (BlockState)state.setValue(BERRIES, false);
+            level.playSound(null, pos, SoundEvents.CAVE_VINES_PICK_BERRIES, SoundSource.BLOCKS, 1.0F, f);
+            BlockState blockState = state.setValue(BERRIES, false);
             level.setBlock(pos, blockState, 2);
             level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(entity, blockState));
             return InteractionResult.sidedSuccess(level.isClientSide);

@@ -91,20 +91,17 @@ public class LaunchButton extends Button {
             i += this.yDiffText;
         }
 
-        /** TEXTURE MANAGER */
         ResourceLocation texture = this.getTypeTexture(this.isHovered, this.buttonTexture, this.hoverButtonTexture);
-
-        /** TEXTURE RENDERER */
         RenderSystem.setShaderTexture(0, texture);
         ScreenHelper.renderTextureWithColor.blit(graphics.pose(), this.getX(), this.getY(), (float) this.xTexStart, (float) i,
                 this.width, this.height, this.textureWidth, this.textureHeight, this.getTypeColor());
 
-        /** FONT RENDERER */
         Font fontRenderer = minecraft.font;
-//        int j = getFGColor();
-//
-//        graphics.drawCenteredString(fontRenderer, this.getMessage(), this.getX() + this.width / 2,
-//                this.getY() + (this.height - 8) / 2, j | Mth.ceil(this.alpha * 255.0F) << 24);
+        Component message = this.getMessage();
+        int textWidth = fontRenderer.width(message);
+        int textX = this.getX() + (this.width - textWidth) / 2;
+        int textY = this.getY() + (this.height - fontRenderer.lineHeight) / 2;
+        graphics.drawString(fontRenderer, message, textX, textY, 16777215);
 
         RenderSystem.disableDepthTest();
         RenderSystem.disableBlend();

@@ -16,7 +16,13 @@
     "client.PlayerKeyMixin",
     "client.PlayerRiddingVehicleMixin",
     "client.RenderPlayerMixin",
-    "client.TabletKeyMenuMixin"
+    "client.PlayerRiddingVehicleMixin",
+    "client.RenderPlayerMixin",
+    "client.RenderPlayerMixin",
+    "client.SandStormMixin",
+    "client.FogRenderMixin",
+    "client.TabletKeyMenuMixin",
+    "StormyPlanetMixin"
   ],
   "injectors": {
     "defaultRequire": 1

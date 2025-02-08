@@ -7,7 +7,7 @@
   ],
   "key": {
     "c": {
-      "item": "stellaris:desh_ingot"
+      "tag": "c:ingots/desh"
     },
     "b": {
       "item": "minecraft:bucket"

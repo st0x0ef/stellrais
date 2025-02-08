@@ -2,6 +2,7 @@ package com.st0x0ef.stellaris.client;
 
 import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.client.events.ClientEvents;
+import com.st0x0ef.stellaris.client.event.ClientEvents;
 import com.st0x0ef.stellaris.client.overlays.*;
 import com.st0x0ef.stellaris.client.particles.*;
 import com.st0x0ef.stellaris.client.renderers.armors.JetSuitModel;
@@ -42,6 +43,7 @@ public class StellarisClient {
         registerArmors();
         ClientEvents.registerEvents();
         Platform.getMod(Stellaris.MODID).registerConfigurationScreen(ConfigScreen::new);
+        ClientEvents.registerEvents();
     }
 
     private static void registerArmors() {
@@ -56,7 +58,6 @@ public class StellarisClient {
         ColorHandlerRegistry.registerItemColors(
                 (stack, color) -> color > 0 ? -1 : DyedItemColor.getOrDefault(stack, -1),
                 ItemsRegistry.SPACESUIT_SUIT.get(), ItemsRegistry.SPACESUIT_HELMET.get(), ItemsRegistry.SPACESUIT_LEGGINGS.get());
-
     }
 
     public static void registerParticle() {

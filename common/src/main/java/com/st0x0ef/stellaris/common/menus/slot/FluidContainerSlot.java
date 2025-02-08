@@ -26,6 +26,7 @@ public class FluidContainerSlot extends Slot {
                 && (!emptyOnly || FluidBucketHooks.getFluid(item).isSame(Fluids.EMPTY)))
                 || (allowTanks && stack.getItem() instanceof OxygenTankItem)
                 || (allowTanks && stack.getItem() instanceof AbstractSpaceArmor.AbstractSpaceChestplate);
+        // TODO : check for fluid tank from other mods when potentials will be fully integrated
     }
 
     @Override

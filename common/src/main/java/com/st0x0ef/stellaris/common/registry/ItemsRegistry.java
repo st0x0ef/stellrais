@@ -10,6 +10,7 @@ import com.st0x0ef.stellaris.common.data_components.RadioactiveComponent;
 import com.st0x0ef.stellaris.common.data_components.RocketComponent;
 import com.st0x0ef.stellaris.common.data_components.RoverComponent;
 import com.st0x0ef.stellaris.common.items.*;
+import com.st0x0ef.stellaris.common.items.armors.JetSuit;
 import com.st0x0ef.stellaris.common.items.armors.SpaceSuit;
 import com.st0x0ef.stellaris.common.items.module.*;
 import com.st0x0ef.stellaris.common.vehicle_upgrade.*;
@@ -405,6 +406,10 @@ public class ItemsRegistry {
         ItemStack JET_SUIT_FULL = new ItemStack(ItemsRegistry.JETSUIT_SUIT);
         JET_SUIT_FULL.set(DataComponentsRegistry.STORED_OXYGEN_COMPONENT.get(),
                 new CappedLongComponent(FluidTankHelper.convertFromNeoMb(10800), FluidTankHelper.convertFromNeoMb(10800)));
+        JET_SUIT_FULL.set(DataComponentsRegistry.STORED_FUEL_COMPONENT.get(),
+                new CappedLongComponent(FluidTankHelper.convertFromNeoMb(1000), FluidTankHelper.convertFromNeoMb(1000)));
+        JET_SUIT_FULL.set(DataComponentsRegistry.JET_SUIT_COMPONENT.get(),
+                new JetSuitComponent(JetSuit.ModeType.DISABLED));
         list.add(JET_SUIT_FULL);
 
         ItemStack OXYGEN_TANK_FULL = new ItemStack(ItemsRegistry.OXYGEN_TANK);

@@ -8,11 +8,13 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 
@@ -23,11 +25,15 @@ public class SpaceSuit extends AbstractSpaceArmor.AbstractSpaceChestplate {
     }
 
     @Override
-    public void onArmorTick(ItemStack stack, ServerLevel level, Player player) {
-        super.onArmorTick(stack, level, player);
-        List<SpaceSuitModule> modules = getModules(stack);
-        if (!modules.isEmpty()) {
-            modules.forEach(spaceSuitModule -> spaceSuitModule.tick(stack, level, player));
+    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
+        super.inventoryTick(stack, level, entity, slotId, isSelected);
+
+        if (entity instanceof Player player && player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof SpaceSuit) {
+            ItemStack spaceSuitItemStack = player.getItemBySlot(EquipmentSlot.CHEST);
+            List<SpaceSuitModule> modules = getModules(stack);
+            if (!modules.isEmpty()) {
+                modules.forEach(spaceSuitModule -> spaceSuitModule.tick(spaceSuitItemStack, level, player));
+            }
         }
     }
 

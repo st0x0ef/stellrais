@@ -6,7 +6,7 @@
     "###"
   ],
   "key": {
-    "#": {"tag": "c:ore_blocks/steel"},
+    "#": {"tag": "c:storage_blocks/steel"},
     "X": {"item": "minecraft:blast_furnace"}
   },
   "result": {

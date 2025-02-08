@@ -176,16 +176,19 @@ public class FluidTankHelper {
             BlockEntity block = entity.getLevel().getBlockEntity(pos2);
             if(block == null) return;
             if (block instanceof WrappedFluidBlockEntity fluidBlock) {
-
                 for (FluidTank tank : fluidBlock.getFluidTanks()) {
-
                     if (tank.getStack().getFluid() == fluidTank.getStack().getFluid()) {
-                        if (fluidTank.getAmount() - 10 > 0 && tank.canGrow(10)) {
-                            tank.grow(10);
-                            fluidTank.grow(-10);
+                        if (fluidTank.getAmount() - convertFromNeoMb(10) > 0 && tank.canGrow(convertFromNeoMb(10))) {
+                            tank.grow(convertFromNeoMb(10));
+                            fluidTank.shrink(convertFromNeoMb(10));
 
                             entity.setChanged();
                         }
+                    } else if (tank.getStack().isEmpty()) {
+                        tank.setFluid(fluidTank.getStack().getFluid(), convertFromNeoMb(10));
+                        fluidTank.shrink(convertFromNeoMb(10));
+
+                        entity.setChanged();
                     }
                 }
             }

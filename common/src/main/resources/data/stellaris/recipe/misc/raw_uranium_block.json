@@ -6,7 +6,7 @@
     "###"
   ],
   "key": {
-    "#": {"item": "stellaris:raw_uranium"}
+    "#": {"tag": "c:raw_materials/uranium"}
   },
   "result": {
     "id": "stellaris:raw_uranium_block"

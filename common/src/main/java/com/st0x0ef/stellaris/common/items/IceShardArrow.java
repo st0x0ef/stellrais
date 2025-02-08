@@ -18,4 +18,5 @@ public class IceShardArrow extends ArrowItem {
     public AbstractArrow createArrow(Level level, ItemStack itemStack, LivingEntity livingEntity, @Nullable ItemStack weapon) {
         return new IceShardArrowEntity(level, livingEntity, itemStack.copyWithCount(1));
     }
+
 }

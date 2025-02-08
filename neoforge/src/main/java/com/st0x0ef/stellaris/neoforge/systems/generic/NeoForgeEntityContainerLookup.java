@@ -31,8 +31,9 @@ public class NeoForgeEntityContainerLookup<T, C> implements EntityContainerLooku
         return stack.getCapability(capability, context);
     }
 
+    @SafeVarargs
     @Override
-    public void registerEntityTypes(EntityGetter<T, C> getter, Supplier<EntityType<?>>... containers) {
+    public final void registerEntityTypes(EntityGetter<T, C> getter, Supplier<EntityType<?>>... containers) {
         for (Supplier<EntityType<?>> container : containers) {
             blockEntityGetterMap.put(container, getter);
         }

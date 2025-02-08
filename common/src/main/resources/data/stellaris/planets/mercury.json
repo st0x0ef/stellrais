@@ -10,5 +10,10 @@
   "textures": {
     "planet": "stellaris:textures/planet_bar/mercury_planet_bar.png",
     "planet_bar": "stellaris:textures/planet_bar/mercury_planet_bar.png"
+  },
+  "stormParameters": {
+    "stormy": false,
+    "lightningFrequency": 0.0,
+    "color": [0, 0, 0]
   }
 }

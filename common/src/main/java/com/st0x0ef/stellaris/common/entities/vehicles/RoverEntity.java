@@ -164,27 +164,27 @@ public class RoverEntity extends AbstractRoverBase implements HasCustomInventory
     private void checkContainer() {
         if (this.level().isClientSide) return;
 
-        if (this.getInventory().getItem(10).getItem() instanceof VehicleUpgradeItem item) {
+        if (this.getInventory().getItem(2).getItem() instanceof VehicleUpgradeItem item) {
             if (item.getUpgrade() instanceof MotorUpgrade upgrade) {
                 this.motorUpgrade = upgrade;
             }
-        } else if (this.getInventory().getItem(10).isEmpty()) {
+        } else if (this.getInventory().getItem(2).isEmpty()) {
             this.motorUpgrade = MotorUpgrade.getBasic();
         }
 
-        if (this.getInventory().getItem(11).getItem() instanceof VehicleUpgradeItem item) {
+        if (this.getInventory().getItem(3).getItem() instanceof VehicleUpgradeItem item) {
             if (item.getUpgrade() instanceof SpeedUpgrade upgrade) {
                 this.speedUpgrade = upgrade;
             }
-        } else if (this.getInventory().getItem(11).isEmpty()) {
+        } else if (this.getInventory().getItem(3).isEmpty()) {
             this.speedUpgrade = SpeedUpgrade.getBasic();
         }
 
-        if (this.getInventory().getItem(12).getItem() instanceof VehicleUpgradeItem item) {
+        if (this.getInventory().getItem(4).getItem() instanceof VehicleUpgradeItem item) {
             if (item.getUpgrade() instanceof TankUpgrade upgrade) {
                 this.tankUpgrade = upgrade;
             }
-        } else if (this.getInventory().getItem(12).isEmpty()) {
+        } else if (this.getInventory().getItem(4).isEmpty()) {
             this.tankUpgrade = TankUpgrade.getBasic();
         }
 

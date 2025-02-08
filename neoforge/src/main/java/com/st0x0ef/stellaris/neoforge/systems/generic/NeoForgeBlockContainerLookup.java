@@ -37,15 +37,17 @@ public class NeoForgeBlockContainerLookup<T, C> implements BlockContainerLookup<
         return level.getCapability(capability, pos, state, entity, direction);
     }
 
+    @SafeVarargs
     @Override
-    public void registerBlocks(BlockGetter<T, C> getter, Supplier<Block>... containers) {
+    public final void registerBlocks(BlockGetter<T, C> getter, Supplier<Block>... containers) {
         for (Supplier<Block> container : containers) {
             blockGetterMap.put(container, getter);
         }
     }
 
+    @SafeVarargs
     @Override
-    public void registerBlockEntities(BlockGetter<T, C> getter, Supplier<BlockEntityType<?>>... containers) {
+    public final void registerBlockEntities(BlockGetter<T, C> getter, Supplier<BlockEntityType<?>>... containers) {
         for (Supplier<BlockEntityType<?>> container : containers) {
             blockEntityGetterMap.put(container, getter);
         }

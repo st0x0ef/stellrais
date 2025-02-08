@@ -20,8 +20,9 @@ public class ForgeItemApiItemLookup implements ItemContainerLookup<ItemContainer
         return PlatformItemContainer.of(lookup.find(stack, context));
     }
 
+    @SafeVarargs
     @Override
-    public void registerItems(ItemGetter<ItemContainer, Void> getter, Supplier<Item>... containers) {
+    public final void registerItems(ItemGetter<ItemContainer, Void> getter, Supplier<Item>... containers) {
         lookup.registerItems((stack, context) -> ForgeItemContainer.of(getter.getContainer(stack, context)), containers);
     }
 }

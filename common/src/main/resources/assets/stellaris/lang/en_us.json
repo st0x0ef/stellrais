@@ -36,11 +36,6 @@
   "block.stellaris.raw_desh_block": "Block of Raw Desh",
   "block.stellaris.raw_uranium_block": "Block of Raw Uranium",
 
-  "item.stellaris.ice_shard": "Ice Shard",
-
-  "item.stellaris.raw_steel_ingot": "Raw Steel",
-  "item.stellaris.raw_desh_ingot": "Raw Desh",
-  "item.stellaris.raw_uranium": "Raw Uranium",
   "item.stellaris.raw_neptunium": "Raw Neptunium",
 
   "block.stellaris.steel_block": "Block of Steel",
@@ -287,15 +282,9 @@
 
 
   "item.stellaris.raw_steel_ingot": "Raw Steel Ingot",
-  "item.stellaris.steel_ingot": "Steel Ingot",
   "item.stellaris.raw_desh_ingot": "Raw Desh Ingot",
-  "item.stellaris.desh_ingot": "Desh Ingot",
   "item.stellaris.ice_shard": "Ice Shard",
-  "item.stellaris.steel_nugget": "Steel Nugget",
-  "item.stellaris.heavy_metal_ingot": "Heavy Metal Ingot",
-  "item.stellaris.heavy_metal_nugget": "Heavy Metal Nugget",
   "item.stellaris.raw_uranium": "Raw Uranium",
-  "item.stellaris.uranium_ingot": "Uranium Ingot",
   "item.stellaris.moon_berries": "Moon Berry",
 
   "STELLARIS VEHICLE STUFF":
@@ -353,7 +342,7 @@
 
   "item.stellaris.fuel_module": "Fuel Module",
   "item.stellaris.oil_finder_module": "Oil Finder Module",
-  "item.stellaris.auto_feeder_module": "Auto Feader Module",
+  "item.stellaris.auto_feeder_module": "Auto Feeder Module",
   "item.stellaris.gravity_normalizer_module": "Gravity Normalizer Module",
   "item.stellaris.jet_module": "Jet Module",
 
@@ -478,6 +467,7 @@
 ,
 
   "effect.stellaris.radioactive": "Radioactivity",
+  "effect.stellaris.sandstorm": "Sandstorm",
 
 
 

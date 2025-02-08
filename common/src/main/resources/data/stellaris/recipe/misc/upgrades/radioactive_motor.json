@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " c ",
+    "cbc",
+    " c "
+  ],
+  "key": {
+    "c": {
+      "tag": "c:ingots/uranium"
+    },
+    "b": {
+      "item": "stellaris:rocket_engine"
+    }
+  },
+  "result": {
+    "id": "stellaris:radioactive_motor",
+    "count": 1
+  }
+}

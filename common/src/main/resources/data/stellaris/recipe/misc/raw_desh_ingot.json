@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "c:storage_blocks/raw_desh"
+    }
+  ],
+  "result": {
+    "id": "stellaris:raw_desh_ingot",
+    "count": 9
+  }
+}

@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "stellaris:desh_block"
+      "tag": "c:storage_blocks/desh"
     }
   ],
   "result": {

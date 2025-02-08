@@ -2,6 +2,7 @@ package com.st0x0ef.stellaris.common.registry;
 
 import com.google.common.base.Suppliers;
 import com.st0x0ef.stellaris.Stellaris;
+import com.st0x0ef.stellaris.common.entities.CustomLightningBolt;
 import com.st0x0ef.stellaris.common.entities.IceShardArrowEntity;
 import com.st0x0ef.stellaris.common.entities.IceSpit;
 import com.st0x0ef.stellaris.common.entities.mobs.*;
@@ -19,10 +20,7 @@ import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.SpawnPlacementTypes;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -57,6 +55,11 @@ public class EntityRegistry {
             Suppliers.memoize(() -> EntityType.Builder.of(CheeseBoss::new, MobCategory.MONSTER).sized(1.0f, 3.7f).eyeHeight(3.5f).build(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "cheese_boss").toString())));
     public static final RegistrySupplier<EntityType<? extends CheeseSpit>> CHEESE_SPIT = ENTITY_TYPE.register("cheese_spit",
             Suppliers.memoize(() -> EntityType.Builder.of(CheeseSpit::new, MobCategory.MISC).sized(0.5f, 0.5f).build(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "cheese_spit").toString())));
+
+    public static final RegistrySupplier<EntityType<CustomLightningBolt>> VENUS_LIGHTNING_BOLT = ENTITY_TYPE.register("custom_lightning_bolt",
+            Suppliers.memoize(() -> EntityType.Builder.of(CustomLightningBolt::new, MobCategory.MISC).sized(0.5f, 0.5f).build(ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "custom_lightning_bolt").toString())));
+
+
     /**
      * Vehicles
      */
@@ -89,7 +92,7 @@ public class EntityRegistry {
         SpawnPlacementsRegistry.register(PYGRO, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Pygro::checkMonsterSpawnRules);
         SpawnPlacementsRegistry.register(MOGLER, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mogler::checkMoglerSpawnRules);
         SpawnPlacementsRegistry.register(STAR_CRAWLER, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, StarCrawler::checkMonsterSpawnRules);
-        SpawnPlacementsRegistry.register(CHEESE_BOSS, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, CheeseBoss::checkMonsterSpawnRules);
+        //SpawnPlacementsRegistry.register(CHEESE_BOSS, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, CheeseBoss::checkMonsterSpawnRules);
     }
 
     //Entity Sensor

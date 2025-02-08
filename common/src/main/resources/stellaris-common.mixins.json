@@ -13,7 +13,6 @@
     "PlayerDataMixin"
   ],
   "client": [
-    "client.PlayerKeyMixin",
     "client.PlayerRiddingVehicleMixin",
     "client.RenderPlayerMixin",
     "client.PlayerRiddingVehicleMixin",

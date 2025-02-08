@@ -25,7 +25,7 @@ public class TabletKeyMenuMixin {
         if (KeyMappingsRegistry.OPEN_TABLET_INFO.matches(KeyMappingsRegistry.OPEN_TABLET_INFO.key.getValue(), keyCode)) {
             if(ClientEvents.entryHovered != null) {
                 ClientEvents.timeClicked++;
-                if(ClientEvents.timeClicked == 20) {
+                if(ClientEvents.timeClicked == 30) {
                     NetworkManager.sendToServer(new OpenTabletEntryPacket(ClientEvents.entryHovered));
                     ClientEvents.timeClicked = 0;
                     ClientEvents.entryHovered = null;

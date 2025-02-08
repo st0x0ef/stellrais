@@ -4,7 +4,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
 
-public class GlobeItem extends BlockItem {
+public class GlobeItem extends BlockItem implements CustomTabletEntry {
 
     private final ResourceLocation texture;
 
@@ -17,4 +17,8 @@ public class GlobeItem extends BlockItem {
         return this.texture;
     }
 
+    @Override
+    public ResourceLocation getEntryName() {
+        return ResourceLocation.fromNamespaceAndPath("planets", this.arch$registryName().getPath().replace("_globe", ""));
+    }
 }

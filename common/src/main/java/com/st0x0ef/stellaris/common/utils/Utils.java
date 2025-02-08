@@ -94,26 +94,19 @@ public class Utils {
 
                 LanderEntity lander = createLanderFromRocket(serverPlayer, rocket, 600, getPlanetLevel(destination));
                 teleportEntity(serverPlayer, destination);
+                player.awardStat(StatsRegistry.SPACE_TRAVEL.get(), Utils.distanceToPlanet(PlanetUtil.getPlanet(player.level().dimension().location()), destination));
+
                 serverPlayer.level().addFreshEntity(lander);
 
                 while (!serverPlayer.startRiding(lander, true)) {
                     // Wait until the player starts riding the lander
                 }
 
-            player.level().addFreshEntity(lander);
-            player.startRiding(lander);
-            player.sendSystemMessage(Component.translatable("message.stellaris.lander"));
-
-            player.awardStat(StatsRegistry.SPACE_TRAVEL.get(), Utils.distanceToPlanet(PlanetUtil.getPlanet(player.level().dimension().location()), destination));
-
-
-        } else {
-            player.closeContainer();
-            player.awardStat(StatsRegistry.SPACE_TRAVEL.get(), Utils.distanceToPlanet(PlanetUtil.getPlanet(player.level().dimension().location()), destination));
-
-            teleportEntity(player, destination);
-
-
+                serverPlayer.sendSystemMessage(Component.translatable("message.stellaris.lander"));
+            } else {
+                serverPlayer.closeContainer();
+                teleportEntity(serverPlayer, destination);
+            }
         }
     }
 

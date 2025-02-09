@@ -38,9 +38,9 @@ dependencies {
     modCompileOnlyApi("mezz.jei:jei-${minecraft_version}-fabric-api:${jei_version}")
     modRuntimeOnly("mezz.jei:jei-${minecraft_version}-fabric:${jei_version}")
 
-    modRuntimeOnly "maven.modrinth:sky-aesthetics:${sky_version}-fabric"
+    runtimeOnly "fr.tathan.sky-aesthetics:sky-aesthetics-fabric-1.21:${sky_version}"
 
-    include "maven.modrinth:sky-aesthetics:${sky_version}-fabric"
+    include "fr.tathan.sky-aesthetics:sky-aesthetics-fabric-1.21:${sky_version}"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }

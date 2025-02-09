@@ -31,6 +31,11 @@ subprojects {
         maven { url "https://maven.parchmentmc.org" }
         maven { url "https://maven.neoforged.net/releases" }
         maven { url "https://maven.blamejared.com/" }
+        maven {
+            name "odysseyusMaven"
+            url "https://maven.odysseyus.fr/releases"
+        }
+
         exclusiveContent {
             forRepository {
                 maven {
@@ -84,7 +89,7 @@ subprojects {
 
         repositories {
             maven {
-                url = "https://maven.odysseyus.fr/releases/"
+                url = "https://maven.odysseyus.fr/snapshots/"
                 credentials {
                     username = System.getenv("MAVEN_USER")
                     password = System.getenv("MAVEN_PASS")

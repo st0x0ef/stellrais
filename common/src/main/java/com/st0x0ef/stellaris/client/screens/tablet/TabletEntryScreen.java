@@ -23,10 +23,12 @@ public class TabletEntryScreen extends Screen {
     private int imageWidth;
     private final TabletMainScreen screen;
     public TabletEntry entry;
-    private ArrayList<TabletButton> BUTTONS = new ArrayList<>();
+    private ArrayList<TabletButton> PAGES_BUTTONS = new ArrayList<>();
     public String currentPage = "main";
     public TabletEntryWidget widget;
 
+    public ArrayList<ArrayList<TabletButton>> ENTRY_BUTTONS = new ArrayList<>();
+    public int currentEntryPage = 1;
 
     protected TabletEntryScreen(Component title, TabletMainScreen screen, int leftPos, int topPos, TabletEntry entry) {
         super(title);
@@ -42,18 +44,15 @@ public class TabletEntryScreen extends Screen {
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         super.render(guiGraphics, mouseX, mouseY, partialTick);
-
         guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, this.topPos + 30, 16777215);
 
         if(currentPage.equals("main")) {
-            BUTTONS.forEach(button -> {
-                button.visible = true;
-            });
+            showEntryButton();
+            removeNonShowButtons();
+
             widget.visible = false;
         } else {
-            BUTTONS.forEach(button -> {
-                button.visible = false;
-            });
+            removeAllButtons();
             widget.visible = true;
 
         }
@@ -94,9 +93,17 @@ public class TabletEntryScreen extends Screen {
             } else {
                 column.getAndIncrement();
             }
-            BUTTONS.add(tabletButton);
+            PAGES_BUTTONS.add(tabletButton);
+
+            if(PAGES_BUTTONS.size() % 8 == 0) {
+                column.set(0);
+                row.set(0);
+            }
+            addButtonToList(tabletButton);
+            tabletButton.visible = false;
             this.addRenderableWidget(tabletButton);
         });
+
 
         this.widget = new TabletEntryWidget(this.leftPos + 15, this.topPos + 50, 215, 100, Component.literal(""), null, this);
         this.widget.visible = false;
@@ -133,5 +140,51 @@ public class TabletEntryScreen extends Screen {
 
     }
 
+    public void showEntryButton() {
+        ENTRY_BUTTONS.get(currentEntryPage).forEach(button -> {
+            button.visible = true;
+        });
+    }
+
+    public void removeNonShowButtons() {
+        for (int i = 0; i < ENTRY_BUTTONS.size(); i++) {
+            if (i != currentEntryPage) {
+                ENTRY_BUTTONS.get(i).forEach(button -> {
+                    button.visible = false;
+                });
+            }
+        }
+    }
+
+    public void removeAllButtons() {
+        for (int i = 0; i < ENTRY_BUTTONS.size(); i++) {
+            ENTRY_BUTTONS.get(i).forEach(button -> {
+                button.visible = false;
+            });
+        }
+    }
+
+    public void addButtonToList(TabletButton button){
+        if (ENTRY_BUTTONS.isEmpty()) {
+            ArrayList<TabletButton> list = new ArrayList<>();
+            list.add(button);
+            ENTRY_BUTTONS.add(list);
+            return;
+        }
+
+        for (ArrayList<TabletButton> buttons : ENTRY_BUTTONS) {
+            if(buttons.size() < 8){
+                buttons.add(button);
+                break;
+            } else if (buttons.size() == 8) {
+                if (ENTRY_BUTTONS.indexOf(buttons) + 1 >= ENTRY_BUTTONS.size()) {
+                    ArrayList<TabletButton> list = new ArrayList<>();
+                    list.add(button);
+                    ENTRY_BUTTONS.add(list);
+                    break;
+                }
+            }
+        }
+    }
 
 }

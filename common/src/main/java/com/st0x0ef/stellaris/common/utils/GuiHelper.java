@@ -3,28 +3,15 @@ package com.st0x0ef.stellaris.common.utils;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.st0x0ef.stellaris.Stellaris;
-import com.st0x0ef.stellaris.client.screens.tablet.TabletMainScreen;
-import com.st0x0ef.stellaris.common.menus.PlanetSelectionMenu;
-import com.st0x0ef.stellaris.common.menus.TabletMenu;
 import com.st0x0ef.stellaris.common.systems.energy.impl.WrappedBlockEnergyContainer;
 import dev.architectury.fluid.FluidStack;
-import dev.architectury.registry.menu.ExtendedMenuProvider;
-import dev.architectury.registry.menu.MenuRegistry;
-import io.netty.buffer.Unpooled;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.material.Fluid;
-import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
 public class GuiHelper

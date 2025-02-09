@@ -37,6 +37,7 @@ import com.st0x0ef.stellaris.client.renderers.entities.customlightning.CustomLig
 import com.st0x0ef.stellaris.client.renderers.globe.GlobeBlockRenderer;
 import com.st0x0ef.stellaris.client.renderers.globe.GlobeModel;
 import com.st0x0ef.stellaris.client.screens.*;
+import com.st0x0ef.stellaris.client.screens.tablet.TabletMainScreen;
 import com.st0x0ef.stellaris.common.registry.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
@@ -130,6 +131,8 @@ public class StellarisNeoforgeClient {
         event.register(MenuTypesRegistry.WATER_PUMP_MENU.get(), WaterPumpScreen::new);
         event.register(MenuTypesRegistry.WAIT_MENU.get(), WaitScreen::new);
         event.register(MenuTypesRegistry.PUMPJACK_MENU.get(), PumpjackScreen::new);
+        event.register(MenuTypesRegistry.TABLET_MENU.get(), TabletMainScreen::new);
+
 
     }
 
@@ -137,6 +140,7 @@ public class StellarisNeoforgeClient {
     public static void registerKeyBindings(RegisterKeyMappingsEvent event) {
         event.register(KeyMappingsRegistry.CHANGE_JETSUIT_MODE);
         event.register(KeyMappingsRegistry.FREEZE_PLANET_MENU);
+        event.register(KeyMappingsRegistry.OPEN_TABLET_INFO);
 
         NeoForge.EVENT_BUS.addListener(StellarisNeoforgeClient::clientTick);
     }

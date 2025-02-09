@@ -6,19 +6,20 @@
   "mixins": [
     "EntityEatMixin",
     "EntityTick",
-    "LivingEntityMixin",
-    "PlayerDataMixin",
     "ItemEntityGravityMixin",
+    "LivingEntityMixin",
     "MixinChunkAccess",
     "MixinChunkSerializer",
-    "StormyPlanetMixin"
+    "MobSpawnEggMixin",
+    "PlayerDataMixin"
   ],
   "client": [
+    "StormyPlanetMixin",
+    "client.FogRenderMixin",
     "client.PlayerRiddingVehicleMixin",
     "client.RenderPlayerMixin",
-    "client.RenderPlayerMixin",
     "client.SandStormMixin",
-    "client.FogRenderMixin"
+    "client.TabletKeyMenuMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -8,6 +8,7 @@ import com.st0x0ef.stellaris.common.keybinds.KeyVariables;
 import com.st0x0ef.stellaris.common.menus.PlanetSelectionMenu;
 import com.st0x0ef.stellaris.common.network.NetworkRegistry;
 import com.st0x0ef.stellaris.common.registry.ItemsRegistry;
+import com.st0x0ef.stellaris.common.utils.PlanetUtil;
 import com.st0x0ef.stellaris.common.utils.Utils;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -84,6 +85,9 @@ public class KeyHandlerPacket implements CustomPacketPayload {
                     break;
                 case "key_jump":
                     KeyVariables.KEY_JUMP.put(player.getUUID(), packet.condition);
+                    break;
+                case "key_tablet":
+                    KeyVariables.KEY_TABLET.put(player.getUUID(), packet.condition);
                     break;
                 case "freeze_planet_menu":
                     if (player.containerMenu instanceof PlanetSelectionMenu menu) menu.switchFreezeGui();

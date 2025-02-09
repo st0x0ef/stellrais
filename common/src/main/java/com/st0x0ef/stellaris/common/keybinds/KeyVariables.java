@@ -1,5 +1,6 @@
 package com.st0x0ef.stellaris.common.keybinds;
 
+import com.st0x0ef.stellaris.Stellaris;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
@@ -15,6 +16,7 @@ public class KeyVariables {
     public static final Map<UUID, Boolean> KEY_RIGHT = new HashMap<>();
     public static final Map<UUID, Boolean> KEY_LEFT = new HashMap<>();
     public static final Map<UUID, Boolean> KEY_JUMP = new HashMap<>();
+    public static final Map<UUID, Boolean> KEY_TABLET = new HashMap<>();
 
     public static boolean isHoldingUp(Player player) {
         return player != null && KEY_UP.getOrDefault(player.getUUID(), false);
@@ -35,6 +37,11 @@ public class KeyVariables {
     public static boolean isHoldingJump(Player player) {
         return player != null && KEY_JUMP.getOrDefault(player.getUUID(), false);
     }
+
+    public static boolean getHoldingTabletPress(Player player) {
+        return player != null && KEY_TABLET.getOrDefault(player.getUUID(), false);
+    }
+
 
     public static Map<KeyMapping, String> getKey(Minecraft minecraft) {
         Map<KeyMapping, String> key = new HashMap<>();

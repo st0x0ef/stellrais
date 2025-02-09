@@ -1,0 +1,75 @@
+{
+  "id": "planets",
+  "description": "Planets",
+  "icon": "stellaris:textures/gui/tablet/rocket_page.png",
+  "hoverIcon": "stellaris:textures/gui/tablet/rocket_page_hover.png",
+  "infos": [
+    {
+      "type": "item",
+      "id": "mercury",
+      "title": "Mercury",
+      "description": "Mercury is a planet that is very close to the sun. It is very hot and has a lot of lava. [br] [br] Temperature : [color=red]430.0°c [br] Gravity : [color=red]3.7 [br] Oxygen : [color=red]false [br] Distance From Earth : 92000km [br] [br] Mobs [br] - [ref=mobs:mogler]Mogler [br] [br] Resources : [br] - [ref=items:uranium]Uranium [br] - Iron",
+      "item": {
+        "stack": {
+          "id": "stellaris:mercury_globe",
+          "count": 1
+        },
+        "size": 32
+      }
+    },
+    {
+      "type": "item",
+      "id": "earth",
+      "title": "The Earth",
+      "description": "The Earth AKA The planet Blue AKA The overworld. It is a very beautiful planet with a lot of life. [br] [br] Temperature : [color=green]15.0°c [br] Gravity : [color=green]9.8 [br] Oxygen : [color=green]true [br] Distance From Earth : 0km [br] [br] Moon : [ref=planets:moon]The [ref=planets:moon]Moon",
+      "item": {
+        "stack": {
+          "id": "stellaris:earth_globe",
+          "count": 1
+        },
+        "size": 32
+      }
+    },
+    {
+      "type": "item",
+      "id": "mars",
+
+      "title": "Mars",
+      "description": "Mars is a planet that is very cold and has a lot of ice. [br] [br] Temperature : [color=blue]-63.0°c [br] Gravity : [color=blue]3.7 [br] Oxygen : [color=blue]false [br] Distance From Earth : 55700km [br] [br] Mobs : [br] - [ref=mobs:martian_raptor]Martian [ref=mobs:martian_raptor]Raptor [br] [br] Resources : [br] - [ref=items:plutonium]Plutonium [br] - Diamond [br] - [ref=items:ice_shard]Ice [ref=items:ice_shard]Shard [br] - Iron [br] - [ref=items:ostrum]Ostrum",
+      "item": {
+        "stack": {
+          "id": "stellaris:mars_globe",
+          "count": 1
+        },
+        "size": 32
+      }
+    },
+    {
+      "type": "item",
+      "id": "venus",
+      "title": "Venus",
+      "description": "Venus is a planet that is very hot and has a lot of lava. [br] [br] Temperature : [color=red]470.0°c [br] Gravity : [color=red]8.9 [br] Oxygen : [color=red]false [br] Distance From Earth : 41000km [br] [br] Mobs : [br] - [ref=mobs:pygro]Pygro [br] - [ref=mobs:mogler]Mogler [br] - [ref=mobs:pygro_brute]Pygro [ref=mobs:pygro_brute]Brute [br] [br] Resources : [br] - [ref=items:neptunium]Neptunium [br] - Coal [br] - Diamond",
+      "item": {
+        "stack": {
+          "id": "stellaris:venus_globe",
+          "count": 1
+        },
+        "size": 32
+      }
+    },
+    {
+      "type": "item",
+      "id": "moon",
+
+      "title": "The Moon",
+      "description": "The Moon is a satellite of the Earth. It is a very cold place with empty desert of moon sand. Please don't steal it. [br] [br] Temperature : [color=blue]-63.0°c [br] Gravity : [color=blue]1.6 [br] Oxygen : [color=blue]false [br] Distance From Earth : 384km [br] [br] Mobs : [br] - [ref=mobs:alien]Alien [br] - [ref=mobs:alien_zombie]Alien [ref=mobs:alien_zombie]Zombie [br] - [ref=mobs:star_crawler]Star [ref=mobs:star_crawler]Crawler [br] [br] Resources : [br] - [ref=items:desh]Desh [br] - [ref=items:ice_shard]Ice [ref=items:ice_shard]Shard [br] - Iron",
+      "item": {
+        "stack": {
+          "id": "stellaris:moon_globe",
+          "count": 1
+        },
+        "size": 32
+      }
+    }
+  ]
+}

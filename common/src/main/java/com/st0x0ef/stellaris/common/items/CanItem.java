@@ -3,6 +3,7 @@ package com.st0x0ef.stellaris.common.items;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
@@ -15,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Optional;
 
-public class CanItem extends Item {
+public class CanItem extends Item implements CustomTabletEntry {
 
     private final int maxNutrition;
 
@@ -89,5 +90,10 @@ public class CanItem extends Item {
             }
         }
         return stack;
+    }
+
+    @Override
+    public ResourceLocation getEntryName(ItemStack stack) {
+        return ResourceLocation.parse("items:cans");
     }
 }

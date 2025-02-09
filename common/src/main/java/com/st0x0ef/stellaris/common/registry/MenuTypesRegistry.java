@@ -28,6 +28,8 @@ public class MenuTypesRegistry {
     public static final RegistrySupplier<MenuType<PumpjackMenu>> PUMPJACK_MENU = MENU_TYPE.register("pumpjack_menu", () -> MenuRegistry.ofExtended(PumpjackMenu::create));
 
     public static final RegistrySupplier<MenuType<PlanetSelectionMenu>> PLANET_SELECTION_MENU = MENU_TYPE.register("planet_selection_menu", () -> MenuRegistry.ofExtended(PlanetSelectionMenu::create));
+    public static final RegistrySupplier<MenuType<TabletMenu>> TABLET_MENU = MENU_TYPE.register("tablet_menu", () -> MenuRegistry.ofExtended(TabletMenu::create));
+
     public static final RegistrySupplier<MenuType<MilkyWayMenu>> MILKYWAY_MENU = MENU_TYPE.register("milkyway_menu", () -> MenuRegistry.ofExtended(MilkyWayMenu::create));
     public static final RegistrySupplier<MenuType<WaitMenu>> WAIT_MENU = MENU_TYPE.register("wait_menu", () -> MenuRegistry.ofExtended(WaitMenu::create));
 

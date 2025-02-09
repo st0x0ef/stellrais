@@ -1,12 +1,14 @@
 package com.st0x0ef.stellaris.common.utils;
 
 import com.mojang.serialization.Codec;
+import com.st0x0ef.stellaris.client.screens.components.TabletButton;
 import com.st0x0ef.stellaris.common.data.planets.Planet;
 import com.st0x0ef.stellaris.common.entities.vehicles.LanderEntity;
 import com.st0x0ef.stellaris.common.entities.vehicles.RocketEntity;
 import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
 import com.st0x0ef.stellaris.common.registry.EntityData;
 import com.st0x0ef.stellaris.common.registry.ItemsRegistry;
+import com.st0x0ef.stellaris.common.registry.StatsRegistry;
 import com.st0x0ef.stellaris.common.vehicle_upgrade.FuelType;
 import dev.architectury.utils.GameInstance;
 import net.minecraft.core.BlockPos;
@@ -18,6 +20,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.Entity;
@@ -29,6 +32,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -89,6 +93,8 @@ public class Utils {
 
                 LanderEntity lander = createLanderFromRocket(serverPlayer, rocket, 600, getPlanetLevel(destination));
                 teleportEntity(serverPlayer, destination);
+                player.awardStat(StatsRegistry.SPACE_TRAVEL.get(), Utils.distanceToPlanet(PlanetUtil.getPlanet(player.level().dimension().location()), destination));
+
                 serverPlayer.level().addFreshEntity(lander);
 
                 while (!serverPlayer.startRiding(lander, true)) {
@@ -116,6 +122,9 @@ public class Utils {
                 teleportEntity(entity, destination);
 
                 if(entity instanceof Player player) {
+
+                    player.awardStat(StatsRegistry.SPACE_TRAVEL.get(), Utils.distanceToPlanet(PlanetUtil.getPlanet(player.level().dimension().location()), destination));
+
                     player.closeContainer();
                     player.getEntityData().set(EntityData.DATA_PLANET_MENU_OPEN, false);
                 }
@@ -130,6 +139,9 @@ public class Utils {
         }
     }
 
+    public static int distanceToPlanet(Planet actual, Planet destination) {
+        return Mth.abs(actual.distanceFromEarth() - destination.distanceFromEarth());
+    }
 
     public static double changeLastDigitToEven(double number) {
         String numberStr = Double.toString(number);
@@ -303,5 +315,29 @@ public class Utils {
         }
 
         return false;
+    }
+
+
+    public  <T> void addButtonToList(ArrayList<ArrayList<T>> finalList, T button, int size){
+        if (finalList.isEmpty()) {
+            ArrayList<T> list = new ArrayList<>();
+            list.add(button);
+            finalList.add(list);
+            return;
+        }
+
+        for (ArrayList<T> buttons : finalList) {
+            if(buttons.size() < size){
+                buttons.add(button);
+                break;
+            } else if (buttons.size() == size) {
+                if (finalList.indexOf(buttons) + 1 >= finalList.size()) {
+                    ArrayList<T> list = new ArrayList<>();
+                    list.add(button);
+                    finalList.add(list);
+                    break;
+                }
+            }
+        }
     }
 }

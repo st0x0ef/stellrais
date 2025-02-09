@@ -5,6 +5,7 @@ import com.st0x0ef.stellaris.common.data.planets.Planet;
 import com.st0x0ef.stellaris.common.data.planets.StellarisData;
 import com.st0x0ef.stellaris.common.menus.MilkyWayMenu;
 import com.st0x0ef.stellaris.common.menus.PlanetSelectionMenu;
+import com.st0x0ef.stellaris.common.menus.TabletMenu;
 import com.st0x0ef.stellaris.common.menus.WaitMenu;
 import com.st0x0ef.stellaris.common.oxygen.GlobalOxygenManager;
 import dev.architectury.registry.menu.ExtendedMenuProvider;
@@ -120,6 +121,36 @@ public class PlanetUtil {
             public @NotNull AbstractContainerMenu createMenu(int syncId, Inventory inv, Player player) {
                 FriendlyByteBuf buffer = new FriendlyByteBuf(Unpooled.buffer());
                 return WaitMenu.create(syncId, inv, buffer.writeUtf(playerChoosing));
+            }
+        };
+
+        if (player instanceof ServerPlayer serverPlayer) {
+            MenuRegistry.openExtendedMenu(serverPlayer, provider);
+            return 1;
+        }
+
+        return 0;
+    }
+
+    public static int openTabletMenu(Player player, ResourceLocation entry) {
+        ExtendedMenuProvider provider = new ExtendedMenuProvider() {
+            @Override
+            public void saveExtraData(FriendlyByteBuf buffer) {
+                buffer.writeResourceLocation(entry);
+
+            }
+
+            @Override
+            public Component getDisplayName() {
+                return Component.literal("Tablet");
+            }
+
+            @Override
+            public @NotNull AbstractContainerMenu createMenu(int syncId, Inventory inv, Player player) {
+                FriendlyByteBuf buffer = new FriendlyByteBuf(Unpooled.buffer());
+                buffer.writeResourceLocation(entry);
+
+                return TabletMenu.create(syncId, inv, buffer);
             }
         };
 

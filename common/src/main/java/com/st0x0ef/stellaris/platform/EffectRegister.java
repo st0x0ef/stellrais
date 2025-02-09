@@ -7,6 +7,7 @@ import net.minecraft.world.effect.MobEffect;
 import java.util.function.Supplier;
 
 public class EffectRegister {
+    
     @ExpectPlatform
     public static Holder<MobEffect> registerEffect(String name, Supplier<MobEffect> effect) {throw new AssertionError();}
 }

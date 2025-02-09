@@ -387,6 +387,7 @@ public class RocketEntity extends IVehicleEntity implements HasCustomInventorySc
             if (this.FUEL > 0 || player.isCreative()) {
                 if (!this.entityData.get(ROCKET_START)) {
                     this.entityData.set(ROCKET_START, true);
+                    player.awardStat(StatsRegistry.ROCKET_LAUNCHED.get());
                     this.level().playSound(player, this, SoundRegistry.ROCKET_SOUND.get(), SoundSource.NEUTRAL, 1, 1);
                 }
             } else {

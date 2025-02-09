@@ -583,8 +583,11 @@
   "tooltip.item.stellaris.rocket.fuel": "Fuel: %s",
   "tooltip.item.stellaris.rocket.model": "Model: %s",
   "tooltip.item.stellaris.oil_finder": "Right click on a block to check if there is oil",
+  "tooltip.item.stellaris.open_tablet": "§7For more infos, press §8[§c%s§8]",
 
-  "screens.stellaris.config": "Stellaris Config Screen",
+  "stellaris.screen.tablet.rocket_launched": "Rocket Launched : %s",
+  "stellaris.screen.tablet.space_traveled": "Kilometers Traveled : %s",
+  "stellaris.screen.tablet.boss_killed": "Boss Killed : %s",
 
   "translatable.stellaris.registry.holdshift": "Hold [↑ Shift] to view more info.",
   "translatable.stellaris.registry.player": "Player",
@@ -627,5 +630,8 @@
   "spacesuit.stellaris.auto_feeder": "Auto Feeder",
   "spacesuit.stellaris.shift_for_modules": "Hold shift for module list",
   "spacesuit.stellaris.modules": "Modules",
-  "container.stellaris.upgrade": "Upgrade"
+  "container.stellaris.upgrade": "Upgrade",
+
+  "stat.minecraft.space_traveled": "Space Traveled",
+  "stat.minecraft.rocket_launched": "Rocket Launched"
 }

@@ -15,6 +15,7 @@ import com.st0x0ef.stellaris.common.entities.vehicles.RocketEntity;
 import com.st0x0ef.stellaris.common.menus.PlanetSelectionMenu;
 import com.st0x0ef.stellaris.common.network.packets.TeleportEntityToPlanetPacket;
 import com.st0x0ef.stellaris.common.registry.EntityData;
+import com.st0x0ef.stellaris.common.registry.StatsRegistry;
 import com.st0x0ef.stellaris.common.registry.TranslatableRegistry;
 import com.st0x0ef.stellaris.common.utils.PlanetUtil;
 import com.st0x0ef.stellaris.common.utils.Utils;
@@ -31,6 +32,7 @@ import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -726,8 +728,8 @@ public class PlanetSelectionScreen extends AbstractContainerScreen<PlanetSelecti
 
     public void tpToFocusedPlanet() {
         if (focusedBody != null) {
-
             NetworkManager.sendToServer(new TeleportEntityToPlanetPacket(focusedBody.dimension));
+
             long windowHandle = Minecraft.getInstance().getWindow().getWindow();
             prevScrollCallback = GLFW.glfwSetScrollCallback(windowHandle, Minecraft.getInstance().mouseHandler::onScroll);
         } else {

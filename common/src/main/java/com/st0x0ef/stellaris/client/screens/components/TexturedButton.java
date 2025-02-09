@@ -9,10 +9,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 
 @Environment(EnvType.CLIENT)
 public class TexturedButton extends Button {
@@ -47,6 +49,10 @@ public class TexturedButton extends Button {
         this.hoverButtonTexture = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/util/buttons/button.png");
     }
 
+    public <T extends TexturedButton> T  tooltip(@Nullable Tooltip tooltip) {
+        this.setTooltip(tooltip);
+        return cast();
+    }
     @SuppressWarnings("unchecked")
     private <T extends TexturedButton> T cast() {
         return (T) this;
@@ -99,10 +105,6 @@ public class TexturedButton extends Button {
 
         /** FONT RENDERER */
         Font fontRenderer = minecraft.font;
-//        int j = getFGColor();
-//
-//        graphics.drawCenteredString(fontRenderer, this.getMessage(), this.getX() + this.width / 2,
-//                this.getY() + (this.height - 8) / 2, j | Mth.ceil(this.alpha * 255.0F) << 24);
 
         RenderSystem.disableDepthTest();
         RenderSystem.disableBlend();

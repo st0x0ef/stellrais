@@ -18,6 +18,12 @@ accessible method net/minecraft/world/level/levelgen/feature/DripstoneUtils isEm
 accessible method net/minecraft/world/level/levelgen/feature/DripstoneClusterFeature getChanceOfStalagmiteOrStalactite (IIIILnet/minecraft/world/level/levelgen/feature/configurations/DripstoneClusterConfiguration;)D
 
 accessible method net/minecraft/client/MouseHandler onScroll (JDD)V
+extendable method net/minecraft/client/gui/components/AbstractScrollWidget renderScrollBar (Lnet/minecraft/client/gui/GuiGraphics;)V
+accessible method net/minecraft/client/gui/components/AbstractScrollWidget getScrollBarHeight ()I
+
+accessible field net/minecraft/client/gui/GuiGraphics pose Lcom/mojang/blaze3d/vertex/PoseStack;
+accessible method net/minecraft/stats/Stats makeCustomStat (Ljava/lang/String;Lnet/minecraft/stats/StatFormatter;)Lnet/minecraft/resources/ResourceLocation;
+accessible field net/minecraft/client/KeyMapping key Lcom/mojang/blaze3d/platform/InputConstants$Key;
 accessible method net/minecraft/server/level/ServerLevel findLightningTargetAround (Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/BlockPos;
 mutable field  net/minecraft/client/renderer/FogRenderer MOB_EFFECT_FOG Ljava/util/List;
 accessible field  net/minecraft/client/renderer/FogRenderer MOB_EFFECT_FOG Ljava/util/List;

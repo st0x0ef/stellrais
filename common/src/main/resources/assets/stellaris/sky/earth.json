@@ -32,10 +32,10 @@
       "percentage": 999,
       "random_lifetime": [
         20,
-        100
+        90
       ],
       "scale": 0.1,
-      "speed": 0.4,
+      "speed": 0.6,
       "rotation": 0,
       "color": [190, 160, -1]
 

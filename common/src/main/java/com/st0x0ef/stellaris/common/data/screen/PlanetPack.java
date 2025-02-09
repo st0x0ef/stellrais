@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;
 import com.st0x0ef.stellaris.Stellaris;
+import com.st0x0ef.stellaris.client.event.custom.PlanetSelectionEvents;
 import com.st0x0ef.stellaris.client.screens.PlanetSelectionScreen;
 import com.st0x0ef.stellaris.client.screens.info.PlanetInfo;
 import com.st0x0ef.stellaris.client.screens.record.PlanetRecord;
@@ -43,5 +44,7 @@ public class PlanetPack extends SimpleJsonResourceReloadListener {
             PlanetSelectionScreen.PLANETS.add(screenPlanet);
             Stellaris.LOG.info("Added a planet to PlanetSelectionScreen : {}", planet.name());
         });
+        PlanetSelectionEvents.POST_PLANET_PACK_REGISTRY.invoker().moonRegistered(PlanetSelectionScreen.PLANETS);
+
     }
 }

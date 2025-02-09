@@ -4,9 +4,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;
 import com.st0x0ef.stellaris.Stellaris;
+import com.st0x0ef.stellaris.client.event.custom.PlanetSelectionEvents;
 import com.st0x0ef.stellaris.client.screens.PlanetSelectionScreen;
 import com.st0x0ef.stellaris.client.screens.info.MoonInfo;
 import com.st0x0ef.stellaris.client.screens.record.MoonRecord;
+import com.st0x0ef.stellaris.common.events.custom.PlanetEvents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -54,6 +56,9 @@ public class MoonPack extends SimpleJsonResourceReloadListener {
             PlanetSelectionScreen.MOONS.add(screenMoon);
             Stellaris.LOG.info("Added a moon to PlanetSelectionScreen : {}", moon.name());
         });
+        PlanetSelectionEvents.POST_MOON_PACK_REGISTRY.invoker().moonRegistered(PlanetSelectionScreen.MOONS);
+
         count++;
+
     }
 }

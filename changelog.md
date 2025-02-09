@@ -1,7 +1,8 @@
-# 1.2.5 changelog
+# 1.2.6 changelog
 
-## Changes
-- Improve tags for better compat ([#64](https://github.com/st0x0ef/stellaris/pull/64))
-
-## Fixes
-- Fix searching Stellaris in mod list result to a crash ([#63](https://github.com/st0x0ef/stellaris/issues/63))
+## Dev Features
+- Added POST_STAR_PACK_REGISTRY event
+- Added POST_MOON_PACK_REGISTRY event
+- Added POST_PLANET_PACK_REGISTRY event
+- Added PLANET_REGISTERED event
+- Added POST_PLANET_REGISTRY event

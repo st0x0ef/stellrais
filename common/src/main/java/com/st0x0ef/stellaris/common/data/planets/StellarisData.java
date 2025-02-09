@@ -4,6 +4,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;
 import com.st0x0ef.stellaris.Stellaris;
+import com.st0x0ef.stellaris.common.events.custom.PlanetEvents;
+import dev.architectury.event.EventResult;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -28,8 +30,13 @@ public class StellarisData extends SimpleJsonResourceReloadListener {
         resourceLocationJsonElementMap.forEach((key, value) -> {
             JsonObject json = GsonHelper.convertToJsonObject(value, "planets");
             Planet planet = Planet.CODEC.parse(JsonOps.INSTANCE, json).getOrThrow();
+
+            if (PlanetEvents.PLANET_REGISTERED.invoker().planetRegistered(planet) == EventResult.interruptDefault() || PlanetEvents.PLANET_REGISTERED.invoker().planetRegistered(planet) ==  EventResult.interruptFalse()) {
+                return;
+            }
             PLANETS.add(planet);
         });
+        PlanetEvents.POST_PLANET_REGISTRY.invoker().planetRegistered(PLANETS, false);
     }
 
     public static List<Planet> getPlanets() {
@@ -39,5 +46,6 @@ public class StellarisData extends SimpleJsonResourceReloadListener {
     public static void addPlanets(List<Planet> planets) {
         PLANETS.clear();
         PLANETS.addAll(planets);
+        PlanetEvents.POST_PLANET_REGISTRY.invoker().planetRegistered(planets, true);
     }
 }

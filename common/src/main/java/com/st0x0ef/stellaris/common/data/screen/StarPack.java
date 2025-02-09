@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;
 import com.st0x0ef.stellaris.Stellaris;
+import com.st0x0ef.stellaris.client.event.custom.PlanetSelectionEvents;
 import com.st0x0ef.stellaris.client.screens.PlanetSelectionScreen;
 import com.st0x0ef.stellaris.client.screens.info.CelestialBody;
 import com.st0x0ef.stellaris.client.screens.record.StarRecord;
@@ -58,7 +59,10 @@ public class StarPack extends SimpleJsonResourceReloadListener {
             PlanetSelectionScreen.STARS.add(screenStar);
             Stellaris.LOG.info("Added a star to PlanetSelectionScreen : {}", star.name());
         });
+
         count++;
+        PlanetSelectionEvents.POST_STAR_PACK_REGISTRY.invoker().starsRegistered(PlanetSelectionScreen.STARS);
+
     }
 
 }

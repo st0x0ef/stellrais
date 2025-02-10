@@ -31,11 +31,15 @@ public class JetSuitModel extends HumanoidModel<HumanoidRenderState> {
 	private final ModelPart right_boot;
 	private final ModelPart left_leg;
 	private final ModelPart right_leg;
+	private final ModelPart hat;
+	private final ModelPart visor;
     private final Model parentModel;
 	private final EquipmentSlot slot;
 
+
 	public JetSuitModel(ModelPart root, EquipmentSlot slot, ItemStack stack, Model parentModel) {
         super(root, RenderType::entityTranslucent);
+
         this.parentModel = parentModel;
 
         this.head = root.getChild("head");
@@ -46,6 +50,9 @@ public class JetSuitModel extends HumanoidModel<HumanoidRenderState> {
 		this.right_leg = root.getChild("right_leg");
 		this.left_boot = left_leg.getChild("left_boot");
 		this.right_boot = right_leg.getChild("right_boot");
+		this.hat = head.getChild("hat");
+		this.visor = head.getChild("visor");
+
 
 		this.slot = slot;
 		this.setVisible();
@@ -105,7 +112,12 @@ public class JetSuitModel extends HumanoidModel<HumanoidRenderState> {
 	private void setVisible() {
 		this.setAllVisible(false);
 		switch (this.slot) {
-			case HEAD -> this.head.visible = true;
+			case HEAD -> {
+				this.head.visible = true;
+				this.visor.visible = true;
+				this.hat.visible = true;
+			}
+
 			case CHEST -> {
 				this.body.visible = true;
 				this.rightArm.visible = true;
@@ -114,6 +126,10 @@ public class JetSuitModel extends HumanoidModel<HumanoidRenderState> {
 			case LEGS -> {
 				this.rightLeg.visible = true;
 				this.leftLeg.visible = true;
+			}
+			case FEET -> {
+				this.right_boot.visible = true;
+				this.left_boot.visible = true;
 			}
 
 		}

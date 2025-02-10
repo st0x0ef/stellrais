@@ -53,8 +53,8 @@ public class JetSuitModel extends HumanoidModel<LivingEntity> {
 		this.waist = root.getChild("waist");
 		this.left_leg = root.getChild("left_leg");
 		this.right_leg = root.getChild("right_leg");
-		this.left_shoe = root.getChild("left_shoe");
-		this.right_shoe = root.getChild("right_shoe");
+		this.left_shoe = left_leg.getChild("left_shoe");
+		this.right_shoe = right_leg.getChild("right_shoe");
 		this.antenna_r1 = head.getChild("antenna_r1");
 		this.lamp_r1 = head.getChild("lamp_r1");
 

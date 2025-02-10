@@ -28,7 +28,7 @@ public class FuelRefineryMenu extends BaseContainer {
         this.blockEntity = blockEntity;
 
         // Ingredient tank
-        addSlot(new SpecificFluidContainerSlot(container, FluidRegistry.FLOWING_OIL.get(), 0, 10, 36, false));
+        addSlot(new SpecificFluidContainerSlot(container, FluidRegistry.OIL_STILL.get(), 0, 10, 36, false));
         addSlot(new ResultSlot(container, 1, 10, 66));
 
         // Result tank

@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 public record FluidInput(BlockEntity entity) implements RecipeInput {
     @Override
     public ItemStack getItem(int slot) {
-        // We need to return something... I know it's not the best solution but it's just a placeholder
+        // We need to return something... I know it's not the best solution, but it's just a placeholder
         return Items.BUCKET.getDefaultInstance();
     }
 

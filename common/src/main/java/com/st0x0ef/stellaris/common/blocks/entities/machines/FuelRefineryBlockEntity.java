@@ -40,7 +40,7 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
 
     public FuelRefineryBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityRegistry.FUEL_REFINERY.get(), pos, state);
-        this.inputTank = new FilteredFluidStorage(1, 10000, 10000, 0, (n,fluidStack) -> fluidStack.getFluid().isSame(FluidRegistry.FLOWING_OIL.get())) {
+        this.inputTank = new FilteredFluidStorage(1, 10000, 10000, 0, (n,fluidStack) -> fluidStack.getFluid().isSame(FluidRegistry.OIL_STILL.get())) {
             @Override
             protected void onChange(int i) {
                 setChanged();
@@ -49,7 +49,7 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
                             new SyncFluidPacket(this.getFluidInTank(0), 0, getBlockPos(), Direction.UP));
             }
         };
-        this.outputTank = new FilteredFluidStorage(1, 10000, 0, 10000, (n,fluidStack) -> fluidStack.getFluid().isSame(FluidRegistry.FLOWING_FUEL.get())) {
+        this.outputTank = new FilteredFluidStorage(1, 10000, 0, 10000, (n,fluidStack) -> fluidStack.getFluid().isSame(FluidRegistry.FUEL_STILL.get())) {
             @Override
             protected void onChange(int i) {
                 setChanged();
@@ -99,13 +99,13 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
             FuelRefineryRecipe recipe = recipeHolder.get().value();
 
             if (energyContainer.getEnergy() >= recipe.energy()) {
-                FluidStack resultStack = recipe.resultStack();
+                FluidStack resultStack = recipe.resultStack().copy();
 
                 if (outputTank.getFluidInTank(0).isEmpty() || outputTank.getFluidInTank(0).isFluidEqual(resultStack)) {
                     if (outputTank.getFluidValueInTank(0) + resultStack.getAmount() < outputTank.getTankCapacity(0)) {
                         energyContainer.extract(recipe.energy(), false);
-                        inputTank.drain(FluidStack.create(recipe.ingredientStack().getFluid(), recipe.ingredientStack().getAmount()), false);
-                        outputTank.fill(resultStack, false);
+                        inputTank.drainWithoutLimits(recipe.ingredientStack().copy(), false);
+                        outputTank.fillWithoutLimits(resultStack, false);
                         setChanged();
                     }
                 }

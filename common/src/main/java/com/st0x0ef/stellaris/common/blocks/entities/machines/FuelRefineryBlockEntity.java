@@ -131,15 +131,15 @@ public class FuelRefineryBlockEntity extends BaseEnergyContainerBlockEntity impl
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
-        inputTank.save(tag, provider, "input");
-        outputTank.save(tag, provider, "output");
+        inputTank.load(tag, provider, "input");
+        outputTank.load(tag, provider, "output");
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.saveAdditional(tag, provider);
-        inputTank.load(tag, provider, "input");
-        outputTank.load(tag, provider, "output");
+        inputTank.save(tag, provider, "input");
+        outputTank.save(tag, provider, "output");
     }
 
     public FluidStorage getIngredientTank() {

@@ -111,15 +111,20 @@ public abstract class FluidStorage extends BaseFluidStorage {
     }
 
     public void save(CompoundTag compoundTag, HolderLookup.Provider provider, String name) {
-        for (int i = 0; i < getTanks(); i++)
-            if(!getFluidInTank(i).isEmpty())
+        for (int i = 0; i < getTanks(); i++) {
+            if (!getFluidInTank(i).isEmpty()) {
                 compoundTag.put(name+"-fluid-"+i, FluidStackHooks.write(provider, getFluidInTank(i), new CompoundTag()));
+            }
+        }
+
+
     }
 
     public void load(CompoundTag compoundTag, HolderLookup.Provider provider, String name) {
-        for (int i = 0; i < getTanks(); i ++) {
-            if (compoundTag.get(name+"-fluid-"+i) != null)
+        for (int i = 0; i < getTanks(); i++) {
+            if (compoundTag.contains(name+"-fluid-"+i)) {
                 setFluidInTank(i, FluidStackHooks.read(provider, compoundTag.get(name+"-fluid-"+i)).orElse(FluidStack.empty()));
+            }
         }
     }
 

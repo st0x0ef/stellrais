@@ -1,12 +1,11 @@
 package com.st0x0ef.stellaris.neoforge.mixin;
 
+import com.st0x0ef.stellaris.client.renderers.globe.GlobeItemRenderer;
 import com.st0x0ef.stellaris.common.items.GlobeItem;
 import com.st0x0ef.stellaris.common.registry.ItemRendererRegistry;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
-import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
@@ -25,8 +24,7 @@ public class GlobeItemRendererMixin extends BlockItem {
         if(GlobeItemRendererMixin.this.getDefaultInstance().getItem() instanceof GlobeItem item) {
             consumer.accept(new IClientItemExtensions() {
 
-                @Override
-                public @NotNull BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                public GlobeItemRenderer getCustomRenderer() {
                     return ItemRendererRegistry.GLOBE_ITEM_RENDERER.setTexture(item.getTexture());
                 }
             });

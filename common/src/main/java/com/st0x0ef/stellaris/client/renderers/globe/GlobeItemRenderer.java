@@ -17,10 +17,9 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
 
 @Environment(EnvType.CLIENT)
-public class GlobeItemRenderer implements SpecialModelRenderer<ItemDisplayContext> {
+public class GlobeItemRenderer implements SpecialModelRenderer<ItemStack> {
 
     private ResourceLocation texture;
     private GlobeModel<?> model;
@@ -36,8 +35,8 @@ public class GlobeItemRenderer implements SpecialModelRenderer<ItemDisplayContex
     }
 
     @Override
-    public void render(ItemDisplayContext patterns, ItemDisplayContext displayContext, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, boolean hasFoilType) {
-        if (patterns instanceof GlobeItem globeItem) {
+    public void render(ItemStack itemStack, ItemDisplayContext displayContext, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, boolean hasFoilType) {
+        if (itemStack.getItem() instanceof GlobeItem globeItem) {
             this.texture = globeItem.getTexture();
         } else {
             this.texture = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/block/globes/earth_globe.png");
@@ -69,7 +68,7 @@ public class GlobeItemRenderer implements SpecialModelRenderer<ItemDisplayContex
     }
 
     @Override
-    public @Nullable ItemDisplayContext extractArgument(ItemStack stack) {
+    public ItemStack extractArgument(ItemStack stack) {
         return null;
     }
 }

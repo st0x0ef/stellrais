@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface PlanetEvents {
 
-    Event<RegisterPlanetEvent> PLANET_REGISTERED = EventFactory.createEventResult();
+    Event<RegisterPlanetEvent> PLANET_REGISTERED = EventFactory.createLoop();
 
-    Event<PostPlanetRegistryEvent> POST_PLANET_REGISTRY = EventFactory.createEventResult();
+    Event<PostPlanetRegistryEvent> POST_PLANET_REGISTRY = EventFactory.createLoop();
 
     interface RegisterPlanetEvent {
         /**

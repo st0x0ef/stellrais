@@ -6,3 +6,6 @@
 - Added POST_PLANET_PACK_REGISTRY event
 - Added PLANET_REGISTERED event
 - Added POST_PLANET_REGISTRY event
+
+## Fix
+- Fix earth satellite

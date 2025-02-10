@@ -38,7 +38,7 @@ dependencies {
     modCompileOnlyApi("mezz.jei:jei-${minecraft_version}-fabric-api:${jei_version}")
     modRuntimeOnly("mezz.jei:jei-${minecraft_version}-fabric:${jei_version}")
 
-    runtimeOnly "fr.tathan.sky-aesthetics:sky-aesthetics-fabric-1.21:${sky_version}"
+    modRuntimeOnly "fr.tathan.sky-aesthetics:sky-aesthetics-fabric-1.21:${sky_version}"
 
     include "fr.tathan.sky-aesthetics:sky-aesthetics-fabric-1.21:${sky_version}"
 

@@ -12,7 +12,6 @@ public class OxygenRoom {
     private final Set<BlockPos> oxygenatedPositions;
     private final Queue<BlockPos> positionsToCheck;
     private final ServerLevel level;
-    private final DimensionOxygenManager oxygenManager;
 
     private static final int HALF_ROOM_SIZE = 16;
 
@@ -21,7 +20,6 @@ public class OxygenRoom {
         this.oxygenatedPositions = new LinkedHashSet<>();
         this.positionsToCheck = new LinkedList<>();
         this.level = level;
-        this.oxygenManager = GlobalOxygenManager.getInstance().getOrCreateDimensionManager(level);
     }
 
     public BlockPos getDistributorPosition() {

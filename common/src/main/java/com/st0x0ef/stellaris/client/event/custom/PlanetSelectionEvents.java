@@ -7,6 +7,7 @@ import com.st0x0ef.stellaris.common.data.planets.Planet;
 import dev.architectury.event.Event;
 import dev.architectury.event.EventFactory;
 import dev.architectury.event.EventResult;
+import dev.architectury.networking.NetworkManager;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.Nullable;
@@ -62,9 +63,10 @@ public interface PlanetSelectionEvents {
          * @param player The player that clicked the button.
          * @param planet The planet that the player selected.
          * @param rocket The rocket that the player is in.
+         * @param context The context of the packet.
          * @return A {@link EventResult}.
          */
-        EventResult launchButton(Player player, @Nullable Planet planet, @Nullable Entity rocket);
+        EventResult launchButton(Player player, @Nullable Planet planet, @Nullable Entity rocket, NetworkManager.PacketContext context);
     }
 
 }

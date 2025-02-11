@@ -2,6 +2,7 @@ package com.st0x0ef.stellaris.client.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.st0x0ef.stellaris.Stellaris;
+import com.st0x0ef.stellaris.client.screens.components.GaugeChunkWidget;
 import com.st0x0ef.stellaris.client.screens.components.GaugeWidget;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.WaterSeparatorBlockEntity;
 import com.st0x0ef.stellaris.common.menus.WaterSeparatorMenu;
@@ -22,7 +23,7 @@ public class WaterSeparatorScreen extends AbstractContainerScreen<WaterSeparator
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Stellaris.MODID, "textures/gui/water_separator.png");
 
     private final WaterSeparatorBlockEntity blockEntity = getMenu().getBlockEntity();
-    private GaugeWidget ingredientTankGauge;
+    private GaugeChunkWidget ingredientTankGauge;
     private GaugeWidget hydrogenTankGauge;
     private GaugeWidget oxygenTankGauge;
     private GaugeWidget energyGauge;
@@ -41,7 +42,7 @@ public class WaterSeparatorScreen extends AbstractContainerScreen<WaterSeparator
         if (blockEntity == null) return;
 
         SingleFluidStorage ingredientTank = blockEntity.getIngredientTank();
-        ingredientTankGauge = new GaugeWidget(leftPos + 50, topPos + 58, 76, 40, Component.translatable("stellaris.screen.water"), GUISprites.WATER_OVERLAY, GUISprites.WATER_SEPARATOR_OVERLAY, ingredientTank.getTankCapacity(0), GaugeWidget.Direction4.DOWN_UP);
+        ingredientTankGauge = new GaugeChunkWidget(leftPos + 50, topPos + 58, 12, 46, 76, 40, Component.translatable("stellaris.screen.water"), GUISprites.WATER_OVERLAY, GUISprites.WATER_SEPARATOR_OVERLAY, ingredientTank.getTankCapacity(0), GaugeChunkWidget.Direction4.DOWN_UP);
         addRenderableWidget(ingredientTankGauge);
 
         FluidStorage resultTanks = blockEntity.getResultTanks();

@@ -8,6 +8,8 @@ import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 
 import java.util.List;
 
@@ -34,6 +36,9 @@ public class DataComponentsRegistry {
             () -> DataComponentType.<CappedLongComponent>builder().persistent(CappedLongComponent.CODEC).networkSynchronized(CappedLongComponent.STREAM_CODEC).build());
 
     public static final RegistrySupplier<DataComponentType<List<FluidStack>>> FLUID_LIST = DATA_COMPONENT_TYPE.register("fluid",
-            () -> DataComponentType.<List<FluidStack>>builder().persistent(Codec.list(FluidStack.CODEC)).build());
+            () -> DataComponentType.<List<FluidStack>>builder()
+                    .persistent(Codec.list(FluidStack.CODEC))
+                    .networkSynchronized(FluidStack.STREAM_CODEC.apply(ByteBufCodecs.list()))
+                    .build());
 
 }

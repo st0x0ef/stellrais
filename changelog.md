@@ -8,6 +8,9 @@
 - Added POST_PLANET_REGISTRY event
 - Added LAUNCH_BUTTON_SERVER event
 
+## Changes
+- Update Sky Aesthetics to 1.4.4
+
 ## Fix
 - Fix earth satellite
 - Fix maven version

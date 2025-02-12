@@ -4,10 +4,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;
 import com.st0x0ef.stellaris.Stellaris;
-import com.st0x0ef.stellaris.client.event.custom.PlanetSelectionEvents;
+import com.st0x0ef.stellaris.client.event.custom.PlanetSelectionClientEvents;
 import com.st0x0ef.stellaris.client.screens.PlanetSelectionScreen;
 import com.st0x0ef.stellaris.client.screens.info.PlanetInfo;
 import com.st0x0ef.stellaris.client.screens.record.PlanetRecord;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -17,6 +19,7 @@ import net.minecraft.util.profiling.ProfilerFiller;
 
 import java.util.Map;
 
+@Environment(EnvType.CLIENT)
 public class PlanetPack extends SimpleJsonResourceReloadListener {
     public PlanetPack() {
         super(Stellaris.GSON, "renderer/planet_screen/planet");
@@ -44,7 +47,7 @@ public class PlanetPack extends SimpleJsonResourceReloadListener {
             PlanetSelectionScreen.PLANETS.add(screenPlanet);
             Stellaris.LOG.info("Added a planet to PlanetSelectionScreen : {}", planet.name());
         });
-        PlanetSelectionEvents.POST_PLANET_PACK_REGISTRY.invoker().moonRegistered(PlanetSelectionScreen.PLANETS);
+        PlanetSelectionClientEvents.POST_PLANET_PACK_REGISTRY.invoker().moonRegistered(PlanetSelectionScreen.PLANETS);
 
     }
 }

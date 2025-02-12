@@ -1,8 +1,9 @@
 package com.st0x0ef.stellaris.common.network.packets;
 
 import com.st0x0ef.stellaris.Stellaris;
-import com.st0x0ef.stellaris.client.event.custom.PlanetSelectionEvents;
+import com.st0x0ef.stellaris.client.event.custom.PlanetSelectionClientEvents;
 import com.st0x0ef.stellaris.common.data.planets.Planet;
+import com.st0x0ef.stellaris.common.events.custom.PlanetSelectionServerEvents;
 import com.st0x0ef.stellaris.common.network.NetworkRegistry;
 import com.st0x0ef.stellaris.common.registry.EntityData;
 import com.st0x0ef.stellaris.common.utils.PlanetUtil;
@@ -46,7 +47,7 @@ public class TeleportEntityToPlanetPacket implements CustomPacketPayload {
         Planet planet = PlanetUtil.getPlanet(packet.dimension);
         Entity rocket = player.getVehicle();
 
-        if(PlanetSelectionEvents.LAUNCH_BUTTON_SERVER.invoker().launchButton(player, planet, rocket, context) == EventResult.interruptTrue()) {
+        if(PlanetSelectionServerEvents.LAUNCH_BUTTON.invoker().launchButton(player, planet, rocket, context) == EventResult.interruptTrue()) {
             return;
         }
 

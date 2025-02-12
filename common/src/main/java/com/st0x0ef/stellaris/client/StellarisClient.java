@@ -2,6 +2,7 @@ package com.st0x0ef.stellaris.client;
 
 import com.st0x0ef.stellaris.Stellaris;
 import com.st0x0ef.stellaris.client.event.ClientEvents;
+import com.st0x0ef.stellaris.client.event.custom.PlanetSelectionClientEvents;
 import com.st0x0ef.stellaris.client.overlays.*;
 import com.st0x0ef.stellaris.client.particles.*;
 import com.st0x0ef.stellaris.client.renderers.armors.JetSuitModel;
@@ -10,6 +11,7 @@ import com.st0x0ef.stellaris.client.screens.ConfigScreen;
 import com.st0x0ef.stellaris.common.data.screen.MoonPack;
 import com.st0x0ef.stellaris.common.data.screen.PlanetPack;
 import com.st0x0ef.stellaris.common.data.screen.StarPack;
+import com.st0x0ef.stellaris.common.events.custom.PlanetSelectionServerEvents;
 import com.st0x0ef.stellaris.common.handlers.GlobalExceptionHandler;
 import com.st0x0ef.stellaris.common.registry.ItemsRegistry;
 import com.st0x0ef.stellaris.common.registry.ParticleRegistry;
@@ -93,4 +95,5 @@ public class StellarisClient {
         ReloadListenerRegistry.register(PackType.CLIENT_RESOURCES, new PlanetPack());
         ReloadListenerRegistry.register(PackType.CLIENT_RESOURCES, new MoonPack());
     }
+
 }

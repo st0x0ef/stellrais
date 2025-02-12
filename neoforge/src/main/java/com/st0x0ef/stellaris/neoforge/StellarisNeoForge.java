@@ -56,13 +56,10 @@ public class StellarisNeoForge {
     }
 
 
-
-
-
-
-
-
     public static void onAddReloadListenerEvent(AddReloadListenerEvent event) {
+        if(FMLEnvironment.dist.isClient()) {
+            Stellaris.onAddReloadClientListenerEvent((id, listener) -> event.addListener(listener));
+        }
         Stellaris.onAddReloadListenerEvent((id, listener) -> event.addListener(listener));
     }
 

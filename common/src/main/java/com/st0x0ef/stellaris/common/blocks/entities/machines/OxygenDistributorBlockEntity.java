@@ -1,12 +1,12 @@
 package com.st0x0ef.stellaris.common.blocks.entities.machines;
 
+import com.fej1fun.potentials.capabilities.Capabilities;
 import com.fej1fun.potentials.fluid.UniversalFluidStorage;
 import com.fej1fun.potentials.providers.FluidProvider;
 import com.st0x0ef.stellaris.common.menus.OxygenDistributorMenu;
 import com.st0x0ef.stellaris.common.oxygen.GlobalOxygenManager;
 import com.st0x0ef.stellaris.common.registry.BlockEntityRegistry;
 import com.st0x0ef.stellaris.common.registry.FluidRegistry;
-import com.st0x0ef.stellaris.common.utils.OxygenUtils;
 import com.st0x0ef.stellaris.common.utils.capabilities.fluid.FluidStorage;
 import dev.architectury.fluid.FluidStack;
 import net.minecraft.core.BlockPos;
@@ -27,7 +27,7 @@ public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity
         protected void onChange(int tank) {
             setChanged();
         }
-    };;
+    };
 
 
     public OxygenDistributorBlockEntity(BlockPos pos, BlockState state) {
@@ -37,10 +37,9 @@ public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity
     @Override
     public void tick() {
         if (level instanceof ServerLevel serverLevel) {
-            if (oxygenTank.canGrow() && this.energyContainer.getEnergy() > 1) {
-                if (OxygenUtils.removeOxygen(getItem(0), 1)) {
+            if (oxygenTank.canGrow()) {
+                if (useOxygenAndEnergy()) {
                     addOxygen(1);
-                    this.energyContainer.extract(1, false);
                 }
             }
 
@@ -53,7 +52,9 @@ public class OxygenDistributorBlockEntity extends BaseEnergyContainerBlockEntity
     public boolean useOxygenAndEnergy() {
         if (oxygenTank.getFluidInTank(oxygenTank.getTanks()).isEmpty() || oxygenTank.getFluidValueInTank(oxygenTank.getTanks()) == 0) {
             if (this.energyContainer.getEnergy() > 0) {
-                if (OxygenUtils.removeOxygen(getItem(0), 1)) {
+                UniversalFluidStorage storage = Capabilities.Fluid.ITEM.getCapability(getItem(0));
+                if (storage != null && !storage.getFluidInTank(0).isEmpty()) {
+                    storage.drain(storage.getFluidInTank(0).copyWithAmount(1), false);
                     this.energyContainer.extract(1, false);
                     return true;
                 }

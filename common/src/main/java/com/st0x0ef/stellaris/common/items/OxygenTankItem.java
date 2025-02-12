@@ -1,10 +1,11 @@
 package com.st0x0ef.stellaris.common.items;
 
+import com.fej1fun.potentials.capabilities.Capabilities;
 import com.fej1fun.potentials.fluid.ItemFluidStorage;
+import com.fej1fun.potentials.fluid.UniversalFluidStorage;
 import com.fej1fun.potentials.providers.FluidProvider;
 import com.st0x0ef.stellaris.common.blocks.entities.machines.OxygenDistributorBlockEntity;
 import com.st0x0ef.stellaris.common.registry.DataComponentsRegistry;
-import com.st0x0ef.stellaris.common.utils.OxygenUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -25,6 +26,7 @@ import java.util.List;
 
 public class OxygenTankItem extends Item implements FluidProvider.ITEM {
     private final int capacity;
+
     public OxygenTankItem(Item.Properties properties, int capacity) {
         super(properties);
         this.capacity = capacity;
@@ -32,7 +34,10 @@ public class OxygenTankItem extends Item implements FluidProvider.ITEM {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("tooltip.item.stellaris.oxygen_tank", OxygenUtils.getOxygen(stack), OxygenUtils.getOxygenCapacity(stack)).withStyle(ChatFormatting.GRAY));
+        UniversalFluidStorage storage = Capabilities.Fluid.ITEM.getCapability(stack);
+        if (storage != null) {
+            tooltip.add(Component.translatable("tooltip.item.stellaris.oxygen_tank", storage.getFluidInTank(0).getAmount(), storage.getTankCapacity(0)).withStyle(ChatFormatting.GRAY));
+        }
     }
 
     @Override
@@ -40,23 +45,26 @@ public class OxygenTankItem extends Item implements FluidProvider.ITEM {
         if(level.isClientSide) return super.use(level, player, usedHand);
 
         if (player.isShiftKeyDown()) {
-            if (player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof FluidProvider.ITEM chestplate && chestplate.getFluidTank(player.getItemBySlot(EquipmentSlot.CHEST)) instanceof ItemFluidStorage storage) {
-                ItemStack armor = player.getItemBySlot(EquipmentSlot.CHEST);
+            ItemStack tank = player.getItemInHand(usedHand);
+            ItemStack armor = player.getItemBySlot(EquipmentSlot.CHEST);
 
-                ItemStack tank = player.getItemInHand(usedHand);
+            UniversalFluidStorage oxygenTankStorage = Capabilities.Fluid.ITEM.getCapability(tank);
+            UniversalFluidStorage chestplateStorage = Capabilities.Fluid.ITEM.getCapability(armor);
 
-                if (storage.getFluidValueInTank(0) == 0) {
-                    return super.use(level, player, usedHand);
-                }
+            if (oxygenTankStorage == null || chestplateStorage == null) return super.use(level, player, usedHand);
 
-                if (OxygenUtils.getOxygenCapacity(armor) - OxygenUtils.getOxygen(armor) > storage.getFluidValueInTank(0)) {
-                    OxygenUtils.addOxygen(armor, storage.getFluidValueInTank(0));
-                    OxygenUtils.removeAllOxyygen(tank);
-                } else if (OxygenUtils.getOxygenCapacity(armor) - OxygenUtils.getOxygen(armor) <= storage.getFluidValueInTank(0)) {
-                    OxygenUtils.addOxygen(armor, OxygenUtils.getOxygenCapacity(armor) - OxygenUtils.getOxygen(armor));
-                    OxygenUtils.addOxygen(tank, -(OxygenUtils.getOxygenCapacity(armor) + OxygenUtils.getOxygen(armor)));
-                }
 
+            if (oxygenTankStorage.getFluidInTank(0).isEmpty()) {
+                return super.use(level, player, usedHand);
+            }
+
+            if (chestplateStorage.getTankCapacity(0) - chestplateStorage.getFluidInTank(0).getAmount() >= oxygenTankStorage.getFluidInTank(0).getAmount()) {
+                chestplateStorage.fill(oxygenTankStorage.getFluidInTank(0).copy(), false);
+                oxygenTankStorage.drain(oxygenTankStorage.getFluidInTank(0).copy(), false);
+            } else {
+                long amount = chestplateStorage.getTankCapacity(0) - chestplateStorage.getFluidInTank(0).getAmount();
+                chestplateStorage.fill(oxygenTankStorage.getFluidInTank(0).copyWithAmount(amount), false);
+                oxygenTankStorage.drain(oxygenTankStorage.getFluidInTank(0).copyWithAmount(amount), false);
             }
         }
 
@@ -69,10 +77,12 @@ public class OxygenTankItem extends Item implements FluidProvider.ITEM {
         BlockEntity block = context.getLevel().getBlockEntity(context.getClickedPos());
         if (block instanceof OxygenDistributorBlockEntity entity) {
             ItemStack stack = context.getItemInHand();
-            long amount = entity.addOxygen(OxygenUtils.getOxygen(stack));
-            OxygenUtils.removeOxygen(stack, amount);
-            return InteractionResult.SUCCESS;
-
+            UniversalFluidStorage storage = Capabilities.Fluid.ITEM.getCapability(stack);
+            if (storage != null) {
+                long amount = entity.addOxygen(storage.getFluidInTank(0).getAmount());
+                storage.drain(storage.getFluidInTank(0).copyWithAmount(amount), false);
+                return InteractionResult.SUCCESS;
+            }
         }
 
         return super.useOn(context);
@@ -85,8 +95,11 @@ public class OxygenTankItem extends Item implements FluidProvider.ITEM {
 
     @Override
     public int getBarWidth(ItemStack stack) {
-        long storedOxygen = OxygenUtils.getOxygen(stack);
-        return (int) Mth.clamp((13 + storedOxygen * 13) / OxygenUtils.getOxygenCapacity(stack), 0, 13);
+        UniversalFluidStorage storage = Capabilities.Fluid.ITEM.getCapability(stack);
+        if (storage != null) {
+            return (int) Mth.clamp(((storage.getFluidInTank(0).getAmount() + 1) * 13) / storage.getTankCapacity(0), 0, 13);
+        }
+        return 0;
     }
 
     @Override

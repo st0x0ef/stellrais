@@ -1,21 +1,21 @@
 {
   "type": "stellaris:water_seperator",
-  "energyContainer": 100,
+  "energyContainer": 50,
   "ingredient": {
     "fluid": "minecraft:water",
     "id": "minecraft:water",
-    "amount": 10
+    "amount": 5
   },
   "results": [
     {
       "fluid": "stellaris:hydrogen",
       "id": "stellaris:hydrogen",
-      "amount": 20
+      "amount": 10
     },
     {
       "fluid": "stellaris:oxygen",
       "id": "stellaris:oxygen",
-      "amount": 10
+      "amount": 5
     }
   ]
 }
